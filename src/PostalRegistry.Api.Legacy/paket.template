@@ -1,0 +1,27 @@
+type file
+version 1.0.0
+
+id Be.Vlaanderen.Basisregisters.PostalRegistry.Api.Legacy
+title Be.Vlaanderen.Basisregisters.PostalRegistry.Api.Legacy
+
+authors Basisregisters Vlaanderen
+owners agentschap Informatie Vlaanderen <https://vlaanderen.be/informatie-vlaanderen>
+copyright Copyright (c) agentschap Informatie Vlaanderen
+requireLicenseAcceptance false
+projectUrl https://github.com/Informatievlaanderen/postal-registry
+iconUrl https://raw.githubusercontent.com/Informatievlaanderen/build-pipeline/master/logo.png
+licenseUrl https://opensource.org/licenses/EUPL-1.2
+
+description Postal Registry.
+
+files
+  PostalRegistry.Api.Legacy.dll => lib\netcoreapp2.2
+  PostalRegistry.Api.Legacy.pdb => lib\netcoreapp2.2
+  PostalRegistry.Api.Legacy.xml => lib\netcoreapp2.2
+  PostalRegistry.Api.Legacy.xml => content
+
+  PostalRegistry.Projections.Legacy.dll => lib\netcoreapp2.2
+  PostalRegistry.Projections.Legacy.pdb => lib\netcoreapp2.2
+
+  PostalRegistry.dll => lib\netcoreapp2.2
+  PostalRegistry.pdb => lib\netcoreapp2.2

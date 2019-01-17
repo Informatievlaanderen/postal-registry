@@ -1,0 +1,24 @@
+type file
+version 1.0.0
+
+id Be.Vlaanderen.Basisregisters.PostalRegistry.Api.CrabImport
+title Be.Vlaanderen.Basisregisters.PostalRegistry.Api.CrabImport
+
+authors Basisregisters Vlaanderen
+owners agentschap Informatie Vlaanderen <https://vlaanderen.be/informatie-vlaanderen>
+copyright Copyright (c) agentschap Informatie Vlaanderen
+requireLicenseAcceptance false
+projectUrl https://github.com/Informatievlaanderen/postal-registry
+iconUrl https://raw.githubusercontent.com/Informatievlaanderen/build-pipeline/master/logo.png
+licenseUrl https://opensource.org/licenses/EUPL-1.2
+
+description Postal Registry.
+
+files
+  PostalRegistry.Api.CrabImport.dll => lib\netcoreapp2.2
+  PostalRegistry.Api.CrabImport.pdb => lib\netcoreapp2.2
+  PostalRegistry.Api.CrabImport.xml => lib\netcoreapp2.2
+  PostalRegistry.Api.CrabImport.xml => content
+
+  PostalRegistry.dll => lib\netcoreapp2.2
+  PostalRegistry.pdb => lib\netcoreapp2.2

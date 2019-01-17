@@ -1,0 +1,80 @@
+namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
+{
+    using Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector;
+    using Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore;
+    using System.Linq;
+    using PostalRegistry.PostalInformation.Events;
+
+    public class PostalInformationSyndicationProjections : ConnectedProjection<LegacyContext>
+    {
+        public PostalInformationSyndicationProjections()
+        {
+            When<Envelope<PostalInformationWasRegistered>>(async (context, message, ct) =>
+            {
+                var newPostalInformationSyndicationItem = new PostalInformationSyndicationItem
+                {
+                    Position = message.Position,
+                    PostalCode = message.Message.PostalCode,
+                    RecordCreatedAt = message.Message.Provenance.Timestamp,
+                    LastChangedOn = message.Message.Provenance.Timestamp,
+                    ChangeType = message.EventName
+                };
+
+                newPostalInformationSyndicationItem.ApplyProvenance(message.Message.Provenance);
+
+                await context
+                    .PostalInformationSyndication
+                    .AddAsync(newPostalInformationSyndicationItem, ct);
+            });
+
+            When<Envelope<PostalInformationBecameCurrent>>(async (context, message, ct) =>
+            {
+                await context.CreateNewPostalInformationSyndicationItem(
+                    message.Message.PostalCode,
+                    message,
+                    x => x.Status = PostalInformationStatus.Current,
+                    ct);
+            });
+
+            When<Envelope<PostalInformationWasRetired>>(async (context, message, ct) =>
+            {
+                await context.CreateNewPostalInformationSyndicationItem(
+                    message.Message.PostalCode,
+                    message,
+                    x => x.Status = PostalInformationStatus.Retired,
+                    ct);
+            });
+
+            When<Envelope<PostalInformationPostalNameWasAdded>>(async (context, message, ct) =>
+            {
+                await context.CreateNewPostalInformationSyndicationItem(
+                    message.Message.PostalCode,
+                    message,
+                    x => x.AddPostalName(new PostalName(message.Message.Name, message.Message.Language)),
+                    ct);
+            });
+
+            When<Envelope<PostalInformationPostalNameWasRemoved>>(async (context, message, ct) =>
+            {
+                await context.CreateNewPostalInformationSyndicationItem(
+                    message.Message.PostalCode,
+                    message,
+                    x =>
+                    {
+                        var name = x.PostalNames.First(y => y.Name == message.Message.Name);
+                        x.RemovePostalName(name);
+                    },
+                    ct);
+            });
+
+            When<Envelope<MunicipalityWasLinkedToPostalInformation>>(async (context, message, ct) =>
+            {
+                await context.CreateNewPostalInformationSyndicationItem(
+                    message.Message.PostalCode,
+                    message,
+                    x => x.MunicipalityOsloId = message.Message.NisCode,
+                    ct);
+            });
+        }
+    }
+}
