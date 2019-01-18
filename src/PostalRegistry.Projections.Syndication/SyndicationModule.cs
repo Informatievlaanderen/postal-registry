@@ -49,7 +49,7 @@ namespace PostalRegistry.Projections.Syndication.Modules
                     .UseSqlServer(provider.GetRequiredService<TraceDbConnection>(), sqlServerOptions =>
                     {
                         sqlServerOptions.EnableRetryOnFailure();
-                        sqlServerOptions.MigrationsHistoryTable(MigrationTables.Legacy, Schema.Legacy);
+                        sqlServerOptions.MigrationsHistoryTable(MigrationTables.Syndication, Schema.Syndication);
                     }));
         }
 
