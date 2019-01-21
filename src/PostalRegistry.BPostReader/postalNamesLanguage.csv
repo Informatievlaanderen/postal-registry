@@ -1,3 +1,4 @@
+Sinterklaas;nl
 BRUSSEL;nl
 Verenigde Vergadering van de Gemeenschappelijke ;nl
 Raad van de Vlaamse Gemeenschapscommissie;nl
@@ -30,7 +31,7 @@ JETTE;nl
 Brussel X;nl
 Postcheque;nl
 Scanning;en
-SOC;nl
+ACTISOC;nl
 NATO;en
 Neder-Over-Heembeek;nl
 Haren;nl
@@ -50,7 +51,7 @@ LA HULPE;fr
 Glimes;fr
 INCOURT;fr
 Opprebais;fr
-Piètrebais;fr
+Piétrebais;fr
 Roux-Miroir;fr
 BEAUVECHAIN;fr
 Hamme-Mille;fr
@@ -82,7 +83,7 @@ HÉLÉCINE;fr
 Linsmeau;fr
 Neerheylissem;fr
 Opheylissem;fr
-Malèves-Sainte-Marie-Wastines;fr
+Malèves-Sainte-Marie-Wastinnes;fr
 Orbais;fr
 PERWEZ;fr
 Thorembais-Les-Béguines;fr
@@ -264,7 +265,7 @@ ZAVENTEM;nl
 Brucargo;nl
 Sint-Stevens-Woluwe;nl
 Sterrebeek;nl
-Office Exchange Brussels Airpor Remailing;en
+Office Exchange Brussels Airport Remailing;en
 Corporate Village;en
 KRAAINEM;nl
 WEZEMBEEK-OPPEM;nl
@@ -285,7 +286,6 @@ ANTWERPEN;nl
 ANTWERPEN;nl
 Burcht;nl
 ZWIJNDRECHT;nl
-CSM Antwerpen X;nl
 Antwerpen X;nl
 Deurne;nl
 WIJNEGEM;nl
@@ -410,7 +410,8 @@ SINT-KATELIJNE-WAVER;nl
 Onze-Lieve-Vrouw-Waver;nl
 Breendonk;nl
 Liezele;nl
-PUURS;nl
+Puurs;nl
+PUURS-SINT-AMANDS;nl
 Ruisbroek;nl
 BORNEM;nl
 Hingene;nl
@@ -418,7 +419,7 @@ Mariekerke;nl
 Weert;nl
 Lippelo;nl
 Oppuurs;nl
-SINT-AMANDS;nl
+Sint-Amands;nl
 SCHOTEN;nl
 ESSEN;nl
 KALMTHOUT;nl
@@ -627,14 +628,14 @@ Elen;nl
 Lanklaar;nl
 Rotem;nl
 Stokkem;nl
-OPGLABBEEK;nl
+Opglabbeek;nl
 AS;nl
 Niel-Bij-As;nl
 Ellikom;nl
 Gruitrode;nl
 Meeuwen;nl
-MEEUWEN-GRUITRODE;nl
 Neerglabbeek;nl
+OUDSBERGEN;nl
 Wijshagen;nl
 MAASEIK;nl
 Neeroeteren;nl
@@ -762,8 +763,9 @@ Borlo;nl
 Buvingen;nl
 Mielen-Boven-Aalst;nl
 Muizen;nl
-OVERPELT;nl
-NEERPELT;nl
+Overpelt;nl
+PELT;nl
+Neerpelt;nl
 Sint-Huibrechts-Lille;nl
 LOMMEL;nl
 Achel;nl
@@ -797,9 +799,9 @@ Bressoux;fr
 Jupille-Sur-Meuse;fr
 LIÈGE;fr
 Wandre;fr
-Grivegnee;fr
+Grivegnée;fr
 Angleur;fr
-Chênee;fr
+Chênée;fr
 HERSTAL;fr
 Milmort;fr
 Vottem;fr
@@ -808,7 +810,6 @@ CHAUDFONTAINE;fr
 Vaux-Sous-Chèvremont;fr
 Beaufays;fr
 Embourg;fr
-CSM Liege X;fr
 Liège X;fr
 Boncelles;fr
 SERAING;fr
@@ -1270,7 +1271,7 @@ Leuze;fr
 Liernu;fr
 Longchamps;fr
 Mehaigne;fr
-Noville-Sur-Méhaigne;fr
+Noville-Sur-Mehaigne;fr
 Saint-Germain;fr
 Taviers;fr
 Upigny;fr
@@ -1343,10 +1344,10 @@ Foy-Notre-Dame;fr
 Anthée;fr
 ONHAYE;fr
 Serville;fr
-Falaen;fr
+Falaën;fr
 Sommière;fr
 Weillen;fr
-Gerin;fr
+Gérin;fr
 Dorinne;fr
 Durnal;fr
 Evrehailles;fr
@@ -1375,7 +1376,7 @@ Alle;fr
 Bagimont;fr
 Bohan;fr
 Chairière;fr
-Laforet;fr
+Laforêt;fr
 Membre;fr
 Mouzaive;fr
 Nafraiture;fr
@@ -1435,7 +1436,7 @@ Buissonville;fr
 Eprave;fr
 Han-Sur-Lesse;fr
 Jemelle;fr
-Lavaux-Saint-Anne;fr
+Lavaux-Sainte-Anne;fr
 Lessive;fr
 Mont-Gauthier;fr
 ROCHEFORT;fr
@@ -1482,7 +1483,7 @@ Morialmé;fr
 Thy-Le-Baudouin;fr
 CERFONTAINE;fr
 Daussois;fr
-Senzeille;fr
+Senzeilles;fr
 Silenrieux;fr
 Soumoy;fr
 Villers-Deux-Eglises;fr
@@ -1522,7 +1523,7 @@ Frasnes;fr
 Gonrieux;fr
 Mariembourg;fr
 Pesche;fr
-Petigny;fr
+Pétigny;fr
 Petite-Chapelle;fr
 Presgaux;fr
 Dourbes;fr
@@ -1563,7 +1564,6 @@ CSM Charleroi X;fr
 Charleroi X;fr
 MONTIGNY-LE-TILLEUL;fr
 Landelies;fr
-Sinterklaas;nl
 Cour-Sur-Heure;fr
 HAM-SUR-HEURE;fr
 Jamioulx;fr
@@ -1888,7 +1888,7 @@ Forrières;fr
 Lesterny;fr
 Masbourg;fr
 Dochamps;fr
-Grandmenil;fr
+Grandménil;fr
 Harre;fr
 Malempré;fr
 MANHAY;fr
@@ -1922,7 +1922,7 @@ Flénu;fr
 Jemappes;fr
 Maisières;fr
 Nimy;fr
-Havre;fr
+Havré;fr
 Harmignies;fr
 Harveng;fr
 Hyon;fr
@@ -2040,7 +2040,7 @@ Tertre;fr
 Hautrage;fr
 Villerot;fr
 COLFONTAINE;fr
-Paturages;fr
+Pâturages;fr
 Warquignies;fr
 Wasmes;fr
 Hainin;fr
@@ -2088,7 +2088,7 @@ Lamain;fr
 Marquain;fr
 Gaurain-Ramecroix;fr
 Havinnes;fr
-Beclers;fr
+Béclers;fr
 Thimougies;fr
 Barry;fr
 Maulde;fr
@@ -2107,7 +2107,7 @@ Bury;fr
 Bon-Secours;fr
 Baugnies;fr
 Braffe;fr
-Brasmenil;fr
+Brasménil;fr
 Callenelle;fr
 Wasmes-Audemez-Briffoeil;fr
 Wiers;fr
@@ -2255,7 +2255,7 @@ Ramegnies;fr
 Thumaide;fr
 Wadelincourt;fr
 Aubechies;fr
-Ellignies-Saint-Anne;fr
+Ellignies-Sainte-Anne;fr
 Quevaucamps;fr
 Grandglise;fr
 Stambruges;fr
@@ -2736,8 +2736,9 @@ Volkegem;nl
 Welden;nl
 Huise;nl
 Ouwegem;nl
-ZINGEM;nl
-KRUISHOUTEM;nl
+Zingem;nl
+KRUISEM;nl
+Kruishoutem;nl
 Nokere;nl
 Wannegem-Lede;nl
 Elsegem;nl
@@ -2772,7 +2773,7 @@ Zevergem;nl
 Hansbeke;nl
 Landegem;nl
 Merendree;nl
-NEVELE;nl
+Nevele;nl
 Poesele;nl
 Vosselare;nl
 Balegem;nl
@@ -2795,18 +2796,19 @@ GAVERE;nl
 Semmerzake;nl
 Vurste;nl
 EEKLO;nl
-KNESSELARE;nl
+Knesselare;nl
 Ursel;nl
-LOVENDEGEM;nl
+Lovendegem;nl
 Vinderhoute;nl
-ZOMERGEM;nl
+LIEVEGEM;nl
+Zomergem;nl
 Oostwinkel;nl
 Ronsele;nl
 Ertvelde;nl
 EVERGEM;nl
 Kluizen;nl
 Sleidinge;nl
-WAARSCHOOT;nl
+Waarschoot;nl
 ASSENEDE;nl
 Boekhoute;nl
 Bassevelde;nl
