@@ -32,10 +32,10 @@ namespace PostalRegistry.Projections.Extract
                         return TimeSpan.FromSeconds(randomValue);
                     })
                 .ExecuteAsync(async ct =>
-                {
-                    logger?.LogInformation("Running EF Migrations.");
-                    await RunInternal(connectionString, loggerFactory, ct);
-                },
+                    {
+                        logger?.LogInformation("Running EF Migrations.");
+                        await RunInternal(connectionString, loggerFactory, ct);
+                    },
                     cancellationToken);
         }
 

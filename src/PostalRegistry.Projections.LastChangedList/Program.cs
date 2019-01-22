@@ -25,12 +25,15 @@ namespace PostalRegistry.Projections.LastChangedList
             var ct = CancellationTokenSource.Token;
 
             ct.Register(() => Closing.Set());
-            Console.CancelKeyPress += (sender, eventArgs) => Closing.Set();
+            Console.CancelKeyPress += (sender, eventArgs) => CancellationTokenSource.Cancel();
 
             Console.WriteLine("Starting PostalRegistry.Projections.LastChangedList");
 
             AppDomain.CurrentDomain.FirstChanceException += (sender, eventArgs) =>
-                Log.Debug(eventArgs.Exception, "FirstChanceException event raised in {AppDomain}.", AppDomain.CurrentDomain.FriendlyName);
+                Log.Debug(
+                    eventArgs.Exception,
+                    "FirstChanceException event raised in {AppDomain}.",
+                    AppDomain.CurrentDomain.FriendlyName);
 
             AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) =>
                 Log.Fatal((Exception)eventArgs.ExceptionObject, "Encountered a fatal exception, exiting program.");
@@ -75,11 +78,13 @@ namespace PostalRegistry.Projections.LastChangedList
             }
 
             Console.WriteLine("Stopping...");
+            Closing.Close();
         }
 
         private static IServiceProvider ConfigureServices(IConfiguration configuration)
         {
             var services = new ServiceCollection();
+
             var builder = new ContainerBuilder();
 
             builder.RegisterModule(new LoggingModule(configuration, services));

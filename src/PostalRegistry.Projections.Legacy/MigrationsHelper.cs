@@ -30,10 +30,10 @@ namespace PostalRegistry.Projections.Legacy
                         return TimeSpan.FromSeconds(randomValue);
                     })
                 .ExecuteAsync(async (ct) =>
-                {
-                    logger?.LogInformation("Running EF Migrations.");
-                    await RunInternal(connectionString, loggerFactory, ct);
-                }, cancellationToken);
+                    {
+                        logger?.LogInformation("Running EF Migrations.");
+                        await RunInternal(connectionString, loggerFactory, ct);
+                    }, cancellationToken);
         }
 
         private static async Task RunInternal(string connectionString, ILoggerFactory loggerFactory, CancellationToken cancellationToken)

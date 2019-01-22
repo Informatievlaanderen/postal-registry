@@ -24,12 +24,15 @@ namespace PostalRegistry.Projections.Legacy
             var ct = CancellationTokenSource.Token;
 
             ct.Register(() => Closing.Set());
-            Console.CancelKeyPress += (sender, eventArgs) => Closing.Set();
+            Console.CancelKeyPress += (sender, eventArgs) => CancellationTokenSource.Cancel();
 
             Console.WriteLine("Starting PostalRegistry.Projections.Legacy");
 
             AppDomain.CurrentDomain.FirstChanceException += (sender, eventArgs) =>
-                Log.Debug(eventArgs.Exception, "FirstChanceException event raised in {AppDomain}.", AppDomain.CurrentDomain.FriendlyName);
+                Log.Debug(
+                    eventArgs.Exception,
+                    "FirstChanceException event raised in {AppDomain}.",
+                    AppDomain.CurrentDomain.FriendlyName);
 
             AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) =>
                 Log.Fatal((Exception)eventArgs.ExceptionObject, "Encountered a fatal exception, exiting program.");

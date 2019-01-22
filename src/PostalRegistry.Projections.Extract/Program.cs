@@ -82,6 +82,7 @@ namespace PostalRegistry.Projections.Extract
             }
 
             Console.WriteLine("Stopping...");
+            Closing.Close();
         }
 
         private static IServiceProvider ConfigureServices(IConfiguration configuration)
