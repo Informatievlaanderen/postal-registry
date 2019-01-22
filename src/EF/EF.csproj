@@ -19,7 +19,7 @@
   <PropertyGroup>
     <PackageId>EF</PackageId>
     <Title>EF</Title>
-    <Authors>Vlaamse basisregisters</Authors>
+    <Authors>Basisregisters Vlaanderen</Authors>
     <Description>Entity Framework Migrations Dummy Project.</Description>
     <Copyright>Copyright (c) Vlaamse overheid</Copyright>
   </PropertyGroup>
