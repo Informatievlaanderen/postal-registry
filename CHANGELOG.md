@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/informatievlaanderen/postal-registry/compare/v1.0.2...v1.0.3) (2019-01-22)
+
+
+### Bug Fixes
+
+* use https for postinfo namespace ([7cb3c10](https://github.com/informatievlaanderen/postal-registry/commit/7cb3c10))
+
 ## [1.0.2](https://github.com/informatievlaanderen/postal-registry/compare/v1.0.1...v1.0.2) (2019-01-21)
 
 
