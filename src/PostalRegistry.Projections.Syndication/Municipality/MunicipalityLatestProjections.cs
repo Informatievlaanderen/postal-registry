@@ -2,11 +2,11 @@ namespace PostalRegistry.Projections.Syndication.Municipality
 {
     using Be.Vlaanderen.Basisregisters.GrAr.Common;
     using Be.Vlaanderen.Basisregisters.GrAr.Legacy;
+    using Be.Vlaanderen.Basisregisters.ProjectionHandling.Syndication;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-    using Be.Vlaanderen.Basisregisters.ProjectionHandling.Syndication;
 
     public class MunicipalityLatestProjections : AtomEntryProjectionHandlerModule<MunicipalityEvent, Gemeente, SyndicationContext>
     {
@@ -19,6 +19,12 @@ namespace PostalRegistry.Projections.Syndication.Municipality
             When(MunicipalityEvent.MunicipalityNameWasCleared, AddSyndicationItemEntry);
             When(MunicipalityEvent.MunicipalityNameWasCorrected, AddSyndicationItemEntry);
             When(MunicipalityEvent.MunicipalityNameWasCorrectedToCleared, AddSyndicationItemEntry);
+
+            //only version is updated
+            When(MunicipalityEvent.MunicipalityOfficialLanguageWasAdded, AddSyndicationItemEntry);
+            When(MunicipalityEvent.MunicipalityOfficialLanguageWasRemoved, AddSyndicationItemEntry);
+            When(MunicipalityEvent.MunicipalityFacilitiesLanguageWasAdded, AddSyndicationItemEntry);
+            When(MunicipalityEvent.MunicipalityFacilitiesLanguageWasRemoved, AddSyndicationItemEntry);
         }
 
         private static async Task AddSyndicationItemEntry(AtomEntry<Gemeente> entry, SyndicationContext context, CancellationToken ct)
