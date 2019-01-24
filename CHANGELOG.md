@@ -1,3 +1,15 @@
+# [1.1.0](https://github.com/informatievlaanderen/postal-registry/compare/v1.0.3...v1.1.0) (2019-01-24)
+
+
+### Bug Fixes
+
+* postal sync with municipality ([a85d2bb](https://github.com/informatievlaanderen/postal-registry/commit/a85d2bb))
+
+
+### Features
+
+* update sync with municipality for language changes ([b6483fc](https://github.com/informatievlaanderen/postal-registry/commit/b6483fc))
+
 ## [1.0.3](https://github.com/informatievlaanderen/postal-registry/compare/v1.0.2...v1.0.3) (2019-01-22)
 
 
