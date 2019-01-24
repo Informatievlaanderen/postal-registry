@@ -15,10 +15,10 @@ namespace PostalRegistry.Projections.Syndication.Municipality
         [DataMember(Name = "Identificator", Order = 2)]
         public Identificator Identificator { get; set; }
 
-        [DataMember(Name = "Gemeentenamen", Order = 3)]
+        [DataMember(Name = "OfficieleTalen", Order = 3)]
         public List<Taal> OfficialLanguages { get; set; }
 
-        [DataMember(Name = "Gemeentenamen", Order = 4)]
+        [DataMember(Name = "FaciliteitenTalen", Order = 4)]
         public List<Taal> FacilitiesLanguages { get; set; }
 
         [DataMember(Name = "Gemeentenamen", Order = 5)]
