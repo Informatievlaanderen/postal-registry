@@ -101,8 +101,8 @@ Target "PushContainer_ProjectionsExtract" (fun _ -> push "projections-extract")
 Target "Containerize_ProjectionsRedis" (fun _ -> containerize "PostalRegistry.Projections.LastChangedList" "projections-redis")
 Target "PushContainer_ProjectionsRedis" (fun _ -> push "projections-redis")
 
-Target "Containerize_ProjectionsSyndication" (fun _ -> containerize "PostalRegistry.Projections.Syndication" "projections-extract")
-Target "PushContainer_ProjectionsSyndication" (fun _ -> push "projections-extract")
+Target "Containerize_ProjectionsSyndication" (fun _ -> containerize "PostalRegistry.Projections.Syndication" "projections-syndication")
+Target "PushContainer_ProjectionsSyndication" (fun _ -> push "projections-syndication")
 
 // --------------------------------------------------------------------------------
 
