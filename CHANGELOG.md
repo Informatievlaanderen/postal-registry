@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/informatievlaanderen/postal-registry/compare/v1.1.0...v1.1.1) (2019-01-25)
+
+
+### Bug Fixes
+
+* push syndication container to correct docker repo ([8598602](https://github.com/informatievlaanderen/postal-registry/commit/8598602))
+
 # [1.1.0](https://github.com/informatievlaanderen/postal-registry/compare/v1.0.3...v1.1.0) (2019-01-24)
 
 
