@@ -9,7 +9,7 @@ namespace PostalRegistry.Projections.LastChangedList
         protected override string CacheKeyFormat => "legacy/postalinfo:{0}.{1}";
         protected override string UriFormat => "/v1/postcodes/{0}";
 
-        private static readonly AcceptType[] SupportedAcceptTypes = { AcceptType.Json, AcceptType.JsonLd, AcceptType.Xml };
+        private static readonly AcceptType[] SupportedAcceptTypes = { AcceptType.Json, AcceptType.Xml };
 
         public Projections()
          : base(SupportedAcceptTypes)
