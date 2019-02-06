@@ -1,3 +1,10 @@
+## [1.1.4](https://github.com/informatievlaanderen/postal-registry/compare/v1.1.3...v1.1.4) (2019-02-06)
+
+
+### Bug Fixes
+
+* properly serialise rfc 3339 dates ([a37d50f](https://github.com/informatievlaanderen/postal-registry/commit/a37d50f))
+
 ## [1.1.3](https://github.com/informatievlaanderen/postal-registry/compare/v1.1.2...v1.1.3) (2019-02-04)
 
 ## [1.1.2](https://github.com/informatievlaanderen/postal-registry/compare/v1.1.1...v1.1.2) (2019-02-04)
