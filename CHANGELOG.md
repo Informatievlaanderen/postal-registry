@@ -1,3 +1,10 @@
+## [1.1.5](https://github.com/informatievlaanderen/postal-registry/compare/v1.1.4...v1.1.5) (2019-02-07)
+
+
+### Bug Fixes
+
+* support nullable Rfc3339SerializableDateTimeOffset in converter ([16de5f2](https://github.com/informatievlaanderen/postal-registry/commit/16de5f2))
+
 ## [1.1.4](https://github.com/informatievlaanderen/postal-registry/compare/v1.1.3...v1.1.4) (2019-02-06)
 
 
