@@ -40,18 +40,13 @@ namespace PostalRegistry.Api.Extract.Extracts
             [FromServices] ExtractContext context,
             CancellationToken cancellationToken)
         {
-            var postalInfo = await context
-                .PostalInformationExtract
-                .AsNoTracking()
-                .OrderBy(x => int.Parse(x.PostalCode))
-                .ToListAsync(cancellationToken);
-
-            var zip = new List<ExtractFile>
+            var fileBuilder = new PostalRegistryExtractBuilder();
+            var zip = new PostalRegistryExtractArchive($"{ZipName}-{DateTime.Now:yyyy-MM-dd}")
             {
-                PostalRegistryExtractBuilder.CreatePostalFile(postalInfo)
+                fileBuilder.CreatePostalFile(context)
             };
 
-            return zip.CreateResponse($"{ZipName}-{DateTime.Now:yyyy-MM-dd}");
+            return zip.CreateCallbackFileStreamResult(cancellationToken);
         }
     }
 }
