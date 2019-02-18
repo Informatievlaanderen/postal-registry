@@ -7,8 +7,7 @@ namespace PostalRegistry.Api.Extract.Extracts.ExtractFiles
     public class DbfFileWriter<TDbaseRecord> : ExtractFileWriter
         where TDbaseRecord : DbaseRecord
     {
-        private static Encoding Encoding => Encoding.GetEncoding(1252);
-
+        private static Encoding Encoding => DbaseCodePage.Western_European_ANSI.ToEncoding();
 
         public DbfFileWriter(DbaseFileHeader header, Stream writeStream)
             : base(Encoding, writeStream)
