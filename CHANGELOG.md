@@ -1,3 +1,10 @@
+## [1.1.6](https://github.com/informatievlaanderen/postal-registry/compare/v1.1.5...v1.1.6) (2019-02-25)
+
+
+### Bug Fixes
+
+* use new lastchangedlist migrations runner ([e339f61](https://github.com/informatievlaanderen/postal-registry/commit/e339f61))
+
 ## [1.1.5](https://github.com/informatievlaanderen/postal-registry/compare/v1.1.4...v1.1.5) (2019-02-07)
 
 
