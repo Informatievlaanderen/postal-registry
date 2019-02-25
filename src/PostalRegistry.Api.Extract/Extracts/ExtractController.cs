@@ -1,16 +1,12 @@
 namespace PostalRegistry.Api.Extract.Extracts
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading;
-    using System.Threading.Tasks;
     using Be.Vlaanderen.Basisregisters.Api;
     using Be.Vlaanderen.Basisregisters.Api.Exceptions;
-    using ExtractFiles;
+    using Be.Vlaanderen.Basisregisters.Api.Extract;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
     using Newtonsoft.Json.Converters;
     using Projections.Extract;
     using Responses;
@@ -36,17 +32,10 @@ namespace PostalRegistry.Api.Extract.Extracts
         [ProducesResponseType(typeof(BasicApiProblem), StatusCodes.Status500InternalServerError)]
         [SwaggerResponseExample(StatusCodes.Status200OK, typeof(PostalRegistryResponseExample), jsonConverter: typeof(StringEnumConverter))]
         [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(InternalServerErrorResponseExamples), jsonConverter: typeof(StringEnumConverter))]
-        public async Task<IActionResult> Get(
+        public IActionResult Get(
             [FromServices] ExtractContext context,
-            CancellationToken cancellationToken)
-        {
-            var fileBuilder = new PostalRegistryExtractBuilder();
-            var zip = new PostalRegistryExtractArchive($"{ZipName}-{DateTime.Now:yyyy-MM-dd}")
-            {
-                fileBuilder.CreatePostalFile(context)
-            };
-
-            return zip.CreateCallbackFileStreamResult(cancellationToken);
-        }
+            CancellationToken cancellationToken) =>
+            new ExtractArchive($"{ZipName}-{DateTime.Now:yyyy-MM-dd}") { PostalRegistryExtractBuilder.CreatePostalFile(context) }
+                .CreateFileCallbackResult(cancellationToken);
     }
 }
