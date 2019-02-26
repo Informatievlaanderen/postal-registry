@@ -3,23 +3,27 @@ namespace PostalRegistry.PostalInformation
     using System;
     using Be.Vlaanderen.Basisregisters.AggregateSource;
     using Be.Vlaanderen.Basisregisters.CommandHandling;
+    using Be.Vlaanderen.Basisregisters.CommandHandling.SqlStreamStore;
+    using Be.Vlaanderen.Basisregisters.EventHandling;
     using Be.Vlaanderen.Basisregisters.GrAr.Provenance;
     using Commands.BPost;
     using Commands.Crab;
+    using SqlStreamStore;
 
-    public sealed class PostalInformationCommandHandlerModule : ProvenanceCommandHandlerModule<PostalInformation>
+    public sealed class PostalInformationCommandHandlerModule : CommandHandlerModule
     {
         public PostalInformationCommandHandlerModule(
             Func<IPostalInformationSet> getPostalInformationSet,
             Func<ConcurrentUnitOfWork> getUnitOfWork,
-            ReturnHandler<CommandMessage> finalHandler = null) :
-            base(
-                getUnitOfWork,
-                finalHandler,
-                new BPostPostalInformationProvenanceFactory(),
-                new CrabPostalInformationProvenanceFactory())
+            Func<IStreamStore> getStreamStore,
+            EventMapping eventMapping,
+            EventSerializer eventSerializer,
+            BPostPostalInformationProvenanceFactory bpostProvenanceFactory,
+            CrabPostalInformationProvenanceFactory crabProvenanceFactory)
         {
             For<ImportPostalInformationFromBPost>()
+                .AddSqlStreamStore(getStreamStore, getUnitOfWork, eventMapping, eventSerializer)
+                .AddProvenance(getUnitOfWork, bpostProvenanceFactory)
                 .Handle(async (message, ct) =>
                 {
                     var postalCode = message.Command.PostalCode;
@@ -41,6 +45,8 @@ namespace PostalRegistry.PostalInformation
                 });
 
             For<ImportPostalInformationFromCrab>()
+                .AddSqlStreamStore(getStreamStore, getUnitOfWork, eventMapping, eventSerializer)
+                .AddProvenance(getUnitOfWork, crabProvenanceFactory)
                 .Handle(async (mesage, ct) =>
                 {
                     // need to use the subcanton => in crab postcode = 1030, subcanton = 1031
