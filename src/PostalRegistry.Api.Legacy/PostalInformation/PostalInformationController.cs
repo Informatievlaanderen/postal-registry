@@ -96,22 +96,18 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
         /// </summary>
         /// <param name="legacyContext"></param>
         /// <param name="syndicationContext"></param>
-        /// <param name="hostingEnvironment"></param>
         /// <param name="reponseOptions"></param>
         /// <param name="cancellationToken"></param>
         /// <response code="200">Als de opvraging van een lijst met postcodes gelukt is.</response>
         /// <response code="500">Als er een interne fout is opgetreden.</response>
         [HttpGet]
         [ProducesResponseType(typeof(PostalInformationListResponse), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(BasicApiProblem), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(BasicApiProblem), StatusCodes.Status500InternalServerError)]
         [SwaggerResponseExample(StatusCodes.Status200OK, typeof(PostalInformationListResponseExamples), jsonConverter: typeof(StringEnumConverter))]
-        [SwaggerResponseExample(StatusCodes.Status400BadRequest, typeof(BadRequestResponseExamples), jsonConverter: typeof(StringEnumConverter))]
         [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(InternalServerErrorResponseExamples), jsonConverter: typeof(StringEnumConverter))]
         public async Task<IActionResult> List(
             [FromServices] LegacyContext legacyContext,
             [FromServices] SyndicationContext syndicationContext,
-            [FromServices] IHostingEnvironment hostingEnvironment,
             [FromServices] IOptions<ResponseOptions> reponseOptions,
             CancellationToken cancellationToken = default)
         {
