@@ -102,7 +102,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
         /// <response code="200">Als de opvraging van een lijst met postcodes gelukt is.</response>
         /// <response code="500">Als er een interne fout is opgetreden.</response>
         [HttpGet]
-        [ProducesResponseType(typeof(List<PostalInformationListResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(PostalInformationListResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(BasicApiProblem), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(BasicApiProblem), StatusCodes.Status500InternalServerError)]
         [SwaggerResponseExample(StatusCodes.Status200OK, typeof(PostalInformationListResponseExamples), jsonConverter: typeof(StringEnumConverter))]
