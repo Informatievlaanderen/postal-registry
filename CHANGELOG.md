@@ -1,3 +1,11 @@
+## [1.1.9](https://github.com/informatievlaanderen/postal-registry/compare/v1.1.8...v1.1.9) (2019-02-28)
+
+
+### Bug Fixes
+
+* removed 400 from list api response ([8a3f81f](https://github.com/informatievlaanderen/postal-registry/commit/8a3f81f))
+* swagger docs now show list response correctly ([ca697b7](https://github.com/informatievlaanderen/postal-registry/commit/ca697b7))
+
 ## [1.1.8](https://github.com/informatievlaanderen/postal-registry/compare/v1.1.7...v1.1.8) (2019-02-26)
 
 ## [1.1.7](https://github.com/informatievlaanderen/postal-registry/compare/v1.1.6...v1.1.7) (2019-02-25)
