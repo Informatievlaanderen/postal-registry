@@ -53,11 +53,9 @@ namespace PostalRegistry.Projections.LastChangedList
             {
                 var runner = container.GetService<PostalInfoLastChangedListRunner>();
 
-                var lastChangedList = new LastChangedListMigrationsHelper(
-                    configuration.GetConnectionString("LastChangedList"),
-                    container.GetService<ILoggerFactory>());
-
-                await lastChangedList.RunMigrationsAsync(ct);
+                await new LastChangedListContextMigrationFactory()
+                    .CreateMigrator(configuration, container.GetService<ILoggerFactory>())
+                    .MigrateAsync(ct);
 
                 await runner.StartAsync(
                     container.GetService<IStreamStore>(),
