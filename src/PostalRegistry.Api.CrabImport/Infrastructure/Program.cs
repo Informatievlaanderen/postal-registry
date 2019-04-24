@@ -1,13 +1,11 @@
 namespace PostalRegistry.Api.CrabImport.Infrastructure
 {
-    using System;
-    using System.Security.Cryptography.X509Certificates;
     using Be.Vlaanderen.Basisregisters.Api;
     using Microsoft.AspNetCore.Hosting;
 
     public class Program
     {
-        private static readonly Tuple<string, string> DevelopmentCertificate = new Tuple<string, string>(
+        private static readonly DevelopmentCertificate DevelopmentCertificate = new DevelopmentCertificate(
             "api.dev.postinfo.basisregisters.vlaanderen.be.pfx",
             "gemeenteregister!");
 
@@ -16,9 +14,18 @@ namespace PostalRegistry.Api.CrabImport.Infrastructure
         public static IWebHostBuilder CreateWebHostBuilder(string[] args)
             => new WebHostBuilder()
                 .UseDefaultForApi<Startup>(
-                    httpPort: 1091,
-                    httpsPort: 1445,
-                    httpsCertificate: () => new X509Certificate2(DevelopmentCertificate.Item1, DevelopmentCertificate.Item2),
-                    commandLineArgs: args);
+                    new ProgramOptions
+                    {
+                        Hosting =
+                        {
+                            HttpPort = 1091,
+                            HttpsPort = 1445,
+                            HttpsCertificate = DevelopmentCertificate.ToCertificate
+                        },
+                        Runtime =
+                        {
+                            CommandLineArgs = args
+                        }
+                    });
     }
 }
