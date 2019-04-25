@@ -15,8 +15,8 @@ namespace PostalRegistry.Api.Projector.Infrastructure
     using Microsoft.Extensions.Diagnostics.HealthChecks;
     using Microsoft.Extensions.Logging;
     using Modules;
-    using Projections.Extract;
-    using Projections.Legacy;
+    using PostalRegistry.Projections.Extract;
+    using PostalRegistry.Projections.Legacy;
     using Swashbuckle.AspNetCore.Swagger;
     using System;
     using System.Linq;

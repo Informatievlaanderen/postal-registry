@@ -14,13 +14,12 @@ namespace PostalRegistry.Api.Projector.Infrastructure.Modules
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
     using PostalRegistry.Infrastructure;
-    using Projections.Extract;
-    using Projections.Extract.PostalInformationExtract;
-    using Projections.LastChangedList;
-    using Projections.Legacy;
-    using Projections.Legacy.PostalInformation;
-    using Projections.Legacy.PostalInformationSyndication;
-    using LastChangedListContextMigrationFactory = Projections.LastChangedList.LastChangedListContextMigrationFactory;
+    using PostalRegistry.Projections.Extract;
+    using PostalRegistry.Projections.Extract.PostalInformationExtract;
+    using PostalRegistry.Projections.LastChangedList;
+    using PostalRegistry.Projections.Legacy;
+    using PostalRegistry.Projections.Legacy.PostalInformation;
+    using PostalRegistry.Projections.Legacy.PostalInformationSyndication;
 
     public class ApiModule : Module
     {
@@ -91,7 +90,7 @@ namespace PostalRegistry.Api.Projector.Infrastructure.Modules
                     _loggerFactory));
 
             builder
-                .RegisterProjectionMigrator<LastChangedListContextMigrationFactory>(
+                .RegisterProjectionMigrator<PostalRegistry.Projections.LastChangedList.LastChangedListContextMigrationFactory>(
                     _configuration,
                     _loggerFactory)
                 .RegisterProjections<LastChangedListProjections, LastChangedListContext>();
