@@ -18,8 +18,8 @@ namespace PostalRegistry.Api.Projector.Infrastructure
                     {
                         Hosting =
                         {
-                            HttpPort = 2090,
-                            HttpsPort = 2444,
+                            HttpPort = 4090,
+                            HttpsPort = 4444,
                             HttpsCertificate = DevelopmentCertificate.ToCertificate
                         },
                         Runtime =
