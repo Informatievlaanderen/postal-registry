@@ -1,4 +1,4 @@
-namespace PostalRegistry.Api.Projector.Infrastructure
+namespace PostalRegistry.Projector.Infrastructure
 {
     using Be.Vlaanderen.Basisregisters.Api;
     using Microsoft.AspNetCore.Hosting;

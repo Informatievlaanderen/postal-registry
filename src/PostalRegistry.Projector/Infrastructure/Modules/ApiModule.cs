@@ -1,4 +1,4 @@
-namespace PostalRegistry.Api.Projector.Infrastructure.Modules
+namespace PostalRegistry.Projector.Infrastructure.Modules
 {
     using Autofac;
     using Autofac.Extensions.DependencyInjection;
