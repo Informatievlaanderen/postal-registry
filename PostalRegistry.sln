@@ -53,7 +53,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "adr", "adr", "{C509B2AD-FD2
 		docs\adr\0001-record-architecture-decisions.md = docs\adr\0001-record-architecture-decisions.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostalRegistry.Api.Projector", "src\PostalRegistry.Api.Projector\PostalRegistry.Api.Projector.csproj", "{212F0A79-44B8-4D16-AA40-75A2500136B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostalRegistry.Projector", "src\PostalRegistry.Projector\PostalRegistry.Projector.csproj", "{212F0A79-44B8-4D16-AA40-75A2500136B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

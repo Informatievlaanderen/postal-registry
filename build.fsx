@@ -67,7 +67,7 @@ Target "Test_Solution" (fun _ -> test "PostalRegistry")
 
 Target "Publish_Solution" (fun _ ->
   [
-    "PostalRegistry.Api.Projector"
+    "PostalRegistry.Projector"
     "PostalRegistry.Api.Legacy"
     "PostalRegistry.Api.Extract"
     "PostalRegistry.Api.CrabImport"
@@ -79,13 +79,13 @@ Target "Publish_Solution" (fun _ ->
 
 Target "Pack_Solution" (fun _ ->
   [
-    "PostalRegistry.Api.Projector"
+    "PostalRegistry.Projector"
     "PostalRegistry.Api.Legacy"
     "PostalRegistry.Api.Extract"
     "PostalRegistry.Api.CrabImport"
   ] |> List.iter pack)
 
-Target "Containerize_ApiProjector" (fun _ -> containerize "PostalRegistry.Api.Projector" "api-projector")
+Target "Containerize_ApiProjector" (fun _ -> containerize "PostalRegistry.Projector" "api-projector")
 Target "PushContainer_ApiProjector" (fun _ -> push "api-projector")
 
 Target "Containerize_ApiLegacy" (fun _ -> containerize "PostalRegistry.Api.Legacy" "api-legacy")

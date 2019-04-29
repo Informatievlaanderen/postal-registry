@@ -1,4 +1,4 @@
-namespace PostalRegistry.Api.Projector.Infrastructure.Configuration
+namespace PostalRegistry.Projector.Infrastructure.Configuration
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
