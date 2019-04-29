@@ -85,8 +85,8 @@ Target "Pack_Solution" (fun _ ->
     "PostalRegistry.Api.CrabImport"
   ] |> List.iter pack)
 
-Target "Containerize_ApiProjector" (fun _ -> containerize "PostalRegistry.Projector" "api-projector")
-Target "PushContainer_ApiProjector" (fun _ -> push "api-projector")
+Target "Containerize_Projector" (fun _ -> containerize "PostalRegistry.Projector" "projections")
+Target "PushContainer_Projector" (fun _ -> push "projections")
 
 Target "Containerize_ApiLegacy" (fun _ -> containerize "PostalRegistry.Api.Legacy" "api-legacy")
 Target "PushContainer_ApiLegacy" (fun _ -> push "api-legacy")
