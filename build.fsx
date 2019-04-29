@@ -125,7 +125,7 @@ Target "Push" DoNothing
 "Pack_Solution"      ==> "Pack"
 
 "Pack"                                    ==> "Containerize"
-"Containerize_ApiProjector"               ==> "Containerize"
+"Containerize_Projector"               ==> "Containerize"
 "Containerize_ApiLegacy"                  ==> "Containerize"
 "Containerize_ApiExtract"                 ==> "Containerize"
 "Containerize_ApiCrabImport"              ==> "Containerize"
@@ -134,7 +134,7 @@ Target "Push" DoNothing
 
 "Containerize"                            ==> "Push"
 "DockerLogin"                             ==> "Push"
-"PushContainer_ApiProjector"              ==> "Push"
+"PushContainer_Projector"              ==> "Push"
 "PushContainer_ApiLegacy"                 ==> "Push"
 "PushContainer_ApiExtract"                ==> "Push"
 "PushContainer_ApiCrabImport"             ==> "Push"
