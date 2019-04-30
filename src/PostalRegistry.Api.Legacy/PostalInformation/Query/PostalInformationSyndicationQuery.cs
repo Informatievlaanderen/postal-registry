@@ -146,5 +146,4 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
     {
         public long? Position { get; set; }
     }
-
 }

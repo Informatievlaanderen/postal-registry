@@ -1,13 +1,13 @@
 namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
 {
+    using System;
+    using System.Collections.Generic;
     using Be.Vlaanderen.Basisregisters.GrAr.Provenance;
     using Infrastructure;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
     using Newtonsoft.Json;
     using NodaTime;
-    using System;
-    using System.Collections.Generic;
 
     public class PostalInformationSyndicationItem
     {
@@ -133,5 +133,4 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
             b.HasIndex(x => x.PostalCode);
         }
     }
-
 }

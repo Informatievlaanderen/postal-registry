@@ -1,9 +1,9 @@
 namespace PostalRegistry.Infrastructure.Modules
 {
-    using Infrastructure;
+    using Autofac;
     using Be.Vlaanderen.Basisregisters.AggregateSource;
     using Be.Vlaanderen.Basisregisters.CommandHandling;
-    using Autofac;
+    using Infrastructure;
     using Microsoft.Extensions.Configuration;
 
     public class CommandHandlingModule : Module

@@ -22,6 +22,11 @@ namespace PostalRegistry.Api.CrabImport.Infrastructure
                             HttpsPort = 1445,
                             HttpsCertificate = DevelopmentCertificate.ToCertificate
                         },
+                        Logging =
+                        {
+                            WriteTextToConsole = false,
+                            WriteJsonToConsole = false
+                        },
                         Runtime =
                         {
                             CommandLineArgs = args

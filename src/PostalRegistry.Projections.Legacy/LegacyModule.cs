@@ -2,8 +2,8 @@ namespace PostalRegistry.Projections.Legacy
 {
     using System;
     using System.Data.SqlClient;
-    using Be.Vlaanderen.Basisregisters.DataDog.Tracing.Sql.EntityFrameworkCore;
     using Autofac;
+    using Be.Vlaanderen.Basisregisters.DataDog.Tracing.Sql.EntityFrameworkCore;
     using Infrastructure;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;

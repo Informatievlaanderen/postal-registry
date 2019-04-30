@@ -19,13 +19,11 @@ namespace PostalRegistry.Api.CrabImport.BPostImport.Requests
     public class RegisterBPostImportRequestExample : IExamplesProvider
     {
         public object GetExamples()
-        {
-            return new RegisterBPostImportRequest
+            => new RegisterBPostImportRequest
             {
                 Type = "PostalRegistry.PostalInformation.Commands.BPost.ImportPostalInformationFromBPost",
                 BPostItem = "{}"
             };
-        }
     }
 
     public static class RegisterBPostImportRequestMapping

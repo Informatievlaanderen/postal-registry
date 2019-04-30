@@ -1,12 +1,12 @@
 namespace PostalRegistry.BPostReader.Data
 {
     using System;
-    using CsvHelper;
-    using CsvHelper.Configuration;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Text;
+    using CsvHelper;
+    using CsvHelper.Configuration;
 
     public static class CsvReaderHelper
     {

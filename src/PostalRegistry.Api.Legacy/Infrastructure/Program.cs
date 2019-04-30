@@ -24,7 +24,7 @@ namespace PostalRegistry.Api.Legacy.Infrastructure
                         },
                         Logging =
                         {
-                            WriteTextToConsole = true,
+                            WriteTextToConsole = false,
                             WriteJsonToConsole = false
                         },
                         Runtime =

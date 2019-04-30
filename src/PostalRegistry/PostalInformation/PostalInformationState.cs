@@ -1,10 +1,10 @@
 namespace PostalRegistry.PostalInformation
 {
     using System.Collections.Generic;
+    using Be.Vlaanderen.Basisregisters.GrAr.Provenance;
     using Events;
     using Events.BPost;
     using Events.Crab;
-    using Be.Vlaanderen.Basisregisters.GrAr.Provenance;
 
     public partial class PostalInformation
     {
@@ -71,7 +71,7 @@ namespace PostalRegistry.PostalInformation
 
         private void When(MunicipalityWasLinkedToPostalInformation @event)
         {
-            _nisCode = (new NisCode(@event.NisCode));
+            _nisCode = new NisCode(@event.NisCode);
         }
     }
 }

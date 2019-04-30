@@ -45,7 +45,6 @@ open ``Build-generic``
 // Push
 // Executes `docker push` to push the built images to the registry.
 
-
 let dockerRepository = "postalregistry"
 let assemblyVersionNumber = (sprintf "2.%s")
 let nugetVersionNumber = (sprintf "%s")
@@ -125,7 +124,7 @@ Target "Push" DoNothing
 "Pack_Solution"      ==> "Pack"
 
 "Pack"                                    ==> "Containerize"
-"Containerize_Projector"               ==> "Containerize"
+"Containerize_Projector"                  ==> "Containerize"
 "Containerize_ApiLegacy"                  ==> "Containerize"
 "Containerize_ApiExtract"                 ==> "Containerize"
 "Containerize_ApiCrabImport"              ==> "Containerize"
@@ -134,7 +133,7 @@ Target "Push" DoNothing
 
 "Containerize"                            ==> "Push"
 "DockerLogin"                             ==> "Push"
-"PushContainer_Projector"              ==> "Push"
+"PushContainer_Projector"                 ==> "Push"
 "PushContainer_ApiLegacy"                 ==> "Push"
 "PushContainer_ApiExtract"                ==> "Push"
 "PushContainer_ApiCrabImport"             ==> "Push"

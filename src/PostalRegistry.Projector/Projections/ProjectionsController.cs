@@ -10,7 +10,6 @@ namespace PostalRegistry.Projector.Projections
     public class ProjectionsController : DefaultProjectorController
     {
         public ProjectionsController(IConnectedProjectionsManager connectedProjectionsManager)
-            : base(connectedProjectionsManager)
-        { }
+            : base(connectedProjectionsManager) { }
     }
 }

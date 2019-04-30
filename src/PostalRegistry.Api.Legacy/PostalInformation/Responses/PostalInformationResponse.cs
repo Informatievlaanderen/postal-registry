@@ -3,13 +3,13 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
     using System;
     using System.Collections.Generic;
     using System.Runtime.Serialization;
-    using Be.Vlaanderen.Basisregisters.Api.Exceptions;
     using Be.Vlaanderen.Basisregisters.GrAr.Legacy;
     using Be.Vlaanderen.Basisregisters.GrAr.Legacy.PostInfo;
     using Infrastructure.Options;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Options;
     using Swashbuckle.AspNetCore.Filters;
+    using ProblemDetails = Be.Vlaanderen.Basisregisters.BasicApiProblem.ProblemDetails;
 
     [DataContract(Name = "PostinfoDetail", Namespace = "")]
     public class PostalInformationResponse
@@ -69,14 +69,12 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
     public class PostalInformationNotFoundResponseExamples : IExamplesProvider
     {
         public object GetExamples()
-        {
-            return new BasicApiProblem
+            => new ProblemDetails
             {
                 HttpStatus = StatusCodes.Status404NotFound,
-                Title = BasicApiProblem.DefaultTitle,
+                Title = ProblemDetails.DefaultTitle,
                 Detail = "Onbestaande postcode.",
-                ProblemInstanceUri = BasicApiProblem.GetProblemNumber()
+                ProblemInstanceUri = ProblemDetails.GetProblemNumber()
             };
-        }
     }
 }

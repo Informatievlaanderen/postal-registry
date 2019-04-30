@@ -40,6 +40,7 @@ namespace PostalRegistry.Projector.Infrastructure.Modules
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterModule(new DataDogModule(_configuration));
+
             RegisterProjectionSetup(builder);
 
             builder.Populate(_services);
@@ -50,15 +51,12 @@ namespace PostalRegistry.Projector.Infrastructure.Modules
             builder.RegisterModule(
                 new EventHandlingModule(
                     typeof(DomainAssemblyMarker).Assembly,
-                    EventsJsonSerializerSettingsProvider.CreateSerializerSettings()
-                )
-            );
+                    EventsJsonSerializerSettingsProvider.CreateSerializerSettings()))
 
-            builder.RegisterModule<EnvelopeModule>();
+                .RegisterModule<EnvelopeModule>()
+                .RegisterEventstreamModule(_configuration)
+                .RegisterModule<ProjectorModule>();
 
-            builder.RegisterEventstreamModule(_configuration);
-
-            builder.RegisterModule<ProjectorModule>();
             RegisterExtractProjections(builder);
             RegisterLastChangedProjections(builder);
             RegisterLegacyProjections(builder);

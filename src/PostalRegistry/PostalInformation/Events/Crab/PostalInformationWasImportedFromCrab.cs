@@ -75,7 +75,6 @@ namespace PostalRegistry.PostalInformation.Events.Crab
                   new CrabTimestamp(timestamp),
                   new CrabOperator(@operator),
                   modification,
-                  organisation)
-        { }
+                  organisation) { }
     }
 }

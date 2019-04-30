@@ -1,10 +1,10 @@
 namespace PostalRegistry.Projections.Syndication.Municipality
 {
-    using Be.Vlaanderen.Basisregisters.GrAr.Legacy;
-    using Be.Vlaanderen.Basisregisters.GrAr.Legacy.Gemeente;
     using System;
     using System.Collections.Generic;
     using System.Runtime.Serialization;
+    using Be.Vlaanderen.Basisregisters.GrAr.Legacy;
+    using Be.Vlaanderen.Basisregisters.GrAr.Legacy.Gemeente;
 
     [DataContract(Name = "Gemeente", Namespace = "")]
     public class Gemeente

@@ -1,5 +1,8 @@
 namespace PostalRegistry.Projector.Infrastructure
 {
+    using System;
+    using System.Linq;
+    using System.Reflection;
     using Autofac;
     using Autofac.Extensions.DependencyInjection;
     using Be.Vlaanderen.Basisregisters.Api;
@@ -18,9 +21,6 @@ namespace PostalRegistry.Projector.Infrastructure
     using PostalRegistry.Projections.Extract;
     using PostalRegistry.Projections.Legacy;
     using Swashbuckle.AspNetCore.Swagger;
-    using System;
-    using System.Linq;
-    using System.Reflection;
 
     /// <summary>Represents the startup process for the application.</summary>
     public class Startup

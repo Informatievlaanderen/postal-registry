@@ -120,6 +120,7 @@ namespace PostalRegistry.Api.Legacy.Infrastructure
                     datadogToggle,
                     debugDataDogToggle,
                     _configuration["DataDog:ServiceName"])
+
                 .UseDefaultForApi(new StartupUseOptions
                 {
                     Common =

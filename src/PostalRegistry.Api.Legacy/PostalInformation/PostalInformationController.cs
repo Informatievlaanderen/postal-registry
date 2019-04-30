@@ -1,7 +1,6 @@
 namespace PostalRegistry.Api.Legacy.PostalInformation
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Net.Mime;
     using System.Reflection;
@@ -21,7 +20,6 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
     using Be.Vlaanderen.Basisregisters.GrAr.Legacy.PostInfo;
     using Convertors;
     using Infrastructure.Options;
-    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
@@ -31,11 +29,11 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
     using Microsoft.SyndicationFeed.Atom;
     using Newtonsoft.Json.Converters;
     using Projections.Legacy;
-    using Projections.Legacy.PostalInformation;
     using Projections.Syndication;
     using Query;
     using Responses;
     using Swashbuckle.AspNetCore.Filters;
+    using ProblemDetails = Be.Vlaanderen.Basisregisters.BasicApiProblem.ProblemDetails;
 
     [ApiVersion("1.0")]
     [AdvertiseApiVersions("1.0")]
@@ -55,8 +53,8 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
         /// <response code="500">Als er een interne fout is opgetreden.</response>
         [HttpGet("{postalCode}")]
         [ProducesResponseType(typeof(PostalInformationResponse), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(BasicApiProblem), StatusCodes.Status404NotFound)]
-        [ProducesResponseType(typeof(BasicApiProblem), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         [SwaggerResponseExample(StatusCodes.Status200OK, typeof(PostalInformationResponseExamples), jsonConverter: typeof(StringEnumConverter))]
         [SwaggerResponseExample(StatusCodes.Status404NotFound, typeof(PostalInformationNotFoundResponseExamples), jsonConverter: typeof(StringEnumConverter))]
         [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(InternalServerErrorResponseExamples), jsonConverter: typeof(StringEnumConverter))]
@@ -102,7 +100,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
         /// <response code="500">Als er een interne fout is opgetreden.</response>
         [HttpGet]
         [ProducesResponseType(typeof(PostalInformationListResponse), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(BasicApiProblem), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         [SwaggerResponseExample(StatusCodes.Status200OK, typeof(PostalInformationListResponseExamples), jsonConverter: typeof(StringEnumConverter))]
         [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(InternalServerErrorResponseExamples), jsonConverter: typeof(StringEnumConverter))]
         public async Task<IActionResult> List(
@@ -156,8 +154,8 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
         [HttpGet("sync")]
         [Produces("text/xml")]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(BasicApiProblem), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(BasicApiProblem), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         [SwaggerResponseExample(StatusCodes.Status200OK, typeof(PostalInformationSyndicationResponseExamples))]
         [SwaggerResponseExample(StatusCodes.Status400BadRequest, typeof(BadRequestResponseExamples), jsonConverter: typeof(StringEnumConverter))]
         [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(InternalServerErrorResponseExamples), jsonConverter: typeof(StringEnumConverter))]
@@ -186,9 +184,9 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
         }
 
         private static async Task<string> BuildAtomFeed(
-                    PagedQueryable<PostalInformationSyndicationQueryResult> pagedPostalInfoItems,
-                    IOptions<ResponseOptions> responseOptions,
-                    IConfiguration configuration)
+            PagedQueryable<PostalInformationSyndicationQueryResult> pagedPostalInfoItems,
+            IOptions<ResponseOptions> responseOptions,
+            IConfiguration configuration)
         {
             var sw = new StringWriterWithEncoding(Encoding.UTF8);
 

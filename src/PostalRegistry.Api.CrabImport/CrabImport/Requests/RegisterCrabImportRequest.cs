@@ -19,13 +19,11 @@ namespace PostalRegistry.Api.CrabImport.CrabImport.Requests
     public class RegisterCrabImportRequestExample : IExamplesProvider
     {
         public object GetExamples()
-        {
-            return new RegisterCrabImportRequest
+            => new RegisterCrabImportRequest
             {
                 Type = "PostalRegistry.PostalInformation.Commands.Crab.ImportPostalInformationFromCrab",
                 CrabItem = "{}"
             };
-        }
     }
 
     public static class RegisterCrabImportRequestMapping

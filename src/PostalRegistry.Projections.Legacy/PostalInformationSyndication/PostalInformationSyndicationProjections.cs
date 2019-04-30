@@ -1,8 +1,8 @@
 namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
 {
+    using System.Linq;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore;
-    using System.Linq;
     using PostalRegistry.PostalInformation.Events;
 
     public class PostalInformationSyndicationProjections : ConnectedProjection<LegacyContext>

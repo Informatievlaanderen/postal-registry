@@ -28,12 +28,8 @@ namespace PostalRegistry.Api.Legacy.Infrastructure.Modules
         protected override void Load(ContainerBuilder containerBuilder)
         {
             containerBuilder
-                .RegisterModule(new DataDogModule(_configuration));
-
-            containerBuilder
-                .RegisterModule(new LegacyModule(_configuration, _services, _loggerFactory));
-
-            containerBuilder
+                .RegisterModule(new DataDogModule(_configuration))
+                .RegisterModule(new LegacyModule(_configuration, _services, _loggerFactory))
                 .RegisterModule(new SyndicationModule(_configuration, _services, _loggerFactory));
 
             containerBuilder.Populate(_services);

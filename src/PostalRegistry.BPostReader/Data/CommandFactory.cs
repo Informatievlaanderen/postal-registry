@@ -1,9 +1,9 @@
 namespace PostalRegistry.BPostReader.Data
 {
-    using Be.Vlaanderen.Basisregisters.GrAr.Provenance;
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Be.Vlaanderen.Basisregisters.GrAr.Provenance;
     using PostalInformation.Commands.BPost;
 
     public class CommandFactory

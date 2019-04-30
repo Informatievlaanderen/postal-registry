@@ -8,6 +8,7 @@ namespace PostalRegistry.Api.CrabImport.Infrastructure
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
+    using Be.Vlaanderen.Basisregisters.Api;
     using Be.Vlaanderen.Basisregisters.Api.Exceptions;
     using Be.Vlaanderen.Basisregisters.AspNetCore.Mvc.Middleware;
     using Be.Vlaanderen.Basisregisters.CommandHandling;
@@ -16,7 +17,6 @@ namespace PostalRegistry.Api.CrabImport.Infrastructure
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
-    using Be.Vlaanderen.Basisregisters.Api;
 
     public abstract class ApiBusController : ApiController
     {

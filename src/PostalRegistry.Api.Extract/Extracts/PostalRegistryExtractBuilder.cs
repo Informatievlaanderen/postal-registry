@@ -1,10 +1,10 @@
 namespace PostalRegistry.Api.Extract.Extracts
 {
-    using Microsoft.EntityFrameworkCore;
-    using Projections.Extract;
     using System.Linq;
     using Be.Vlaanderen.Basisregisters.Api.Extract;
     using Be.Vlaanderen.Basisregisters.GrAr.Extracts;
+    using Microsoft.EntityFrameworkCore;
+    using Projections.Extract;
 
     public class PostalRegistryExtractBuilder
     {

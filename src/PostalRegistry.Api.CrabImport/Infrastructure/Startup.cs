@@ -1,5 +1,8 @@
 namespace PostalRegistry.Api.CrabImport.Infrastructure
 {
+    using System;
+    using System.Linq;
+    using System.Reflection;
     using Autofac;
     using Autofac.Extensions.DependencyInjection;
     using Be.Vlaanderen.Basisregisters.Api;
@@ -11,14 +14,11 @@ namespace PostalRegistry.Api.CrabImport.Infrastructure
     using Microsoft.AspNetCore.Mvc.ApiExplorer;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Diagnostics.HealthChecks;
     using Microsoft.Extensions.Logging;
     using Modules;
     using SqlStreamStore;
     using Swashbuckle.AspNetCore.Swagger;
-    using System;
-    using System.Linq;
-    using System.Reflection;
-    using Microsoft.Extensions.Diagnostics.HealthChecks;
 
     /// <summary>Represents the startup process for the application.</summary>
     public class Startup
@@ -111,40 +111,41 @@ namespace PostalRegistry.Api.CrabImport.Infrastructure
             StartupHelpers.CheckDatabases(healthCheckService, DatabaseTag).GetAwaiter().GetResult();
             StartupHelpers.EnsureSqlStreamStoreSchema<Startup>(streamStore, loggerFactory);
 
-            app.UseDatadog<Startup>(
-                serviceProvider,
-                loggerFactory,
-                datadogToggle,
-                debugDataDogToggle,
-                _configuration["DataDog:ServiceName"]);
+            app
+                .UseDatadog<Startup>(
+                    serviceProvider,
+                    loggerFactory,
+                    datadogToggle,
+                    debugDataDogToggle,
+                    _configuration["DataDog:ServiceName"])
 
-            app.UseDefaultForApi(new StartupUseOptions
-            {
-                Common =
+                .UseDefaultForApi(new StartupUseOptions
                 {
-                    ApplicationContainer = _applicationContainer,
-                    ServiceProvider = serviceProvider,
-                    HostingEnvironment = env,
-                    ApplicationLifetime = appLifetime,
-                    LoggerFactory = loggerFactory,
-                },
-                Api =
-                {
-                    VersionProvider = apiVersionProvider,
-                    Info = groupName => $"Basisregisters.Vlaanderen - Postal Information Registry API {groupName}"
-                },
-                Server =
-                {
-                    PoweredByName = "Vlaamse overheid - Basisregisters Vlaanderen",
-                    ServerName = "agentschap Informatie Vlaanderen"
-                },
-                MiddlewareHooks =
-                {
-                    AfterMiddleware = x => x.UseMiddleware<AddNoCacheHeadersMiddleware>()
-                }
-            });
+                    Common =
+                    {
+                        ApplicationContainer = _applicationContainer,
+                        ServiceProvider = serviceProvider,
+                        HostingEnvironment = env,
+                        ApplicationLifetime = appLifetime,
+                        LoggerFactory = loggerFactory,
+                    },
+                    Api =
+                    {
+                        VersionProvider = apiVersionProvider,
+                        Info = groupName => $"Basisregisters.Vlaanderen - Postal Information Registry API {groupName}"
+                    },
+                    Server =
+                    {
+                        PoweredByName = "Vlaamse overheid - Basisregisters Vlaanderen",
+                        ServerName = "agentschap Informatie Vlaanderen"
+                    },
+                    MiddlewareHooks =
+                    {
+                        AfterMiddleware = x => x.UseMiddleware<AddNoCacheHeadersMiddleware>()
+                    }
+                })
 
-            app.UseIdempotencyDatabaseMigrations();
+                .UseIdempotencyDatabaseMigrations();
         }
 
         private static string GetApiLeadingText(ApiVersionDescription description)

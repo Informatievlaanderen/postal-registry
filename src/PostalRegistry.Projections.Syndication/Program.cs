@@ -5,18 +5,15 @@ namespace PostalRegistry.Projections.Syndication
     using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
-    using Be.Vlaanderen.Basisregisters.EventHandling;
-    using Be.Vlaanderen.Basisregisters.EventHandling.Autofac;
-    using Be.Vlaanderen.Basisregisters.ProjectionHandling.Syndication;
     using Autofac;
     using Autofac.Extensions.DependencyInjection;
     using Autofac.Features.OwnedInstances;
+    using Be.Vlaanderen.Basisregisters.ProjectionHandling.Syndication;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
     using Modules;
     using Municipality;
-    using Infrastructure.Modules;
     using Serilog;
 
     public class Program
@@ -104,7 +101,6 @@ namespace PostalRegistry.Projections.Syndication
 
             var tempProvider = services.BuildServiceProvider();
             builder.RegisterModule(new SyndicationModule(configuration, services, tempProvider.GetService<ILoggerFactory>()));
-
 
             builder.Populate(services);
 

@@ -1,10 +1,5 @@
 namespace PostalRegistry.BPostReader
 {
-    using Be.Vlaanderen.Basisregisters.GrAr.Provenance;
-    using Data;
-    using Microsoft.Extensions.Configuration;
-    using Newtonsoft.Json;
-    using NodaTime;
     using System;
     using System.Collections.Generic;
     using System.Globalization;
@@ -16,6 +11,11 @@ namespace PostalRegistry.BPostReader
     using System.Text;
     using System.Threading.Tasks;
     using System.Web;
+    using Be.Vlaanderen.Basisregisters.GrAr.Provenance;
+    using Data;
+    using Microsoft.Extensions.Configuration;
+    using Newtonsoft.Json;
+    using NodaTime;
     using PostalInformation.Commands.BPost;
 
     public class Program
