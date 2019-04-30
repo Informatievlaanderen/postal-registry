@@ -1,3 +1,12 @@
+# [1.2.0](https://github.com/informatievlaanderen/postal-registry/compare/v1.1.9...v1.2.0) (2019-04-30)
+
+
+### Features
+
+* add projections controller to projector ([688930c](https://github.com/informatievlaanderen/postal-registry/commit/688930c))
+* add projector and clean up projection libs ([3b609a5](https://github.com/informatievlaanderen/postal-registry/commit/3b609a5))
+* upgrade packages ([a192865](https://github.com/informatievlaanderen/postal-registry/commit/a192865))
+
 ## [1.1.9](https://github.com/informatievlaanderen/postal-registry/compare/v1.1.8...v1.1.9) (2019-02-28)
 
 
