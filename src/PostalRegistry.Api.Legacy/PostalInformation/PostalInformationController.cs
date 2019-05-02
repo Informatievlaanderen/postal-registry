@@ -10,6 +10,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
     using System.Xml;
     using Be.Vlaanderen.Basisregisters.Api;
     using Be.Vlaanderen.Basisregisters.Api.Exceptions;
+    using Be.Vlaanderen.Basisregisters.Api.Search;
     using Be.Vlaanderen.Basisregisters.Api.Search.Filtering;
     using Be.Vlaanderen.Basisregisters.Api.Search.Pagination;
     using Be.Vlaanderen.Basisregisters.Api.Search.Sorting;
@@ -117,8 +118,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
                 new PostalInformationListQuery(legacyContext, syndicationContext)
                     .Fetch(filtering, sorting, pagination);
 
-            Response.AddPaginationResponse(pagedPostalInformationSet.PaginationInfo);
-            Response.AddSortingResponse(sorting.SortBy, sorting.SortOrder);
+            Response.AddPagedQueryResultHeaders(pagedPostalInformationSet);
 
             var postalInformationSet = await pagedPostalInformationSet.Items
                 .Include(x => x.PostalNames)
@@ -172,8 +172,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
 
             var pagedPostalInformationSet = new PostalInformationSyndicationQuery(context, embed).Fetch(filtering, sorting, pagination);
 
-            Response.AddPaginationResponse(pagedPostalInformationSet.PaginationInfo);
-            Response.AddSortingResponse(sorting.SortBy, sorting.SortOrder);
+            Response.AddPagedQueryResultHeaders(pagedPostalInformationSet);
 
             return new ContentResult
             {
