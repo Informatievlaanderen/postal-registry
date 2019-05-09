@@ -79,8 +79,8 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         private static string BuildDescription(PostalInformationSyndicationQueryResult postalInformation, string naamruimte)
         {
             var content = new PostalInfoSyndicationContent(
-                postalInformation.PostalCode,
                 naamruimte,
+                postalInformation.PostalCode,
                 postalInformation.LastChangedOn.ToBelgianDateTimeOffset(),
                 postalInformation.Status,
                 postalInformation.PostalNames,
@@ -141,6 +141,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
             Organisation? organisation,
             Plan? plan)
         {
+            PostalCode = postcode;
             Identificator = new Identificator(naamruimte, postcode, version);
             Status = status?.ConvertFromPostalInformationStatus();
             MunicipalityOsloId = municipalityOsloId;
