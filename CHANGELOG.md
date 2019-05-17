@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/informatievlaanderen/postal-registry/compare/v1.2.1...v1.2.2) (2019-05-17)
+
+
+### Bug Fixes
+
+* postalcode and Identificator id is now correct ([0249f4c](https://github.com/informatievlaanderen/postal-registry/commit/0249f4c))
+
 ## [1.2.1](https://github.com/informatievlaanderen/postal-registry/compare/v1.2.0...v1.2.1) (2019-05-02)
 
 # [1.2.0](https://github.com/informatievlaanderen/postal-registry/compare/v1.1.9...v1.2.0) (2019-04-30)
