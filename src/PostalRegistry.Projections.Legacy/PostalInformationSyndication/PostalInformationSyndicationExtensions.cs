@@ -4,6 +4,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using System.Xml.Linq;
     using Be.Vlaanderen.Basisregisters.GrAr.Provenance;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore;
@@ -32,6 +33,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
                 applyEventInfoOn);
 
             newPostalInformationSyndicationItem.ApplyProvenance(provenance);
+            newPostalInformationSyndicationItem.SetEventData(message.Message);
 
             await context
                 .PostalInformationSyndication
@@ -64,6 +66,9 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
             item.Organisation = provenance.Organisation;
             item.Plan = provenance.Plan;
         }
+
+        public static void SetEventData<T>(this PostalInformationSyndicationItem syndicationItem, T message)
+            => syndicationItem.EventDataAsXml = message.ToXml(message.GetType().Name).ToString(SaveOptions.DisableFormatting);
 
         private static ProjectionItemNotFoundException<PostalInformationSyndicationProjections> DatabaseItemNotFound(string postalCode)
             => new ProjectionItemNotFoundException<PostalInformationSyndicationProjections>(postalCode);

@@ -8,7 +8,7 @@ namespace PostalRegistry.Projections.Syndication.Municipality
     using Be.Vlaanderen.Basisregisters.GrAr.Legacy;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Syndication;
 
-    public class MunicipalityLatestProjections : AtomEntryProjectionHandlerModule<MunicipalityEvent, Gemeente, SyndicationContext>
+    public class MunicipalityLatestProjections : AtomEntryProjectionHandlerModule<MunicipalityEvent, SyndicationContent<Gemeente>, SyndicationContext>
     {
         public MunicipalityLatestProjections()
         {
@@ -27,24 +27,24 @@ namespace PostalRegistry.Projections.Syndication.Municipality
             When(MunicipalityEvent.MunicipalityFacilitiesLanguageWasRemoved, AddSyndicationItemEntry);
         }
 
-        private static async Task AddSyndicationItemEntry(AtomEntry<Gemeente> entry, SyndicationContext context, CancellationToken ct)
+        private static async Task AddSyndicationItemEntry(AtomEntry<SyndicationContent<Gemeente>> entry, SyndicationContext context, CancellationToken ct)
         {
             var municipalityLatestItem = await context
                 .MunicipalityLatestItems
-                .FindAsync(entry.Content.Id);
+                .FindAsync(entry.Content.Object.Id);
 
             if (municipalityLatestItem == null)
             {
                 municipalityLatestItem = new MunicipalityLatestItem
                 {
-                    MunicipalityId = entry.Content.Id,
-                    NisCode = entry.Content.Identificator?.ObjectId,
+                    MunicipalityId = entry.Content.Object.Id,
+                    NisCode = entry.Content.Object.Identificator?.ObjectId,
                     LastUpdatedOn = entry.FeedEntry.LastUpdated,
-                    Version = entry.Content.Identificator?.Versie,
+                    Version = entry.Content.Object.Identificator?.Versie,
                     Position = long.Parse(entry.FeedEntry.Id)
                 };
 
-                UpdateNamesByGemeentenamen(municipalityLatestItem, entry.Content.Gemeentenamen);
+                UpdateNamesByGemeentenamen(municipalityLatestItem, entry.Content.Object.Gemeentenamen);
 
                 await context
                     .MunicipalityLatestItems
@@ -52,12 +52,12 @@ namespace PostalRegistry.Projections.Syndication.Municipality
             }
             else
             {
-                municipalityLatestItem.NisCode = entry.Content.Identificator?.ObjectId;
+                municipalityLatestItem.NisCode = entry.Content.Object.Identificator?.ObjectId;
                 municipalityLatestItem.LastUpdatedOn = entry.FeedEntry.LastUpdated;
-                municipalityLatestItem.Version = entry.Content.Identificator?.Versie;
+                municipalityLatestItem.Version = entry.Content.Object.Identificator?.Versie;
                 municipalityLatestItem.Position = long.Parse(entry.FeedEntry.Id);
 
-                UpdateNamesByGemeentenamen(municipalityLatestItem, entry.Content.Gemeentenamen);
+                UpdateNamesByGemeentenamen(municipalityLatestItem, entry.Content.Object.Gemeentenamen);
             }
         }
 

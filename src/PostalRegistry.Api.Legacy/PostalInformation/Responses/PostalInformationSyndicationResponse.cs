@@ -7,6 +7,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
     using System.Net.Mime;
     using System.Runtime.Serialization;
     using System.Threading.Tasks;
+    using System.Xml;
     using Be.Vlaanderen.Basisregisters.GrAr.Common;
     using Be.Vlaanderen.Basisregisters.GrAr.Common.Syndication;
     using Be.Vlaanderen.Basisregisters.GrAr.Legacy;
@@ -73,27 +74,49 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
                     "informatie.vlaanderen@vlaanderen.be",
                     AtomContributorTypes.Author));
 
-            await writer.Write(new SyndicationContent(formatter.CreateContent(item)));
+            await writer.Write(item);
         }
 
         private static string BuildDescription(PostalInformationSyndicationQueryResult postalInformation, string naamruimte)
         {
-            var content = new PostalInfoSyndicationContent(
-                naamruimte,
-                postalInformation.PostalCode,
-                postalInformation.LastChangedOn.ToBelgianDateTimeOffset(),
-                postalInformation.Status,
-                postalInformation.PostalNames,
-                postalInformation.MunicipalityOsloId,
-                postalInformation.Organisation,
-                postalInformation.Plan);
+            if (!postalInformation.ContainsEvent && !postalInformation.ContainsObject)
+                return "No data embedded";
+
+            var content = new SyndicationContent();
+            if (postalInformation.ContainsObject)
+                content.Object = new PostalInfoSyndicationContent(
+                    naamruimte,
+                    postalInformation.PostalCode,
+                    postalInformation.LastChangedOn.ToBelgianDateTimeOffset(),
+                    postalInformation.Status,
+                    postalInformation.PostalNames,
+                    postalInformation.MunicipalityOsloId,
+                    postalInformation.Organisation,
+                    postalInformation.Plan);
+
+            if (postalInformation.ContainsEvent)
+            {
+                var doc = new XmlDocument();
+                doc.LoadXml(postalInformation.EventDataAsXml);
+                content.Event = doc.DocumentElement;
+            }
 
             return content.ToXml();
         }
     }
 
+    [DataContract(Name = "Content", Namespace = "")]
+    public class SyndicationContent : SyndicationContentBase
+    {
+        [DataMember(Name = "Event")]
+        public XmlElement Event { get; set; }
+
+        [DataMember(Name = "Object")]
+        public PostalInfoSyndicationContent Object { get; set; }
+    }
+
     [DataContract(Name = "PostInfo", Namespace = "")]
-    public class PostalInfoSyndicationContent : SyndicationContentBase
+    public class PostalInfoSyndicationContent
     {
         /// <summary>
         /// De technische id van de postinfo.
