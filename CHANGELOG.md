@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/informatievlaanderen/postal-registry/compare/v1.2.3...v1.3.0) (2019-05-22)
+
+
+### Features
+
+* add eventdata as xml to sync ([f61a307](https://github.com/informatievlaanderen/postal-registry/commit/f61a307))
+
 ## [1.2.3](https://github.com/informatievlaanderen/postal-registry/compare/v1.2.2...v1.2.3) (2019-05-21)
 
 ## [1.2.2](https://github.com/informatievlaanderen/postal-registry/compare/v1.2.1...v1.2.2) (2019-05-17)
