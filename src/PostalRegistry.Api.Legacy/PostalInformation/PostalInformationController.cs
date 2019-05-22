@@ -148,7 +148,6 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
         /// <param name="configuration"></param>
         /// <param name="context"></param>
         /// <param name="responseOptions"></param>
-        /// <param name="embed">Om volledige objecten terug te krijgen, zet embed op true.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet("sync")]
@@ -163,14 +162,17 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
             [FromServices] IConfiguration configuration,
             [FromServices] LegacyContext context,
             [FromServices] IOptions<ResponseOptions> responseOptions,
-            bool embed = false,
             CancellationToken cancellationToken = default)
         {
             var filtering = Request.ExtractFilteringRequest<PostalInformationSyndicationFilter>();
             var sorting = Request.ExtractSortingRequest();
             var pagination = Request.ExtractPaginationRequest();
 
-            var pagedPostalInformationSet = new PostalInformationSyndicationQuery(context, embed).Fetch(filtering, sorting, pagination);
+            var pagedPostalInformationSet = new PostalInformationSyndicationQuery(
+                context,
+                filtering.Filter?.ContainsEvent ?? false,
+                filtering.Filter?.ContainsObject ?? false)
+                .Fetch(filtering, sorting, pagination);
 
             Response.AddPagedQueryResultHeaders(pagedPostalInformationSet);
 

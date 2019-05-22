@@ -21,6 +21,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
                 };
 
                 newPostalInformationSyndicationItem.ApplyProvenance(message.Message.Provenance);
+                newPostalInformationSyndicationItem.SetEventData(message.Message);
 
                 await context
                     .PostalInformationSyndication

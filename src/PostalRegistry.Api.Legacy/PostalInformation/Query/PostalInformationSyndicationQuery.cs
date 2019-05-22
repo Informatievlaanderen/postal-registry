@@ -15,7 +15,8 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
 
     public class PostalInformationSyndicationQueryResult
     {
-        public bool ContainsDetails { get; }
+        public bool ContainsEvent { get; }
+        public bool ContainsObject { get; }
 
         public string PostalCode { get; }
         public long Position { get; }
@@ -28,6 +29,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
         public string MunicipalityOsloId { get; }
         public Organisation? Organisation { get; }
         public Plan? Plan { get; }
+        public string EventDataAsXml { get; }
 
         public PostalInformationSyndicationQueryResult(
             string postalCode,
@@ -39,7 +41,8 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
             Organisation? organisation,
             Plan? plan)
         {
-            ContainsDetails = false;
+            ContainsEvent = false;
+            ContainsObject = false;
 
             PostalCode = postalCode;
             Position = position;
@@ -49,6 +52,30 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
             MunicipalityOsloId = municipalityOsloId;
             Organisation = organisation;
             Plan = plan;
+        }
+
+        public PostalInformationSyndicationQueryResult(
+            string postalCode,
+            long position,
+            string changeType,
+            Instant recordCreatedAt,
+            Instant lastChangedOn,
+            string municipalityOsloId,
+            Organisation? organisation,
+            Plan? plan,
+            string eventDataAsXml)
+            : this(postalCode,
+                position,
+                changeType,
+                recordCreatedAt,
+                lastChangedOn,
+                municipalityOsloId,
+                organisation,
+                plan)
+        {
+            ContainsEvent = true;
+
+            EventDataAsXml = eventDataAsXml;
         }
 
         public PostalInformationSyndicationQueryResult(
@@ -72,41 +99,101 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
                 organisation,
                 plan)
         {
-            ContainsDetails = true;
+            ContainsObject = true;
 
             Status = status;
             PostalNames = postalNames;
         }
+
+        public PostalInformationSyndicationQueryResult(
+            string postalCode,
+            long position,
+            string changeType,
+            Instant recordCreatedAt,
+            Instant lastChangedOn,
+            PostalInformationStatus? status,
+            IEnumerable<PostalName> postalNames,
+            string municipalityOsloId,
+            Organisation? organisation,
+            Plan? plan,
+            string eventDataAsXml)
+            : this(
+                postalCode,
+                position,
+                changeType,
+                recordCreatedAt,
+                lastChangedOn,
+                status,
+                postalNames,
+                municipalityOsloId,
+                organisation,
+                plan)
+        {
+            ContainsEvent = true;
+            EventDataAsXml = eventDataAsXml;
+        }
     }
 
-    public class PostalInformationSyndicationQuery : Query<PostalInformationSyndicationItem, PostalInformationSyndicationFilter, PostalInformationSyndicationQueryResult>
+    public class PostalInformationSyndicationQuery : Query<PostalInformationSyndicationItem,
+        PostalInformationSyndicationFilter, PostalInformationSyndicationQueryResult>
     {
         private readonly LegacyContext _context;
-        private readonly bool _embed;
+        private readonly bool _embedEvent;
+        private readonly bool _embedObject;
 
-        public PostalInformationSyndicationQuery(LegacyContext context, bool embed)
+        public PostalInformationSyndicationQuery(LegacyContext context, bool embedEvent, bool embedObject)
         {
             _context = context;
-            _embed = embed;
+            _embedEvent = embedEvent;
+            _embedObject = embedObject;
         }
 
-        protected override ISorting Sorting => new PostalInformationSyndicationSoring();
+        protected override ISorting Sorting => new PostalInformationSyndicationSorting();
 
-        protected override Expression<Func<PostalInformationSyndicationItem, PostalInformationSyndicationQueryResult>> Transformation => _embed
-            ? (Expression<Func<PostalInformationSyndicationItem, PostalInformationSyndicationQueryResult>>) (syndicationItem =>
-                new PostalInformationSyndicationQueryResult(
-                    syndicationItem.PostalCode,
-                    syndicationItem.Position,
-                    syndicationItem.ChangeType,
-                    syndicationItem.RecordCreatedAt,
-                    syndicationItem.LastChangedOn,
-                    syndicationItem.Status,
-                    syndicationItem.PostalNames,
-                    syndicationItem.MunicipalityOsloId,
-                    syndicationItem.Organisation,
-                    syndicationItem.Plan))
-            : syndicationItem =>
-                new PostalInformationSyndicationQueryResult(
+        protected override Expression<Func<PostalInformationSyndicationItem, PostalInformationSyndicationQueryResult>> Transformation
+        {
+            get
+            {
+                if (_embedEvent && _embedObject)
+                    return syndicationItem => new PostalInformationSyndicationQueryResult(
+                        syndicationItem.PostalCode,
+                        syndicationItem.Position,
+                        syndicationItem.ChangeType,
+                        syndicationItem.RecordCreatedAt,
+                        syndicationItem.LastChangedOn,
+                        syndicationItem.Status,
+                        syndicationItem.PostalNames,
+                        syndicationItem.MunicipalityOsloId,
+                        syndicationItem.Organisation,
+                        syndicationItem.Plan,
+                        syndicationItem.EventDataAsXml);
+
+                if (_embedEvent)
+                    return syndicationItem => new PostalInformationSyndicationQueryResult(
+                        syndicationItem.PostalCode,
+                        syndicationItem.Position,
+                        syndicationItem.ChangeType,
+                        syndicationItem.RecordCreatedAt,
+                        syndicationItem.LastChangedOn,
+                        syndicationItem.MunicipalityOsloId,
+                        syndicationItem.Organisation,
+                        syndicationItem.Plan,
+                        syndicationItem.EventDataAsXml);
+
+                if(_embedObject)
+                    return syndicationItem => new PostalInformationSyndicationQueryResult(
+                        syndicationItem.PostalCode,
+                        syndicationItem.Position,
+                        syndicationItem.ChangeType,
+                        syndicationItem.RecordCreatedAt,
+                        syndicationItem.LastChangedOn,
+                        syndicationItem.Status,
+                        syndicationItem.PostalNames,
+                        syndicationItem.MunicipalityOsloId,
+                        syndicationItem.Organisation,
+                        syndicationItem.Plan);
+
+                return syndicationItem => new PostalInformationSyndicationQueryResult(
                     syndicationItem.PostalCode,
                     syndicationItem.Position,
                     syndicationItem.ChangeType,
@@ -115,6 +202,8 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
                     syndicationItem.MunicipalityOsloId,
                     syndicationItem.Organisation,
                     syndicationItem.Plan);
+            }
+        }
 
         protected override IQueryable<PostalInformationSyndicationItem> Filter(FilteringHeader<PostalInformationSyndicationFilter> filtering)
         {
@@ -132,7 +221,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
         }
     }
 
-    internal class PostalInformationSyndicationSoring : ISorting
+    internal class PostalInformationSyndicationSorting : ISorting
     {
         public IEnumerable<string> SortableFields { get; } = new[]
         {
@@ -145,5 +234,12 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
     public class PostalInformationSyndicationFilter
     {
         public long? Position { get; set; }
+        public string Embed { get; set; }
+
+        public bool ContainsEvent =>
+            Embed.Contains("event", StringComparison.OrdinalIgnoreCase);
+
+        public bool ContainsObject =>
+            Embed.Contains("object", StringComparison.OrdinalIgnoreCase);
     }
 }

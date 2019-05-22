@@ -1,4 +1,4 @@
-namespace EF
+namespace EF.MigrationsHelper
 {
     using System;
 
