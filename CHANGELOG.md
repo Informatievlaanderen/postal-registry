@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/informatievlaanderen/postal-registry/compare/v1.3.0...v1.4.0) (2019-05-23)
+
+
+### Features
+
+* move docker to prod ([4c8995a](https://github.com/informatievlaanderen/postal-registry/commit/4c8995a))
+
 # [1.3.0](https://github.com/informatievlaanderen/postal-registry/compare/v1.2.3...v1.3.0) (2019-05-22)
 
 
