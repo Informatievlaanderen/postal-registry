@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/informatievlaanderen/postal-registry/compare/v1.4.0...v1.5.0) (2019-06-06)
+
+
+### Features
+
+* add docker init files ([d610cd6](https://github.com/informatievlaanderen/postal-registry/commit/d610cd6))
+
 # [1.4.0](https://github.com/informatievlaanderen/postal-registry/compare/v1.3.0...v1.4.0) (2019-05-23)
 
 
