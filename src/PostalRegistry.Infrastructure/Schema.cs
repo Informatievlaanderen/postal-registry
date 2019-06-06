@@ -3,8 +3,8 @@ namespace PostalRegistry.Infrastructure
     public class Schema
     {
         public const string Default = "PostalRegistry";
-        public const string Import = "PostalRegistryImport";
 
+        public const string Import = "PostalRegistryImport";
         public const string Legacy = "PostalRegistryLegacy";
         public const string Extract = "PostalRegistryExtract";
         public const string Syndication = "PostalRegistrySyndication";
