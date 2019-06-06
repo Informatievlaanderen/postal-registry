@@ -1,3 +1,11 @@
+## [1.5.1](https://github.com/informatievlaanderen/postal-registry/compare/v1.5.0...v1.5.1) (2019-06-06)
+
+
+### Bug Fixes
+
+* fix the Lifetime property in idempotency hash ([3a6ddef](https://github.com/informatievlaanderen/postal-registry/commit/3a6ddef))
+* idempotency hash is now stable ([f906fb6](https://github.com/informatievlaanderen/postal-registry/commit/f906fb6))
+
 # [1.5.0](https://github.com/informatievlaanderen/postal-registry/compare/v1.4.0...v1.5.0) (2019-06-06)
 
 
