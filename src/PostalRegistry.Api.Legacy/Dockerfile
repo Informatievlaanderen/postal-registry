@@ -5,7 +5,11 @@ LABEL maintainer "agentschap Informatie Vlaanderen <informatie.vlaanderen@vlaand
 COPY / /app
 WORKDIR /app
 
+RUN apt-get update && \
+    apt-get install curl jq -y && \
+    chmod +x ./init.sh
+
 EXPOSE 3002/tcp
 ENV ASPNETCORE_URLS http://*:3002
 
-ENTRYPOINT ["./PostalRegistry.Api.Legacy"]
+ENTRYPOINT ["./init.sh"]
