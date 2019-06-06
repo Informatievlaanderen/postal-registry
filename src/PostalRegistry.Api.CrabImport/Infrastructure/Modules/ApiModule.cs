@@ -39,8 +39,8 @@ namespace PostalRegistry.Api.CrabImport.Infrastructure.Modules
                 .RegisterModule(new IdempotencyModule(
                     _services,
                     _configuration.GetSection(IdempotencyConfiguration.Section).Get<IdempotencyConfiguration>().ConnectionString,
-                    new IdempotencyMigrationsTableInfo(Schema.Default),
-                    new IdempotencyTableInfo(Schema.Default),
+                    new IdempotencyMigrationsTableInfo(Schema.Import),
+                    new IdempotencyTableInfo(Schema.Import),
                     _loggerFactory))
 
                 .RegisterModule(new EventHandlingModule(typeof(DomainAssemblyMarker).Assembly, eventSerializerSettings))
