@@ -64,7 +64,7 @@ namespace PostalRegistry.PostalInformation.Commands.Crab
             yield return SubCantonCode;
             yield return NisCode;
             yield return MunicipalityName;
-            yield return Lifetime.BeginDateTime;
+            yield return Lifetime.BeginDateTime.Print();
             yield return Timestamp;
             yield return Operator;
             yield return Modification;
