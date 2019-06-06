@@ -4,16 +4,16 @@ namespace PostalRegistry.PostalInformation.Events
     using Be.Vlaanderen.Basisregisters.GrAr.Provenance;
     using Newtonsoft.Json;
 
-    [EventName("MunicipalityWasLinkedToPostalInformation")]
+    [EventName("MunicipalityWasAttached")]
     [EventDescription("De gemeente werd gelinked aan een postcode.")]
-    public class MunicipalityWasLinkedToPostalInformation : IHasProvenance, ISetProvenance
+    public class MunicipalityWasAttached : IHasProvenance, ISetProvenance
     {
         public string PostalCode { get; }
         public string NisCode { get; }
 
         public ProvenanceData Provenance { get; private set; }
 
-        public MunicipalityWasLinkedToPostalInformation(
+        public MunicipalityWasAttached(
             PostalCode postalCode,
             NisCode nisCode)
         {
@@ -22,7 +22,7 @@ namespace PostalRegistry.PostalInformation.Events
         }
 
         [JsonConstructor]
-        private MunicipalityWasLinkedToPostalInformation(
+        private MunicipalityWasAttached(
             string postalCode,
             string nisCode,
             ProvenanceData provenance) :

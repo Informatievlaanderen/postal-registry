@@ -23,7 +23,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformation
                         }, ct);
             });
 
-            When<Envelope<MunicipalityWasLinkedToPostalInformation>>(async (context, message, ct) =>
+            When<Envelope<MunicipalityWasAttached>>(async (context, message, ct) =>
             {
                 await context.FindAndUpdatePostalInformation(
                     message.Message.PostalCode,

@@ -24,7 +24,7 @@ namespace PostalRegistry.PostalInformation
             Register<PostalInformationWasRetired>(When);
             Register<PostalInformationPostalNameWasAdded>(When);
             Register<PostalInformationPostalNameWasRemoved>(When);
-            Register<MunicipalityWasLinkedToPostalInformation>(When);
+            Register<MunicipalityWasAttached>(When);
 
             Register<PostalInformationWasImportedFromBPost>(@event => WhenCrabEventApplied());
             Register<PostalInformationWasImportedFromCrab>(@event => WhenCrabEventApplied());
@@ -69,7 +69,7 @@ namespace PostalRegistry.PostalInformation
             PostalCode = new PostalCode(@event.PostalCode);
         }
 
-        private void When(MunicipalityWasLinkedToPostalInformation @event)
+        private void When(MunicipalityWasAttached @event)
         {
             _nisCode = new NisCode(@event.NisCode);
         }
