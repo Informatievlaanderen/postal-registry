@@ -68,7 +68,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
                     ct);
             });
 
-            When<Envelope<MunicipalityWasLinkedToPostalInformation>>(async (context, message, ct) =>
+            When<Envelope<MunicipalityWasAttached>>(async (context, message, ct) =>
             {
                 await context.CreateNewPostalInformationSyndicationItem(
                     message.Message.PostalCode,

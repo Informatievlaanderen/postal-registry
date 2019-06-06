@@ -61,7 +61,7 @@ namespace PostalRegistry.PostalInformation
             CrabOrganisation? organisation)
         {
             ApplyChange(
-                new MunicipalityWasLinkedToPostalInformation(
+                new MunicipalityWasAttached(
                     new PostalCode(subCantonCode),
                     nisCode));
 
