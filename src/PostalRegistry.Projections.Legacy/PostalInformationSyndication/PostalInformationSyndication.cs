@@ -43,7 +43,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
         public Modification? Modification { get; set; }
         public string Operator { get; set; }
         public Organisation? Organisation { get; set; }
-        public Plan? Plan { get; set; }
+        public string Reason { get; set; }
         public string EventDataAsXml { get; set; }
 
         public PostalInformationSyndicationItem CloneAndApplyEventInfo(
@@ -71,7 +71,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
                 Modification = Modification,
                 Operator = Operator,
                 Organisation = Organisation,
-                Plan = Plan
+                Reason = Reason
             };
 
             editFunc(newItem);
@@ -125,7 +125,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
             b.Property(x => x.Modification);
             b.Property(x => x.Operator);
             b.Property(x => x.Organisation);
-            b.Property(x => x.Plan);
+            b.Property(x => x.Reason);
             b.Property(x => x.EventDataAsXml);
 
             b.Ignore(x => x.PostalNames);
