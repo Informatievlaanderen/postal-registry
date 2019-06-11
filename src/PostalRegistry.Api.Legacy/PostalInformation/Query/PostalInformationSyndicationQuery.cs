@@ -28,7 +28,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
         public IEnumerable<PostalName> PostalNames { get; }
         public string MunicipalityOsloId { get; }
         public Organisation? Organisation { get; }
-        public Plan? Plan { get; }
+        public string Reason { get; }
         public string EventDataAsXml { get; }
 
         public PostalInformationSyndicationQueryResult(
@@ -39,7 +39,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
             Instant lastChangedOn,
             string municipalityOsloId,
             Organisation? organisation,
-            Plan? plan)
+            string reason)
         {
             ContainsEvent = false;
             ContainsObject = false;
@@ -51,7 +51,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
             LastChangedOn = lastChangedOn;
             MunicipalityOsloId = municipalityOsloId;
             Organisation = organisation;
-            Plan = plan;
+            Reason = reason;
         }
 
         public PostalInformationSyndicationQueryResult(
@@ -62,7 +62,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
             Instant lastChangedOn,
             string municipalityOsloId,
             Organisation? organisation,
-            Plan? plan,
+            string reason,
             string eventDataAsXml)
             : this(postalCode,
                 position,
@@ -71,7 +71,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
                 lastChangedOn,
                 municipalityOsloId,
                 organisation,
-                plan)
+                reason)
         {
             ContainsEvent = true;
 
@@ -88,7 +88,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
             IEnumerable<PostalName> postalNames,
             string municipalityOsloId,
             Organisation? organisation,
-            Plan? plan) :
+            string reason) :
             this(
                 postalCode,
                 position,
@@ -97,7 +97,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
                 lastChangedOn,
                 municipalityOsloId,
                 organisation,
-                plan)
+                reason)
         {
             ContainsObject = true;
 
@@ -115,7 +115,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
             IEnumerable<PostalName> postalNames,
             string municipalityOsloId,
             Organisation? organisation,
-            Plan? plan,
+            string reason,
             string eventDataAsXml)
             : this(
                 postalCode,
@@ -127,7 +127,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
                 postalNames,
                 municipalityOsloId,
                 organisation,
-                plan)
+                reason)
         {
             ContainsEvent = true;
             EventDataAsXml = eventDataAsXml;
@@ -165,7 +165,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
                         syndicationItem.PostalNames,
                         syndicationItem.MunicipalityOsloId,
                         syndicationItem.Organisation,
-                        syndicationItem.Plan,
+                        syndicationItem.Reason,
                         syndicationItem.EventDataAsXml);
 
                 if (_embedEvent)
@@ -177,7 +177,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
                         syndicationItem.LastChangedOn,
                         syndicationItem.MunicipalityOsloId,
                         syndicationItem.Organisation,
-                        syndicationItem.Plan,
+                        syndicationItem.Reason,
                         syndicationItem.EventDataAsXml);
 
                 if(_embedObject)
@@ -191,7 +191,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
                         syndicationItem.PostalNames,
                         syndicationItem.MunicipalityOsloId,
                         syndicationItem.Organisation,
-                        syndicationItem.Plan);
+                        syndicationItem.Reason);
 
                 return syndicationItem => new PostalInformationSyndicationQueryResult(
                     syndicationItem.PostalCode,
@@ -201,7 +201,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
                     syndicationItem.LastChangedOn,
                     syndicationItem.MunicipalityOsloId,
                     syndicationItem.Organisation,
-                    syndicationItem.Plan);
+                    syndicationItem.Reason);
             }
         }
 

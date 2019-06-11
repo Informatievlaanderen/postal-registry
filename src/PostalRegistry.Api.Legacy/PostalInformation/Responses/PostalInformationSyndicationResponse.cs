@@ -92,7 +92,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
                     postalInformation.PostalNames,
                     postalInformation.MunicipalityOsloId,
                     postalInformation.Organisation,
-                    postalInformation.Plan);
+                    postalInformation.Reason);
 
             if (postalInformation.ContainsEvent)
             {
@@ -162,7 +162,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
             IEnumerable<PostalName> postalNames,
             string municipalityOsloId,
             Organisation? organisation,
-            Plan? plan)
+            string reason)
         {
             PostalCode = postcode;
             Identificator = new Identificator(naamruimte, postcode, version);
@@ -172,7 +172,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
                               .Select(name => new Postnaam(new GeografischeNaam(name.Name, name.Language.ConvertFromLanguage())))
                               .ToList()
                           ?? new List<Postnaam>();
-            Provenance = new Provenance(organisation, plan);
+            Provenance = new Provenance(organisation, new Reason(reason));
         }
     }
 

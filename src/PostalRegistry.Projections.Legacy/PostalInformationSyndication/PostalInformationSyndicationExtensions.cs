@@ -64,7 +64,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
             item.Modification = provenance.Modification;
             item.Operator = provenance.Operator;
             item.Organisation = provenance.Organisation;
-            item.Plan = provenance.Plan;
+            item.Reason = provenance.Reason;
         }
 
         public static void SetEventData<T>(this PostalInformationSyndicationItem syndicationItem, T message)

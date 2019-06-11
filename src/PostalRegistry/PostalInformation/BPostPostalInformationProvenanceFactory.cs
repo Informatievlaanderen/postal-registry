@@ -16,7 +16,7 @@ namespace PostalRegistry.PostalInformation
             return new Provenance(
                 bpostProvenance.Timestamp,
                 Application.BPost,
-                Plan.CentralManagementBPost,
+                Reason.CentralManagementBPost,
                 null,
                 bpostProvenance.Modification,
                 Organisation.DePost);

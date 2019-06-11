@@ -15,7 +15,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
             typeof(string), typeof(DateTime), typeof(Enum),
             typeof(decimal), typeof(Guid), typeof(Instant),
             typeof(LocalDate), typeof(LocalDateTime), typeof(DateTimeOffset),
-            typeof(Plan), typeof(Organisation), typeof(Modification)
+            typeof(Organisation), typeof(Modification)
         };
 
         /// <summary>
