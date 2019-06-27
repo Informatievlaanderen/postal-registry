@@ -57,7 +57,7 @@ namespace PostalRegistry.Projections.Legacy
         private static void RunInMemoryDb(
             IServiceCollection services,
             ILoggerFactory loggerFactory,
-            ILogger<LegacyModule> logger)
+            ILogger logger)
         {
             services
                 .AddDbContext<LegacyContext>(options => options

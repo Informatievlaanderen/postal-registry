@@ -5,10 +5,6 @@ namespace PostalRegistry.Api.Legacy.Infrastructure
 
     public class Program
     {
-        private static readonly DevelopmentCertificate DevelopmentCertificate = new DevelopmentCertificate(
-            "api.dev.postinfo.basisregisters.vlaanderen.be.pfx",
-            "gemeenteregister!");
-
         public static void Main(string[] args) => CreateWebHostBuilder(args).Build().Run();
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args)
@@ -18,9 +14,7 @@ namespace PostalRegistry.Api.Legacy.Infrastructure
                     {
                         Hosting =
                         {
-                            HttpPort = 2091,
-                            HttpsPort = 2445,
-                            HttpsCertificate = DevelopmentCertificate.ToCertificate,
+                            HttpPort = 3002
                         },
                         Logging =
                         {

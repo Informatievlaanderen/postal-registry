@@ -25,7 +25,7 @@ namespace PostalRegistry.Projections.Syndication.Modules
                     fileSizeLimitBytes: 104857600,
                     rollOnFileSizeLimit: true,
                     rollingInterval: RollingInterval.Day)
-                .WriteTo.Console()
+                //.WriteTo.Console()
                 .Enrich.FromLogContext()
                 .Enrich.WithMachineName()
                 .Enrich.WithThreadId()

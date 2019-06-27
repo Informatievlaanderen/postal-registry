@@ -56,7 +56,7 @@ namespace PostalRegistry.Projections.Syndication.Modules
         private static void RunInMemoryDb(
             IServiceCollection services,
             ILoggerFactory loggerFactory,
-            ILogger<SyndicationModule> logger)
+            ILogger logger)
         {
             services
                 .AddDbContext<SyndicationContext>(options => options

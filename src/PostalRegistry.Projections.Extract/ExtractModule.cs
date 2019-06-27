@@ -57,7 +57,7 @@ namespace PostalRegistry.Projections.Extract
         private static void RunInMemoryDb(
             IServiceCollection services,
             ILoggerFactory loggerFactory,
-            ILogger<ExtractModule> logger)
+            ILogger logger)
         {
             services
                 .AddDbContext<ExtractContext>(options => options
