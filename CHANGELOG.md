@@ -1,3 +1,10 @@
+## [1.6.2](https://github.com/informatievlaanderen/postal-registry/compare/v1.6.1...v1.6.2) (2019-06-27)
+
+
+### Bug Fixes
+
+* fix logging for syndication ([faa9a8d](https://github.com/informatievlaanderen/postal-registry/commit/faa9a8d))
+
 ## [1.6.1](https://github.com/informatievlaanderen/postal-registry/compare/v1.6.0...v1.6.1) (2019-06-27)
 
 # [1.6.0](https://github.com/informatievlaanderen/postal-registry/compare/v1.5.1...v1.6.0) (2019-06-11)
