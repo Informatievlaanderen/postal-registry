@@ -16,10 +16,10 @@ description Postal Registry Projector API.
 
 dependencies
   framework: netstandard20
-    Be.Vlaanderen.Basisregisters.Api ~> 6.0
-    Be.Vlaanderen.Basisregisters.EventHandling.Autofac ~> 1.0
-    Be.Vlaanderen.Basisregisters.DataDog.Tracing.Autofac ~> 3.0
-    Be.Vlaanderen.Basisregisters.Projector ~> 2.0
+    Be.Vlaanderen.Basisregisters.Api >= LOCKEDVERSION
+    Be.Vlaanderen.Basisregisters.EventHandling.Autofac >= LOCKEDVERSION
+    Be.Vlaanderen.Basisregisters.DataDog.Tracing.Autofac >= LOCKEDVERSION
+    Be.Vlaanderen.Basisregisters.Projector >= LOCKEDVERSION
 
 files
   PostalRegistry.Projector.dll => lib\netcoreapp2.2
