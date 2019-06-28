@@ -1,3 +1,10 @@
+## [1.6.3](https://github.com/informatievlaanderen/postal-registry/compare/v1.6.2...v1.6.3) (2019-06-28)
+
+
+### Bug Fixes
+
+* reference correct packages for documentation ([698bbeb](https://github.com/informatievlaanderen/postal-registry/commit/698bbeb))
+
 ## [1.6.2](https://github.com/informatievlaanderen/postal-registry/compare/v1.6.1...v1.6.2) (2019-06-27)
 
 
