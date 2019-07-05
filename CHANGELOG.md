@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/informatievlaanderen/postal-registry/compare/v1.6.3...v1.7.0) (2019-07-05)
+
+
+### Features
+
+* upgrade Be.Vlaanderen.Basisregisters.Api ([1762780](https://github.com/informatievlaanderen/postal-registry/commit/1762780))
+
 ## [1.6.3](https://github.com/informatievlaanderen/postal-registry/compare/v1.6.2...v1.6.3) (2019-06-28)
 
 
