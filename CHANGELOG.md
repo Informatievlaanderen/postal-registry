@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/informatievlaanderen/postal-registry/compare/v1.7.0...v1.8.0) (2019-07-09)
+
+
+### Features
+
+* rename municipality oslo id to nis code ([2ee1d86](https://github.com/informatievlaanderen/postal-registry/commit/2ee1d86))
+
 # [1.7.0](https://github.com/informatievlaanderen/postal-registry/compare/v1.6.3...v1.7.0) (2019-07-05)
 
 
