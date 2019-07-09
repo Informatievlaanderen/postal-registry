@@ -18,7 +18,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
 
         public PostalInformationStatus? Status { get; set; }
 
-        public string MunicipalityOsloId { get; set; }
+        public string MunicipalityNisCode { get; set; }
 
         public string PostalNamesAsJson { get; set; }
 
@@ -60,7 +60,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
                 ChangeType = eventName,
 
                 Status = Status,
-                MunicipalityOsloId = MunicipalityOsloId,
+                MunicipalityNisCode = MunicipalityNisCode,
 
                 PostalNamesAsJson = PostalNamesAsJson,
 
@@ -115,7 +115,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
             b.Property(x => x.ChangeType);
 
             b.Property(x => x.Status);
-            b.Property(x => x.MunicipalityOsloId);
+            b.Property(x => x.MunicipalityNisCode);
 
             b.Property(x => x.RecordCreatedAtAsDateTimeOffset).HasColumnName("RecordCreatedAt");
             b.Property(x => x.LastChangedOnAsDateTimeOffset).HasColumnName("LastChangedOn");

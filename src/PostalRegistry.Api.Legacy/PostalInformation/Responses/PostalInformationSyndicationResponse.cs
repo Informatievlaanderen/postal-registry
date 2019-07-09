@@ -90,7 +90,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
                     postalInformation.LastChangedOn.ToBelgianDateTimeOffset(),
                     postalInformation.Status,
                     postalInformation.PostalNames,
-                    postalInformation.MunicipalityOsloId,
+                    postalInformation.MunicipalityNisCode,
                     postalInformation.Organisation,
                     postalInformation.Reason);
 
@@ -146,7 +146,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         /// De NisCode van de gemeente waarmee de postcode verwant is.
         /// </summary>
         [DataMember(Name = "NisCode", Order = 3)]
-        public string MunicipalityOsloId { get; set; }
+        public string MunicipalityNisCode { get; set; }
 
         /// <summary>
         /// Creatie data ivm het item.
@@ -160,14 +160,14 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
             DateTimeOffset? version,
             PostalInformationStatus? status,
             IEnumerable<PostalName> postalNames,
-            string municipalityOsloId,
+            string municipalityNisCode,
             Organisation? organisation,
             string reason)
         {
             PostalCode = postcode;
             Identificator = new Identificator(naamruimte, postcode, version);
             Status = status?.ConvertFromPostalInformationStatus();
-            MunicipalityOsloId = municipalityOsloId;
+            MunicipalityNisCode = municipalityNisCode;
             PostalNames = postalNames?
                               .Select(name => new Postnaam(new GeografischeNaam(name.Name, name.Language.ConvertFromLanguage())))
                               .ToList()

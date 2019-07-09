@@ -73,7 +73,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
                 await context.CreateNewPostalInformationSyndicationItem(
                     message.Message.PostalCode,
                     message,
-                    x => x.MunicipalityOsloId = message.Message.NisCode,
+                    x => x.MunicipalityNisCode = message.Message.NisCode,
                     ct);
             });
         }
