@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/informatievlaanderen/postal-registry/compare/v1.8.0...v1.8.1) (2019-07-17)
+
+
+### Bug Fixes
+
+* do not hardcode logging to console ([f7a0705](https://github.com/informatievlaanderen/postal-registry/commit/f7a0705))
+
 # [1.8.0](https://github.com/informatievlaanderen/postal-registry/compare/v1.7.0...v1.8.0) (2019-07-09)
 
 
