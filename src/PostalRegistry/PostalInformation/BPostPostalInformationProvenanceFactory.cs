@@ -17,7 +17,7 @@ namespace PostalRegistry.PostalInformation
                 bpostProvenance.Timestamp,
                 Application.BPost,
                 Reason.CentralManagementBPost,
-                null,
+                new Operator("Postal information loading service"),
                 bpostProvenance.Modification,
                 Organisation.DePost);
         }
