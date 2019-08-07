@@ -1,3 +1,10 @@
+## [1.8.2](https://github.com/informatievlaanderen/postal-registry/compare/v1.8.1...v1.8.2) (2019-08-07)
+
+
+### Bug Fixes
+
+* added operator for bpost import ([13b451a](https://github.com/informatievlaanderen/postal-registry/commit/13b451a))
+
 ## [1.8.1](https://github.com/informatievlaanderen/postal-registry/compare/v1.8.0...v1.8.1) (2019-07-17)
 
 
