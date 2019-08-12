@@ -3,6 +3,8 @@ namespace PostalRegistry.Projections.LastChangedList
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.LastChangedList;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore;
     using PostalInformation.Events;
+    using PostalInformation.Events.BPost;
+    using PostalInformation.Events.Crab;
 
     public class LastChangedListProjections : LastChangedListConnectedProjection
     {
@@ -14,6 +16,11 @@ namespace PostalRegistry.Projections.LastChangedList
         public LastChangedListProjections()
          : base(SupportedAcceptTypes)
         {
+            When<Envelope<PostalInformationWasRegistered>>(async (context, message, ct) =>
+            {
+                await GetLastChangedRecordsAndUpdatePosition(message.Message.PostalCode, message.Position, context, ct);
+            });
+
             When<Envelope<PostalInformationBecameCurrent>>(async (context, message, ct) =>
             {
                 await GetLastChangedRecordsAndUpdatePosition(message.Message.PostalCode, message.Position, context, ct);
@@ -33,6 +40,12 @@ namespace PostalRegistry.Projections.LastChangedList
             {
                 await GetLastChangedRecordsAndUpdatePosition(message.Message.PostalCode, message.Position, context, ct);
             });
+
+            When<Envelope<MunicipalityWasAttached>>(async (context, message, ct) => DoNothing());
+            When<Envelope<PostalInformationWasImportedFromCrab>>(async (context, message, ct) => DoNothing());
+            When<Envelope<PostalInformationWasImportedFromBPost>>(async (context, message, ct) => DoNothing());
         }
+
+        private static void DoNothing() { }
     }
 }

@@ -4,6 +4,8 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore;
     using PostalRegistry.PostalInformation.Events;
+    using PostalRegistry.PostalInformation.Events.BPost;
+    using PostalRegistry.PostalInformation.Events.Crab;
 
     public class PostalInformationSyndicationProjections : ConnectedProjection<LegacyContext>
     {
@@ -76,6 +78,11 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
                     x => x.MunicipalityNisCode = message.Message.NisCode,
                     ct);
             });
+
+            When<Envelope<PostalInformationWasImportedFromCrab>>(async (context, message, ct) => DoNothing());
+            When<Envelope<PostalInformationWasImportedFromBPost>>(async (context, message, ct) => DoNothing());
         }
+
+        private static void DoNothing() { }
     }
 }
