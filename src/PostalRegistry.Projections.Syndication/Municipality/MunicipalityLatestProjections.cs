@@ -25,6 +25,15 @@ namespace PostalRegistry.Projections.Syndication.Municipality
             When(MunicipalityEvent.MunicipalityOfficialLanguageWasRemoved, AddSyndicationItemEntry);
             When(MunicipalityEvent.MunicipalityFacilitiesLanguageWasAdded, AddSyndicationItemEntry);
             When(MunicipalityEvent.MunicipalityFacilitiesLanguageWasRemoved, AddSyndicationItemEntry);
+
+            When(MunicipalityEvent.MunicipalityWasDrawn, DoNothing);
+            When(MunicipalityEvent.MunicipalityGeometryWasCleared, DoNothing);
+            When(MunicipalityEvent.MunicipalityGeometryWasCorrected, DoNothing);
+            When(MunicipalityEvent.MunicipalityGeometryWasCorrectedToCleared, DoNothing);
+            When(MunicipalityEvent.MunicipalityBecameCurrent, DoNothing);
+            When(MunicipalityEvent.MunicipalityWasRetired, DoNothing);
+            When(MunicipalityEvent.MunicipalityWasCorrectedToCurrent, DoNothing);
+            When(MunicipalityEvent.MunicipalityWasCorrectedToRetired, DoNothing);
         }
 
         private static async Task AddSyndicationItemEntry(AtomEntry<SyndicationContent<Gemeente>> entry, SyndicationContext context, CancellationToken ct)
@@ -92,6 +101,14 @@ namespace PostalRegistry.Projections.Syndication.Municipality
                         break;
                 }
             }
+        }
+
+        private static Task DoNothing(
+            AtomEntry<SyndicationContent<Gemeente>> entry,
+            SyndicationContext context,
+            CancellationToken ct)
+        {
+            return Task.CompletedTask;
         }
     }
 }

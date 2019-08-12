@@ -13,5 +13,14 @@ namespace PostalRegistry.Projections.Syndication.Municipality
         MunicipalityOfficialLanguageWasRemoved,
         MunicipalityFacilitiesLanguageWasAdded,
         MunicipalityFacilitiesLanguageWasRemoved,
+
+        MunicipalityWasDrawn,
+        MunicipalityGeometryWasCleared,
+        MunicipalityGeometryWasCorrected,
+        MunicipalityGeometryWasCorrectedToCleared,
+        MunicipalityBecameCurrent,
+        MunicipalityWasRetired,
+        MunicipalityWasCorrectedToCurrent,
+        MunicipalityWasCorrectedToRetired,
     }
 }

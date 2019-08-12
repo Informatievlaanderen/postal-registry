@@ -9,6 +9,8 @@ namespace PostalRegistry.Projections.Extract.PostalInformationExtract
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore;
     using NodaTime;
     using PostalInformation.Events;
+    using PostalInformation.Events.BPost;
+    using PostalInformation.Events.Crab;
 
     public class PostalInformationExtractProjections : ConnectedProjection<ExtractContext>
     {
@@ -125,6 +127,10 @@ namespace PostalRegistry.Projections.Extract.PostalInformationExtract
                     },
                     ct);
             });
+
+            When<Envelope<MunicipalityWasAttached>>(async (context, message, ct) => DoNothing());
+            When<Envelope<PostalInformationWasImportedFromCrab>>(async (context, message, ct) => DoNothing());
+            When<Envelope<PostalInformationWasImportedFromBPost>>(async (context, message, ct) => DoNothing());
         }
 
         private void UpdateStatus(IEnumerable<PostalInformationExtractItem> postalInformationSet, string status)
@@ -148,5 +154,7 @@ namespace PostalRegistry.Projections.Extract.PostalInformationExtract
 
             postalInformation.DbaseRecord = record.ToBytes(_encoding);
         }
+
+        private static void DoNothing() { }
     }
 }

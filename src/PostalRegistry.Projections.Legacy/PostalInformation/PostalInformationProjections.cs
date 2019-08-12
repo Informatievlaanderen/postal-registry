@@ -7,6 +7,8 @@ namespace PostalRegistry.Projections.Legacy.PostalInformation
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore;
     using NodaTime;
     using PostalRegistry.PostalInformation.Events;
+    using PostalRegistry.PostalInformation.Events.BPost;
+    using PostalRegistry.PostalInformation.Events.Crab;
 
     public class PostalInformationProjections : ConnectedProjection<LegacyContext>
     {
@@ -92,7 +94,12 @@ namespace PostalRegistry.Projections.Legacy.PostalInformation
                     },
                     ct);
             });
+
+            When<Envelope<PostalInformationWasImportedFromCrab>>(async (context, message, ct) => DoNothing());
+            When<Envelope<PostalInformationWasImportedFromBPost>>(async (context, message, ct) => DoNothing());
         }
+
+        private static void DoNothing() { }
 
         private static void UpdateVersionTimestamp(PostalInformation postalInformation, Instant versionTimestamp)
             => postalInformation.VersionTimestamp = versionTimestamp;
