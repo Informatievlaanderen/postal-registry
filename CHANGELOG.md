@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/informatievlaanderen/postal-registry/compare/v1.8.3...v1.9.0) (2019-08-12)
+
+
+### Features
+
+* add missing event handlers where nothing was expected [#19](https://github.com/informatievlaanderen/postal-registry/issues/19) ([b0dd8fc](https://github.com/informatievlaanderen/postal-registry/commit/b0dd8fc))
+
 ## [1.8.3](https://github.com/informatievlaanderen/postal-registry/compare/v1.8.2...v1.8.3) (2019-08-09)
 
 
