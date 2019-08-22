@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/informatievlaanderen/postal-registry/compare/v1.9.0...v1.10.0) (2019-08-22)
+
+
+### Features
+
+* extract datavlaanderen namespace to settings [#2](https://github.com/informatievlaanderen/postal-registry/issues/2) ([d6e0623](https://github.com/informatievlaanderen/postal-registry/commit/d6e0623))
+
 # [1.9.0](https://github.com/informatievlaanderen/postal-registry/compare/v1.8.3...v1.9.0) (2019-08-12)
 
 
