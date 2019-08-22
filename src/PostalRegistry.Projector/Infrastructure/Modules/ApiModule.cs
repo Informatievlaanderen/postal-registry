@@ -13,6 +13,7 @@ namespace PostalRegistry.Projector.Infrastructure.Modules
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Options;
     using PostalRegistry.Infrastructure;
     using PostalRegistry.Projections.Extract;
     using PostalRegistry.Projections.Extract.PostalInformationExtract;
@@ -75,7 +76,7 @@ namespace PostalRegistry.Projector.Infrastructure.Modules
                     _configuration,
                     _loggerFactory)
                 .RegisterProjections<PostalInformationExtractProjections, ExtractContext>(
-                    () => new PostalInformationExtractProjections(DbaseCodePage.Western_European_ANSI.ToEncoding()));
+                    context => new PostalInformationExtractProjections(context.Resolve<IOptions<ExtractConfig>>(), DbaseCodePage.Western_European_ANSI.ToEncoding()));
         }
 
         private void RegisterLastChangedProjections(ContainerBuilder builder)
