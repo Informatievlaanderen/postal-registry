@@ -7,6 +7,7 @@ namespace PostalRegistry.Projections.Extract.PostalInformationExtract
     using Be.Vlaanderen.Basisregisters.GrAr.Common;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore;
+    using Microsoft.Extensions.Options;
     using NodaTime;
     using PostalInformation.Events;
     using PostalInformation.Events.BPost;
@@ -14,14 +15,13 @@ namespace PostalRegistry.Projections.Extract.PostalInformationExtract
 
     public class PostalInformationExtractProjections : ConnectedProjection<ExtractContext>
     {
-        // TODO: Probably need to get these from enums and data vlaanderen from config
+        // TODO: Probably need to get these from enums from config
         private const string Realized = "Gerealiseerd";
         private const string Retired = "Gehistoreerd";
-        private const string IdUri = "https://data.vlaanderen.be/id/postinfo";
 
         private readonly Encoding _encoding;
 
-        public PostalInformationExtractProjections(Encoding encoding)
+        public PostalInformationExtractProjections(IOptions<ExtractConfig> extractConfig, Encoding encoding)
         {
             _encoding = encoding ?? throw new ArgumentNullException(nameof(encoding));
 
@@ -35,7 +35,7 @@ namespace PostalRegistry.Projections.Extract.PostalInformationExtract
                         PostName = string.Empty,
                         DbaseRecord = new PostalDbaseRecord
                         {
-                            id = { Value = $"{IdUri}/{message.Message.PostalCode}" },
+                            id = { Value = $"{extractConfig.Value.DataVlaanderenNamespace}/{message.Message.PostalCode}" },
                             postinfoid = { Value = message.Message.PostalCode },
                             versie = { Value = message.Message.Provenance.Timestamp.ToBelgianDateTimeOffset().DateTime },
                         }.ToBytes(_encoding)
@@ -93,7 +93,7 @@ namespace PostalRegistry.Projections.Extract.PostalInformationExtract
                                     DbaseRecord = new PostalDbaseRecord
                                     {
                                         versie = { Value = message.Message.Provenance.Timestamp.ToBelgianDateTimeOffset().DateTime },
-                                        id = { Value = $"{IdUri}/{message.Message.PostalCode}" },
+                                        id = { Value = $"{extractConfig.Value.DataVlaanderenNamespace}/{message.Message.PostalCode}" },
                                         postinfoid = { Value = message.Message.PostalCode },
                                         postnaam = { Value = message.Message.Name },
                                         status = { Value = postalInformationDbaseRecord.status.Value }
