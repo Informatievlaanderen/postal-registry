@@ -1,3 +1,10 @@
+## [1.11.2](https://github.com/informatievlaanderen/postal-registry/compare/v1.11.1...v1.11.2) (2019-08-26)
+
+
+### Bug Fixes
+
+* use fixed datadog tracing ([185ec40](https://github.com/informatievlaanderen/postal-registry/commit/185ec40))
+
 ## [1.11.1](https://github.com/informatievlaanderen/postal-registry/compare/v1.11.0...v1.11.1) (2019-08-26)
 
 
