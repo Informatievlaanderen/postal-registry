@@ -1,3 +1,10 @@
+## [1.11.1](https://github.com/informatievlaanderen/postal-registry/compare/v1.11.0...v1.11.1) (2019-08-26)
+
+
+### Bug Fixes
+
+* fix swagger ([6092128](https://github.com/informatievlaanderen/postal-registry/commit/6092128))
+
 # [1.11.0](https://github.com/informatievlaanderen/postal-registry/compare/v1.10.0...v1.11.0) (2019-08-26)
 
 
