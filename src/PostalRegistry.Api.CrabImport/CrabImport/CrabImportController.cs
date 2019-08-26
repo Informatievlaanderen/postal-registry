@@ -36,7 +36,7 @@ namespace PostalRegistry.Api.CrabImport.CrabImport
         /// <returns></returns>
         [HttpPost]
         [ProducesResponseType(typeof(void), StatusCodes.Status202Accepted)]
-        [ProducesResponseType(typeof(BadRequestObjectResult), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         [SwaggerRequestExample(typeof(RegisterCrabImportRequest), typeof(RegisterCrabImportRequestExample))]
         [SwaggerResponseExample(StatusCodes.Status202Accepted, typeof(RegisterCrabImportResponseExamples), jsonConverter: typeof(StringEnumConverter))]

@@ -145,7 +145,16 @@ namespace PostalRegistry.Api.Legacy.Infrastructure
                     Api =
                     {
                         VersionProvider = apiVersionProvider,
-                        Info = groupName => $"Basisregisters.Vlaanderen - Postal Information Registry API {groupName}"
+                        Info = groupName => $"Basisregisters.Vlaanderen - Postal Information Registry API {groupName}",
+                        CSharpClientOptions =
+                        {
+                            ClassName = "PostalRegistry",
+                            Namespace = "Be.Vlaanderen.Basisregisters"
+                        },
+                        TypeScriptClientOptions =
+                        {
+                            ClassName = "PostalRegistry"
+                        }
                     },
                     Server =
                     {

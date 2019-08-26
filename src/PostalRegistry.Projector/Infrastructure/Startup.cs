@@ -156,7 +156,16 @@ namespace PostalRegistry.Projector.Infrastructure
                     Api =
                     {
                         VersionProvider = apiVersionProvider,
-                        Info = groupName => $"Basisregisters.Vlaanderen - Postal Information Registry API {groupName}"
+                        Info = groupName => $"Basisregisters.Vlaanderen - Postal Information Registry API {groupName}",
+                        CSharpClientOptions =
+                        {
+                            ClassName = "PostalRegistryProjector",
+                            Namespace = "Be.Vlaanderen.Basisregisters"
+                        },
+                        TypeScriptClientOptions =
+                        {
+                            ClassName = "PostalRegistryProjector"
+                        }
                     },
                     Server =
                     {
