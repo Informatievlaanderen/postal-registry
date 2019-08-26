@@ -24,6 +24,8 @@ nuget HtmlAgilityPack 1.11.12
 
 nuget CsvHelper 12.1.2
 
+nuget NetTopologySuite 1.15.3
+
 // For more healtchecks, look at https://github.com/Xabaril/AspNetCore.Diagnostics.HealthChecks
 nuget AspNetCore.HealthChecks.SqlServer 2.2.1
 
