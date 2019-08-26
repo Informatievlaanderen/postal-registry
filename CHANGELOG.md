@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/informatievlaanderen/postal-registry/compare/v1.10.0...v1.11.0) (2019-08-26)
+
+
+### Features
+
+* bump to .net 2.2.6 ([307d7ec](https://github.com/informatievlaanderen/postal-registry/commit/307d7ec))
+
 # [1.10.0](https://github.com/informatievlaanderen/postal-registry/compare/v1.9.0...v1.10.0) (2019-08-22)
 
 
