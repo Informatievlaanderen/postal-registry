@@ -1,3 +1,10 @@
+## [1.11.4](https://github.com/informatievlaanderen/postal-registry/compare/v1.11.3...v1.11.4) (2019-08-27)
+
+
+### Bug Fixes
+
+* make datadog tracing check more for nulls ([050e48b](https://github.com/informatievlaanderen/postal-registry/commit/050e48b))
+
 ## [1.11.3](https://github.com/informatievlaanderen/postal-registry/compare/v1.11.2...v1.11.3) (2019-08-27)
 
 
