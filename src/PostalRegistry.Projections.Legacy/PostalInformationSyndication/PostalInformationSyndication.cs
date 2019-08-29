@@ -3,6 +3,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
     using System;
     using System.Collections.Generic;
     using Be.Vlaanderen.Basisregisters.GrAr.Provenance;
+    using Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner.MigrationExtensions;
     using Infrastructure;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -110,6 +111,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
                 .ForSqlServerIsClustered();
 
             b.Property(x => x.Position).ValueGeneratedNever();
+            b.HasIndex(x => x.Position).IsColumnStore($"CI_{TableName}_Position");
 
             b.Property(x => x.PostalCode).IsRequired();
             b.Property(x => x.ChangeType);
