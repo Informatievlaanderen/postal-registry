@@ -1,3 +1,10 @@
+## [1.11.5](https://github.com/informatievlaanderen/postal-registry/compare/v1.11.4...v1.11.5) (2019-08-29)
+
+
+### Bug Fixes
+
+* use columnstore for legacy syndication ([74e2a30](https://github.com/informatievlaanderen/postal-registry/commit/74e2a30))
+
 ## [1.11.4](https://github.com/informatievlaanderen/postal-registry/compare/v1.11.3...v1.11.4) (2019-08-27)
 
 
