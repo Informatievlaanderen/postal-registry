@@ -3,6 +3,7 @@ namespace PostalRegistry.Projections.Extract
     using System;
     using System.Data.SqlClient;
     using Autofac;
+    using Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner.MigrationExtensions;
     using Be.Vlaanderen.Basisregisters.DataDog.Tracing.Sql.EntityFrameworkCore;
     using Infrastructure;
     using Microsoft.EntityFrameworkCore;
@@ -51,7 +52,8 @@ namespace PostalRegistry.Projections.Extract
                     {
                         sqlServerOptions.EnableRetryOnFailure();
                         sqlServerOptions.MigrationsHistoryTable(MigrationTables.Extract, Schema.Extract);
-                    }));
+                    })
+                    .UseExtendedSqlServerMigrations());
         }
 
         private static void RunInMemoryDb(

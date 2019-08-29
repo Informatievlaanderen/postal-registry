@@ -3,6 +3,7 @@ namespace PostalRegistry.Projections.Legacy
     using System;
     using System.IO;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner;
+    using Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner.MigrationExtensions;
     using Infrastructure;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Design;
@@ -44,7 +45,8 @@ namespace PostalRegistry.Projections.Legacy
                     {
                         sqlServerOptions.EnableRetryOnFailure();
                         sqlServerOptions.MigrationsHistoryTable(MigrationTables.Legacy, Schema.Legacy);
-                    });
+                    })
+                    .UseExtendedSqlServerMigrations();
 
                 return new LegacyContext(builder.Options);
             }

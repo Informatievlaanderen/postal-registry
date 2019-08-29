@@ -52,12 +52,12 @@ nuget Be.Vlaanderen.Basisregisters.CommandHandling.SqlStreamStore ~> 3.2
 nuget Be.Vlaanderen.Basisregisters.EventHandling ~> 1.1
 nuget Be.Vlaanderen.Basisregisters.EventHandling.Autofac ~> 1.1
 
-nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.LastChangedList ~> 4.3
-nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore ~> 4.3
-nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore.Autofac ~> 4.3
-nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner ~> 4.3
-nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector.Testing ~> 4.3
-nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Syndication ~> 4.3
+nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.LastChangedList ~> 4.4
+nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore ~> 4.4
+nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore.Autofac ~> 4.4
+nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner ~> 4.4
+nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector.Testing ~> 4.4
+nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Syndication ~> 4.4
 
 nuget Be.Vlaanderen.Basisregisters.Projector ~> 3.3
 
@@ -91,7 +91,7 @@ nuget xunit 2.4.1
 nuget xunit.runner.visualstudio 2.4.1
 nuget xunit.categories 2.0.4
 nuget AutoFixture 4.11.0
-nuget FluentAssertions 5.8.0
+nuget FluentAssertions 5.9.0
 
 // BUILD STUFF
 nuget FAKE 4.64.13 // Don't update to v5!

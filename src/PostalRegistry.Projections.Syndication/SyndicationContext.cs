@@ -3,6 +3,7 @@ namespace PostalRegistry.Projections.Syndication
     using System;
     using System.IO;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner;
+    using Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner.MigrationExtensions;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Design;
     using Microsoft.Extensions.Configuration;
@@ -44,7 +45,8 @@ namespace PostalRegistry.Projections.Syndication
                     {
                         sqlServerOptions.EnableRetryOnFailure();
                         sqlServerOptions.MigrationsHistoryTable(MigrationTables.Syndication, Schema.Syndication);
-                    });
+                    })
+                    .UseExtendedSqlServerMigrations();
 
                 return new SyndicationContext(builder.Options);
             }

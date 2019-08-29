@@ -5,6 +5,7 @@ namespace PostalRegistry.Projections.Syndication.Modules
     using System.Net.Http;
     using Be.Vlaanderen.Basisregisters.DataDog.Tracing.Http;
     using Be.Vlaanderen.Basisregisters.DataDog.Tracing.Sql.EntityFrameworkCore;
+    using Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner.MigrationExtensions;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Syndication;
     using Autofac;
     using Infrastructure;
@@ -50,7 +51,8 @@ namespace PostalRegistry.Projections.Syndication.Modules
                     {
                         sqlServerOptions.EnableRetryOnFailure();
                         sqlServerOptions.MigrationsHistoryTable(MigrationTables.Syndication, Schema.Syndication);
-                    }));
+                    })
+                    .UseExtendedSqlServerMigrations());
         }
 
         private static void RunInMemoryDb(
