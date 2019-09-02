@@ -28,8 +28,6 @@ namespace PostalRegistry.Projections.Syndication
             ct.Register(() => Closing.Set());
             Console.CancelKeyPress += (sender, eventArgs) => CancellationTokenSource.Cancel();
 
-            Console.WriteLine("Starting PostalRegistry.Projections.Syndication");
-
             AppDomain.CurrentDomain.FirstChanceException += (sender, eventArgs) =>
                 Log.Debug(
                     eventArgs.Exception,
@@ -49,6 +47,8 @@ namespace PostalRegistry.Projections.Syndication
 
             var container = ConfigureServices(configuration);
 
+            Log.Information("Starting PostalRegistry.Projections.Syndication");
+            
             try
             {
                 await MigrationsHelper.RunAsync(
@@ -58,7 +58,7 @@ namespace PostalRegistry.Projections.Syndication
 
                 await Task.WhenAll(StartRunners(configuration, container, ct));
 
-                Console.WriteLine("Running... Press CTRL + C to exit.");
+                Log.Information("Running... Press CTRL + C to exit.");
                 Closing.WaitOne();
             }
             catch (Exception e)
@@ -71,7 +71,7 @@ namespace PostalRegistry.Projections.Syndication
                 throw;
             }
 
-            Console.WriteLine("Stopping...");
+            Log.Information("Stopping...");
             Closing.Close();
         }
 
