@@ -1,3 +1,10 @@
+## [1.11.7](https://github.com/informatievlaanderen/postal-registry/compare/v1.11.6...v1.11.7) (2019-09-02)
+
+
+### Bug Fixes
+
+* do not log to console writeline ([a12f04f](https://github.com/informatievlaanderen/postal-registry/commit/a12f04f))
+
 ## [1.11.6](https://github.com/informatievlaanderen/postal-registry/compare/v1.11.5...v1.11.6) (2019-09-02)
 
 
