@@ -1,3 +1,10 @@
+## [1.11.6](https://github.com/informatievlaanderen/postal-registry/compare/v1.11.5...v1.11.6) (2019-09-02)
+
+
+### Bug Fixes
+
+* properly report errors ([1fb118d](https://github.com/informatievlaanderen/postal-registry/commit/1fb118d))
+
 ## [1.11.5](https://github.com/informatievlaanderen/postal-registry/compare/v1.11.4...v1.11.5) (2019-08-29)
 
 
