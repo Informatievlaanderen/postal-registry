@@ -94,6 +94,6 @@ nuget AutoFixture 4.11.0
 nuget FluentAssertions 5.9.0
 
 // BUILD STUFF
-nuget FAKE 4.64.13 // Don't update to v5!
+nuget FAKE 4.64.17 // Don't update to v5!
 nuget SourceLink.Embed.AllSourceFiles 2.8.3 copy_local: true
 nuget SourceLink.Copy.PdbFiles 2.8.3 copy_local: true
