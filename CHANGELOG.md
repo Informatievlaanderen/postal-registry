@@ -1,3 +1,10 @@
+## [1.11.8](https://github.com/informatievlaanderen/postal-registry/compare/v1.11.7...v1.11.8) (2019-09-03)
+
+
+### Bug Fixes
+
+* update problemdetails for xml response GR-829 ([b5ceb80](https://github.com/informatievlaanderen/postal-registry/commit/b5ceb80))
+
 ## [1.11.7](https://github.com/informatievlaanderen/postal-registry/compare/v1.11.6...v1.11.7) (2019-09-02)
 
 
