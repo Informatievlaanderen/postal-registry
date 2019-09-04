@@ -14,6 +14,6 @@ namespace PostalRegistry.Api.CrabImport.Infrastructure
         public IActionResult Get()
             => Request.Headers[HeaderNames.Accept].ToString().Contains("text/html")
                 ? (IActionResult)new RedirectResult("/docs")
-                : new OkObjectResult($"Welcome to the Basisregisters Vlaanderen Postal Information Api v{Assembly.GetEntryAssembly().GetName().Version}.");
+                : new OkObjectResult($"Welcome to the Basisregisters Vlaanderen Postal Information CrabImport Api {Assembly.GetEntryAssembly().GetVersionText()}.");
     }
 }

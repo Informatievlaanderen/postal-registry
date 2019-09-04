@@ -38,9 +38,10 @@ namespace PostalRegistry.Projections.Syndication.Municipality
 
         private static async Task AddSyndicationItemEntry(AtomEntry<SyndicationContent<Gemeente>> entry, SyndicationContext context, CancellationToken ct)
         {
-            var municipalityLatestItem = await context
-                .MunicipalityLatestItems
-                .FindAsync(entry.Content.Object.Id);
+            var municipalityLatestItem =
+                await context
+                    .MunicipalityLatestItems
+                    .FindAsync(entry.Content.Object.Id);
 
             if (municipalityLatestItem == null)
             {
@@ -106,9 +107,6 @@ namespace PostalRegistry.Projections.Syndication.Municipality
         private static Task DoNothing(
             AtomEntry<SyndicationContent<Gemeente>> entry,
             SyndicationContext context,
-            CancellationToken ct)
-        {
-            return Task.CompletedTask;
-        }
+            CancellationToken ct) => Task.CompletedTask;
     }
 }

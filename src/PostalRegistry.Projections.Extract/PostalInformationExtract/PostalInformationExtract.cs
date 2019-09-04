@@ -13,7 +13,7 @@ namespace PostalRegistry.Projections.Extract.PostalInformationExtract
 
     public class PostalExtractItemConfiguration : IEntityTypeConfiguration<PostalInformationExtractItem>
     {
-        public const string TableName = "Postal";
+        private const string TableName = "Postal";
 
         public void Configure(EntityTypeBuilder<PostalInformationExtractItem> builder)
         {

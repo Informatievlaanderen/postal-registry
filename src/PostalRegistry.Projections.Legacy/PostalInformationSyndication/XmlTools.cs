@@ -11,48 +11,41 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
 
     public static class XmlTools
     {
-        private static readonly Type[] WriteTypes = new[] {
-            typeof(string), typeof(DateTime), typeof(Enum),
-            typeof(decimal), typeof(Guid), typeof(Instant),
-            typeof(LocalDate), typeof(LocalDateTime), typeof(DateTimeOffset),
-            typeof(Organisation), typeof(Modification)
+        private static readonly Type[] WriteTypes = {
+            typeof(string),
+            typeof(DateTime),
+            typeof(Enum),
+            typeof(decimal),
+            typeof(Guid),
+            typeof(Instant),
+            typeof(LocalDate),
+            typeof(LocalDateTime),
+            typeof(DateTimeOffset),
+            typeof(Organisation),
+            typeof(Modification)
         };
 
         /// <summary>
         /// Preferred way to exclude properties
         /// </summary>
-        private static readonly Type[] ExcludeTypes = new[]
-        {
+        private static readonly Type[] ExcludeTypes = {
             typeof(Application)
         };
 
         /// <summary>
         /// Alternative way if property is a primitive type or included in WriteTypes.
         /// </summary>
-        private static readonly string[] ExcludePropertyNames = new[]
-        {
+        private static readonly string[] ExcludePropertyNames = {
             "Operator"
         };
 
-        private static bool IsSimpleType(this Type type)
-        {
-            return type.IsPrimitive || WriteTypes.Contains(type);
-        }
+        private static bool IsSimpleType(this Type type) => type.IsPrimitive || WriteTypes.Contains(type);
 
-        private static bool IsExcludedType(this Type type)
-        {
-            return ExcludeTypes.Contains(type);
-        }
+        private static bool IsExcludedType(this Type type) => ExcludeTypes.Contains(type);
 
-        private static bool IsExcludedPropertyName(this string propertyName)
-        {
-            return ExcludePropertyNames.Contains(propertyName);
-        }
+        private static bool IsExcludedPropertyName(this string propertyName) => ExcludePropertyNames.Contains(propertyName);
 
-        public static XElement ToXml(this object input)
-        {
-            return input.ToXml(null);
-        }
+        public static XElement ToXml(this object input) => input.ToXml(null);
 
         public static XElement ToXml(this object input, string element, int? arrayIndex = null, string arrayName = null)
         {
@@ -61,7 +54,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
 
             if (string.IsNullOrEmpty(element))
             {
-                string name = input.GetType().Name;
+                var name = input.GetType().Name;
                 element = name.Contains("AnonymousType")
                     ? "Object"
                     : arrayIndex != null
@@ -90,28 +83,26 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
             return ret;
         }
 
-        private static readonly Type[] FlatternTypes = new[] {
+        private static readonly Type[] FlatternTypes = {
             typeof(string)
         };
 
-        public static bool IsEnumerable(this Type type)
-        {
-            return typeof(IEnumerable).IsAssignableFrom(type) && !FlatternTypes.Contains(type);
-        }
+        public static bool IsEnumerable(this Type type) => typeof(IEnumerable).IsAssignableFrom(type) && !FlatternTypes.Contains(type);
 
         private static XElement GetEnumerableElements(PropertyInfo info, IEnumerable input)
         {
             var name = XmlConvert.EncodeName(info.Name);
 
-            XElement rootElement = new XElement(name);
+            var rootElement = new XElement(name);
 
-            int i = 0;
+            var i = 0;
             foreach (var v in input)
             {
-                XElement childElement = v.GetType().IsSimpleType() || v.GetType().IsEnum ? new XElement(name + "_" + i, v) : ToXml(v, null, i, name);
+                var childElement = v.GetType().IsSimpleType() || v.GetType().IsEnum ? new XElement(name + "_" + i, v) : ToXml(v, null, i, name);
                 rootElement.Add(childElement);
                 i++;
             }
+
             return rootElement;
         }
     }
