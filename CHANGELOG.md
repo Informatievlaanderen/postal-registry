@@ -1,3 +1,10 @@
+## [1.11.9](https://github.com/informatievlaanderen/postal-registry/compare/v1.11.8...v1.11.9) (2019-09-04)
+
+
+### Bug Fixes
+
+* report correct version number ([a51bfbd](https://github.com/informatievlaanderen/postal-registry/commit/a51bfbd))
+
 ## [1.11.8](https://github.com/informatievlaanderen/postal-registry/compare/v1.11.7...v1.11.8) (2019-09-03)
 
 
