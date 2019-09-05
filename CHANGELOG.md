@@ -1,3 +1,10 @@
+## [1.11.10](https://github.com/informatievlaanderen/postal-registry/compare/v1.11.9...v1.11.10) (2019-09-05)
+
+
+### Bug Fixes
+
+* initial jira version ([3a1ec36](https://github.com/informatievlaanderen/postal-registry/commit/3a1ec36))
+
 ## [1.11.9](https://github.com/informatievlaanderen/postal-registry/compare/v1.11.8...v1.11.9) (2019-09-04)
 
 
