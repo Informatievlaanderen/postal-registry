@@ -1,3 +1,10 @@
+# [1.12.0](https://github.com/informatievlaanderen/postal-registry/compare/v1.11.10...v1.12.0) (2019-09-12)
+
+
+### Features
+
+* keep track of how many times lastchanged has errored ([4de52be](https://github.com/informatievlaanderen/postal-registry/commit/4de52be))
+
 ## [1.11.10](https://github.com/informatievlaanderen/postal-registry/compare/v1.11.9...v1.11.10) (2019-09-05)
 
 
