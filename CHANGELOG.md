@@ -1,3 +1,10 @@
+## [1.12.1](https://github.com/informatievlaanderen/postal-registry/compare/v1.12.0...v1.12.1) (2019-09-13)
+
+
+### Bug Fixes
+
+* update redis lastchangedlist to log time of lasterror ([0aea033](https://github.com/informatievlaanderen/postal-registry/commit/0aea033))
+
 # [1.12.0](https://github.com/informatievlaanderen/postal-registry/compare/v1.11.10...v1.12.0) (2019-09-12)
 
 
