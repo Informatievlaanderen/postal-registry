@@ -1,3 +1,10 @@
+## [1.12.2](https://github.com/informatievlaanderen/postal-registry/compare/v1.12.1...v1.12.2) (2019-09-16)
+
+
+### Bug Fixes
+
+* use generic dbtraceconnection ([7da2d0b](https://github.com/informatievlaanderen/postal-registry/commit/7da2d0b))
+
 ## [1.12.1](https://github.com/informatievlaanderen/postal-registry/compare/v1.12.0...v1.12.1) (2019-09-13)
 
 
