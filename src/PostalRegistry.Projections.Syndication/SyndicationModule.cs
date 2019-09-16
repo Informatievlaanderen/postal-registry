@@ -42,12 +42,12 @@ namespace PostalRegistry.Projections.Syndication.Modules
             string backofficeProjectionsConnectionString)
         {
             services
-                .AddScoped(s => new TraceDbConnection(
+                .AddScoped(s => new TraceDbConnection<SyndicationContext>(
                     new SqlConnection(backofficeProjectionsConnectionString),
                     configuration["DataDog:ServiceName"]))
                 .AddDbContext<SyndicationContext>((provider, options) => options
                     .UseLoggerFactory(loggerFactory)
-                    .UseSqlServer(provider.GetRequiredService<TraceDbConnection>(), sqlServerOptions =>
+                    .UseSqlServer(provider.GetRequiredService<TraceDbConnection<SyndicationContext>>(), sqlServerOptions =>
                     {
                         sqlServerOptions.EnableRetryOnFailure();
                         sqlServerOptions.MigrationsHistoryTable(MigrationTables.Syndication, Schema.Syndication);
