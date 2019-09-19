@@ -1,3 +1,10 @@
+# [1.13.0](https://github.com/informatievlaanderen/postal-registry/compare/v1.12.2...v1.13.0) (2019-09-19)
+
+
+### Features
+
+* upgrade NTS & Shaperon packages ([e448d80](https://github.com/informatievlaanderen/postal-registry/commit/e448d80))
+
 ## [1.12.2](https://github.com/informatievlaanderen/postal-registry/compare/v1.12.1...v1.12.2) (2019-09-16)
 
 
