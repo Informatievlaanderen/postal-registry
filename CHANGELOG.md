@@ -1,3 +1,10 @@
+# [1.14.0](https://github.com/informatievlaanderen/postal-registry/compare/v1.13.0...v1.14.0) (2019-09-25)
+
+
+### Features
+
+* upgrade projector and removed explicit start of projections ([a0d2683](https://github.com/informatievlaanderen/postal-registry/commit/a0d2683))
+
 # [1.13.0](https://github.com/informatievlaanderen/postal-registry/compare/v1.12.2...v1.13.0) (2019-09-19)
 
 
