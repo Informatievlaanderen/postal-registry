@@ -177,9 +177,6 @@ namespace PostalRegistry.Projector.Infrastructure
                         AfterMiddleware = x => x.UseMiddleware<AddNoCacheHeadersMiddleware>()
                     }
                 });
-
-            var projectionsManager = serviceProvider.GetRequiredService<IConnectedProjectionsManager>();
-            projectionsManager.Start();
         }
 
         private static string GetApiLeadingText(ApiVersionDescription description)
