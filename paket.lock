@@ -294,7 +294,7 @@ NUGET
       Microsoft.Extensions.Http (>= 2.2)
       Microsoft.Extensions.Logging (>= 2.2)
       Microsoft.SyndicationFeed.ReaderWriter (>= 1.0.2)
-    Be.Vlaanderen.Basisregisters.Projector (4.1.1)
+    Be.Vlaanderen.Basisregisters.Projector (4.2)
       Autofac (>= 4.9.4)
       Autofac.Extensions.DependencyInjection (>= 4.4)
       Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector (>= 4.3 < 5.0)
