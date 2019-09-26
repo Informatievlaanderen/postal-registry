@@ -1,3 +1,10 @@
+## [1.14.1](https://github.com/informatievlaanderen/postal-registry/compare/v1.14.0...v1.14.1) (2019-09-26)
+
+
+### Bug Fixes
+
+* resume projections on startup ([4af0d84](https://github.com/informatievlaanderen/postal-registry/commit/4af0d84))
+
 # [1.14.0](https://github.com/informatievlaanderen/postal-registry/compare/v1.13.0...v1.14.0) (2019-09-25)
 
 
