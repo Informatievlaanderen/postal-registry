@@ -1,3 +1,11 @@
+## [1.14.2](https://github.com/informatievlaanderen/postal-registry/compare/v1.14.1...v1.14.2) (2019-10-14)
+
+
+### Bug Fixes
+
+* force build :( ([2ceb444](https://github.com/informatievlaanderen/postal-registry/commit/2ceb444))
+* push to correct docker repo ([84aa15e](https://github.com/informatievlaanderen/postal-registry/commit/84aa15e))
+
 ## [1.14.1](https://github.com/informatievlaanderen/postal-registry/compare/v1.14.0...v1.14.1) (2019-09-26)
 
 
