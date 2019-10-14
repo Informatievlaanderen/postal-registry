@@ -49,7 +49,7 @@ let product = "Basisregisters Vlaanderen"
 let copyright = "Copyright (c) Vlaamse overheid"
 let company = "Vlaamse overheid"
 
-let dockerRepository = "postalregistry"
+let dockerRepository = "postal-registry"
 let assemblyVersionNumber = (sprintf "2.%s")
 let nugetVersionNumber = (sprintf "%s")
 
@@ -91,8 +91,8 @@ Target "Pack_Solution" (fun _ ->
     "PostalRegistry.Api.CrabImport"
   ] |> List.iter pack)
 
-Target "Containerize_Projector" (fun _ -> containerize "PostalRegistry.Projector" "projections")
-Target "PushContainer_Projector" (fun _ -> push "projections")
+Target "Containerize_Projector" (fun _ -> containerize "PostalRegistry.Projector" "projector")
+Target "PushContainer_Projector" (fun _ -> push "projector")
 
 Target "Containerize_ApiLegacy" (fun _ -> containerize "PostalRegistry.Api.Legacy" "api-legacy")
 Target "PushContainer_ApiLegacy" (fun _ -> push "api-legacy")
