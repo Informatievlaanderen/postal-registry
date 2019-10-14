@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "PostalRegistry.EventGenerator.CrabPostinfo": {
+      "commandName": "Project",
+      "commandLineArgs": "init -c -l Trace"
+    }
+  }
+}
