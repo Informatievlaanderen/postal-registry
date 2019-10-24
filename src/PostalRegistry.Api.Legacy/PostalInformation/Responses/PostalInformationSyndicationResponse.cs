@@ -157,7 +157,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         public PostalInfoSyndicationContent(
             string naamruimte,
             string postcode,
-            DateTimeOffset version,
+            DateTimeOffset? version,
             PostalInformationStatus? status,
             IEnumerable<PostalName> postalNames,
             string municipalityNisCode,
