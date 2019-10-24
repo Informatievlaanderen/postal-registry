@@ -38,7 +38,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         /// De identificator van de postcode.
         /// </summary>
         [DataMember(Name = "Identificator", Order = 1)]
-        public Identificator Identificator { get; set; }
+        public PostinfoIdentificator Identificator { get; set; }
 
         /// <summary>
         ///  De URL die naar de details van de meest recente versie van de postcode leidt.
@@ -54,7 +54,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 
         public PostalInformationListItemResponse(string postalCode, string naamruimte, string detail, DateTimeOffset? version)
         {
-            Identificator = new Identificator(naamruimte, postalCode, version);
+            Identificator = new PostinfoIdentificator(naamruimte, postalCode, version);
             Detail = new Uri(string.Format(detail, postalCode));
         }
     }

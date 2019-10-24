@@ -128,7 +128,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         /// De identificator van de postcode.
         /// </summary>
         [DataMember(Name = "Identificator", Order = 1)]
-        public Identificator Identificator { get; set; }
+        public PostinfoIdentificator Identificator { get; set; }
 
         /// <summary>
         /// De namen van het gebied dat de postcode beslaat, in meerdere talen.
@@ -165,7 +165,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
             string reason)
         {
             PostalCode = postcode;
-            Identificator = new Identificator(naamruimte, postcode, version);
+            Identificator = new PostinfoIdentificator(naamruimte, postcode, version);
             Status = status?.ConvertFromPostalInformationStatus();
             MunicipalityNisCode = municipalityNisCode;
             PostalNames = postalNames?
