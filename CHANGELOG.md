@@ -1,3 +1,10 @@
+## [1.14.4](https://github.com/informatievlaanderen/postal-registry/compare/v1.14.3...v1.14.4) (2019-10-24)
+
+
+### Bug Fixes
+
+* upgrade grar common ([4865705](https://github.com/informatievlaanderen/postal-registry/commit/4865705))
+
 ## [1.14.3](https://github.com/informatievlaanderen/postal-registry/compare/v1.14.2...v1.14.3) (2019-10-24)
 
 
