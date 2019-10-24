@@ -52,7 +52,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         [DataMember(Name = "Postnamen", Order = 3)]
         public List<Postnaam> Postnamen { get; set; }
 
-        public PostalInformationListItemResponse(string postalCode, string naamruimte, string detail, DateTimeOffset? version)
+        public PostalInformationListItemResponse(string postalCode, string naamruimte, string detail, DateTimeOffset version)
         {
             Identificator = new Identificator(naamruimte, postalCode, version);
             Detail = new Uri(string.Format(detail, postalCode));
