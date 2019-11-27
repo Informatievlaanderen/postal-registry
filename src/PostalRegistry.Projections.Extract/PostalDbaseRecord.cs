@@ -8,7 +8,7 @@ namespace PostalRegistry.Projections.Extract
 
         public DbaseString id { get; }
         public DbaseString postinfoid { get; }
-        public DbaseDateTime versie { get; }
+        public DbaseDateTime versieid { get; }
         public DbaseString postnaam { get; }
         public DbaseString status { get; }
 
@@ -16,7 +16,7 @@ namespace PostalRegistry.Projections.Extract
         {
             id = new DbaseString(Schema.id);
             postinfoid = new DbaseString(Schema.postinfoid);
-            versie = new DbaseDateTime(Schema.versie);
+            versieid = new DbaseDateTime(Schema.versieid);
             postnaam = new DbaseString(Schema.postnaam);
             status = new DbaseString(Schema.status);
 
@@ -24,7 +24,7 @@ namespace PostalRegistry.Projections.Extract
             {
                 id,
                 postinfoid,
-                versie,
+                versieid,
                 postnaam,
                 status
             };
