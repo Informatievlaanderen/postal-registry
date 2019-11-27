@@ -1,3 +1,10 @@
+## [1.14.6](https://github.com/informatievlaanderen/postal-registry/compare/v1.14.5...v1.14.6) (2019-11-27)
+
+
+### Bug Fixes
+
+* extract correct filename and versie column GR-1097 GR-1096 ([e218481](https://github.com/informatievlaanderen/postal-registry/commit/e218481))
+
 ## [1.14.5](https://github.com/informatievlaanderen/postal-registry/compare/v1.14.4...v1.14.5) (2019-10-24)
 
 ## [1.14.4](https://github.com/informatievlaanderen/postal-registry/compare/v1.14.3...v1.14.4) (2019-10-24)
