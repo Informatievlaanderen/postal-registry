@@ -19,7 +19,7 @@ namespace PostalRegistry.Api.Extract.Extracts
     [ApiExplorerSettings(GroupName = "Extract")]
     public class ExtractController : ApiController
     {
-        public static readonly string ZipName = "postinfo";
+        public static readonly string ZipName = "Postinfo";
 
         /// <summary>
         /// Vraag een dump van het volledige register op.

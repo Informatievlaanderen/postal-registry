@@ -37,7 +37,7 @@ namespace PostalRegistry.Projections.Extract.PostalInformationExtract
                         {
                             id = { Value = $"{extractConfig.Value.DataVlaanderenNamespace}/{message.Message.PostalCode}" },
                             postinfoid = { Value = message.Message.PostalCode },
-                            versie = { Value = message.Message.Provenance.Timestamp.ToBelgianDateTimeOffset().DateTime },
+                            versieid = { Value = message.Message.Provenance.Timestamp.ToBelgianDateTimeOffset().DateTime },
                         }.ToBytes(_encoding)
                     }, ct);
             });
@@ -92,7 +92,7 @@ namespace PostalRegistry.Projections.Extract.PostalInformationExtract
                                     PostName = message.Message.Name,
                                     DbaseRecord = new PostalDbaseRecord
                                     {
-                                        versie = { Value = message.Message.Provenance.Timestamp.ToBelgianDateTimeOffset().DateTime },
+                                        versieid = { Value = message.Message.Provenance.Timestamp.ToBelgianDateTimeOffset().DateTime },
                                         id = { Value = $"{extractConfig.Value.DataVlaanderenNamespace}/{message.Message.PostalCode}" },
                                         postinfoid = { Value = message.Message.PostalCode },
                                         postnaam = { Value = message.Message.Name },
@@ -142,7 +142,7 @@ namespace PostalRegistry.Projections.Extract.PostalInformationExtract
         private void UpdateVersie(IEnumerable<PostalInformationExtractItem> postalInformationSet, Instant timestamp)
         {
             foreach (var postalInformation in postalInformationSet)
-                UpdateRecord(postalInformation, record => record.versie.Value = timestamp.ToBelgianDateTimeOffset().DateTime);
+                UpdateRecord(postalInformation, record => record.versieid.Value = timestamp.ToBelgianDateTimeOffset().DateTime);
         }
 
         private void UpdateRecord(PostalInformationExtractItem postalInformation, Action<PostalDbaseRecord> updateFunc)
