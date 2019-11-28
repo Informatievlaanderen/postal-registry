@@ -14,7 +14,7 @@ namespace PostalRegistry.Projections.Extract
         {
             DbaseField.CreateStringField(new DbaseFieldName(nameof(id)), new DbaseFieldLength(254)),
             DbaseField.CreateStringField(new DbaseFieldName(nameof(postinfoid)), new DbaseFieldLength(4)),
-            DbaseField.CreateDateTimeField(new DbaseFieldName(nameof(versieid))),
+            DbaseField.CreateStringField(new DbaseFieldName(nameof(versieid)), new DbaseFieldLength(25)),
             DbaseField.CreateStringField(new DbaseFieldName(nameof(postnaam)), new DbaseFieldLength(254)),
             DbaseField.CreateStringField(new DbaseFieldName(nameof(status)), new DbaseFieldLength(50))
         };

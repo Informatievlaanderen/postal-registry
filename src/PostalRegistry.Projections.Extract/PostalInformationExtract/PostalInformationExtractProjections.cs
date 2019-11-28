@@ -5,6 +5,7 @@ namespace PostalRegistry.Projections.Extract.PostalInformationExtract
     using System.Linq;
     using System.Text;
     using Be.Vlaanderen.Basisregisters.GrAr.Common;
+    using Be.Vlaanderen.Basisregisters.GrAr.Extracts;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore;
     using Microsoft.Extensions.Options;
@@ -37,7 +38,7 @@ namespace PostalRegistry.Projections.Extract.PostalInformationExtract
                         {
                             id = { Value = $"{extractConfig.Value.DataVlaanderenNamespace}/{message.Message.PostalCode}" },
                             postinfoid = { Value = message.Message.PostalCode },
-                            versieid = { Value = message.Message.Provenance.Timestamp.ToBelgianDateTimeOffset().DateTime },
+                            versieid = { Value = message.Message.Provenance.Timestamp.ToBelgianDateTimeOffset().FromDateTimeOffset() },
                         }.ToBytes(_encoding)
                     }, ct);
             });
@@ -92,7 +93,7 @@ namespace PostalRegistry.Projections.Extract.PostalInformationExtract
                                     PostName = message.Message.Name,
                                     DbaseRecord = new PostalDbaseRecord
                                     {
-                                        versieid = { Value = message.Message.Provenance.Timestamp.ToBelgianDateTimeOffset().DateTime },
+                                        versieid = { Value = message.Message.Provenance.Timestamp.ToBelgianDateTimeOffset().FromDateTimeOffset() },
                                         id = { Value = $"{extractConfig.Value.DataVlaanderenNamespace}/{message.Message.PostalCode}" },
                                         postinfoid = { Value = message.Message.PostalCode },
                                         postnaam = { Value = message.Message.Name },
@@ -142,7 +143,7 @@ namespace PostalRegistry.Projections.Extract.PostalInformationExtract
         private void UpdateVersie(IEnumerable<PostalInformationExtractItem> postalInformationSet, Instant timestamp)
         {
             foreach (var postalInformation in postalInformationSet)
-                UpdateRecord(postalInformation, record => record.versieid.Value = timestamp.ToBelgianDateTimeOffset().DateTime);
+                UpdateRecord(postalInformation, record => record.versieid.SetValue(timestamp.ToBelgianDateTimeOffset()));
         }
 
         private void UpdateRecord(PostalInformationExtractItem postalInformation, Action<PostalDbaseRecord> updateFunc)
