@@ -13,16 +13,16 @@ namespace PostalRegistry.Projections.Extract.PostalInformationExtract
             Action<PostalInformationExtractItem> updateFunc,
             CancellationToken ct)
         {
-            var postalInfo = await context
+            var postalInformation = await context
                 .PostalInformationExtract
                 .FindAsync(postalCode, cancellationToken: ct);
 
-            if (postalInfo == null)
+            if (postalInformation == null)
                 throw DatabaseItemNotFound(postalCode);
 
-            updateFunc(postalInfo);
+            updateFunc(postalInformation);
 
-            return postalInfo;
+            return postalInformation;
         }
 
         private static ProjectionItemNotFoundException<PostalInformationExtractProjections> DatabaseItemNotFound(string postalId)
