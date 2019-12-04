@@ -1,8 +1,6 @@
 namespace PostalRegistry.Projections.Extract.PostalInformationExtract
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Text;
     using Be.Vlaanderen.Basisregisters.GrAr.Common;
     using Be.Vlaanderen.Basisregisters.GrAr.Extracts;
@@ -33,7 +31,6 @@ namespace PostalRegistry.Projections.Extract.PostalInformationExtract
                     .AddAsync(new PostalInformationExtractItem
                     {
                         PostalCode = message.Message.PostalCode,
-                        PostName = string.Empty,
                         DbaseRecord = new PostalDbaseRecord
                         {
                             id = { Value = $"{extractConfig.Value.DataVlaanderenNamespace}/{message.Message.PostalCode}" },
@@ -71,36 +68,18 @@ namespace PostalRegistry.Projections.Extract.PostalInformationExtract
             {
                 await context.FindAndUpdatePostalInformationExtract(
                     message.Message.PostalCode,
-                    async postalInformationSet =>
+                    postalInformation =>
                     {
-                        var postalInformationDbaseRecord = new PostalDbaseRecord();
-                        var firstPostalInformation = postalInformationSet.First();
-                        postalInformationDbaseRecord.FromBytes(firstPostalInformation.DbaseRecord, _encoding);
+                        UpdateRecord(postalInformation, postalInfo =>
+                            {
+                                // Grab the first postal information, if the name is empty, update that one, otherwise add a new one
+                                if (string.IsNullOrWhiteSpace(postalInfo.postnaam.Value))
+                                    postalInfo.postnaam.Value = message.Message.Name;
+                                else
+                                    postalInfo.postnaam.Value = postalInfo.postnaam.Value + "/" + message.Message.Name;
+                            });
 
-                        // Grab the first postal information, if the name is empty, update that one, otherwise add a new one
-                        if (string.IsNullOrWhiteSpace(postalInformationDbaseRecord.postnaam.Value))
-                        {
-                            postalInformationDbaseRecord.postnaam.Value = message.Message.Name;
-                            firstPostalInformation.DbaseRecord = postalInformationDbaseRecord.ToBytes(_encoding);
-                        }
-                        else
-                        {
-                            await context
-                                .PostalInformationExtract
-                                .AddAsync(new PostalInformationExtractItem
-                                {
-                                    PostalCode = message.Message.PostalCode,
-                                    PostName = message.Message.Name,
-                                    DbaseRecord = new PostalDbaseRecord
-                                    {
-                                        versieid = { Value = message.Message.Provenance.Timestamp.ToBelgianDateTimeOffset().FromDateTimeOffset() },
-                                        id = { Value = $"{extractConfig.Value.DataVlaanderenNamespace}/{message.Message.PostalCode}" },
-                                        postinfoid = { Value = message.Message.PostalCode },
-                                        postnaam = { Value = message.Message.Name },
-                                        status = { Value = postalInformationDbaseRecord.status.Value }
-                                    }.ToBytes(_encoding)
-                                }, ct);
-                        }
+                        UpdateVersie(postalInformation, message.Message.Provenance.Timestamp);
                     },
                     ct);
             });
@@ -109,22 +88,25 @@ namespace PostalRegistry.Projections.Extract.PostalInformationExtract
             {
                 await context.FindAndUpdatePostalInformationExtract(
                     message.Message.PostalCode,
-                    postalInformationSet =>
+                    postalInformation =>
                     {
-                        if (postalInformationSet.Count == 1)
+                        UpdateRecord(postalInformation, postalInfo =>
                         {
-                            var postalInformationDbaseRecord = new PostalDbaseRecord();
-                            var firstPostalInformation = postalInformationSet.First();
+                            var index = postalInfo.postnaam.Value.IndexOf(message.Message.Name);
+                            var count = message.Message.Name.Length;
+                            if (postalInfo.postnaam.Value.Contains('/')) //Has multiple names
+                            {
+                                if (index == 0)
+                                    count++;
+                                else
+                                    index--;
+                            }
 
-                            postalInformationDbaseRecord.FromBytes(firstPostalInformation.DbaseRecord, _encoding);
-                            postalInformationDbaseRecord.postnaam.Value = string.Empty;
-                            firstPostalInformation.DbaseRecord = postalInformationDbaseRecord.ToBytes(_encoding);
-                        }
-                        else
-                        {
-                            var postalInformationToRemove = postalInformationSet.First(x => x.PostName == message.Message.Name);
-                            context.Remove(postalInformationToRemove);
-                        }
+                            postalInfo.postnaam.Value = postalInfo.postnaam.Value.Remove(index, count);
+
+                        });
+
+                        UpdateVersie(postalInformation, message.Message.Provenance.Timestamp);
                     },
                     ct);
             });
@@ -134,17 +116,11 @@ namespace PostalRegistry.Projections.Extract.PostalInformationExtract
             When<Envelope<PostalInformationWasImportedFromBPost>>(async (context, message, ct) => DoNothing());
         }
 
-        private void UpdateStatus(IEnumerable<PostalInformationExtractItem> postalInformationSet, string status)
-        {
-            foreach (var postalInformation in postalInformationSet)
-                UpdateRecord(postalInformation, record => { record.status.Value = status; });
-        }
+        private void UpdateStatus(PostalInformationExtractItem postalInformation, string status)
+            => UpdateRecord(postalInformation, record => { record.status.Value = status; });
 
-        private void UpdateVersie(IEnumerable<PostalInformationExtractItem> postalInformationSet, Instant timestamp)
-        {
-            foreach (var postalInformation in postalInformationSet)
-                UpdateRecord(postalInformation, record => record.versieid.SetValue(timestamp.ToBelgianDateTimeOffset()));
-        }
+        private void UpdateVersie(PostalInformationExtractItem postalInformation, Instant timestamp)
+            => UpdateRecord(postalInformation, record => record.versieid.SetValue(timestamp.ToBelgianDateTimeOffset()));
 
         private void UpdateRecord(PostalInformationExtractItem postalInformation, Action<PostalDbaseRecord> updateFunc)
         {

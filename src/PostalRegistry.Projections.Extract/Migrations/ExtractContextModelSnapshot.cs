@@ -38,13 +38,12 @@ namespace PostalRegistry.Projections.Extract.Migrations
 
             modelBuilder.Entity("PostalRegistry.Projections.Extract.PostalInformationExtract.PostalInformationExtractItem", b =>
                 {
-                    b.Property<string>("PostalCode");
-
-                    b.Property<string>("PostName");
+                    b.Property<string>("PostalCode")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<byte[]>("DbaseRecord");
 
-                    b.HasKey("PostalCode", "PostName")
+                    b.HasKey("PostalCode")
                         .HasAnnotation("SqlServer:Clustered", false);
 
                     b.HasIndex("PostalCode")

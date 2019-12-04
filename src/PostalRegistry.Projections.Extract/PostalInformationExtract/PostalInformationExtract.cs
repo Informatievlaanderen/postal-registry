@@ -7,7 +7,6 @@ namespace PostalRegistry.Projections.Extract.PostalInformationExtract
     public class PostalInformationExtractItem
     {
         public string PostalCode { get; set; }
-        public string PostName { get; set; }
         public byte[] DbaseRecord { get; set; }
     }
 
@@ -18,7 +17,7 @@ namespace PostalRegistry.Projections.Extract.PostalInformationExtract
         public void Configure(EntityTypeBuilder<PostalInformationExtractItem> builder)
         {
             builder.ToTable(TableName, Schema.Extract)
-                .HasKey(p => new { p.PostalCode, p.PostName })
+                .HasKey(p => p.PostalCode)
                 .ForSqlServerIsClustered(false);
 
             builder.Property(p => p.DbaseRecord);
