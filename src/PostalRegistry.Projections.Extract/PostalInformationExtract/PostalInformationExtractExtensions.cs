@@ -1,50 +1,28 @@
 namespace PostalRegistry.Projections.Extract.PostalInformationExtract
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector;
-    using Microsoft.EntityFrameworkCore;
 
     public static class PostalInformationExtractExtensions
     {
-        public static async Task<List<PostalInformationExtractItem>> FindAndUpdatePostalInformationExtract(
+        public static async Task<PostalInformationExtractItem> FindAndUpdatePostalInformationExtract(
             this ExtractContext context,
             string postalCode,
-            Action<List<PostalInformationExtractItem>> updateFunc,
+            Action<PostalInformationExtractItem> updateFunc,
             CancellationToken ct)
         {
-            var postalInformationSet = (await context.AllVersions(postalCode, ct)).ToList();
+            var postalInfo = await context
+                .PostalInformationExtract
+                .FindAsync(postalCode, cancellationToken: ct);
 
-            if (postalInformationSet == null || postalInformationSet.Count == 0)
+            if (postalInfo == null)
                 throw DatabaseItemNotFound(postalCode);
 
-            updateFunc(postalInformationSet);
+            updateFunc(postalInfo);
 
-            return postalInformationSet;
-        }
-
-        public static async Task<IEnumerable<PostalInformationExtractItem>> AllVersions(
-            this ExtractContext context,
-            string postalCode,
-            CancellationToken cancellationToken)
-        {
-            var sqlEntities = await context
-                .PostalInformationExtract
-                .Where(x => x.PostalCode == postalCode)
-                .ToListAsync(cancellationToken);
-
-            var localEntities = context
-                .PostalInformationExtract
-                .Local
-                .Where(x => x.PostalCode == postalCode)
-                .ToList();
-
-            return sqlEntities
-                .Union(localEntities)
-                .Distinct();
+            return postalInfo;
         }
 
         private static ProjectionItemNotFoundException<PostalInformationExtractProjections> DatabaseItemNotFound(string postalId)

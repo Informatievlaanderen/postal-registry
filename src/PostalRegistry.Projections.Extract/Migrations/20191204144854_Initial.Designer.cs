@@ -10,8 +10,8 @@ using PostalRegistry.Projections.Extract;
 namespace PostalRegistry.Projections.Extract.Migrations
 {
     [DbContext(typeof(ExtractContext))]
-    [Migration("20190827115744_DesiredState")]
-    partial class DesiredState
+    [Migration("20191204144854_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -40,13 +40,12 @@ namespace PostalRegistry.Projections.Extract.Migrations
 
             modelBuilder.Entity("PostalRegistry.Projections.Extract.PostalInformationExtract.PostalInformationExtractItem", b =>
                 {
-                    b.Property<string>("PostalCode");
-
-                    b.Property<string>("PostName");
+                    b.Property<string>("PostalCode")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<byte[]>("DbaseRecord");
 
-                    b.HasKey("PostalCode", "PostName")
+                    b.HasKey("PostalCode")
                         .HasAnnotation("SqlServer:Clustered", false);
 
                     b.HasIndex("PostalCode")

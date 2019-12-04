@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PostalRegistry.Projections.Extract.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,12 +16,11 @@ namespace PostalRegistry.Projections.Extract.Migrations
                 columns: table => new
                 {
                     PostalCode = table.Column<string>(nullable: false),
-                    PostName = table.Column<string>(nullable: false),
                     DbaseRecord = table.Column<byte[]>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Postal", x => new { x.PostalCode, x.PostName })
+                    table.PrimaryKey("PK_Postal", x => x.PostalCode)
                         .Annotation("SqlServer:Clustered", false);
                 });
 
@@ -31,7 +30,9 @@ namespace PostalRegistry.Projections.Extract.Migrations
                 columns: table => new
                 {
                     Name = table.Column<string>(nullable: false),
-                    Position = table.Column<long>(nullable: false)
+                    Position = table.Column<long>(nullable: false),
+                    DesiredState = table.Column<string>(nullable: true),
+                    DesiredStateChangedAt = table.Column<DateTimeOffset>(nullable: true)
                 },
                 constraints: table =>
                 {
