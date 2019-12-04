@@ -1,3 +1,10 @@
+## [1.14.8](https://github.com/informatievlaanderen/postal-registry/compare/v1.14.7...v1.14.8) (2019-12-04)
+
+
+### Bug Fixes
+
+* extract concat postal names and recreated migrations ([b1075c6](https://github.com/informatievlaanderen/postal-registry/commit/b1075c6))
+
 ## [1.14.7](https://github.com/informatievlaanderen/postal-registry/compare/v1.14.6...v1.14.7) (2019-11-28)
 
 ## [1.14.6](https://github.com/informatievlaanderen/postal-registry/compare/v1.14.5...v1.14.6) (2019-11-27)
