@@ -70,14 +70,14 @@ namespace PostalRegistry.Projections.Extract.PostalInformationExtract
                     message.Message.PostalCode,
                     postalInformation =>
                     {
-                        UpdateRecord(postalInformation, postalInfo =>
-                            {
-                                // Grab the first postal information, if the name is empty, update that one, otherwise add a new one
-                                if (string.IsNullOrWhiteSpace(postalInfo.postnaam.Value))
-                                    postalInfo.postnaam.Value = message.Message.Name;
-                                else
-                                    postalInfo.postnaam.Value = postalInfo.postnaam.Value + "/" + message.Message.Name;
-                            });
+                        UpdateRecord(postalInformation, postalInformationRecord =>
+                        {
+                            // Grab the first postal information, if the name is empty, update that one, otherwise add a new one
+                            if (string.IsNullOrWhiteSpace(postalInformationRecord.postnaam.Value))
+                                postalInformationRecord.postnaam.Value = message.Message.Name;
+                            else
+                                postalInformationRecord.postnaam.Value = postalInformationRecord.postnaam.Value + "/" + message.Message.Name;
+                        });
 
                         UpdateVersie(postalInformation, message.Message.Provenance.Timestamp);
                     },
@@ -90,11 +90,11 @@ namespace PostalRegistry.Projections.Extract.PostalInformationExtract
                     message.Message.PostalCode,
                     postalInformation =>
                     {
-                        UpdateRecord(postalInformation, postalInfo =>
+                        UpdateRecord(postalInformation, postalInformationRecord =>
                         {
-                            var index = postalInfo.postnaam.Value.IndexOf(message.Message.Name);
+                            var index = postalInformationRecord.postnaam.Value.IndexOf(message.Message.Name);
                             var count = message.Message.Name.Length;
-                            if (postalInfo.postnaam.Value.Contains('/')) //Has multiple names
+                            if (postalInformationRecord.postnaam.Value.Contains('/')) //Has multiple names
                             {
                                 if (index == 0)
                                     count++;
@@ -102,8 +102,7 @@ namespace PostalRegistry.Projections.Extract.PostalInformationExtract
                                     index--;
                             }
 
-                            postalInfo.postnaam.Value = postalInfo.postnaam.Value.Remove(index, count);
-
+                            postalInformationRecord.postnaam.Value = postalInformationRecord.postnaam.Value.Remove(index, count);
                         });
 
                         UpdateVersie(postalInformation, message.Message.Provenance.Timestamp);
