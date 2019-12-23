@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/informatievlaanderen/postal-registry/compare/v1.14.8...v2.0.0) (2019-12-23)
+
+
+### Code Refactoring
+
+* upgrade to netcoreapp31 ([9d0cf6a](https://github.com/informatievlaanderen/postal-registry/commit/9d0cf6a))
+
+
+### BREAKING CHANGES
+
+* Upgrade to .NET Core 3.1
+
 ## [1.14.8](https://github.com/informatievlaanderen/postal-registry/compare/v1.14.7...v1.14.8) (2019-12-04)
 
 
