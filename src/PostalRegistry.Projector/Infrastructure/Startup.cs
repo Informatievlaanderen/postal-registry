@@ -17,6 +17,7 @@ namespace PostalRegistry.Projector.Infrastructure
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Diagnostics.HealthChecks;
     using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Hosting;
     using Modules;
     using PostalRegistry.Projections.Extract;
     using PostalRegistry.Projections.Legacy;
@@ -114,8 +115,8 @@ namespace PostalRegistry.Projector.Infrastructure
         public void Configure(
             IServiceProvider serviceProvider,
             IApplicationBuilder app,
-            IHostingEnvironment env,
-            IApplicationLifetime appLifetime,
+            IWebHostEnvironment env,
+            IHostApplicationLifetime appLifetime,
             ILoggerFactory loggerFactory,
             IApiVersionDescriptionProvider apiVersionProvider,
             ApiDataDogToggle datadogToggle,

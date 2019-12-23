@@ -1,6 +1,14 @@
+#r "paket:
+version 5.241.2
+framework: netstandard20
+source https://api.nuget.org/v3/index.json
+nuget Be.Vlaanderen.Basisregisters.Build.Pipeline 3.2.0 //"
+
 #load "packages/Be.Vlaanderen.Basisregisters.Build.Pipeline/Content/build-generic.fsx"
 
-open Fake
+open Fake.Core
+open Fake.Core.TargetOperators
+open Fake.IO.FileSystemOperators
 open ``Build-generic``
 
 // The buildserver passes in `BITBUCKET_BUILD_NUMBER` as an integer to version the results
@@ -63,15 +71,15 @@ let push = push dockerRepository
 
 // Solution -----------------------------------------------------------------------
 
-Target "Restore_Solution" (fun _ -> restore "PostalRegistry")
+Target.create "Restore_Solution" (fun _ -> restore "PostalRegistry")
 
-Target "Build_Solution" (fun _ ->
+Target.create "Build_Solution" (fun _ ->
   setVersions "SolutionInfo.cs"
   build "PostalRegistry")
 
-Target "Test_Solution" (fun _ -> test "PostalRegistry")
+Target.create "Test_Solution" (fun _ -> test "PostalRegistry")
 
-Target "Publish_Solution" (fun _ ->
+Target.create "Publish_Solution" (fun _ ->
   [
     "PostalRegistry.Projector"
     "PostalRegistry.Api.Legacy"
@@ -83,7 +91,7 @@ Target "Publish_Solution" (fun _ ->
     "PostalRegistry.Projections.Syndication"
   ] |> List.iter publish)
 
-Target "Pack_Solution" (fun _ ->
+Target.create "Pack_Solution" (fun _ ->
   [
     "PostalRegistry.Projector"
     "PostalRegistry.Api.Legacy"
@@ -91,61 +99,67 @@ Target "Pack_Solution" (fun _ ->
     "PostalRegistry.Api.CrabImport"
   ] |> List.iter pack)
 
-Target "Containerize_Projector" (fun _ -> containerize "PostalRegistry.Projector" "projector")
-Target "PushContainer_Projector" (fun _ -> push "projector")
+Target.create "Containerize_Projector" (fun _ -> containerize "PostalRegistry.Projector" "projector")
+Target.create "PushContainer_Projector" (fun _ -> push "projector")
 
-Target "Containerize_ApiLegacy" (fun _ -> containerize "PostalRegistry.Api.Legacy" "api-legacy")
-Target "PushContainer_ApiLegacy" (fun _ -> push "api-legacy")
+Target.create "Containerize_ApiLegacy" (fun _ -> containerize "PostalRegistry.Api.Legacy" "api-legacy")
+Target.create "PushContainer_ApiLegacy" (fun _ -> push "api-legacy")
 
-Target "Containerize_ApiExtract" (fun _ -> containerize "PostalRegistry.Api.Extract" "api-extract")
-Target "PushContainer_ApiExtract" (fun _ -> push "api-extract")
+Target.create "Containerize_ApiExtract" (fun _ -> containerize "PostalRegistry.Api.Extract" "api-extract")
+Target.create "PushContainer_ApiExtract" (fun _ -> push "api-extract")
 
-Target "Containerize_ApiCrabImport" (fun _ -> containerize "PostalRegistry.Api.CrabImport" "api-crab-import")
-Target "PushContainer_ApiCrabImport" (fun _ -> push "api-crab-import")
+Target.create "Containerize_ApiCrabImport" (fun _ -> containerize "PostalRegistry.Api.CrabImport" "api-crab-import")
+Target.create "PushContainer_ApiCrabImport" (fun _ -> push "api-crab-import")
 
-Target "Containerize_ProjectionsSyndication" (fun _ -> containerize "PostalRegistry.Projections.Syndication" "projections-syndication")
-Target "PushContainer_ProjectionsSyndication" (fun _ -> push "projections-syndication")
+Target.create "Containerize_ProjectionsSyndication" (fun _ -> containerize "PostalRegistry.Projections.Syndication" "projections-syndication")
+Target.create "PushContainer_ProjectionsSyndication" (fun _ -> push "projections-syndication")
 
 // --------------------------------------------------------------------------------
 
-Target "Build" DoNothing
-Target "Test" DoNothing
-Target "Publish" DoNothing
-Target "Pack" DoNothing
-Target "Containerize" DoNothing
-Target "Push" DoNothing
+Target.create "Build" ignore
+Target.create "Test" ignore
+Target.create "Publish" ignore
+Target.create "Pack" ignore
+Target.create "Containerize" ignore
+Target.create "Push" ignore
 
-"NpmInstall"         ==> "Build"
-"DotNetCli"          ==> "Build"
-"Clean"              ==> "Build"
-"Restore_Solution"   ==> "Build"
-"Build_Solution"     ==> "Build"
+"NpmInstall"
+  ==> "DotNetCli"
+  ==> "Clean"
+  ==> "Restore_Solution"
+  ==> "Build_Solution"
+  ==> "Build"
 
-"Build"              ==> "Test"
-"Test_Solution"      ==> "Test"
+"Build"
+  ==> "Test_Solution"
+  ==> "Test"
 
-"Test"               ==> "Publish"
-"Publish_Solution"   ==> "Publish"
+"Test"
+  ==> "Publish_Solution"
+  ==> "Publish"
 
-"Publish"            ==> "Pack"
-"Pack_Solution"      ==> "Pack"
+"Publish"
+  ==> "Pack_Solution"
+  ==> "Pack"
 
-"Pack"                                    ==> "Containerize"
-"Containerize_Projector"                  ==> "Containerize"
-"Containerize_ApiLegacy"                  ==> "Containerize"
-"Containerize_ApiExtract"                 ==> "Containerize"
-"Containerize_ApiCrabImport"              ==> "Containerize"
-"Containerize_ProjectionsSyndication"     ==> "Containerize"
+"Pack"
+  ==> "Containerize_Projector"
+  ==> "Containerize_ApiLegacy"
+  ==> "Containerize_ApiExtract"
+  ==> "Containerize_ApiCrabImport"
+  ==> "Containerize_ProjectionsSyndication"
+  ==> "Containerize"
 // Possibly add more projects to containerize here
 
-"Containerize"                            ==> "Push"
-"DockerLogin"                             ==> "Push"
-"PushContainer_Projector"                 ==> "Push"
-"PushContainer_ApiLegacy"                 ==> "Push"
-"PushContainer_ApiExtract"                ==> "Push"
-"PushContainer_ApiCrabImport"             ==> "Push"
-"PushContainer_ProjectionsSyndication"    ==> "Push"
+"Containerize"
+  ==> "DockerLogin"
+  ==> "PushContainer_Projector"
+  ==> "PushContainer_ApiLegacy"
+  ==> "PushContainer_ApiExtract"
+  ==> "PushContainer_ApiCrabImport"
+  ==> "PushContainer_ProjectionsSyndication"
+  ==> "Push"
 // Possibly add more projects to push here
 
 // By default we build & test
-RunTargetOrDefault "Test"
+Target.runOrDefault "Test"

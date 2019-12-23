@@ -6,19 +6,19 @@ namespace PostalRegistry.Projections.Extract
     {
         public static readonly PostalDbaseSchema Schema = new PostalDbaseSchema();
 
-        public DbaseString id { get; }
-        public DbaseString postinfoid { get; }
-        public DbaseString versieid { get; }
-        public DbaseString postnaam { get; }
-        public DbaseString status { get; }
+        public DbaseCharacter id { get; }
+        public DbaseCharacter postinfoid { get; }
+        public DbaseCharacter versieid { get; }
+        public DbaseCharacter postnaam { get; }
+        public DbaseCharacter status { get; }
 
         public PostalDbaseRecord()
         {
-            id = new DbaseString(Schema.id);
-            postinfoid = new DbaseString(Schema.postinfoid);
-            versieid = new DbaseString(Schema.versieid);
-            postnaam = new DbaseString(Schema.postnaam);
-            status = new DbaseString(Schema.status);
+            id = new DbaseCharacter(Schema.id);
+            postinfoid = new DbaseCharacter(Schema.postinfoid);
+            versieid = new DbaseCharacter(Schema.versieid);
+            postnaam = new DbaseCharacter(Schema.postnaam);
+            status = new DbaseCharacter(Schema.status);
 
             Values = new DbaseFieldValue[]
             {
