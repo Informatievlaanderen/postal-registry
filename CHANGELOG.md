@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.0.0...v2.1.0) (2020-01-03)
+
+
+### Features
+
+* allow only one projector instance ([896c311](https://github.com/informatievlaanderen/postal-registry/commit/896c311))
+
 # [2.0.0](https://github.com/informatievlaanderen/postal-registry/compare/v1.14.8...v2.0.0) (2019-12-23)
 
 
