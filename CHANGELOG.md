@@ -1,3 +1,10 @@
+## [2.1.1](https://github.com/informatievlaanderen/postal-registry/compare/v2.1.0...v2.1.1) (2020-01-16)
+
+
+### Bug Fixes
+
+* get api's working again ([c4adb62](https://github.com/informatievlaanderen/postal-registry/commit/c4adb62))
+
 # [2.1.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.0.0...v2.1.0) (2020-01-03)
 
 
