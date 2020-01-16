@@ -8,9 +8,9 @@ namespace PostalRegistry.Projections.Legacy.PostalInformation
     public class PostalInformationName
     {
         public Guid Id { get; set; }
-        public string Name { get; set; }
+        public string? Name { get; set; }
         public Language Language { get; set; }
-        public string PostalCode { get; set; }
+        public string? PostalCode { get; set; }
 
         public PostalInformationName() { }
 
@@ -30,7 +30,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformation
         {
             builder.ToTable(TableName, Schema.Legacy)
                 .HasKey(p => p.Id)
-                .ForSqlServerIsClustered();
+                .IsClustered();
 
             builder.Property(p => p.Id)
                 .ValueGeneratedOnAdd();

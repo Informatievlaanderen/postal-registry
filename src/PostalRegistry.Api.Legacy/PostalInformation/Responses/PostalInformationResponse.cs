@@ -44,13 +44,13 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         }
     }
 
-    public class PostalInformationResponseExamples : IExamplesProvider
+    public class PostalInformationResponseExamples : IExamplesProvider<PostalInformationResponse>
     {
         private readonly ResponseOptions _responseOptions;
 
         public PostalInformationResponseExamples(IOptions<ResponseOptions> responseOptionsProvider) => _responseOptions = responseOptionsProvider.Value;
 
-        public object GetExamples()
+        public PostalInformationResponse GetExamples()
         {
             return new PostalInformationResponse(
                 _responseOptions.Naamruimte,
@@ -66,9 +66,9 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         }
     }
 
-    public class PostalInformationNotFoundResponseExamples : IExamplesProvider
+    public class PostalInformationNotFoundResponseExamples : IExamplesProvider<ProblemDetails>
     {
-        public object GetExamples()
+        public ProblemDetails GetExamples()
             => new ProblemDetails
             {
                 HttpStatus = StatusCodes.Status404NotFound,

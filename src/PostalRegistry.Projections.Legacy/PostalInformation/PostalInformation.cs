@@ -12,7 +12,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformation
         public static string VersionTimestampBackingPropertyName = nameof(VersionTimestampAsDateTimeOffset);
 
         public string PostalCode { get; set; }
-        public string NisCode { get; set; }
+        public string? NisCode { get; set; }
 
         public bool IsRetired { get; set; }
 
@@ -35,7 +35,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformation
         {
             builder.ToTable(TableName, Schema.Legacy)
                 .HasKey(p => p.PostalCode)
-                .ForSqlServerIsClustered(false);
+                .IsClustered(false);
 
             builder.Property(p => p.NisCode);
 
@@ -50,7 +50,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformation
 
             builder.Ignore(p => p.VersionTimestamp);
 
-            builder.HasIndex(x => x.NisCode).ForSqlServerIsClustered();
+            builder.HasIndex(x => x.NisCode).IsClustered();
         }
     }
 }

@@ -18,11 +18,11 @@ namespace PostalRegistry.Projections.Extract.PostalInformationExtract
         {
             builder.ToTable(TableName, Schema.Extract)
                 .HasKey(p => p.PostalCode)
-                .ForSqlServerIsClustered(false);
+                .IsClustered(false);
 
             builder.Property(p => p.DbaseRecord);
 
-            builder.HasIndex(p => p.PostalCode).ForSqlServerIsClustered();
+            builder.HasIndex(p => p.PostalCode).IsClustered();
         }
     }
 }

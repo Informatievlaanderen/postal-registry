@@ -16,9 +16,9 @@ namespace PostalRegistry.Api.CrabImport.BPostImport.Requests
         public string BPostItem { get; set; }
     }
 
-    public class RegisterBPostImportRequestExample : IExamplesProvider
+    public class RegisterBPostImportRequestExample : IExamplesProvider<RegisterBPostImportRequest>
     {
-        public object GetExamples()
+        public RegisterBPostImportRequest GetExamples()
             => new RegisterBPostImportRequest
             {
                 Type = "PostalRegistry.PostalInformation.Commands.BPost.ImportPostalInformationFromBPost",
