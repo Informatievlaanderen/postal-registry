@@ -59,13 +59,13 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         }
     }
 
-    public class PostalInformationListResponseExamples : IExamplesProvider
+    public class PostalInformationListResponseExamples : IExamplesProvider<PostalInformationListResponse>
     {
         private readonly ResponseOptions _responseOptions;
 
         public PostalInformationListResponseExamples(IOptions<ResponseOptions> responseOptionsProvider) => _responseOptions = responseOptionsProvider.Value;
 
-        public object GetExamples()
+        public PostalInformationListResponse GetExamples()
         {
             var postalInformationSampleGent =
                 new PostalInformationListItemResponse("9000", _responseOptions.Naamruimte, _responseOptions.DetailUrl, DateTimeOffset.Now.LocalDateTime)

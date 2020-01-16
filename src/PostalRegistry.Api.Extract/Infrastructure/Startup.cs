@@ -19,6 +19,7 @@ namespace PostalRegistry.Api.Extract.Infrastructure
     using System.Linq;
     using System.Reflection;
     using Microsoft.Extensions.Diagnostics.HealthChecks;
+    using Microsoft.OpenApi.Models;
 
     public class Startup
     {
@@ -54,16 +55,16 @@ namespace PostalRegistry.Api.Extract.Infrastructure
                     },
                     Swagger =
                     {
-                        ApiInfo = (provider, description) => new Info
+                        ApiInfo = (provider, description) => new OpenApiInfo
                         {
                             Version = description.ApiVersion.ToString(),
                             Title = "Basisregisters Vlaanderen Postal Information Registry API",
                             Description = GetApiLeadingText(description),
-                            Contact = new Contact
+                            Contact = new OpenApiContact
                             {
                                 Name = "Informatie Vlaanderen",
                                 Email = "informatie.vlaanderen@vlaanderen.be",
-                                Url = "https://legacy.basisregisters.vlaanderen"
+                                Url = new Uri("https://legacy.basisregisters.vlaanderen")
                             }
                         },
                         XmlCommentPaths = new [] { typeof(Startup).GetTypeInfo().Assembly.GetName().Name }

@@ -176,7 +176,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         }
     }
 
-    public class PostalInformationSyndicationResponseExamples : IExamplesProvider
+    public class PostalInformationSyndicationResponseExamples : IExamplesProvider<object>
     {
         private readonly ResponseOptions _responseOptions;
 

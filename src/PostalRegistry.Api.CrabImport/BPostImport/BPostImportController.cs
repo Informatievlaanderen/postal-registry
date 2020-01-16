@@ -59,7 +59,7 @@ namespace PostalRegistry.Api.CrabImport.BPostImport
         }
     }
 
-    public class RegisterBPostImportResponseExamples : IExamplesProvider
+    public class RegisterBPostImportResponseExamples : IExamplesProvider<object>
     {
         public object GetExamples() => new { };
     }
