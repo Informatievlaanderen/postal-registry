@@ -1,3 +1,10 @@
+## [2.3.1](https://github.com/informatievlaanderen/postal-registry/compare/v2.3.0...v2.3.1) (2020-01-23)
+
+
+### Bug Fixes
+
+* add error logging for syndication ([cd499ed](https://github.com/informatievlaanderen/postal-registry/commit/cd499ed))
+
 # [2.3.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.2.0...v2.3.0) (2020-01-23)
 
 
