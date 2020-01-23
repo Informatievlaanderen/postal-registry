@@ -52,7 +52,7 @@ namespace PostalRegistry.Projections.Syndication
 
             try
             {
-                DistributedLock<Program>.Run(
+                await DistributedLock<Program>.RunAsync(
                     async () =>
                     {
                         try
