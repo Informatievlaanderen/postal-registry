@@ -55,15 +55,23 @@ namespace PostalRegistry.Projections.Syndication
                 DistributedLock<Program>.Run(
                     async () =>
                     {
-                        await MigrationsHelper.RunAsync(
-                            configuration.GetConnectionString("SyndicationProjectionsAdmin"),
-                            container.GetService<ILoggerFactory>(),
-                            ct);
+                        try
+                        {
+                            await MigrationsHelper.RunAsync(
+                                configuration.GetConnectionString("SyndicationProjectionsAdmin"),
+                                container.GetService<ILoggerFactory>(),
+                                ct);
 
-                        await Task.WhenAll(StartRunners(configuration, container, ct));
+                            await Task.WhenAll(StartRunners(configuration, container, ct));
 
-                        Log.Information("Running... Press CTRL + C to exit.");
-                        Closing.WaitOne();
+                            Log.Information("Running... Press CTRL + C to exit.");
+                            Closing.WaitOne();
+                        }
+                        catch (Exception e)
+                        {
+                            Log.Fatal(e, "Encountered a fatal exception, exiting program.");
+                            throw;
+                        }
                     },
                     DistributedLockOptions.LoadFromConfiguration(configuration) ?? DistributedLockOptions.Defaults,
                     container.GetService<ILogger<Program>>());
