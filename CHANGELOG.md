@@ -1,3 +1,10 @@
+## [2.3.2](https://github.com/informatievlaanderen/postal-registry/compare/v2.3.1...v2.3.2) (2020-01-23)
+
+
+### Bug Fixes
+
+* syndication distributed lock now runs async ([9f09a04](https://github.com/informatievlaanderen/postal-registry/commit/9f09a04))
+
 ## [2.3.1](https://github.com/informatievlaanderen/postal-registry/compare/v2.3.0...v2.3.1) (2020-01-23)
 
 
