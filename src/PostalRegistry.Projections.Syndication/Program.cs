@@ -12,6 +12,7 @@ namespace PostalRegistry.Projections.Syndication
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
+    using Be.Vlaanderen.Basisregisters.Aws.DistributedMutex;
     using Modules;
     using Municipality;
     using Serilog;
@@ -48,18 +49,24 @@ namespace PostalRegistry.Projections.Syndication
             var container = ConfigureServices(configuration);
 
             Log.Information("Starting PostalRegistry.Projections.Syndication");
-            
+
             try
             {
-                await MigrationsHelper.RunAsync(
-                    configuration.GetConnectionString("SyndicationProjectionsAdmin"),
-                    container.GetService<ILoggerFactory>(),
-                    ct);
+                DistributedLock<Program>.Run(
+                    async () =>
+                    {
+                        await MigrationsHelper.RunAsync(
+                            configuration.GetConnectionString("SyndicationProjectionsAdmin"),
+                            container.GetService<ILoggerFactory>(),
+                            ct);
 
-                await Task.WhenAll(StartRunners(configuration, container, ct));
+                        await Task.WhenAll(StartRunners(configuration, container, ct));
 
-                Log.Information("Running... Press CTRL + C to exit.");
-                Closing.WaitOne();
+                        Log.Information("Running... Press CTRL + C to exit.");
+                        Closing.WaitOne();
+                    },
+                    DistributedLockOptions.LoadFromConfiguration(configuration) ?? DistributedLockOptions.Defaults,
+                    container.GetService<ILogger<Program>>());
             }
             catch (Exception e)
             {
