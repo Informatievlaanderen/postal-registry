@@ -1,3 +1,10 @@
+# [2.3.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.2.0...v2.3.0) (2020-01-23)
+
+
+### Features
+
+* upgrade projectionhandling package ([83db66d](https://github.com/informatievlaanderen/postal-registry/commit/83db66d))
+
 # [2.2.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.1.1...v2.2.0) (2020-01-23)
 
 
