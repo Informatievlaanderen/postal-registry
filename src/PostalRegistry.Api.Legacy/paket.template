@@ -23,5 +23,8 @@ files
   PostalRegistry.Projections.Legacy.dll => lib\netcoreapp3.1
   PostalRegistry.Projections.Legacy.pdb => lib\netcoreapp3.1
 
+  PostalRegistry.Projections.Syndication.dll => lib\netcoreapp3.1
+  PostalRegistry.Projections.Syndication.pdb => lib\netcoreapp3.1
+  
   PostalRegistry.dll => lib\netcoreapp3.1
   PostalRegistry.pdb => lib\netcoreapp3.1
