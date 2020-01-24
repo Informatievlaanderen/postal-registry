@@ -1,3 +1,10 @@
+## [2.3.3](https://github.com/informatievlaanderen/postal-registry/compare/v2.3.2...v2.3.3) (2020-01-24)
+
+
+### Bug Fixes
+
+* add syndication to api references ([ecfb29c](https://github.com/informatievlaanderen/postal-registry/commit/ecfb29c))
+
 ## [2.3.2](https://github.com/informatievlaanderen/postal-registry/compare/v2.3.1...v2.3.2) (2020-01-23)
 
 
