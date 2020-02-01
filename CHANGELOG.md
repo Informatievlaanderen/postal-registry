@@ -1,3 +1,10 @@
+# [2.4.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.3.3...v2.4.0) (2020-02-01)
+
+
+### Features
+
+* upgrade netcoreapp31 and dependencies ([0a05b69](https://github.com/informatievlaanderen/postal-registry/commit/0a05b69))
+
 ## [2.3.3](https://github.com/informatievlaanderen/postal-registry/compare/v2.3.2...v2.3.3) (2020-01-24)
 
 
