@@ -1,3 +1,10 @@
+## [2.4.2](https://github.com/informatievlaanderen/postal-registry/compare/v2.4.1...v2.4.2) (2020-02-03)
+
+
+### Bug Fixes
+
+* next url is nullable ([bae31aa](https://github.com/informatievlaanderen/postal-registry/commit/bae31aa))
+
 ## [2.4.1](https://github.com/informatievlaanderen/postal-registry/compare/v2.4.0...v2.4.1) (2020-02-03)
 
 
