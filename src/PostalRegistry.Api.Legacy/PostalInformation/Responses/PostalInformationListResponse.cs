@@ -31,7 +31,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         /// De URL voor het ophalen van de volgende verzameling.
         /// </summary>
         [DataMember(Name = "Volgende", Order = 3, EmitDefaultValue = false)]
-        [JsonProperty(Required = Required.DisallowNull)]
+        [JsonProperty(Required = Required.Default)]
         public Uri Volgende { get; set; }
     }
 
