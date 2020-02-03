@@ -1,3 +1,10 @@
+## [2.4.3](https://github.com/informatievlaanderen/postal-registry/compare/v2.4.2...v2.4.3) (2020-02-03)
+
+
+### Bug Fixes
+
+* add type to problemdetails ([a42e8bd](https://github.com/informatievlaanderen/postal-registry/commit/a42e8bd))
+
 ## [2.4.2](https://github.com/informatievlaanderen/postal-registry/compare/v2.4.1...v2.4.2) (2020-02-03)
 
 
