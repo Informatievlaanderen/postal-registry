@@ -8,6 +8,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
     using Infrastructure.Options;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Options;
+    using Newtonsoft.Json;
     using Swashbuckle.AspNetCore.Filters;
     using ProblemDetails = Be.Vlaanderen.Basisregisters.BasicApiProblem.ProblemDetails;
 
@@ -18,18 +19,21 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         /// De identificator van de postcode.
         /// </summary>
         [DataMember(Name = "Identificator", Order = 1)]
+        [JsonProperty(Required = Required.DisallowNull)]
         public PostinfoIdentificator Identificator { get; set; }
 
         /// <summary>
         /// De namen van het gebied dat de postcode beslaat, in meerdere talen.
         /// </summary>
         [DataMember(Name = "Postnamen", Order = 2)]
+        [JsonProperty(Required = Required.DisallowNull)]
         public List<Postnaam> Postnamen { get; set; }
 
         /// <summary>
         /// De huidige fase in de doorlooptijd van de postcode.
         /// </summary>
         [DataMember(Name = "PostInfoStatus", Order = 3)]
+        [JsonProperty(Required = Required.DisallowNull)]
         public PostInfoStatus PostInfoStatus { get; set; }
 
         public PostalInformationResponse(
