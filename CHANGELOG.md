@@ -1,3 +1,10 @@
+## [2.4.1](https://github.com/informatievlaanderen/postal-registry/compare/v2.4.0...v2.4.1) (2020-02-03)
+
+
+### Bug Fixes
+
+* specify non nullable responses ([e0d2620](https://github.com/informatievlaanderen/postal-registry/commit/e0d2620))
+
 # [2.4.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.3.3...v2.4.0) (2020-02-01)
 
 
