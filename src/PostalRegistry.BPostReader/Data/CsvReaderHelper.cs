@@ -2,6 +2,7 @@ namespace PostalRegistry.BPostReader.Data
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.IO;
     using System.Linq;
     using System.Text;
@@ -14,7 +15,7 @@ namespace PostalRegistry.BPostReader.Data
         {
             using (var reader = new StreamReader(path))
             {
-                var csvReader = new CsvReader(reader, new Configuration { Delimiter = ",", HasHeaderRecord = true, Encoding = Encoding.UTF8 });
+                var csvReader = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture) { Delimiter = ",", HasHeaderRecord = true, Encoding = Encoding.UTF8 });
                 return csvReader.GetRecords<BPostData>().ToList();
             }
         }
@@ -25,7 +26,7 @@ namespace PostalRegistry.BPostReader.Data
 
             using (var reader = new StreamReader(path))
             {
-                var csvReader = new CsvReader(reader, new Configuration { Delimiter = ";", Encoding = Encoding.UTF8 });
+                var csvReader = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture) { Delimiter = ";", Encoding = Encoding.UTF8 });
                 while (csvReader.Read())
                 {
                     var name = csvReader.GetField<string>(0);

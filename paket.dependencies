@@ -15,7 +15,7 @@ nuget Microsoft.SyndicationFeed.ReaderWriter 1.0.2
 
 nuget HtmlAgilityPack 1.11.18
 
-nuget CsvHelper 12.3.2
+nuget CsvHelper 14.0.0
 
 nuget NetTopologySuite 2.0.0
 

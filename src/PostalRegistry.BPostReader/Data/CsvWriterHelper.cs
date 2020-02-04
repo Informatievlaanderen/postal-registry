@@ -1,6 +1,7 @@
 namespace PostalRegistry.BPostReader.Data
 {
     using System.Collections.Generic;
+    using System.Globalization;
     using System.IO;
     using CsvHelper;
 
@@ -10,7 +11,7 @@ namespace PostalRegistry.BPostReader.Data
         {
             using (var writer = new StreamWriter(path))
             {
-                var csvWriter = new CsvWriter(writer)
+                var csvWriter = new CsvWriter(writer, CultureInfo.InvariantCulture)
                 {
                     Configuration =
                     {
