@@ -1,3 +1,10 @@
+## [2.5.1](https://github.com/informatievlaanderen/postal-registry/compare/v2.5.0...v2.5.1) (2020-02-04)
+
+
+### Bug Fixes
+
+* instance uri for error examples now show correctly ([7426277](https://github.com/informatievlaanderen/postal-registry/commit/7426277))
+
 # [2.5.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.4.3...v2.5.0) (2020-02-04)
 
 
