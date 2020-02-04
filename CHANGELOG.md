@@ -1,3 +1,10 @@
+# [2.5.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.4.3...v2.5.0) (2020-02-04)
+
+
+### Features
+
+* upgrade csv helper ([f084308](https://github.com/informatievlaanderen/postal-registry/commit/f084308))
+
 ## [2.4.3](https://github.com/informatievlaanderen/postal-registry/compare/v2.4.2...v2.4.3) (2020-02-03)
 
 
