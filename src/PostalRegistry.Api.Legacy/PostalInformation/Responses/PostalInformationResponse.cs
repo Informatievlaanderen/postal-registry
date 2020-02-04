@@ -3,6 +3,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
     using System;
     using System.Collections.Generic;
     using System.Runtime.Serialization;
+    using Be.Vlaanderen.Basisregisters.Api.Exceptions;
     using Be.Vlaanderen.Basisregisters.GrAr.Legacy;
     using Be.Vlaanderen.Basisregisters.GrAr.Legacy.PostInfo;
     using Infrastructure.Options;
@@ -79,7 +80,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
                 HttpStatus = StatusCodes.Status404NotFound,
                 Title = ProblemDetails.DefaultTitle,
                 Detail = "Onbestaande postcode.",
-                ProblemInstanceUri = ProblemDetails.GetProblemNumber()
+                ProblemInstanceUri = new DefaultHttpContext().GetProblemInstanceUri()
             };
     }
 }
