@@ -1,3 +1,10 @@
+## [2.5.2](https://github.com/informatievlaanderen/postal-registry/compare/v2.5.1...v2.5.2) (2020-02-10)
+
+
+### Bug Fixes
+
+* JSON default value for nullable field ([b75f86d](https://github.com/informatievlaanderen/postal-registry/commit/b75f86d))
+
 ## [2.5.1](https://github.com/informatievlaanderen/postal-registry/compare/v2.5.0...v2.5.1) (2020-02-04)
 
 
