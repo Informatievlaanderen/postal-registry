@@ -1,3 +1,10 @@
+## [2.5.3](https://github.com/informatievlaanderen/postal-registry/compare/v2.5.2...v2.5.3) (2020-02-17)
+
+
+### Bug Fixes
+
+* update packages to fix json order ([9442769](https://github.com/informatievlaanderen/postal-registry/commit/9442769))
+
 ## [2.5.2](https://github.com/informatievlaanderen/postal-registry/compare/v2.5.1...v2.5.2) (2020-02-10)
 
 
