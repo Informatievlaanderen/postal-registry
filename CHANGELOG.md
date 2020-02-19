@@ -1,3 +1,10 @@
+## [2.5.4](https://github.com/informatievlaanderen/postal-registry/compare/v2.5.3...v2.5.4) (2020-02-19)
+
+
+### Bug Fixes
+
+* add order by to api's + add clustered indexes ([716ac14](https://github.com/informatievlaanderen/postal-registry/commit/716ac14))
+
 ## [2.5.3](https://github.com/informatievlaanderen/postal-registry/compare/v2.5.2...v2.5.3) (2020-02-17)
 
 
