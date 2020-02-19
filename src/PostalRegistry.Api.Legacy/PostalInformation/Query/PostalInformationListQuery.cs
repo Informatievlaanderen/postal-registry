@@ -29,6 +29,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
             var postalInformationSet = _context
                 .PostalInformation
                 .AsNoTracking()
+                .OrderBy(x => x.PostalCode)
                 .Where(p => !p.IsRetired);
 
             if (!filtering.ShouldFilter)
