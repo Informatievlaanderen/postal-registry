@@ -35,7 +35,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformation
         {
             builder.ToTable(TableName, Schema.Legacy)
                 .HasKey(p => p.PostalCode)
-                .IsClustered(false);
+                .IsClustered();
 
             builder.Property(p => p.NisCode);
 
@@ -50,7 +50,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformation
 
             builder.Ignore(p => p.VersionTimestamp);
 
-            builder.HasIndex(x => x.NisCode).IsClustered();
+            builder.HasIndex(x => x.NisCode);
         }
     }
 }

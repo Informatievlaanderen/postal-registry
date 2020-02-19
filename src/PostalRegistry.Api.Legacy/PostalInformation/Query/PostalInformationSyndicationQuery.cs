@@ -209,6 +209,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
         {
             var postalInformationSet = _context
                 .PostalInformationSyndication
+                .OrderBy(x => x.Position)
                 .AsNoTracking();
 
             if (!filtering.ShouldFilter)
