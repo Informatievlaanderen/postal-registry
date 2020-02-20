@@ -1,3 +1,10 @@
+## [2.5.5](https://github.com/informatievlaanderen/postal-registry/compare/v2.5.4...v2.5.5) (2020-02-20)
+
+
+### Bug Fixes
+
+* update grar common ([02d652b](https://github.com/informatievlaanderen/postal-registry/commit/02d652b))
+
 ## [2.5.4](https://github.com/informatievlaanderen/postal-registry/compare/v2.5.3...v2.5.4) (2020-02-19)
 
 
