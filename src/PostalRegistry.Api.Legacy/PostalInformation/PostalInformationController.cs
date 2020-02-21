@@ -137,7 +137,6 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
             return Ok(new PostalInformationListResponse
             {
                 PostInfoObjecten = items,
-                TotaalAantal = pagedPostalInformationSet.PaginationInfo.TotalItems,
                 Volgende = BuildVolgendeUri(pagedPostalInformationSet.PaginationInfo, reponseOptions.Value.VolgendeUrl)
             });
         }
@@ -222,7 +221,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
             var offset = paginationInfo.Offset;
             var limit = paginationInfo.Limit;
 
-            return offset + limit < paginationInfo.TotalItems
+            return paginationInfo.HasNextPage
                 ? new Uri(string.Format(volgendeUrlBase, offset + limit, limit))
                 : null;
         }
