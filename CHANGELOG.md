@@ -1,3 +1,10 @@
+## [2.5.6](https://github.com/informatievlaanderen/postal-registry/compare/v2.5.5...v2.5.6) (2020-02-21)
+
+
+### Performance Improvements
+
+* increase performance by removing count from lists ([8a1be64](https://github.com/informatievlaanderen/postal-registry/commit/8a1be64))
+
 ## [2.5.5](https://github.com/informatievlaanderen/postal-registry/compare/v2.5.4...v2.5.5) (2020-02-20)
 
 
