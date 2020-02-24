@@ -1,3 +1,10 @@
+## [2.5.7](https://github.com/informatievlaanderen/postal-registry/compare/v2.5.6...v2.5.7) (2020-02-24)
+
+
+### Bug Fixes
+
+* update projection handling & update sync migrator ([8ea6dec](https://github.com/informatievlaanderen/postal-registry/commit/8ea6dec))
+
 ## [2.5.6](https://github.com/informatievlaanderen/postal-registry/compare/v2.5.5...v2.5.6) (2020-02-21)
 
 
