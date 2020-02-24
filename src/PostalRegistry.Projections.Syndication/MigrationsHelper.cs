@@ -53,7 +53,7 @@ namespace PostalRegistry.Projections.Syndication
                 migratorOptions = migratorOptions.UseLoggerFactory(loggerFactory);
 
             using (var migrator = new SyndicationContext(migratorOptions.Options))
-                await migrator.Database.MigrateAsync(cancellationToken);
+                await migrator.MigrateAsync(cancellationToken);
         }
     }
 }
