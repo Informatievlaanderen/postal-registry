@@ -1,3 +1,10 @@
+## [2.5.8](https://github.com/informatievlaanderen/postal-registry/compare/v2.5.7...v2.5.8) (2020-02-27)
+
+
+### Bug Fixes
+
+* update json serialization dependencies ([0fb561a](https://github.com/informatievlaanderen/postal-registry/commit/0fb561a))
+
 ## [2.5.7](https://github.com/informatievlaanderen/postal-registry/compare/v2.5.6...v2.5.7) (2020-02-24)
 
 
