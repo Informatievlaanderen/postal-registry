@@ -1,3 +1,10 @@
+## [2.5.10](https://github.com/informatievlaanderen/postal-registry/compare/v2.5.9...v2.5.10) (2020-03-03)
+
+
+### Bug Fixes
+
+* force build ([3ba5b58](https://github.com/informatievlaanderen/postal-registry/commit/3ba5b58))
+
 ## [2.5.9](https://github.com/informatievlaanderen/postal-registry/compare/v2.5.8...v2.5.9) (2020-03-03)
 
 
