@@ -1,3 +1,11 @@
+## [2.5.9](https://github.com/informatievlaanderen/postal-registry/compare/v2.5.8...v2.5.9) (2020-03-03)
+
+
+### Bug Fixes
+
+* bump netcore to 3.1.2 ([34f8db2](https://github.com/informatievlaanderen/postal-registry/commit/34f8db2))
+* update dockerid detection ([cee1459](https://github.com/informatievlaanderen/postal-registry/commit/cee1459))
+
 ## [2.5.8](https://github.com/informatievlaanderen/postal-registry/compare/v2.5.7...v2.5.8) (2020-02-27)
 
 
