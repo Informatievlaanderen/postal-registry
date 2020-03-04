@@ -1,3 +1,10 @@
+## [2.5.11](https://github.com/informatievlaanderen/postal-registry/compare/v2.5.10...v2.5.11) (2020-03-04)
+
+
+### Bug Fixes
+
+* bump netcore dockerfiles ([5840606](https://github.com/informatievlaanderen/postal-registry/commit/5840606))
+
 ## [2.5.10](https://github.com/informatievlaanderen/postal-registry/compare/v2.5.9...v2.5.10) (2020-03-03)
 
 
