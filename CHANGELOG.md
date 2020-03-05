@@ -1,3 +1,10 @@
+## [2.5.12](https://github.com/informatievlaanderen/postal-registry/compare/v2.5.11...v2.5.12) (2020-03-05)
+
+
+### Bug Fixes
+
+* update grar common to fix provenance ([0bb7a33](https://github.com/informatievlaanderen/postal-registry/commit/0bb7a33))
+
 ## [2.5.11](https://github.com/informatievlaanderen/postal-registry/compare/v2.5.10...v2.5.11) (2020-03-04)
 
 
