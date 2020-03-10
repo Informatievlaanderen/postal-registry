@@ -142,6 +142,41 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
         }
 
         /// <summary>
+        /// Vraag het totaal aantal van actieve postcodes op.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="cancellationToken"></param>
+        /// <response code="200">Als de opvraging van het totaal aantal gelukt is.</response>
+        /// <response code="500">Als er een interne fout is opgetreden.</response>
+        [HttpGet("totaal-aantal")]
+        [ProducesResponseType(typeof(TotaalAantalResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        [SwaggerResponseExample(StatusCodes.Status200OK, typeof(TotalCountResponseExample), jsonConverter: typeof(StringEnumConverter))]
+        [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(InternalServerErrorResponseExamples), jsonConverter: typeof(StringEnumConverter))]
+        public async Task<IActionResult> Count(
+            [FromServices] LegacyContext context,
+            [FromServices] SyndicationContext syndicationContext,
+            CancellationToken cancellationToken = default)
+        {
+            var filtering = Request.ExtractFilteringRequest<PostalInformationFilter>();
+            var sorting = Request.ExtractSortingRequest();
+            var pagination = Request.ExtractPaginationRequest();
+
+            return Ok(
+                new TotaalAantalResponse
+                {
+                    Aantal = filtering.ShouldFilter
+                        ? await new PostalInformationListQuery(context, syndicationContext)
+                            .Fetch(filtering, sorting, pagination)
+                            .Items
+                            .CountAsync(cancellationToken)
+                        : await context
+                            .PostalInformation
+                            .CountAsync(cancellationToken)
+                });
+        }
+
+        /// <summary>
         /// Vraag een lijst met wijzigingen van postinfo op.
         /// </summary>
         /// <param name="configuration"></param>
