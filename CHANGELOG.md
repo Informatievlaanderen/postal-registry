@@ -1,3 +1,10 @@
+# [2.6.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.5.12...v2.6.0) (2020-03-10)
+
+
+### Features
+
+* add totaal aantal endpoint ([7ea39cf](https://github.com/informatievlaanderen/postal-registry/commit/7ea39cf))
+
 ## [2.5.12](https://github.com/informatievlaanderen/postal-registry/compare/v2.5.11...v2.5.12) (2020-03-05)
 
 
