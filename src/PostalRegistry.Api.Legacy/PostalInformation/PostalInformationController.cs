@@ -160,7 +160,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
         {
             var filtering = Request.ExtractFilteringRequest<PostalInformationFilter>();
             var sorting = Request.ExtractSortingRequest();
-            var pagination = Request.ExtractPaginationRequest();
+            var pagination = new NoPaginationRequest();
 
             return Ok(
                 new TotaalAantalResponse
