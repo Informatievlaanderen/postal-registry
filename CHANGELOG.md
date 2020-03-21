@@ -1,3 +1,12 @@
+## [2.6.2](https://github.com/informatievlaanderen/postal-registry/compare/v2.6.1...v2.6.2) (2020-03-21)
+
+
+### Bug Fixes
+
+* update grar common to fix versie id type ([61afe38](https://github.com/informatievlaanderen/postal-registry/commit/61afe38))
+* use correct build user ([d75dd9b](https://github.com/informatievlaanderen/postal-registry/commit/d75dd9b))
+* versie id update sync projection ([dcbc5fa](https://github.com/informatievlaanderen/postal-registry/commit/dcbc5fa))
+
 ## [2.6.1](https://github.com/informatievlaanderen/postal-registry/compare/v2.6.0...v2.6.1) (2020-03-11)
 
 
