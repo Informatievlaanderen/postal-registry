@@ -19,7 +19,7 @@ namespace PostalRegistry.Projections.Syndication.Municipality
         public string? NameEnglish { get; set; }
         public string? NameEnglishSearch { get; set; }
 
-        public DateTimeOffset? Version { get; set; }
+        public string? Version { get; set; }
 
         public long Position { get; set; }
 
