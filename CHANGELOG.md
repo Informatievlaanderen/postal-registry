@@ -1,3 +1,10 @@
+## [2.6.3](https://github.com/informatievlaanderen/postal-registry/compare/v2.6.2...v2.6.3) (2020-03-27)
+
+
+### Bug Fixes
+
+* set sync dates to belgian timezone ([6ea9f2a](https://github.com/informatievlaanderen/postal-registry/commit/6ea9f2a))
+
 ## [2.6.2](https://github.com/informatievlaanderen/postal-registry/compare/v2.6.1...v2.6.2) (2020-03-21)
 
 
