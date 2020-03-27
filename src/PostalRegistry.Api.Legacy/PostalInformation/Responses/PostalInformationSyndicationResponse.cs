@@ -35,8 +35,8 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
             {
                 Id = postalInformation.Position.ToString(CultureInfo.InvariantCulture),
                 Title = $"{postalInformation.ChangeType}-{postalInformation.Position}",
-                Published = postalInformation.RecordCreatedAt.ToDateTimeOffset(),
-                LastUpdated = postalInformation.LastChangedOn.ToDateTimeOffset(),
+                Published = postalInformation.RecordCreatedAt.ToBelgianDateTimeOffset(),
+                LastUpdated = postalInformation.LastChangedOn.ToBelgianDateTimeOffset(),
                 Description = BuildDescription(postalInformation, responseOptions.Value.Naamruimte)
             };
 
