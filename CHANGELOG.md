@@ -1,3 +1,10 @@
+# [2.7.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.6.3...v2.7.0) (2020-04-03)
+
+
+### Features
+
+* upgrade projection handling to include errmessage lastchangedlist ([cc07426](https://github.com/informatievlaanderen/postal-registry/commit/cc07426))
+
 ## [2.6.3](https://github.com/informatievlaanderen/postal-registry/compare/v2.6.2...v2.6.3) (2020-03-27)
 
 
