@@ -1,3 +1,10 @@
+## [2.7.3](https://github.com/informatievlaanderen/postal-registry/compare/v2.7.2...v2.7.3) (2020-04-28)
+
+
+### Bug Fixes
+
+* update grar dependencies GRAR-412 ([0c5509a](https://github.com/informatievlaanderen/postal-registry/commit/0c5509a))
+
 ## [2.7.2](https://github.com/informatievlaanderen/postal-registry/compare/v2.7.1...v2.7.2) (2020-04-10)
 
 
