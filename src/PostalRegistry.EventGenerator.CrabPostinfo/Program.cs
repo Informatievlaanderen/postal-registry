@@ -6,7 +6,7 @@ namespace PostalRegistry.EventGenerator.CrabPostinfo
     using NodaTime;
     using System;
     using System.Collections.Generic;
-    using System.Data.SqlClient;
+    using Microsoft.Data.SqlClient;
     using System.IO;
     using System.Net.Http;
     using System.Net.Http.Headers;

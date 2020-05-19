@@ -1,7 +1,7 @@
 namespace PostalRegistry.Projections.Syndication.Modules
 {
     using System;
-    using System.Data.SqlClient;
+    using Microsoft.Data.SqlClient;
     using System.Net.Http;
     using Be.Vlaanderen.Basisregisters.DataDog.Tracing.Http;
     using Be.Vlaanderen.Basisregisters.DataDog.Tracing.Sql.EntityFrameworkCore;

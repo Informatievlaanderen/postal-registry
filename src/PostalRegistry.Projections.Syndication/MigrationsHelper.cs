@@ -1,7 +1,7 @@
 namespace PostalRegistry.Projections.Syndication
 {
     using System;
-    using System.Data.SqlClient;
+    using Microsoft.Data.SqlClient;
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
