@@ -95,10 +95,13 @@ jobs:
         GIT_COMMITTER_EMAIL: ${{ secrets.VBR_GIT_EMAIL }}
 
     - name: Set Release Version
-      run: echo ::set-env name=RELEASE_VERSION::$(cat semver)
+      run: |
+        [ ! -f semver ] && echo none > semver
+        echo ::set-env name=RELEASE_VERSION::$(cat semver)
       shell: bash
 
     - name: Configure AWS credentials (Staging)
+      if: env.RELEASE_VERSION != 'none'
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.VBR_AWS_ACCESS_KEY_ID }}
@@ -106,6 +109,7 @@ jobs:
         aws-region: ${{ secrets.VBR_AWS_REGION }}
 
     - name: Login to Amazon ECR (Staging)
+      if: env.RELEASE_VERSION != 'none'
       uses: aws-actions/amazon-ecr-login@v1
 
     - name: Push to Staging
@@ -122,6 +126,7 @@ jobs:
         WORKSPACE: ${{ github.workspace }}
 
     - name: Configure AWS credentials (Production)
+      if: env.RELEASE_VERSION != 'none'
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.VBR_AWS_ACCESS_KEY_ID_PRD }}
@@ -129,9 +134,11 @@ jobs:
         aws-region: ${{ secrets.VBR_AWS_REGION_PRD }}
 
     - name: Login to Amazon ECR (Production)
+      if: env.RELEASE_VERSION != 'none'
       uses: aws-actions/amazon-ecr-login@v1
 
     - name: Push to Production
+      if: env.RELEASE_VERSION != 'none'
       shell: bash
       run: |
         docker tag  $BUILD_DOCKER_REGISTRY/postal-registry/api-legacy:$SEMVER $BUILD_DOCKER_REGISTRY_PRD/postal-registry/api-legacy:$SEMVER
@@ -155,6 +162,7 @@ jobs:
         WORKSPACE: ${{ github.workspace }}
 
     - name: Publish to NuGet
+      if: env.RELEASE_VERSION != 'none'
       shell: bash
       run: |
         node packages/Be.Vlaanderen.Basisregisters.Build.Pipeline/Content/ci-nuget.js dist/nuget/Be.Vlaanderen.Basisregisters.PostalRegistry.Api.Legacy.$SEMVER.nupkg
@@ -167,6 +175,7 @@ jobs:
         NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
 
     - name: Publish to Confluence
+      if: env.RELEASE_VERSION != 'none'
       shell: bash
       run: ./packages/Be.Vlaanderen.Basisregisters.Build.Pipeline/Content/ci-confluence.sh
       env:
@@ -175,6 +184,7 @@ jobs:
         CONFLUENCE_PASSWORD: ${{ secrets.VBR_CONFLUENCE_PASSWORD }}
 
     - name: Create Jira Release
+      if: env.RELEASE_VERSION != 'none'
       shell: bash
       run: ./packages/Be.Vlaanderen.Basisregisters.Build.Pipeline/Content/ci-jira.sh
       env:
