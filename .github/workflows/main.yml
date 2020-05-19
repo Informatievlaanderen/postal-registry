@@ -113,6 +113,7 @@ jobs:
       uses: aws-actions/amazon-ecr-login@v1
 
     - name: Push to Staging
+      if: env.RELEASE_VERSION != 'none'
       shell: bash
       run: |
         docker push $BUILD_DOCKER_REGISTRY/postal-registry/api-legacy:$SEMVER
