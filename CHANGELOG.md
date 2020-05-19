@@ -1,3 +1,10 @@
+## [2.7.4](https://github.com/informatievlaanderen/postal-registry/compare/v2.7.3...v2.7.4) (2020-05-19)
+
+
+### Bug Fixes
+
+* move to 3.1.4 and gh-actions ([1237351](https://github.com/informatievlaanderen/postal-registry/commit/1237351aafd9b0e3ddf15ae661f63237370f32ba))
+
 ## [2.7.3](https://github.com/informatievlaanderen/postal-registry/compare/v2.7.2...v2.7.3) (2020-04-28)
 
 
