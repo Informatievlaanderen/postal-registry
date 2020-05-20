@@ -1,3 +1,10 @@
+## [2.7.5](https://github.com/informatievlaanderen/postal-registry/compare/v2.7.4...v2.7.5) (2020-05-20)
+
+
+### Bug Fixes
+
+* add build badge ([210194b](https://github.com/informatievlaanderen/postal-registry/commit/210194b48843a12b66d8b1da2227f662e183adc9))
+
 ## [2.7.4](https://github.com/informatievlaanderen/postal-registry/compare/v2.7.3...v2.7.4) (2020-05-19)
 
 
