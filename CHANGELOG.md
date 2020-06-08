@@ -1,3 +1,10 @@
+## [2.7.7](https://github.com/informatievlaanderen/postal-registry/compare/v2.7.6...v2.7.7) (2020-06-08)
+
+
+### Bug Fixes
+
+* build msil version for public api ([2df2562](https://github.com/informatievlaanderen/postal-registry/commit/2df25622ed9a216225429c289f8982815466d665))
+
 ## [2.7.6](https://github.com/informatievlaanderen/postal-registry/compare/v2.7.5...v2.7.6) (2020-05-29)
 
 
