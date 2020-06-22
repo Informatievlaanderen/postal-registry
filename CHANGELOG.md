@@ -1,3 +1,10 @@
+## [2.7.9](https://github.com/informatievlaanderen/postal-registry/compare/v2.7.8...v2.7.9) (2020-06-22)
+
+
+### Bug Fixes
+
+* configure baseurls for all problemdetails GRAR-1358 GRAR-1357 ([3a051aa](https://github.com/informatievlaanderen/postal-registry/commit/3a051aa91e4855cdf115b364eb3149bb8e0af28d))
+
 ## [2.7.8](https://github.com/informatievlaanderen/postal-registry/compare/v2.7.7...v2.7.8) (2020-06-19)
 
 
