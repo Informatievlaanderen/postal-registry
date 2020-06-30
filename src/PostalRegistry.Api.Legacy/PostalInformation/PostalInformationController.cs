@@ -137,7 +137,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
             return Ok(new PostalInformationListResponse
             {
                 PostInfoObjecten = items,
-                Volgende = BuildVolgendeUri(pagedPostalInformationSet.PaginationInfo, reponseOptions.Value.VolgendeUrl)
+                Volgende = BuildNextUri(pagedPostalInformationSet.PaginationInfo, reponseOptions.Value.VolgendeUrl)
             });
         }
 
@@ -202,13 +202,12 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
             var sorting = Request.ExtractSortingRequest();
             var pagination = Request.ExtractPaginationRequest();
 
-            var pagedPostalInformationSet = new PostalInformationSyndicationQuery(
-                context,
-                filtering.Filter?.ContainsEvent ?? false,
-                filtering.Filter?.ContainsObject ?? false)
+            var pagedPostalInformationSet =
+                new PostalInformationSyndicationQuery(
+                    context,
+                    filtering.Filter?.ContainsEvent ?? false,
+                    filtering.Filter?.ContainsObject ?? false)
                 .Fetch(filtering, sorting, pagination);
-
-            Response.AddPagedQueryResultHeaders(pagedPostalInformationSet);
 
             return new ContentResult
             {
@@ -238,11 +237,17 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
                         new Uri(syndicationConfiguration["Self"]),
                         syndicationConfiguration.GetSection("Related").GetChildren().Select(c => c.Value).ToArray());
 
-                var nextUri = BuildVolgendeUri(pagedPostalInfoItems.PaginationInfo, syndicationConfiguration["NextUri"]);
+                var postalInfos = pagedPostalInfoItems.Items.ToList();
+
+                var nextFrom = postalInfos.Any()
+                    ? postalInfos.Max(x => x.Position) + 1
+                    : (long?) null;
+
+                var nextUri = BuildNextSyncUri(pagedPostalInfoItems.PaginationInfo.Limit, nextFrom, syndicationConfiguration["NextUri"]);
                 if (nextUri != null)
                     await writer.Write(new SyndicationLink(nextUri, GrArAtomLinkTypes.Next));
 
-                foreach (var postalInfo in pagedPostalInfoItems.Items)
+                foreach (var postalInfo in postalInfos)
                     await writer.WritePostalInfo(responseOptions, formatter, syndicationConfiguration["Category"], postalInfo);
 
                 xmlWriter.Flush();
@@ -251,13 +256,20 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
             return sw.ToString();
         }
 
-        private static Uri BuildVolgendeUri(PaginationInfo paginationInfo, string volgendeUrlBase)
+        private static Uri BuildNextUri(PaginationInfo paginationInfo, string nextUrlBase)
         {
             var offset = paginationInfo.Offset;
             var limit = paginationInfo.Limit;
 
             return paginationInfo.HasNextPage
-                ? new Uri(string.Format(volgendeUrlBase, offset + limit, limit))
+                ? new Uri(string.Format(nextUrlBase, offset + limit, limit))
+                : null;
+        }
+
+        private static Uri BuildNextSyncUri(int limit, long? from, string nextUrlBase)
+        {
+            return from.HasValue
+                ? new Uri(string.Format(nextUrlBase, from.Value, limit))
                 : null;
         }
     }
