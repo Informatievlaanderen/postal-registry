@@ -1,3 +1,10 @@
+## [2.7.11](https://github.com/informatievlaanderen/postal-registry/compare/v2.7.10...v2.7.11) (2020-06-30)
+
+
+### Bug Fixes
+
+* remove offset and add from to next uri GRAR-1418 ([39b0b55](https://github.com/informatievlaanderen/postal-registry/commit/39b0b5575d716f6ab0885d9b856bbd2f1271a9c6))
+
 ## [2.7.10](https://github.com/informatievlaanderen/postal-registry/compare/v2.7.9...v2.7.10) (2020-06-23)
 
 
