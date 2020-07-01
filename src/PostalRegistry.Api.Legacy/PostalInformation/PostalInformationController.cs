@@ -20,6 +20,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
     using Be.Vlaanderen.Basisregisters.GrAr.Legacy;
     using Be.Vlaanderen.Basisregisters.GrAr.Legacy.PostInfo;
     using Convertors;
+    using Infrastructure;
     using Infrastructure.Options;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -229,13 +230,9 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
                 var formatter = new AtomFormatter(null, xmlWriter.Settings) { UseCDATA = true };
                 var writer = new AtomFeedWriter(xmlWriter, null, formatter);
                 var syndicationConfiguration = configuration.GetSection("Syndication");
+                var atomFeedConfig = AtomFeedConfigurationBuilder.CreateFrom(syndicationConfiguration, DateTimeOffset.Now);
 
-                await writer.WriteDefaultMetadata(
-                        syndicationConfiguration["Id"],
-                        syndicationConfiguration["Title"],
-                        Assembly.GetEntryAssembly().GetName().Version.ToString(),
-                        new Uri(syndicationConfiguration["Self"]),
-                        syndicationConfiguration.GetSection("Related").GetChildren().Select(c => c.Value).ToArray());
+                await writer.WriteDefaultMetadata(atomFeedConfig);
 
                 var postalInfos = pagedPostalInfoItems.Items.ToList();
 
