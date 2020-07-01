@@ -1,3 +1,10 @@
+# [2.8.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.7.11...v2.8.0) (2020-07-01)
+
+
+### Features
+
+* refactored metadata for atom feed ([fd10ce7](https://github.com/informatievlaanderen/postal-registry/commit/fd10ce7d1cbaf27a5534b81b12cf4a89b431ed0a))
+
 ## [2.7.11](https://github.com/informatievlaanderen/postal-registry/compare/v2.7.10...v2.7.11) (2020-06-30)
 
 
