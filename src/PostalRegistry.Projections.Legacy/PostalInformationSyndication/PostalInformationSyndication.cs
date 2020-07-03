@@ -46,6 +46,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
         public Organisation? Organisation { get; set; }
         public string? Reason { get; set; }
         public string? EventDataAsXml { get; set; }
+        public DateTimeOffset SyndicationItemCreatedAt { get; set; }
 
         public PostalInformationSyndicationItem CloneAndApplyEventInfo(
             long newPosition,
@@ -129,6 +130,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
             b.Property(x => x.Organisation);
             b.Property(x => x.Reason);
             b.Property(x => x.EventDataAsXml);
+            b.Property(x => x.SyndicationItemCreatedAt).IsRequired();
 
             b.Ignore(x => x.PostalNames);
             b.Ignore(x => x.RecordCreatedAt);
