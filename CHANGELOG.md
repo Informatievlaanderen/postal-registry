@@ -1,3 +1,10 @@
+## [2.8.2](https://github.com/informatievlaanderen/postal-registry/compare/v2.8.1...v2.8.2) (2020-07-03)
+
+
+### Bug Fixes
+
+* correct migration script GRAR-1442 ([056b91b](https://github.com/informatievlaanderen/postal-registry/commit/056b91b4eb6de944ca726f06e140de8e75879998))
+
 ## [2.8.1](https://github.com/informatievlaanderen/postal-registry/compare/v2.8.0...v2.8.1) (2020-07-03)
 
 
