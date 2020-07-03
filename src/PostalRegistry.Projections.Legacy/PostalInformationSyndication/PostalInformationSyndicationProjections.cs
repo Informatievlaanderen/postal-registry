@@ -1,5 +1,6 @@
 namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
 {
+    using System;
     using System.Linq;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore;
@@ -19,7 +20,8 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
                     PostalCode = message.Message.PostalCode,
                     RecordCreatedAt = message.Message.Provenance.Timestamp,
                     LastChangedOn = message.Message.Provenance.Timestamp,
-                    ChangeType = message.EventName
+                    ChangeType = message.EventName,
+                    SyndicationItemCreatedAt = DateTimeOffset.UtcNow
                 };
 
                 newPostalInformationSyndicationItem.ApplyProvenance(message.Message.Provenance);
