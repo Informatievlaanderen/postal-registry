@@ -8,6 +8,7 @@ namespace PostalRegistry.Projector.Infrastructure.Modules
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.LastChangedList;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore.Autofac;
     using Be.Vlaanderen.Basisregisters.Projector;
+    using Be.Vlaanderen.Basisregisters.Projector.ConnectedProjections;
     using Be.Vlaanderen.Basisregisters.Projector.Modules;
     using Be.Vlaanderen.Basisregisters.Shaperon;
     using Microsoft.Extensions.Configuration;
@@ -76,7 +77,8 @@ namespace PostalRegistry.Projector.Infrastructure.Modules
                     _configuration,
                     _loggerFactory)
                 .RegisterProjections<PostalInformationExtractProjections, ExtractContext>(
-                    context => new PostalInformationExtractProjections(context.Resolve<IOptions<ExtractConfig>>(), DbaseCodePage.Western_European_ANSI.ToEncoding()));
+                    context => new PostalInformationExtractProjections(context.Resolve<IOptions<ExtractConfig>>(), DbaseCodePage.Western_European_ANSI.ToEncoding()),
+                    RetryPolicy.NoRetries);
         }
 
         private void RegisterLastChangedProjections(ContainerBuilder builder)
@@ -92,7 +94,7 @@ namespace PostalRegistry.Projector.Infrastructure.Modules
                 .RegisterProjectionMigrator<PostalRegistry.Projections.LastChangedList.LastChangedListContextMigrationFactory>(
                     _configuration,
                     _loggerFactory)
-                .RegisterProjections<LastChangedListProjections, LastChangedListContext>();
+                .RegisterProjections<LastChangedListProjections, LastChangedListContext>(RetryPolicy.NoRetries);
         }
 
         private void RegisterLegacyProjections(ContainerBuilder builder)
@@ -107,8 +109,8 @@ namespace PostalRegistry.Projector.Infrastructure.Modules
                 .RegisterProjectionMigrator<LegacyContextMigrationFactory>(
                     _configuration,
                     _loggerFactory)
-                .RegisterProjections<PostalInformationProjections, LegacyContext>()
-                .RegisterProjections<PostalInformationSyndicationProjections, LegacyContext>();
+                .RegisterProjections<PostalInformationProjections, LegacyContext>(RetryPolicy.NoRetries)
+                .RegisterProjections<PostalInformationSyndicationProjections, LegacyContext>(RetryPolicy.NoRetries);
         }
     }
 }
