@@ -16,7 +16,7 @@ namespace PostalRegistry.Projections.Legacy.Migrations
                 defaultValue: DateTimeOffset.UtcNow);
 
             // remove the default value
-            migrationBuilder.AddColumn<DateTimeOffset>(
+            migrationBuilder.AlterColumn<DateTimeOffset>(
                 name: "SyndicationItemCreatedAt",
                 schema: "PostalRegistryLegacy",
                 table: "PostalInformationSyndication",
