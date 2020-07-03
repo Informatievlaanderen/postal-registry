@@ -1,3 +1,13 @@
+## [2.8.1](https://github.com/informatievlaanderen/postal-registry/compare/v2.8.0...v2.8.1) (2020-07-03)
+
+
+### Bug Fixes
+
+* add SyndicationItemCreatedAt GRAR-1442 ([f36cd47](https://github.com/informatievlaanderen/postal-registry/commit/f36cd4749b86dc07089cebb9d30e4ca07c7ab374))
+* get updated value from projections GRAR-1442 ([797a262](https://github.com/informatievlaanderen/postal-registry/commit/797a262c37638ad6e79078e041ce920870c4544f))
+* run CI only on InformatiaVlaanderen repo ([1d05bf3](https://github.com/informatievlaanderen/postal-registry/commit/1d05bf38c619c5f018d788322268a306dcf3ac3f))
+* update dependcies ([37dd699](https://github.com/informatievlaanderen/postal-registry/commit/37dd6997770ed652c8e3f6130d9b0fc3db1008a1))
+
 # [2.8.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.7.11...v2.8.0) (2020-07-01)
 
 
