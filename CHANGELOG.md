@@ -1,3 +1,10 @@
+## [2.8.3](https://github.com/informatievlaanderen/postal-registry/compare/v2.8.2...v2.8.3) (2020-07-10)
+
+
+### Bug Fixes
+
+* enums were not correctly serialized in syndication event GRAR-1490 ([3250380](https://github.com/informatievlaanderen/postal-registry/commit/3250380772599a541a1921f923194cb9ba97b91f))
+
 ## [2.8.2](https://github.com/informatievlaanderen/postal-registry/compare/v2.8.1...v2.8.2) (2020-07-03)
 
 
