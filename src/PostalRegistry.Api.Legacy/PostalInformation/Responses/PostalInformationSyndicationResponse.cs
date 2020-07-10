@@ -4,7 +4,6 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
-    using System.Net.Mime;
     using System.Runtime.Serialization;
     using System.Threading.Tasks;
     using System.Xml;
@@ -47,22 +46,22 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
                         new Uri($"{responseOptions.Value.Naamruimte}/{postalInformation.PostalCode}"),
                         AtomLinkTypes.Related));
 
-                item.AddLink(
-                    new SyndicationLink(
-                        new Uri(string.Format(responseOptions.Value.DetailUrl, postalInformation.PostalCode)),
-                        AtomLinkTypes.Self));
+                //item.AddLink(
+                //    new SyndicationLink(
+                //        new Uri(string.Format(responseOptions.Value.DetailUrl, postalInformation.PostalCode)),
+                //        AtomLinkTypes.Self));
 
-                item.AddLink(
-                    new SyndicationLink(
-                        new Uri(string.Format($"{responseOptions.Value.DetailUrl}.xml", postalInformation.PostalCode)),
-                        AtomLinkTypes.Alternate)
-                    { MediaType = MediaTypeNames.Application.Xml });
+                //item.AddLink(
+                //    new SyndicationLink(
+                //        new Uri(string.Format($"{responseOptions.Value.DetailUrl}.xml", postalInformation.PostalCode)),
+                //        AtomLinkTypes.Alternate)
+                //    { MediaType = MediaTypeNames.Application.Xml });
 
-                item.AddLink(
-                    new SyndicationLink(
-                        new Uri(string.Format($"{responseOptions.Value.DetailUrl}.json", postalInformation.PostalCode)),
-                        AtomLinkTypes.Alternate)
-                    { MediaType = MediaTypeNames.Application.Json });
+                //item.AddLink(
+                //    new SyndicationLink(
+                //        new Uri(string.Format($"{responseOptions.Value.DetailUrl}.json", postalInformation.PostalCode)),
+                //        AtomLinkTypes.Alternate)
+                //    { MediaType = MediaTypeNames.Application.Json });
             }
 
             item.AddCategory(
@@ -70,8 +69,8 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 
             item.AddContributor(
                 new SyndicationPerson(
-                    "agentschap Informatie Vlaanderen",
-                    "informatie.vlaanderen@vlaanderen.be",
+                    postalInformation.Organisation?.ToName(),
+                    string.Empty,
                     AtomContributorTypes.Author));
 
             await writer.Write(item);
