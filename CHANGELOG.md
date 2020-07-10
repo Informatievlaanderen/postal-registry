@@ -1,3 +1,10 @@
+## [2.8.4](https://github.com/informatievlaanderen/postal-registry/compare/v2.8.3...v2.8.4) (2020-07-10)
+
+
+### Bug Fixes
+
+* correct author, entry links atom feed + example GRAR-1443 GRAR-1447 ([9504be4](https://github.com/informatievlaanderen/postal-registry/commit/9504be47ca700b4b325b854b25560ab566ea2789))
+
 ## [2.8.3](https://github.com/informatievlaanderen/postal-registry/compare/v2.8.2...v2.8.3) (2020-07-10)
 
 
