@@ -1,3 +1,11 @@
+## [2.8.5](https://github.com/informatievlaanderen/postal-registry/compare/v2.8.4...v2.8.5) (2020-07-13)
+
+
+### Bug Fixes
+
+* update dependencies ([522f01f](https://github.com/informatievlaanderen/postal-registry/commit/522f01f16ec8a12693edd8195f63c13ab8e5d70b))
+* use typed embed value GRAR-1465 ([ba1d192](https://github.com/informatievlaanderen/postal-registry/commit/ba1d192c3d35c6b9fc4a49a0c32e3609c7c8b29d))
+
 ## [2.8.4](https://github.com/informatievlaanderen/postal-registry/compare/v2.8.3...v2.8.4) (2020-07-10)
 
 
