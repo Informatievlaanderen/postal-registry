@@ -141,11 +141,11 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
         private readonly bool _embedEvent;
         private readonly bool _embedObject;
 
-        public PostalInformationSyndicationQuery(LegacyContext context, bool embedEvent, bool embedObject)
+        public PostalInformationSyndicationQuery(LegacyContext context, EmbedValue embed)
         {
             _context = context;
-            _embedEvent = embedEvent;
-            _embedObject = embedObject;
+            _embedEvent = embed?.Event ?? false;
+            _embedObject = embed?.Object ?? false;
         }
 
         protected override ISorting Sorting => new PostalInformationSyndicationSorting();
@@ -235,12 +235,6 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
     public class PostalInformationSyndicationFilter
     {
         public long? Position { get; set; }
-        public string Embed { get; set; }
-
-        public bool ContainsEvent =>
-            Embed.Contains("event", StringComparison.OrdinalIgnoreCase);
-
-        public bool ContainsObject =>
-            Embed.Contains("object", StringComparison.OrdinalIgnoreCase);
+        public EmbedValue Embed  { get; set; }
     }
 }

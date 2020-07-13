@@ -216,8 +216,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
             var pagedPostalInformationSet =
                 new PostalInformationSyndicationQuery(
                     context,
-                    filtering.Filter?.ContainsEvent ?? false,
-                    filtering.Filter?.ContainsObject ?? false)
+                    filtering.Filter?.Embed)
                 .Fetch(filtering, sorting, pagination);
 
             return new ContentResult
