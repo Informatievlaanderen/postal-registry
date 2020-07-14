@@ -1,3 +1,10 @@
+# [2.9.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.8.5...v2.9.0) (2020-07-14)
+
+
+### Features
+
+* add timestamp to sync provenance GRAR-1451 ([b164b9c](https://github.com/informatievlaanderen/postal-registry/commit/b164b9cce90dac00ac248c0b9beb85d75926e319))
+
 ## [2.8.5](https://github.com/informatievlaanderen/postal-registry/compare/v2.8.4...v2.8.5) (2020-07-13)
 
 
