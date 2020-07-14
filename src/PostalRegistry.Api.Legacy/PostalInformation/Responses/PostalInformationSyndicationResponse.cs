@@ -156,7 +156,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         public PostalInfoSyndicationContent(
             string naamruimte,
             string postcode,
-            DateTimeOffset? version,
+            DateTimeOffset version,
             PostalInformationStatus? status,
             IEnumerable<PostalName> postalNames,
             string municipalityNisCode,
@@ -171,7 +171,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
                               .Select(name => new Postnaam(new GeografischeNaam(name.Name, name.Language.ConvertFromLanguage())))
                               .ToList()
                           ?? new List<Postnaam>();
-            Provenance = new Provenance(organisation, new Reason(reason));
+            Provenance = new Provenance(version, organisation, new Reason(reason));
         }
     }
 
