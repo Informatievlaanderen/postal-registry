@@ -1,3 +1,10 @@
+## [2.9.1](https://github.com/informatievlaanderen/postal-registry/compare/v2.9.0...v2.9.1) (2020-07-19)
+
+
+### Bug Fixes
+
+* move to 3.1.6 ([fa9e306](https://github.com/informatievlaanderen/postal-registry/commit/fa9e3063b5434dd701808c9560a20970adad1e7c))
+
 # [2.9.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.8.5...v2.9.0) (2020-07-14)
 
 
