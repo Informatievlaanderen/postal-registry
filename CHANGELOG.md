@@ -1,3 +1,10 @@
+## [2.9.2](https://github.com/informatievlaanderen/postal-registry/compare/v2.9.1...v2.9.2) (2020-07-20)
+
+
+### Bug Fixes
+
+* have syndication example return a string for now ([27d332b](https://github.com/informatievlaanderen/postal-registry/commit/27d332bf2f8c35ee048aca2b35861d160d6e3129))
+
 ## [2.9.1](https://github.com/informatievlaanderen/postal-registry/compare/v2.9.0...v2.9.1) (2020-07-19)
 
 
