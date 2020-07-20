@@ -182,6 +182,6 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         public PostalInformationSyndicationResponseExamples(IOptions<ResponseOptions> responseOptionsProvider)
             => _responseOptions = responseOptionsProvider.Value;
 
-        public object GetExamples() => new { };
+        public object GetExamples() => "";
     }
 }
