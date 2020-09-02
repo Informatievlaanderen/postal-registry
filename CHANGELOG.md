@@ -1,3 +1,10 @@
+## [2.9.3](https://github.com/informatievlaanderen/postal-registry/compare/v2.9.2...v2.9.3) (2020-09-02)
+
+
+### Bug Fixes
+
+* upgrade common to fix sync author ([7eeafe5](https://github.com/informatievlaanderen/postal-registry/commit/7eeafe55f0e35f17e0af9a2a79c1ba77556eed72))
+
 ## [2.9.2](https://github.com/informatievlaanderen/postal-registry/compare/v2.9.1...v2.9.2) (2020-07-20)
 
 
