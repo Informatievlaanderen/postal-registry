@@ -1,3 +1,10 @@
+## [2.9.4](https://github.com/informatievlaanderen/postal-registry/compare/v2.9.3...v2.9.4) (2020-09-03)
+
+
+### Bug Fixes
+
+* null organistation defaults to unknown ([486a6ff](https://github.com/informatievlaanderen/postal-registry/commit/486a6ff04294d27fc49fe2c214d6d2a2c66d513e))
+
 ## [2.9.3](https://github.com/informatievlaanderen/postal-registry/compare/v2.9.2...v2.9.3) (2020-09-02)
 
 
