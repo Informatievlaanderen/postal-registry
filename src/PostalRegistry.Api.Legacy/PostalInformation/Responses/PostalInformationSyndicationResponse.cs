@@ -69,7 +69,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 
             item.AddContributor(
                 new SyndicationPerson(
-                    postalInformation.Organisation?.ToName(),
+                    postalInformation.Organisation == null ? Organisation.Unknown.ToName() : postalInformation.Organisation.Value.ToName(),
                     string.Empty,
                     AtomContributorTypes.Author));
 
