@@ -1,3 +1,10 @@
+## [2.9.5](https://github.com/informatievlaanderen/postal-registry/compare/v2.9.4...v2.9.5) (2020-09-10)
+
+
+### Bug Fixes
+
+* add generator version GRAR-1540 ([be6af90](https://github.com/informatievlaanderen/postal-registry/commit/be6af90f181ddae5bd509bf2e8e3295268f06e09))
+
 ## [2.9.4](https://github.com/informatievlaanderen/postal-registry/compare/v2.9.3...v2.9.4) (2020-09-03)
 
 
