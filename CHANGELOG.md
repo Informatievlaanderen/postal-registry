@@ -1,3 +1,10 @@
+## [2.9.7](https://github.com/informatievlaanderen/postal-registry/compare/v2.9.6...v2.9.7) (2020-09-11)
+
+
+### Bug Fixes
+
+* remove Modification from xml GRAR-1529 ([7a1e711](https://github.com/informatievlaanderen/postal-registry/commit/7a1e7111ca3880903baa2953f2cb1d9f44270c51))
+
 ## [2.9.6](https://github.com/informatievlaanderen/postal-registry/compare/v2.9.5...v2.9.6) (2020-09-11)
 
 
