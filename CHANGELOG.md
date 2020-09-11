@@ -1,3 +1,10 @@
+## [2.9.6](https://github.com/informatievlaanderen/postal-registry/compare/v2.9.5...v2.9.6) (2020-09-11)
+
+
+### Bug Fixes
+
+* update pakcages to fix null operator/reason GRAR-1535 ([231f1e9](https://github.com/informatievlaanderen/postal-registry/commit/231f1e916ccd9de80eaed77185ed324853afac40))
+
 ## [2.9.5](https://github.com/informatievlaanderen/postal-registry/compare/v2.9.4...v2.9.5) (2020-09-10)
 
 
