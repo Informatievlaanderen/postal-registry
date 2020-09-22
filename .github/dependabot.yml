@@ -11,7 +11,7 @@ updates:
   schedule:
     interval: daily
 
-    - package-ecosystem: docker
+- package-ecosystem: docker
   directory: "/src/PostalRegistry.Api.CrabImport"
   schedule:
     interval: daily
