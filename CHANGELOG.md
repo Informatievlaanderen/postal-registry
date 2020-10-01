@@ -1,3 +1,10 @@
+# [2.10.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.9.8...v2.10.0) (2020-10-01)
+
+
+### Features
+
+* add cache status to projector api ([bb91d5e](https://github.com/informatievlaanderen/postal-registry/commit/bb91d5e02ee61aa52b8ca953fa28d20b1998a7ad))
+
 ## [2.9.8](https://github.com/informatievlaanderen/postal-registry/compare/v2.9.7...v2.9.8) (2020-09-22)
 
 
