@@ -1,3 +1,10 @@
+## [2.10.1](https://github.com/informatievlaanderen/postal-registry/compare/v2.10.0...v2.10.1) (2020-10-05)
+
+
+### Bug Fixes
+
+* run projection using the feedprojector GRAR-1562 ([c0379eb](https://github.com/informatievlaanderen/postal-registry/commit/c0379eba8d0a7b7c5d50048c6da605a8a4c9beaf))
+
 # [2.10.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.9.8...v2.10.0) (2020-10-01)
 
 
