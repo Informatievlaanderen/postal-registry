@@ -62,10 +62,10 @@ namespace PostalRegistry.Projections.Syndication
                                 container.GetService<ILoggerFactory>(),
                                 ct);
 
-                            await Task.WhenAll(StartRunners(configuration, container, ct));
-
-                            Log.Information("Running... Press CTRL + C to exit.");
-                            Closing.WaitOne();
+                            await container
+                                .GetService<FeedProjector<SyndicationContext>>()
+                                .Register(BuildProjectionRunner(configuration, container))
+                                .Start(ct);
                         }
                         catch (Exception e)
                         {
@@ -90,9 +90,9 @@ namespace PostalRegistry.Projections.Syndication
             Closing.Close();
         }
 
-        private static IEnumerable<Task> StartRunners(IConfiguration configuration, IServiceProvider container, CancellationToken ct)
+        private static IFeedProjectionRunner<SyndicationContext> BuildProjectionRunner(IConfiguration configuration, IServiceProvider container)
         {
-            var municipalityRunner = new FeedProjectionRunner<MunicipalityEvent, SyndicationContent<Gemeente>, SyndicationContext>(
+            return new FeedProjectionRunner<MunicipalityEvent, SyndicationContent<Gemeente>, SyndicationContext>(
                 "municipality",
                 configuration.GetValue<Uri>("SyndicationFeeds:Municipality"),
                 configuration.GetValue<string>("SyndicationFeeds:MunicipalityAuthUserName"),
@@ -103,10 +103,6 @@ namespace PostalRegistry.Projections.Syndication
                 container.GetService<ILogger<Program>>(),
                 container.GetService<IRegistryAtomFeedReader>(),
                 new MunicipalityLatestProjections());
-
-            yield return municipalityRunner.CatchUpAsync(
-                container.GetService<Func<Owned<SyndicationContext>>>(),
-                ct);
         }
 
         private static IServiceProvider ConfigureServices(IConfiguration configuration)
