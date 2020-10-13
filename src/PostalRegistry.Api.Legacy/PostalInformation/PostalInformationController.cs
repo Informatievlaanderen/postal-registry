@@ -130,6 +130,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
                     p.PostalCode,
                     reponseOptions.Value.Naamruimte,
                     reponseOptions.Value.DetailUrl,
+                    p.IsRetired ? PostInfoStatus.Gehistoreerd : PostInfoStatus.Gerealiseerd,
                     p.VersionTimestamp.ToBelgianDateTimeOffset())
                 {
                     Postnamen = p.PostalNames.Select(x => x.ConvertFromPostalName()).ToList()
