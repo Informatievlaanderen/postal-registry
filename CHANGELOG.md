@@ -1,3 +1,10 @@
+# [2.11.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.10.1...v2.11.0) (2020-10-13)
+
+
+### Features
+
+* add status to legacy list ([90a6f0b](https://github.com/informatievlaanderen/postal-registry/commit/90a6f0b2e80858d2ffa339e1c51ac274800cd06d))
+
 ## [2.10.1](https://github.com/informatievlaanderen/postal-registry/compare/v2.10.0...v2.10.1) (2020-10-05)
 
 
