@@ -53,16 +53,29 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         public Uri Detail { get; set; }
 
         /// <summary>
+        /// De huidige fase in de doorlooptijd van de postcode.
+        /// </summary>
+        [DataMember(Name = "PostInfoStatus", Order = 3)]
+        [JsonProperty(Required = Required.DisallowNull)]
+        public PostInfoStatus PostInfoStatus { get; set; }
+
+        /// <summary>
         /// De namen van de gebieden die de postcode beslaat, in het Nederlands.
         /// </summary>
         [DataMember(Name = "Postnamen", Order = 3)]
         [JsonProperty(Required = Required.DisallowNull)]
         public List<Postnaam> Postnamen { get; set; }
 
-        public PostalInformationListItemResponse(string postalCode, string naamruimte, string detail, DateTimeOffset? version)
+        public PostalInformationListItemResponse(
+            string postalCode,
+            string naamruimte,
+            string detail,
+            PostInfoStatus status,
+            DateTimeOffset? version)
         {
             Identificator = new PostinfoIdentificator(naamruimte, postalCode, version);
             Detail = new Uri(string.Format(detail, postalCode));
+            PostInfoStatus = status;
         }
     }
 
@@ -75,7 +88,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         public PostalInformationListResponse GetExamples()
         {
             var postalInformationSampleGent =
-                new PostalInformationListItemResponse("9000", _responseOptions.Naamruimte, _responseOptions.DetailUrl, DateTimeOffset.Now.LocalDateTime)
+                new PostalInformationListItemResponse("9000", _responseOptions.Naamruimte, _responseOptions.DetailUrl, PostInfoStatus.Gerealiseerd, DateTimeOffset.Now.LocalDateTime)
                 {
                     Postnamen = new List<Postnaam>
                     {
@@ -84,7 +97,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
                 };
 
             var postalInformationSampleTemse =
-                new PostalInformationListItemResponse("9140", _responseOptions.Naamruimte, _responseOptions.DetailUrl, DateTimeOffset.Now)
+                new PostalInformationListItemResponse("9140", _responseOptions.Naamruimte, _responseOptions.DetailUrl, PostInfoStatus.Gerealiseerd, DateTimeOffset.Now)
                 {
                     Postnamen = new List<Postnaam>
                     {
