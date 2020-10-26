@@ -57,7 +57,7 @@ namespace PostalRegistry.Projector.Infrastructure.Modules
 
                 .RegisterModule<EnvelopeModule>()
                 .RegisterEventstreamModule(_configuration)
-                .RegisterModule<ProjectorModule>();
+                .RegisterModule(new ProjectorModule(_configuration));
 
             RegisterExtractProjections(builder);
             RegisterLastChangedProjections(builder);
