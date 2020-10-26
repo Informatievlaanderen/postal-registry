@@ -7,7 +7,7 @@ namespace PostalRegistry.Projections.Extract.PostalInformationExtract
     public class PostalInformationExtractItem
     {
         public string PostalCode { get; set; }
-        public byte[] DbaseRecord { get; set; }
+        public byte[]? DbaseRecord { get; set; }
     }
 
     public class PostalExtractItemConfiguration : IEntityTypeConfiguration<PostalInformationExtractItem>
