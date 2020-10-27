@@ -1,3 +1,10 @@
+# [2.13.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.12.0...v2.13.0) (2020-10-27)
+
+
+### Features
+
+* add error message for syndication projections ([9838351](https://github.com/informatievlaanderen/postal-registry/commit/983835193dea129e02a82596697dfd3e784f77c2))
+
 # [2.12.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.11.0...v2.12.0) (2020-10-27)
 
 
