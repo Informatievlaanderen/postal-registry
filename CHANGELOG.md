@@ -1,3 +1,15 @@
+# [2.12.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.11.0...v2.12.0) (2020-10-27)
+
+
+### Bug Fixes
+
+* drop FK before dropping PK ([1312851](https://github.com/informatievlaanderen/postal-registry/commit/1312851f88030bf7cab5c0249235dbf1224ae1ca))
+
+
+### Features
+
+* update projector with gap detection and extended status api ([8e7e06e](https://github.com/informatievlaanderen/postal-registry/commit/8e7e06e752a26433ed29953544239aabb86f5ebc))
+
 # [2.11.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.10.1...v2.11.0) (2020-10-13)
 
 
