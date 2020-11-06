@@ -1,3 +1,14 @@
+## [2.13.1](https://github.com/informatievlaanderen/postal-registry/compare/v2.13.0...v2.13.1) (2020-11-06)
+
+
+### Bug Fixes
+
+* logging ([f80e054](https://github.com/informatievlaanderen/postal-registry/commit/f80e05468428e59acfc49c82447cfc9e0bd6a836))
+* logging ([bb4ccb3](https://github.com/informatievlaanderen/postal-registry/commit/bb4ccb393fb84a55c4528c6295978bb174dba23f))
+* logging ([a4512f4](https://github.com/informatievlaanderen/postal-registry/commit/a4512f4044ebfc875317e463cb12f3f21914e6ad))
+* logging ([01da4c5](https://github.com/informatievlaanderen/postal-registry/commit/01da4c572bcf3ce93f9ce65c64fd10c5c09b01b4))
+* logging ([55cc800](https://github.com/informatievlaanderen/postal-registry/commit/55cc800d55f486532328a018ba99ce19e30ec40f))
+
 # [2.13.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.12.0...v2.13.0) (2020-10-27)
 
 
