@@ -1,3 +1,11 @@
+## [2.13.2](https://github.com/informatievlaanderen/postal-registry/compare/v2.13.1...v2.13.2) (2020-11-12)
+
+
+### Bug Fixes
+
+* event name serialization for sync xml ([70d8bc2](https://github.com/informatievlaanderen/postal-registry/commit/70d8bc23ed827b4ce96e6521e8023e76952c147c))
+* set event name sync register street ([527e651](https://github.com/informatievlaanderen/postal-registry/commit/527e651909afcd9dfaf85b97d1fc06869d9573ca))
+
 ## [2.13.1](https://github.com/informatievlaanderen/postal-registry/compare/v2.13.0...v2.13.1) (2020-11-06)
 
 
