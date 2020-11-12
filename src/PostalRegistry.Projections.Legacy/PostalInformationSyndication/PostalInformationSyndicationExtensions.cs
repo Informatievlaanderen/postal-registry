@@ -33,7 +33,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
                 applyEventInfoOn);
 
             newPostalInformationSyndicationItem.ApplyProvenance(provenance);
-            newPostalInformationSyndicationItem.SetEventData(message.Message);
+            newPostalInformationSyndicationItem.SetEventData(message.Message, message.EventName);
 
             await context
                 .PostalInformationSyndication
@@ -67,8 +67,8 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
             item.Reason = provenance.Reason;
         }
 
-        public static void SetEventData<T>(this PostalInformationSyndicationItem syndicationItem, T message)
-            => syndicationItem.EventDataAsXml = message.ToXml(message.GetType().Name).ToString(SaveOptions.DisableFormatting);
+        public static void SetEventData<T>(this PostalInformationSyndicationItem syndicationItem, T message, string eventName)
+            => syndicationItem.EventDataAsXml = message.ToXml(eventName).ToString(SaveOptions.DisableFormatting);
 
         private static ProjectionItemNotFoundException<PostalInformationSyndicationProjections> DatabaseItemNotFound(string postalCode)
             => new ProjectionItemNotFoundException<PostalInformationSyndicationProjections>(postalCode);
