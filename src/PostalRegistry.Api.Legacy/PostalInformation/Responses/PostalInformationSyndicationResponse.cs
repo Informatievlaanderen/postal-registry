@@ -175,13 +175,66 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         }
     }
 
-    public class PostalInformationSyndicationResponseExamples : IExamplesProvider<object>
+    public class PostalInformationSyndicationResponseExamples : IExamplesProvider<XmlElement>
     {
-        private readonly ResponseOptions _responseOptions;
+        const string RawXml = @"<?xml version=""1.0"" encoding=""utf-8""?>
+<feed xmlns=""http://www.w3.org/2005/Atom"">
+    <id>https://api.basisregisters.dev-vlaanderen.be/v1/feeds/postinfo.atom</id>
+    <title>Basisregisters Vlaanderen - feed 'postinfo'</title>
+    <subtitle>Deze Atom feed geeft leestoegang tot events op de resource 'postinfo'.</subtitle>
+    <generator uri=""https://basisregisters.dev-vlaanderen.be"" version=""2.2.13.2"">Basisregisters Vlaanderen</generator>
+    <rights>Gratis hergebruik volgens https://overheid.vlaanderen.be/sites/default/files/documenten/ict-egov/licenties/hergebruik/modellicentie_gratis_hergebruik_v1_0.html</rights>
+    <updated>2020-09-17T09:14:41Z</updated>
+    <author>
+        <name>agentschap Informatie Vlaanderen</name>
+        <email>informatie.vlaanderen@vlaanderen.be</email>
+    </author>
+    <link href=""https://api.basisregisters.dev-vlaanderen.be/v1/feeds/postinfo"" rel=""self"" />
+    <link href=""https://api.basisregisters.dev-vlaanderen.be/v1/feeds/postinfo.atom"" rel=""alternate"" type=""application/atom+xml"" />
+    <link href=""https://api.basisregisters.dev-vlaanderen.be/v1/feeds/postinfo.xml"" rel=""alternate"" type=""application/xml"" />
+    <link href=""https://docs.basisregisters.dev-vlaanderen.be/"" rel=""related"" />
+    <link href=""https://api.basisregisters.dev-vlaanderen.be/v1/feeds/postinfo?from=2&amp;limit=100&amp;embed=event,object"" rel=""next"" />
+    <entry>
+        <id>0</id>
+        <title>PostalInformationWasRegistered-0</title>
+        <updated>2019-11-21T09:34:51+01:00</updated>
+        <published>2019-11-21T09:34:51+01:00</published>
+        <link href=""https://data.vlaanderen.be/id/postinfo/8900"" rel=""related"" />
+        <author>
+            <name>bpost</name>
+        </author>
+        <category term=""postinfo"" />
+        <content>
+            <![CDATA[<Content xmlns:i=""http://www.w3.org/2001/XMLSchema-instance""><Event><PostalInformationWasRegistered><PostalCode>8900</PostalCode><Provenance><Timestamp>2019-11-21T08:34:51Z</Timestamp><Organisation>DePost</Organisation><Reason>Centrale bijhouding o.b.v. bPost-bestand</Reason></Provenance>
+    </PostalInformationWasRegistered>
+  </Event><Object><Id>8900</Id><Identificator><Id>https://data.vlaanderen.be/id/postinfo/8900</Id><Naamruimte>https://data.vlaanderen.be/id/postinfo</Naamruimte><ObjectId>8900</ObjectId><VersieId>2019-11-21T09:34:51+01:00</VersieId></Identificator><Postnamen /><NisCode i:nil=""true"" /><PostInfoStatus i:nil=""true"" /><Creatie><Tijdstip>2019-11-21T09:34:51+01:00</Tijdstip><Organisatie>bpost</Organisatie><Reden>Centrale bijhouding o.b.v. bPost-bestand</Reden></Creatie>
+  </Object></Content>]]>
+</content>
+</entry>
+<entry>
+    <id>1</id>
+    <title>PostalInformationBecameCurrent-1</title>
+    <updated>2019-11-21T09:34:51+01:00</updated>
+    <published>2019-11-21T09:34:51+01:00</published>
+    <link href=""https://data.vlaanderen.be/id/postinfo/8900"" rel=""related"" />
+    <author>
+        <name>bpost</name>
+    </author>
+    <category term=""postinfo"" />
+    <content>
+        <![CDATA[<Content xmlns:i=""http://www.w3.org/2001/XMLSchema-instance""><Event><PostalInformationBecameCurrent><PostalCode>8900</PostalCode><Provenance><Timestamp>2019-11-21T08:34:51Z</Timestamp><Organisation>DePost</Organisation><Reason>Centrale bijhouding o.b.v. bPost-bestand</Reason></Provenance>
+    </PostalInformationBecameCurrent>
+  </Event><Object><Id>8900</Id><Identificator><Id>https://data.vlaanderen.be/id/postinfo/8900</Id><Naamruimte>https://data.vlaanderen.be/id/postinfo</Naamruimte><ObjectId>8900</ObjectId><VersieId>2019-11-21T09:34:51+01:00</VersieId></Identificator><Postnamen /><NisCode i:nil=""true"" /><PostInfoStatus>Gerealiseerd</PostInfoStatus><Creatie><Tijdstip>2019-11-21T09:34:51+01:00</Tijdstip><Organisatie>bpost</Organisatie><Reden>Centrale bijhouding o.b.v. bPost-bestand</Reden></Creatie>
+  </Object></Content>]]>
+</content>
+</entry>
+</feed>";
 
-        public PostalInformationSyndicationResponseExamples(IOptions<ResponseOptions> responseOptionsProvider)
-            => _responseOptions = responseOptionsProvider.Value;
-
-        public object GetExamples() => "";
+        public XmlElement GetExamples()
+        {
+            var example = new XmlDocument();
+            example.LoadXml(RawXml);
+            return example.DocumentElement;
+        }
     }
 }
