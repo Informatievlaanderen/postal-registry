@@ -179,21 +179,21 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
     {
         const string RawXml = @"<?xml version=""1.0"" encoding=""utf-8""?>
 <feed xmlns=""http://www.w3.org/2005/Atom"">
-    <id>https://api.basisregisters.dev-vlaanderen.be/v1/feeds/postinfo.atom</id>
+    <id>https://api.basisregisters.vlaanderen.be/v1/feeds/postinfo.atom</id>
     <title>Basisregisters Vlaanderen - feed 'postinfo'</title>
     <subtitle>Deze Atom feed geeft leestoegang tot events op de resource 'postinfo'.</subtitle>
-    <generator uri=""https://basisregisters.dev-vlaanderen.be"" version=""2.2.13.2"">Basisregisters Vlaanderen</generator>
+    <generator uri=""https://basisregisters.vlaanderen.be"" version=""2.2.13.2"">Basisregisters Vlaanderen</generator>
     <rights>Gratis hergebruik volgens https://overheid.vlaanderen.be/sites/default/files/documenten/ict-egov/licenties/hergebruik/modellicentie_gratis_hergebruik_v1_0.html</rights>
     <updated>2020-09-17T09:14:41Z</updated>
     <author>
         <name>agentschap Informatie Vlaanderen</name>
         <email>informatie.vlaanderen@vlaanderen.be</email>
     </author>
-    <link href=""https://api.basisregisters.dev-vlaanderen.be/v1/feeds/postinfo"" rel=""self"" />
-    <link href=""https://api.basisregisters.dev-vlaanderen.be/v1/feeds/postinfo.atom"" rel=""alternate"" type=""application/atom+xml"" />
-    <link href=""https://api.basisregisters.dev-vlaanderen.be/v1/feeds/postinfo.xml"" rel=""alternate"" type=""application/xml"" />
-    <link href=""https://docs.basisregisters.dev-vlaanderen.be/"" rel=""related"" />
-    <link href=""https://api.basisregisters.dev-vlaanderen.be/v1/feeds/postinfo?from=2&amp;limit=100&amp;embed=event,object"" rel=""next"" />
+    <link href=""https://api.basisregisters.vlaanderen.be/v1/feeds/postinfo"" rel=""self"" />
+    <link href=""https://api.basisregisters.vlaanderen.be/v1/feeds/postinfo.atom"" rel=""alternate"" type=""application/atom+xml"" />
+    <link href=""https://api.basisregisters.vlaanderen.be/v1/feeds/postinfo.xml"" rel=""alternate"" type=""application/xml"" />
+    <link href=""https://docs.basisregisters.vlaanderen.be/"" rel=""related"" />
+    <link href=""https://api.basisregisters.vlaanderen.be/v1/feeds/postinfo?from=2&amp;limit=100&amp;embed=event,object"" rel=""next"" />
     <entry>
         <id>0</id>
         <title>PostalInformationWasRegistered-0</title>
