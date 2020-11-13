@@ -57,9 +57,9 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
         [ProducesResponseType(typeof(PostalInformationResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        [SwaggerResponseExample(StatusCodes.Status200OK, typeof(PostalInformationResponseExamples), jsonConverter: typeof(StringEnumConverter))]
-        [SwaggerResponseExample(StatusCodes.Status404NotFound, typeof(PostalInformationNotFoundResponseExamples), jsonConverter: typeof(StringEnumConverter))]
-        [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(InternalServerErrorResponseExamples), jsonConverter: typeof(StringEnumConverter))]
+        [SwaggerResponseExample(StatusCodes.Status200OK, typeof(PostalInformationResponseExamples))]
+        [SwaggerResponseExample(StatusCodes.Status404NotFound, typeof(PostalInformationNotFoundResponseExamples))]
+        [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(InternalServerErrorResponseExamples))]
         public async Task<IActionResult> Get(
             [FromServices] LegacyContext context,
             [FromServices] IOptions<ResponseOptions> responseOptions,
@@ -103,8 +103,8 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
         [HttpGet]
         [ProducesResponseType(typeof(PostalInformationListResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        [SwaggerResponseExample(StatusCodes.Status200OK, typeof(PostalInformationListResponseExamples), jsonConverter: typeof(StringEnumConverter))]
-        [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(InternalServerErrorResponseExamples), jsonConverter: typeof(StringEnumConverter))]
+        [SwaggerResponseExample(StatusCodes.Status200OK, typeof(PostalInformationListResponseExamples))]
+        [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(InternalServerErrorResponseExamples))]
         public async Task<IActionResult> List(
             [FromServices] LegacyContext legacyContext,
             [FromServices] SyndicationContext syndicationContext,
@@ -153,8 +153,8 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
         [HttpGet("totaal-aantal")]
         [ProducesResponseType(typeof(TotaalAantalResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        [SwaggerResponseExample(StatusCodes.Status200OK, typeof(TotalCountResponseExample), jsonConverter: typeof(StringEnumConverter))]
-        [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(InternalServerErrorResponseExamples), jsonConverter: typeof(StringEnumConverter))]
+        [SwaggerResponseExample(StatusCodes.Status200OK, typeof(TotalCountResponseExample))]
+        [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(InternalServerErrorResponseExamples))]
         public async Task<IActionResult> Count(
             [FromServices] LegacyContext context,
             [FromServices] SyndicationContext syndicationContext,
@@ -192,8 +192,8 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         [SwaggerResponseExample(StatusCodes.Status200OK, typeof(PostalInformationSyndicationResponseExamples))]
-        [SwaggerResponseExample(StatusCodes.Status400BadRequest, typeof(BadRequestResponseExamples), jsonConverter: typeof(StringEnumConverter))]
-        [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(InternalServerErrorResponseExamples), jsonConverter: typeof(StringEnumConverter))]
+        [SwaggerResponseExample(StatusCodes.Status400BadRequest, typeof(BadRequestResponseExamples))]
+        [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(InternalServerErrorResponseExamples))]
         public async Task<IActionResult> Sync(
             [FromServices] IConfiguration configuration,
             [FromServices] LegacyContext context,
