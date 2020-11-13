@@ -1,3 +1,12 @@
+## [2.13.3](https://github.com/informatievlaanderen/postal-registry/compare/v2.13.2...v2.13.3) (2020-11-13)
+
+
+### Bug Fixes
+
+* display sync response example as correct xml GRAR-1599 ([f9bd86c](https://github.com/informatievlaanderen/postal-registry/commit/f9bd86c9e909e22292352fc26bf195cceeb71d79))
+* upgrade swagger GRAR-1599 ([f1269aa](https://github.com/informatievlaanderen/postal-registry/commit/f1269aa592624224deb8d70b8449f98efad7f6c6))
+* use production url for sync examples ([08ed932](https://github.com/informatievlaanderen/postal-registry/commit/08ed932cffe1fee9f53ffd16d254764c94807936))
+
 ## [2.13.2](https://github.com/informatievlaanderen/postal-registry/compare/v2.13.1...v2.13.2) (2020-11-12)
 
 
