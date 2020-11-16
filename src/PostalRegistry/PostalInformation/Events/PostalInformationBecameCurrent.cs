@@ -8,8 +8,10 @@ namespace PostalRegistry.PostalInformation.Events
     [EventDescription("De postcode werd in gebruik genomen.")]
     public class PostalInformationBecameCurrent : IHasProvenance, ISetProvenance
     {
+        [EventPropertyDescription("Postcode (= objectidentificator) van het PostInfo-object.")]
         public string PostalCode { get; }
 
+        [EventPropertyDescription("Metadata bij het event.")]
         public ProvenanceData Provenance { get; private set; }
 
         public PostalInformationBecameCurrent(
