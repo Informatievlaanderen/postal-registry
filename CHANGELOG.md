@@ -1,3 +1,11 @@
+## [2.13.4](https://github.com/informatievlaanderen/postal-registry/compare/v2.13.3...v2.13.4) (2020-11-19)
+
+
+### Bug Fixes
+
+* remove set-env usage in gh-actions ([40b982c](https://github.com/informatievlaanderen/postal-registry/commit/40b982cc2c42d277ee1cc98d318ea581f661ecbc))
+* update references for event property descriptions ([1dcd880](https://github.com/informatievlaanderen/postal-registry/commit/1dcd8800315b1305207d4d4c495761f824aff802))
+
 ## [2.13.3](https://github.com/informatievlaanderen/postal-registry/compare/v2.13.2...v2.13.3) (2020-11-13)
 
 
