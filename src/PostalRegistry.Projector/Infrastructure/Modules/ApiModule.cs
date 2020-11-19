@@ -78,7 +78,7 @@ namespace PostalRegistry.Projector.Infrastructure.Modules
                     _loggerFactory)
                 .RegisterProjections<PostalInformationExtractProjections, ExtractContext>(
                     context => new PostalInformationExtractProjections(context.Resolve<IOptions<ExtractConfig>>(), DbaseCodePage.Western_European_ANSI.ToEncoding()),
-                    RetryPolicy.NoRetries);
+                    ConnectedProjectionSettings.Default);
         }
 
         private void RegisterLastChangedProjections(ContainerBuilder builder)
@@ -94,7 +94,7 @@ namespace PostalRegistry.Projector.Infrastructure.Modules
                 .RegisterProjectionMigrator<PostalRegistry.Projections.LastChangedList.LastChangedListContextMigrationFactory>(
                     _configuration,
                     _loggerFactory)
-                .RegisterProjections<LastChangedListProjections, LastChangedListContext>(RetryPolicy.NoRetries);
+                .RegisterProjections<LastChangedListProjections, LastChangedListContext>(ConnectedProjectionSettings.Default);
         }
 
         private void RegisterLegacyProjections(ContainerBuilder builder)
@@ -109,8 +109,8 @@ namespace PostalRegistry.Projector.Infrastructure.Modules
                 .RegisterProjectionMigrator<LegacyContextMigrationFactory>(
                     _configuration,
                     _loggerFactory)
-                .RegisterProjections<PostalInformationProjections, LegacyContext>(RetryPolicy.NoRetries)
-                .RegisterProjections<PostalInformationSyndicationProjections, LegacyContext>(RetryPolicy.NoRetries);
+                .RegisterProjections<PostalInformationProjections, LegacyContext>(ConnectedProjectionSettings.Default)
+                .RegisterProjections<PostalInformationSyndicationProjections, LegacyContext>(ConnectedProjectionSettings.Default);
         }
     }
 }
