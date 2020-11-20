@@ -5,7 +5,7 @@ namespace PostalRegistry.PostalInformation.Events
     using Newtonsoft.Json;
 
     [EventName("PostalInformationPostalNameWasAdded")]
-    [EventDescription("Er werd een postnaam toegevoegd aan het Postinfo-object.")]
+    [EventDescription("Er werd een postnaam toegevoegd aan het PostInfo-object.")]
     public class PostalInformationPostalNameWasAdded : IHasProvenance, ISetProvenance
     {
         [EventPropertyDescription("Postcode (= objectidentificator) van het PostInfo-object.")]
