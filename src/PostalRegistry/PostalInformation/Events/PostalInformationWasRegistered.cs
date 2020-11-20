@@ -5,7 +5,7 @@ namespace PostalRegistry.PostalInformation.Events
     using Newtonsoft.Json;
 
     [EventName("PostalInformationWasRegistered")]
-    [EventDescription("Het postinfo-object werd aangemaakt in het register met zijn persistente lokale identificator.")]
+    [EventDescription("Het PostInfo-object werd aangemaakt in het register met zijn persistente lokale identificator.")]
     public class PostalInformationWasRegistered : IHasProvenance, ISetProvenance
     {
         [EventPropertyDescription("Postcode (= objectidentificator) van het PostInfo-object.")]
