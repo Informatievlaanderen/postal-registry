@@ -5,7 +5,7 @@ namespace PostalRegistry.PostalInformation.Events
     using Newtonsoft.Json;
 
     [EventName("PostalInformationWasRetired")]
-    [EventDescription("Het postinfo-object kreeg status 'gehistoreerd'.")]
+    [EventDescription("Het PostInfo-object kreeg status 'gehistoreerd'.")]
     public class PostalInformationWasRetired : IHasProvenance, ISetProvenance
     {
         [EventPropertyDescription("Postcode (= objectidentificator) van het PostInfo-object.")]
