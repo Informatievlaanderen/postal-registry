@@ -5,13 +5,19 @@ namespace PostalRegistry.PostalInformation.Events
     using Newtonsoft.Json;
 
     [EventName("PostalInformationPostalNameWasRemoved")]
-    [EventDescription("Aan de postcode werd een postnaam verwijderd.")]
+    [EventDescription("Er werd een postnaam verwijderd uit het Postinfo-object.")]
     public class PostalInformationPostalNameWasRemoved : IHasProvenance, ISetProvenance
     {
+        [EventPropertyDescription("Postcode (= objectidentificator) van het PostInfo-object.")]
         public string PostalCode { get; }
+        
+        [EventPropertyDescription("Officiële spelling van de postnaam.")]
         public string Name { get; }
+        
+        [EventPropertyDescription("Taal (voluit, EN) waarin de officiële naam staat.")]
         public Language Language { get; }
 
+        [EventPropertyDescription("Metadata bij het event.")]
         public ProvenanceData Provenance { get; private set; }
 
         public PostalInformationPostalNameWasRemoved(
