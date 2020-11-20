@@ -5,7 +5,7 @@ namespace PostalRegistry.PostalInformation.Events
     using Newtonsoft.Json;
 
     [EventName("PostalInformationBecameCurrent")]
-    [EventDescription("Het postinfo-object kreeg status 'gerealiseerd'.")]
+    [EventDescription("Het PostInfo-object kreeg status 'gerealiseerd'.")]
     public class PostalInformationBecameCurrent : IHasProvenance, ISetProvenance
     {
         [EventPropertyDescription("Postcode (= objectidentificator) van het PostInfo-object.")]
