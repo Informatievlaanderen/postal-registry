@@ -5,7 +5,7 @@ namespace PostalRegistry.PostalInformation.Events
     using Newtonsoft.Json;
 
     [EventName("MunicipalityWasAttached")]
-    [EventDescription("Het postinfo-object werd gekoppeld aan een gemeente.")]
+    [EventDescription("Het PostInfo-object werd gekoppeld aan een gemeente.")]
     public class MunicipalityWasAttached : IHasProvenance, ISetProvenance
     {
         [EventPropertyDescription("Postcode (= objectidentificator) van het PostInfo-object.")]
