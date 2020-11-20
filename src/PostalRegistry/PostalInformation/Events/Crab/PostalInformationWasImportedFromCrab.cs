@@ -6,22 +6,40 @@ namespace PostalRegistry.PostalInformation.Events.Crab
     using NodaTime;
 
     [EventName("Crab-PostalInformationWasImported")]
-    [EventDescription("De postcode werd geïmporteerd van CRAB.")]
+    [EventDescription("Er werd postinformatie geïmporteerd uit CRAB.")]
     public class PostalInformationWasImportedFromCrab
     {
+        [EventPropertyDescription("Subkantonidentificator. Postkantons die gemeentegrenzen overschrijden worden onderverdeeld in subkantons.")]
         public int SubCantonId { get; }
+        
+        [EventPropertyDescription("Subkantonnummer.")]
         public string SubCantonCode { get; }
+        
+        [EventPropertyDescription("Postcode.")]
         public string PostalCode { get; }
+        
+        [EventPropertyDescription("NIS-code van de gemeente waaraan de postcode is gekoppeld.")]
         public string NisCode { get; }
 
+        [EventPropertyDescription("Begindatum van de postinformatie (objecthistoriek).")]
         public LocalDateTime? BeginDate { get; }
 
+        [EventPropertyDescription("Officiële spelling van de gemeente.")]
         public string MunicipalityName { get; }
+        
+        [EventPropertyDescription("Taal waarin de officiële naam staat.")]
         public CrabLanguage? MunicipalityNameLanguage { get; }
 
+        [EventPropertyDescription("Tijdstip (recordhistoriek).")]
         public Instant Timestamp { get; }
+
+        [EventPropertyDescription("Operator (recordhistoriek).")]
         public string Operator { get; }
+        
+        [EventPropertyDescription("Bewerking (recordhistoriek).")]
         public CrabModification? Modification { get; }
+        
+        [EventPropertyDescription("Organisatie (recordhistoriek).")]
         public CrabOrganisation? Organisation { get; }
 
         public PostalInformationWasImportedFromCrab(
