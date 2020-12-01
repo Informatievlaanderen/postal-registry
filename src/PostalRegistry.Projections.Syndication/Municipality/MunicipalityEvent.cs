@@ -11,8 +11,8 @@ namespace PostalRegistry.Projections.Syndication.Municipality
         MunicipalityNisCodeWasCorrected,
         MunicipalityOfficialLanguageWasAdded,
         MunicipalityOfficialLanguageWasRemoved,
-        MunicipalityFacilitiesLanguageWasAdded,
-        MunicipalityFacilitiesLanguageWasRemoved,
+        MunicipalityFacilityLanguageWasAdded,
+        MunicipalityFacilityLanguageWasRemoved,
 
         MunicipalityWasDrawn,
         MunicipalityGeometryWasCleared,

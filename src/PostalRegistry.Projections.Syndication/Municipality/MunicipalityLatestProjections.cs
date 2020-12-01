@@ -23,8 +23,8 @@ namespace PostalRegistry.Projections.Syndication.Municipality
             // only version is updated
             When(MunicipalityEvent.MunicipalityOfficialLanguageWasAdded, AddSyndicationItemEntry);
             When(MunicipalityEvent.MunicipalityOfficialLanguageWasRemoved, AddSyndicationItemEntry);
-            When(MunicipalityEvent.MunicipalityFacilitiesLanguageWasAdded, AddSyndicationItemEntry);
-            When(MunicipalityEvent.MunicipalityFacilitiesLanguageWasRemoved, AddSyndicationItemEntry);
+            When(MunicipalityEvent.MunicipalityFacilityLanguageWasAdded, AddSyndicationItemEntry);
+            When(MunicipalityEvent.MunicipalityFacilityLanguageWasRemoved, AddSyndicationItemEntry);
 
             When(MunicipalityEvent.MunicipalityWasDrawn, DoNothing);
             When(MunicipalityEvent.MunicipalityGeometryWasCleared, DoNothing);
