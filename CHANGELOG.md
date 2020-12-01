@@ -1,3 +1,10 @@
+## [2.13.5](https://github.com/informatievlaanderen/postal-registry/compare/v2.13.4...v2.13.5) (2020-12-01)
+
+
+### Bug Fixes
+
+* correct municipality event name in syndication GRAR-1650 ([5753431](https://github.com/informatievlaanderen/postal-registry/commit/575343165fc4cb90aa1dba3b85dc96d465603750))
+
 ## [2.13.4](https://github.com/informatievlaanderen/postal-registry/compare/v2.13.3...v2.13.4) (2020-11-19)
 
 
