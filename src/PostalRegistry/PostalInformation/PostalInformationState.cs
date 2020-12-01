@@ -20,7 +20,7 @@ namespace PostalRegistry.PostalInformation
         public PostalInformation()
         {
             Register<PostalInformationWasRegistered>(When);
-            Register<PostalInformationBecameCurrent>(When);
+            Register<PostalInformationWasRealized>(When);
             Register<PostalInformationWasRetired>(When);
             Register<PostalInformationPostalNameWasAdded>(When);
             Register<PostalInformationPostalNameWasRemoved>(When);
@@ -59,7 +59,7 @@ namespace PostalRegistry.PostalInformation
             _status = PostalInformationStatus.Retired;
         }
 
-        private void When(PostalInformationBecameCurrent @event)
+        private void When(PostalInformationWasRealized @event)
         {
             _status = PostalInformationStatus.Current;
         }

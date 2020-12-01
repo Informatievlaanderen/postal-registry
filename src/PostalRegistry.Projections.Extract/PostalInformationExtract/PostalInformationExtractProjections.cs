@@ -40,7 +40,7 @@ namespace PostalRegistry.Projections.Extract.PostalInformationExtract
                     }, ct);
             });
 
-            When<Envelope<PostalInformationBecameCurrent>>(async (context, message, ct) =>
+            When<Envelope<PostalInformationWasRealized>>(async (context, message, ct) =>
             {
                 await context.FindAndUpdatePostalInformationExtract(
                     message.Message.PostalCode,
