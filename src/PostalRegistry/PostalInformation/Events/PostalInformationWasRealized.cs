@@ -4,9 +4,9 @@ namespace PostalRegistry.PostalInformation.Events
     using Be.Vlaanderen.Basisregisters.GrAr.Provenance;
     using Newtonsoft.Json;
 
-    [EventName("PostalInformationBecameCurrent")]
+    [EventName("PostalInformationWasRealized")]
     [EventDescription("Het PostInfo-object kreeg status 'gerealiseerd'.")]
-    public class PostalInformationBecameCurrent : IHasProvenance, ISetProvenance
+    public class PostalInformationWasRealized : IHasProvenance, ISetProvenance
     {
         [EventPropertyDescription("Postcode (= objectidentificator) van het PostInfo-object.")]
         public string PostalCode { get; }
@@ -14,14 +14,14 @@ namespace PostalRegistry.PostalInformation.Events
         [EventPropertyDescription("Metadata bij het event.")]
         public ProvenanceData Provenance { get; private set; }
 
-        public PostalInformationBecameCurrent(
+        public PostalInformationWasRealized(
             PostalCode postalCode)
         {
             PostalCode = postalCode;
         }
 
         [JsonConstructor]
-        private PostalInformationBecameCurrent(
+        private PostalInformationWasRealized(
             string postalCode,
             ProvenanceData provenance) :
             this(

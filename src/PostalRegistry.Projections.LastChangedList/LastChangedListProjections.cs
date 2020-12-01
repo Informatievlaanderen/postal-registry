@@ -21,7 +21,7 @@ namespace PostalRegistry.Projections.LastChangedList
                 await GetLastChangedRecordsAndUpdatePosition(message.Message.PostalCode, message.Position, context, ct);
             });
 
-            When<Envelope<PostalInformationBecameCurrent>>(async (context, message, ct) =>
+            When<Envelope<PostalInformationWasRealized>>(async (context, message, ct) =>
             {
                 await GetLastChangedRecordsAndUpdatePosition(message.Message.PostalCode, message.Position, context, ct);
             });

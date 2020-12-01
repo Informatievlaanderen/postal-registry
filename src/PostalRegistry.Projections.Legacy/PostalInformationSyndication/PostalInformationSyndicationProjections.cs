@@ -32,7 +32,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
                     .AddAsync(newPostalInformationSyndicationItem, ct);
             });
 
-            When<Envelope<PostalInformationBecameCurrent>>(async (context, message, ct) =>
+            When<Envelope<PostalInformationWasRealized>>(async (context, message, ct) =>
             {
                 await context.CreateNewPostalInformationSyndicationItem(
                     message.Message.PostalCode,

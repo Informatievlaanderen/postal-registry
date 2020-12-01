@@ -37,7 +37,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformation
                     ct);
             });
 
-            When<Envelope<PostalInformationBecameCurrent>>(async (context, message, ct) =>
+            When<Envelope<PostalInformationWasRealized>>(async (context, message, ct) =>
             {
                 await context.FindAndUpdatePostalInformation(
                     message.Message.PostalCode,

@@ -32,7 +32,7 @@ namespace PostalRegistry.PostalInformation
                 ApplyChange(new PostalInformationWasRetired(PostalCode));
 
             if (modification != Modification.Delete && _status != PostalInformationStatus.Retired)
-                ApplyChange(new PostalInformationBecameCurrent(PostalCode));
+                ApplyChange(new PostalInformationWasRealized(PostalCode));
 
             foreach (var postalName in postalNames.Where(x => !_postalNames.Contains(x)))
                 ApplyChange(new PostalInformationPostalNameWasAdded(PostalCode, postalName));
