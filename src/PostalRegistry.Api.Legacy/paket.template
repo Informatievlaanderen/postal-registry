@@ -15,16 +15,16 @@ licenseUrl https://opensource.org/licenses/EUPL-1.2
 description Postal Registry.
 
 files
-  PostalRegistry.Api.Legacy.dll => lib\netcoreapp3.1
-  PostalRegistry.Api.Legacy.pdb => lib\netcoreapp3.1
-  PostalRegistry.Api.Legacy.xml => lib\netcoreapp3.1
+  PostalRegistry.Api.Legacy.dll => lib\net5.0
+  PostalRegistry.Api.Legacy.pdb => lib\net5.0
+  PostalRegistry.Api.Legacy.xml => lib\net5.0
   PostalRegistry.Api.Legacy.xml => content
 
-  PostalRegistry.Projections.Legacy.dll => lib\netcoreapp3.1
-  PostalRegistry.Projections.Legacy.pdb => lib\netcoreapp3.1
+  PostalRegistry.Projections.Legacy.dll => lib\net5.0
+  PostalRegistry.Projections.Legacy.pdb => lib\net5.0
 
-  PostalRegistry.Projections.Syndication.dll => lib\netcoreapp3.1
-  PostalRegistry.Projections.Syndication.pdb => lib\netcoreapp3.1
+  PostalRegistry.Projections.Syndication.dll => lib\net5.0
+  PostalRegistry.Projections.Syndication.pdb => lib\net5.0
   
-  PostalRegistry.dll => lib\netcoreapp3.1
-  PostalRegistry.pdb => lib\netcoreapp3.1
+  PostalRegistry.dll => lib\net5.0
+  PostalRegistry.pdb => lib\net5.0
