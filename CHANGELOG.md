@@ -1,3 +1,10 @@
+## [2.13.7](https://github.com/informatievlaanderen/postal-registry/compare/v2.13.6...v2.13.7) (2020-12-28)
+
+
+### Bug Fixes
+
+* update basisregisters api dependency ([51dfb5c](https://github.com/informatievlaanderen/postal-registry/commit/51dfb5caf9cf427468a92d6f109e060cc8d5a46a))
+
 ## [2.13.6](https://github.com/informatievlaanderen/postal-registry/compare/v2.13.5...v2.13.6) (2020-12-21)
 
 
