@@ -8,7 +8,7 @@ namespace PostalRegistry.PostalInformation.Events.BPost
     using Newtonsoft.Json;
 
     [EventName("BPost-PostalInformationWasImported")]
-    [EventDescription("Er werd postinformatie geïmporteerd van bPost.")]
+    [EventDescription("Er werd postinformatie geïmporteerd van bpost.")]
     public class PostalInformationWasImportedFromBPost : IHasProvenance, ISetProvenance
     {
         [EventPropertyDescription("Postcode.")]
