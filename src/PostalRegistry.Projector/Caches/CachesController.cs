@@ -20,7 +20,6 @@ namespace PostalRegistry.Projector.Caches
             [FromServices] LastChangedListContext lastChangedListContext,
             CancellationToken cancellationToken)
         {
-            var maxErrorCount = configuration.GetValue<int?>("Caches:LastChangedList:MaxErrorCount") ?? 10;
             var maxErrorTimeInSeconds =
                 configuration.GetValue<int?>("Caches:LastChangedList:MaxErrorTimeInSeconds") ?? 60;
 
@@ -28,10 +27,7 @@ namespace PostalRegistry.Projector.Caches
             var numberOfRecords = await lastChangedListContext
                 .LastChangedList
                 .OrderBy(x => x.Id)
-                .Where(r =>
-                    r.Position > r.LastPopulatedPosition &&
-                    r.ErrorCount < maxErrorCount &&
-                    (r.LastError == null || r.LastError < maxErrorTime))
+                .Where(r => r.ToBeIndexed && (r.LastError == null || r.LastError < maxErrorTime))
                 .CountAsync(cancellationToken);
 
             return Ok(new[]
