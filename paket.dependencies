@@ -8,12 +8,12 @@ nuget Microsoft.SyndicationFeed.ReaderWriter 1.0.2
 
 nuget HtmlAgilityPack 1.11.29
 
-nuget CsvHelper 18.0.0
+nuget CsvHelper 19.0.0
 
 nuget NetTopologySuite 2.1.0
 
 // For more healtchecks, look at https://github.com/Xabaril/AspNetCore.Diagnostics.HealthChecks
-nuget AspNetCore.HealthChecks.SqlServer 3.2.0
+nuget AspNetCore.HealthChecks.SqlServer 5.0.1
 
 nuget Microsoft.EntityFrameworkCore.Design 5.0.1
 
@@ -40,12 +40,12 @@ nuget Be.Vlaanderen.Basisregisters.CommandHandling.SqlStreamStore 5.0.12
 nuget Be.Vlaanderen.Basisregisters.EventHandling 3.0.3
 nuget Be.Vlaanderen.Basisregisters.EventHandling.Autofac 3.0.3
 
-nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.LastChangedList 7.0.4
-nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore 7.0.4
-nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore.Autofac 7.0.4
-nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner 7.0.4
-nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector.Testing 7.0.4
-nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Syndication 7.0.4
+nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.LastChangedList 7.0.5
+nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore 7.0.5
+nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore.Autofac 7.0.5
+nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner 7.0.5
+nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector.Testing 7.0.5
+nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Syndication 7.0.5
 
 nuget Be.Vlaanderen.Basisregisters.Projector 7.0.3
 
