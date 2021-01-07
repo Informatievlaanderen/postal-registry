@@ -1,3 +1,10 @@
+## [2.13.9](https://github.com/informatievlaanderen/postal-registry/compare/v2.13.8...v2.13.9) (2021-01-07)
+
+
+### Bug Fixes
+
+* improve cache status page GRAR-1734 ([2cad5ed](https://github.com/informatievlaanderen/postal-registry/commit/2cad5ed2d71c727dcbd394e31b867a561f80c840))
+
 ## [2.13.8](https://github.com/informatievlaanderen/postal-registry/compare/v2.13.7...v2.13.8) (2021-01-07)
 
 
