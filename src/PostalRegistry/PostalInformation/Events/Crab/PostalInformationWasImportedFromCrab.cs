@@ -21,7 +21,7 @@ namespace PostalRegistry.PostalInformation.Events.Crab
         [EventPropertyDescription("NIS-code van de gemeente waaraan de postcode is gekoppeld.")]
         public string NisCode { get; }
 
-        [EventPropertyDescription("Begindatum van de postinformatie (objecthistoriek).")]
+        [EventPropertyDescription("Datum waarop het object is ontstaan in werkelijkheid.")]
         public LocalDateTime? BeginDate { get; }
 
         [EventPropertyDescription("Officiële spelling van de gemeente.")]
@@ -30,16 +30,16 @@ namespace PostalRegistry.PostalInformation.Events.Crab
         [EventPropertyDescription("Taal waarin de officiële naam staat.")]
         public CrabLanguage? MunicipalityNameLanguage { get; }
 
-        [EventPropertyDescription("Tijdstip (recordhistoriek).")]
+        [EventPropertyDescription("Tijdstip waarop het object werd ingevoerd in de databank.")] 
         public Instant Timestamp { get; }
 
-        [EventPropertyDescription("Operator (recordhistoriek).")]
+        [EventPropertyDescription("Operator door wie het object werd ingevoerd in de databank.")]
         public string Operator { get; }
         
-        [EventPropertyDescription("Bewerking (recordhistoriek).")]
+        [EventPropertyDescription("Bewerking waarmee het object werd ingevoerd in de databank.")] 
         public CrabModification? Modification { get; }
         
-        [EventPropertyDescription("Organisatie (recordhistoriek).")]
+        [EventPropertyDescription("Organisatie die het object heeft ingevoerd in de databank.")]
         public CrabOrganisation? Organisation { get; }
 
         public PostalInformationWasImportedFromCrab(
