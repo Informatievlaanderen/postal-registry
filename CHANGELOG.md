@@ -1,3 +1,10 @@
+# [2.14.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.13.9...v2.14.0) (2021-01-12)
+
+
+### Features
+
+* add syndication status to projector api GRAR-1567 ([3b134a2](https://github.com/informatievlaanderen/postal-registry/commit/3b134a29ee5d83aa85e86e7cc8b0f76afd58b47a))
+
 ## [2.13.9](https://github.com/informatievlaanderen/postal-registry/compare/v2.13.8...v2.13.9) (2021-01-07)
 
 
