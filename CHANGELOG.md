@@ -1,3 +1,10 @@
+## [2.14.1](https://github.com/informatievlaanderen/postal-registry/compare/v2.14.0...v2.14.1) (2021-01-29)
+
+
+### Bug Fixes
+
+* remove sync alternate links ([5f9aac3](https://github.com/informatievlaanderen/postal-registry/commit/5f9aac3eb09bf0c6b6a4819bc4531617a56db490))
+
 # [2.14.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.13.9...v2.14.0) (2021-01-12)
 
 
