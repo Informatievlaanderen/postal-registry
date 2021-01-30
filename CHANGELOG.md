@@ -1,3 +1,10 @@
+# [2.15.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.14.1...v2.15.0) (2021-01-30)
+
+
+### Features
+
+* add sync tags on events ([934abc5](https://github.com/informatievlaanderen/postal-registry/commit/934abc5cdbfe2d47698419cf28fcd2bdb0ef15a3))
+
 ## [2.14.1](https://github.com/informatievlaanderen/postal-registry/compare/v2.14.0...v2.14.1) (2021-01-29)
 
 
