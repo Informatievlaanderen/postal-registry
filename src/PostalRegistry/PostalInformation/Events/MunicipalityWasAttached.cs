@@ -4,13 +4,14 @@ namespace PostalRegistry.PostalInformation.Events
     using Be.Vlaanderen.Basisregisters.GrAr.Provenance;
     using Newtonsoft.Json;
 
+    [EventTags(EventTag.For.Sync)]
     [EventName("MunicipalityWasAttached")]
     [EventDescription("Het PostInfo-object werd gekoppeld aan een gemeente.")]
     public class MunicipalityWasAttached : IHasProvenance, ISetProvenance
     {
         [EventPropertyDescription("Postcode (= objectidentificator) van het PostInfo-object.")]
         public string PostalCode { get; }
-        
+
         [EventPropertyDescription("NIS-code (= objectidentificator) van de gemeente aan dewelke het PostInfo-object is toegewezen.")]
         public string NisCode { get; }
 
