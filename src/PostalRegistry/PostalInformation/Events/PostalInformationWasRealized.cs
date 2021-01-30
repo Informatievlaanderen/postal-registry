@@ -4,6 +4,7 @@ namespace PostalRegistry.PostalInformation.Events
     using Be.Vlaanderen.Basisregisters.GrAr.Provenance;
     using Newtonsoft.Json;
 
+    [EventTags(EventTag.For.Sync)]
     [EventName("PostalInformationWasRealized")]
     [EventDescription("Het PostInfo-object kreeg status 'gerealiseerd'.")]
     public class PostalInformationWasRealized : IHasProvenance, ISetProvenance

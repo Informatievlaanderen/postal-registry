@@ -4,13 +4,14 @@ namespace PostalRegistry.PostalInformation.Events
     using Be.Vlaanderen.Basisregisters.GrAr.Provenance;
     using Newtonsoft.Json;
 
+    [EventTags(EventTag.For.Sync)]
     [EventName("PostalInformationWasRegistered")]
     [EventDescription("Het PostInfo-object werd aangemaakt in het register met zijn persistente lokale identificator.")]
     public class PostalInformationWasRegistered : IHasProvenance, ISetProvenance
     {
         [EventPropertyDescription("Postcode (= objectidentificator) van het PostInfo-object.")]
         public string PostalCode { get; }
-        
+
         [EventPropertyDescription("Metadata bij het event.")]
         public ProvenanceData Provenance { get; private set; }
 

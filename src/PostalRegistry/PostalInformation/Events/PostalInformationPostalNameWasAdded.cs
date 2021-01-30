@@ -4,16 +4,17 @@ namespace PostalRegistry.PostalInformation.Events
     using Be.Vlaanderen.Basisregisters.GrAr.Provenance;
     using Newtonsoft.Json;
 
+    [EventTags(EventTag.For.Sync)]
     [EventName("PostalInformationPostalNameWasAdded")]
     [EventDescription("Er werd een postnaam toegevoegd aan het PostInfo-object.")]
     public class PostalInformationPostalNameWasAdded : IHasProvenance, ISetProvenance
     {
         [EventPropertyDescription("Postcode (= objectidentificator) van het PostInfo-object.")]
         public string PostalCode { get; }
-        
+
         [EventPropertyDescription("Officiële spelling van de postnaam.")]
         public string Name { get; }
-        
+
         [EventPropertyDescription("Taal (voluit, EN) waarin de officiële naam staat.")]
         public Language Language { get; }
 
