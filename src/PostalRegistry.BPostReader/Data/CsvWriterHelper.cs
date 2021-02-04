@@ -4,6 +4,7 @@ namespace PostalRegistry.BPostReader.Data
     using System.Globalization;
     using System.IO;
     using CsvHelper;
+    using CsvHelper.Configuration;
 
     public static class CsvWriterHelper
     {
@@ -11,14 +12,7 @@ namespace PostalRegistry.BPostReader.Data
         {
             using (var writer = new StreamWriter(path))
             {
-                var csvWriter = new CsvWriter(writer, CultureInfo.InvariantCulture)
-                {
-                    Configuration =
-                    {
-                        Delimiter = ",",
-                        HasHeaderRecord = true,
-                    }
-                };
+                var csvWriter = new CsvWriter(writer, new CsvConfiguration(CultureInfo.InvariantCulture, delimiter: ",", hasHeaderRecord: true));
 
                 csvWriter.WriteHeader<BPostData>();
                 csvWriter.NextRecord();
