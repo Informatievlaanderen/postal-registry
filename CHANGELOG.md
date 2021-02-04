@@ -1,3 +1,10 @@
+## [2.15.2](https://github.com/informatievlaanderen/postal-registry/compare/v2.15.1...v2.15.2) (2021-02-04)
+
+
+### Bug Fixes
+
+* compiles the updated csv helper ([9706d19](https://github.com/informatievlaanderen/postal-registry/commit/9706d19aaa222c16227d68db3ce9a3a6bbab66fc))
+
 ## [2.15.1](https://github.com/informatievlaanderen/postal-registry/compare/v2.15.0...v2.15.1) (2021-02-02)
 
 
