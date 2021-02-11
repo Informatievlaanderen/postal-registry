@@ -2,6 +2,7 @@ namespace PostalRegistry.Api.CrabImport.Infrastructure.Modules
 {
     using Autofac;
     using Autofac.Extensions.DependencyInjection;
+    using Be.Vlaanderen.Basisregisters.Api.Exceptions;
     using Be.Vlaanderen.Basisregisters.CommandHandling.Idempotency;
     using Be.Vlaanderen.Basisregisters.DataDog.Tracing.Autofac;
     using Be.Vlaanderen.Basisregisters.EventHandling;
@@ -48,6 +49,10 @@ namespace PostalRegistry.Api.CrabImport.Infrastructure.Modules
                 .RegisterModule(new EnvelopeModule())
 
                 .RegisterModule(new CommandHandlingModule(_configuration));
+
+            containerBuilder
+                .RegisterType<ProblemDetailsHelper>()
+                .AsSelf();
 
             containerBuilder.Populate(_services);
         }
