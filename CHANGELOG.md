@@ -1,3 +1,10 @@
+## [2.15.3](https://github.com/informatievlaanderen/postal-registry/compare/v2.15.2...v2.15.3) (2021-02-11)
+
+
+### Bug Fixes
+
+* update api with use of problemdetailshelper GRAR-1814 ([165d644](https://github.com/informatievlaanderen/postal-registry/commit/165d644d945c3da3e58e1f96d74aa15264ca1f3b))
+
 ## [2.15.2](https://github.com/informatievlaanderen/postal-registry/compare/v2.15.1...v2.15.2) (2021-02-04)
 
 
