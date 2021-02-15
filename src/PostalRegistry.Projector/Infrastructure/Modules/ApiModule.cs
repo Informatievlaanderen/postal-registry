@@ -2,6 +2,7 @@ namespace PostalRegistry.Projector.Infrastructure.Modules
 {
     using Autofac;
     using Autofac.Extensions.DependencyInjection;
+    using Be.Vlaanderen.Basisregisters.Api.Exceptions;
     using Be.Vlaanderen.Basisregisters.DataDog.Tracing.Autofac;
     using Be.Vlaanderen.Basisregisters.EventHandling;
     using Be.Vlaanderen.Basisregisters.EventHandling.Autofac;
@@ -44,6 +45,10 @@ namespace PostalRegistry.Projector.Infrastructure.Modules
             builder.RegisterModule(new DataDogModule(_configuration));
 
             RegisterProjectionSetup(builder);
+
+            builder
+                .RegisterType<ProblemDetailsHelper>()
+                .AsSelf();
 
             builder.Populate(_services);
         }
