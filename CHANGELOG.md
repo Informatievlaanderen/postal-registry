@@ -1,3 +1,10 @@
+## [2.15.4](https://github.com/informatievlaanderen/postal-registry/compare/v2.15.3...v2.15.4) (2021-02-15)
+
+
+### Bug Fixes
+
+* register problem details helper for projector GRAR-1814 ([786c796](https://github.com/informatievlaanderen/postal-registry/commit/786c796011954b0dc3c1971574e16def68e7b0c3))
+
 ## [2.15.3](https://github.com/informatievlaanderen/postal-registry/compare/v2.15.2...v2.15.3) (2021-02-11)
 
 
