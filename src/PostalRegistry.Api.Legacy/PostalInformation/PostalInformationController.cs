@@ -264,6 +264,63 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
             return sw.ToString();
         }
 
+        /// <summary>
+        /// Vraag een lijst met wijzigingen van postinfo op, semantisch geannoteerd (Linked Data Event Streams)
+        /// </summary>
+        /// <param name="configuration"></param>
+        /// <param name="context"></param>
+        /// <param name="responseOptions"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        const int PageSize = 250;
+
+        [HttpGet("base")]
+        [Produces("application/ld+json")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        [SwaggerResponseExample(StatusCodes.Status200OK, typeof(PostalInformationSyndicationResponseExamples))]
+        [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(InternalServerErrorResponseExamples))]
+        public async Task<IActionResult> Base(
+            [FromServices] IConfiguration configuration,
+            [FromServices] LegacyContext context,
+            [FromServices] IOptions<ResponseOptions> responseOptions,
+            string page,
+            CancellationToken cancellationToken = default)
+        {
+
+            if (string.IsNullOrEmpty(page))
+            {
+                return Redirect("?page=1");
+            }
+
+            var pageNumber = Int32.Parse(page);
+           var pagedPostalInformationSet =
+                new PostalInformationLinkedDataEventStreamQuery(
+                    context,
+                    pageNumber,
+                    PageSize).GetPage();
+
+            /*return new ContentResult
+            {
+                Content = await BuildLinkedDataEventStream((PagedQueryable<PostalInformationLinkedDataEventStreamQueryResult>)pagedPostalInformationSet, responseOptions, configuration),
+                ContentType = MediaTypeNames.Application.Json,
+                StatusCode = StatusCodes.Status200OK
+            };*/
+
+            return null;
+        }
+
+        private static async Task<string> BuildLinkedDataEventStream(
+            PagedQueryable<PostalInformationLinkedDataEventStreamQueryResult> pagedPostalInfoItems,
+            IOptions<ResponseOptions> responseOptions,
+            IConfiguration configuration)
+        {
+
+            //TODO
+         
+            return "";
+        }
+
         private static Uri BuildNextUri(PaginationInfo paginationInfo, string nextUrlBase)
         {
             var offset = paginationInfo.Offset;
