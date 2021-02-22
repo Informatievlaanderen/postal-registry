@@ -4,7 +4,6 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-    using System.Xml.Linq;
     using Be.Vlaanderen.Basisregisters.GrAr.Provenance;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore;
@@ -32,8 +31,8 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
                 provenance.Timestamp,
                 applyEventInfoOn);
 
-            newPostalInformationSyndicationItem.ApplyProvenance(provenance);
-            newPostalInformationSyndicationItem.SetEventData(message.Message, message.EventName);
+            //newPostalInformationSyndicationItem.ApplyProvenance(provenance);
+            newPostalInformationSyndicationItem.SetEventData<PostalInformationSyndicationItem>();
 
             await context
                 .PostalInformationSyndication
@@ -56,7 +55,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
                    .OrderByDescending(x => x.Position)
                    .FirstOrDefaultAsync(ct);
 
-        public static void ApplyProvenance(
+        /*public static void ApplyProvenance(
             this PostalInformationSyndicationItem item,
             ProvenanceData provenance)
         {
@@ -65,10 +64,10 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
             item.Operator = provenance.Operator;
             item.Organisation = provenance.Organisation;
             item.Reason = provenance.Reason;
-        }
+        }*/
 
-        public static void SetEventData<T>(this PostalInformationSyndicationItem syndicationItem, T message, string eventName)
-            => syndicationItem.EventDataAsXml = message.ToXml(eventName).ToString(SaveOptions.DisableFormatting);
+        public static void SetEventData<T>(this PostalInformationSyndicationItem syndicationItem)
+            => syndicationItem.EventDataAsJsonLd = syndicationItem.ToJsonLd();
 
         private static ProjectionItemNotFoundException<PostalInformationSyndicationProjections> DatabaseItemNotFound(string postalCode)
             => new ProjectionItemNotFoundException<PostalInformationSyndicationProjections>(postalCode);

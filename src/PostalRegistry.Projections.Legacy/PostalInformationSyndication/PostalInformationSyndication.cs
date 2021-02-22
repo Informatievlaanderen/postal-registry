@@ -2,7 +2,6 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
 {
     using System;
     using System.Collections.Generic;
-    using Be.Vlaanderen.Basisregisters.GrAr.Provenance;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner.MigrationExtensions;
     using Infrastructure;
     using Microsoft.EntityFrameworkCore;
@@ -19,14 +18,14 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
 
         public PostalInformationStatus? Status { get; set; }
 
-        public string? MunicipalityNisCode { get; set; }
-
         public string? PostalNamesAsJson { get; set; }
 
         public IReadOnlyList<PostalName> PostalNames => GetPostalNamesAsList();
 
         public DateTimeOffset RecordCreatedAtAsDateTimeOffset { get; set; }
         public DateTimeOffset LastChangedOnAsDateTimeOffset { get; set; }
+
+        public string? EventDataAsJsonLd { get; set; }
 
         public Instant RecordCreatedAt
         {
@@ -40,12 +39,6 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
             set => LastChangedOnAsDateTimeOffset = value.ToDateTimeOffset();
         }
 
-        public Application? Application { get; set; }
-        public Modification? Modification { get; set; }
-        public string? Operator { get; set; }
-        public Organisation? Organisation { get; set; }
-        public string? Reason { get; set; }
-        public string? EventDataAsXml { get; set; }
         public DateTimeOffset SyndicationItemCreatedAt { get; set; }
 
         public PostalInformationSyndicationItem CloneAndApplyEventInfo(
@@ -62,18 +55,11 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
                 ChangeType = eventName,
 
                 Status = Status,
-                MunicipalityNisCode = MunicipalityNisCode,
 
                 PostalNamesAsJson = PostalNamesAsJson,
 
                 RecordCreatedAt = RecordCreatedAt,
                 LastChangedOn = lastChangedOn,
-
-                Application = Application,
-                Modification = Modification,
-                Operator = Operator,
-                Organisation = Organisation,
-                Reason = Reason,
                 SyndicationItemCreatedAt = DateTimeOffset.UtcNow
             };
 
@@ -119,19 +105,12 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
             b.Property(x => x.ChangeType);
 
             b.Property(x => x.Status);
-            b.Property(x => x.MunicipalityNisCode);
 
             b.Property(x => x.RecordCreatedAtAsDateTimeOffset).HasColumnName("RecordCreatedAt");
             b.Property(x => x.LastChangedOnAsDateTimeOffset).HasColumnName("LastChangedOn");
             b.Property(x => x.PostalNamesAsJson).HasColumnName("PostalNames");
+            b.Property(x => x.EventDataAsJsonLd);
 
-            b.Property(x => x.Application);
-            b.Property(x => x.Modification);
-            b.Property(x => x.Operator);
-            b.Property(x => x.Organisation);
-            b.Property(x => x.Reason);
-            b.Property(x => x.EventDataAsXml);
-            b.Property(x => x.SyndicationItemCreatedAt).IsRequired();
 
             b.Ignore(x => x.PostalNames);
             b.Ignore(x => x.RecordCreatedAt);
