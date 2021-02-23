@@ -293,21 +293,24 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
                 return Redirect("?page=1");
             }
 
-            var pageNumber = Int32.Parse(page);
-           var pagedPostalInformationSet =
-                new PostalInformationLinkedDataEventStreamQuery(
-                    context,
-                    pageNumber,
-                    PageSize).GetPage();
+            var filtering = Request.ExtractFilteringRequest<PostalInformationLDESFilter>();
+            var sorting = Request.ExtractSortingRequest();
+            var pagination = Request.ExtractPaginationRequest();
 
-            /*return new ContentResult
+            var pageNumber = Int32.Parse(page);
+            var pagedPostalInformationSet =
+                 new PostalInformationLinkedDataEventStreamQuery(
+                     context,
+                     pageNumber,
+                     PageSize).Fetch(filtering, sorting, pagination);
+
+
+            return new ContentResult
             {
                 Content = await BuildLinkedDataEventStream((PagedQueryable<PostalInformationLinkedDataEventStreamQueryResult>)pagedPostalInformationSet, responseOptions, configuration),
                 ContentType = MediaTypeNames.Application.Json,
                 StatusCode = StatusCodes.Status200OK
-            };*/
-
-            return null;
+            };
         }
 
         private static async Task<string> BuildLinkedDataEventStream(
@@ -317,8 +320,10 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
         {
 
             //TODO
-         
-            return "";
+            var postalInfos = pagedPostalInfoItems.Items.ToList();
+            
+
+            return "Number of items is: " + postalInfos.Count;
         }
 
         private static Uri BuildNextUri(PaginationInfo paginationInfo, string nextUrlBase)

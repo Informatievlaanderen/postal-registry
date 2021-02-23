@@ -1,3 +1,6 @@
+using Be.Vlaanderen.Basisregisters.Api.Search;
+using Be.Vlaanderen.Basisregisters.Api.Search.Filtering;
+using Be.Vlaanderen.Basisregisters.Api.Search.Sorting;
 using Microsoft.EntityFrameworkCore;
 using NodaTime;
 using PostalRegistry.Projections.Legacy;
@@ -5,6 +8,7 @@ using PostalRegistry.Projections.Legacy.PostalInformationSyndication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace PostalRegistry.Api.Legacy.PostalInformation.Query
@@ -18,22 +22,10 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
         public Instant RecordCreatedAt { get; }
         public Instant LastChangedOn { get; }
         public PostalInformationStatus? Status { get; }
-        public IEnumerable<PostalName> PostalNames { get; }
+        public IEnumerable<PostalName>? PostalNames { get; }
 
+        public string EventDataAsJsonLd { get; }
 
-        public PostalInformationLinkedDataEventStreamQueryResult(
-            string postalCode,
-            long position,
-            string changeType,
-            Instant recordCreatedAt,
-            Instant lastChangedOn)
-        {
-            PostalCode = postalCode;
-            Position = position;
-            ChangeType = changeType;
-            RecordCreatedAt = recordCreatedAt;
-            LastChangedOn = lastChangedOn;
-        }
 
         public PostalInformationLinkedDataEventStreamQueryResult(
             string postalCode,
@@ -42,19 +34,21 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
             Instant recordCreatedAt,
             Instant lastChangedOn,
             PostalInformationStatus? status,
-            IEnumerable<PostalName> postalNames) : this(
-                postalCode,
-                position,
-                changeType,
-                recordCreatedAt,
-                lastChangedOn)
+            IEnumerable<PostalName>? postalNames,
+            string eventDataAsJsonLd)
         {
+            PostalCode = postalCode;
+            Position = position;
+            ChangeType = changeType;
+            RecordCreatedAt = recordCreatedAt;
+            LastChangedOn = lastChangedOn;
             Status = status;
             PostalNames = postalNames;
+            EventDataAsJsonLd = eventDataAsJsonLd;
         }
     }
 
-    public class PostalInformationLinkedDataEventStreamQuery
+    public class PostalInformationLinkedDataEventStreamQuery : Query<PostalInformationSyndicationItem, PostalInformationLDESFilter, PostalInformationLinkedDataEventStreamQueryResult>
     {
         private readonly LegacyContext _context;
         private readonly int _pageNumber;
@@ -67,9 +61,27 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
             _pageSize = pageSize;
         }
 
-        public IQueryable<PostalInformationSyndicationItem> GetPage()
+        protected override ISorting Sorting => new PostalInformationLDESSorting();
+
+        protected override Expression<Func<PostalInformationSyndicationItem, PostalInformationLinkedDataEventStreamQueryResult>> Transformation
         {
-            var offset = ((_pageNumber - 1) * _pageSize);
+            get
+            {
+                return syndicationItem => new PostalInformationLinkedDataEventStreamQueryResult(
+                        syndicationItem.PostalCode,
+                        syndicationItem.Position,
+                        syndicationItem.ChangeType,
+                        syndicationItem.RecordCreatedAt,
+                        syndicationItem.LastChangedOn,
+                        syndicationItem.Status,
+                        syndicationItem.PostalNames,
+                        syndicationItem.EventDataAsJsonLd);
+            }
+        }
+
+        protected override IQueryable<PostalInformationSyndicationItem> Filter(FilteringHeader<PostalInformationLDESFilter> filtering)
+        {
+            int offset = ((_pageNumber - 1) * _pageSize);
             var postalInformationSet = _context
                 .PostalInformationSyndication
                 .OrderBy(x => x.Position)
@@ -77,7 +89,23 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
                 .Take(_pageSize)
                 .AsNoTracking();
 
+
             return postalInformationSet;
         }
+    }
+
+    internal class PostalInformationLDESSorting : ISorting
+    {
+        public IEnumerable<string> SortableFields { get; } = new[]
+        {
+            nameof(PostalInformationSyndicationItem.Position)
+        };
+
+        public SortingHeader DefaultSortingHeader { get; } = new SortingHeader(nameof(PostalInformationSyndicationItem.Position), SortOrder.Ascending);
+    }
+
+    public class PostalInformationLDESFilter
+    {
+        public int PageNumber { get; set; }
     }
 }
