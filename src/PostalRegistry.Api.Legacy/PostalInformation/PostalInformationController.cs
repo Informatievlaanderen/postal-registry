@@ -29,6 +29,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
     using Microsoft.Extensions.Options;
     using Microsoft.SyndicationFeed;
     using Microsoft.SyndicationFeed.Atom;
+    using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
     using Projections.Legacy;
     using Projections.Syndication;
@@ -272,58 +273,78 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
         /// <param name="responseOptions"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        const int PageSize = 250;
 
         [HttpGet("base")]
         [Produces("application/ld+json")]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        [SwaggerResponseExample(StatusCodes.Status200OK, typeof(PostalInformationSyndicationResponseExamples))]
-        [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(InternalServerErrorResponseExamples))]
         public async Task<IActionResult> Base(
             [FromServices] IConfiguration configuration,
             [FromServices] LegacyContext context,
             [FromServices] IOptions<ResponseOptions> responseOptions,
-            string page,
             CancellationToken cancellationToken = default)
         {
-
-            if (string.IsNullOrEmpty(page))
-            {
-                return Redirect("?page=1");
-            }
 
             var filtering = Request.ExtractFilteringRequest<PostalInformationLDESFilter>();
             var sorting = Request.ExtractSortingRequest();
             var pagination = Request.ExtractPaginationRequest();
 
-            var pageNumber = Int32.Parse(page);
+            var xPaginationHeader = Request.Headers["X-pagination"].ToString().Split(",");
+            var offset = Int32.Parse(xPaginationHeader[0]);
+            var limit = Int32.Parse(xPaginationHeader[1]);
+            var pageSize = (limit - offset);
+            var page = limit / pageSize;
+
+
             var pagedPostalInformationSet =
                  new PostalInformationLinkedDataEventStreamQuery(
-                     context,
-                     pageNumber,
-                     PageSize).Fetch(filtering, sorting, pagination);
+                     context).Fetch(filtering, sorting, pagination);
 
+            var ldesConfiguration = configuration.GetSection("LinkedDataEventStream");
 
-            return new ContentResult
+            var pagedPostalInformationVersionObjects =
+                pagedPostalInformationSet
+                .Items
+                .Select(p => new PostalInformationVersionObject(ldesConfiguration, p.Position, p.ChangeType, p.PostalCode, p.PostalNames, p.Status)).ToList();
+
+            return Ok(new PostalInformationLinkedDataEventStreamResponse
             {
-                Content = await BuildLinkedDataEventStream((PagedQueryable<PostalInformationLinkedDataEventStreamQueryResult>)pagedPostalInformationSet, responseOptions, configuration),
-                ContentType = MediaTypeNames.Application.Json,
-                StatusCode = StatusCodes.Status200OK
-            };
+                Context = new PostalInformationLdesContext(),
+                Id = PostalInformationLdesMetadata.GetPageIdentifier(ldesConfiguration, page),
+                Type = "tree:Node",
+                CollectionLink = PostalInformationLdesMetadata.GetCollectionLink(ldesConfiguration),
+                PostalInformationShape = new Uri($"{ldesConfiguration["ApiEndpoint"]}/shape"),
+                HypermdiaControls = PostalInformationLdesMetadata.GetHypermediaControls(pagedPostalInformationVersionObjects, ldesConfiguration, page, pageSize),
+                Items = pagedPostalInformationVersionObjects
+            });
         }
 
-        private static async Task<string> BuildLinkedDataEventStream(
-            PagedQueryable<PostalInformationLinkedDataEventStreamQueryResult> pagedPostalInfoItems,
-            IOptions<ResponseOptions> responseOptions,
-            IConfiguration configuration)
+        /// <summary>
+        /// Vraag de shape van postinfo op
+        /// </summary>
+        /// <param name="configuration"></param>
+        /// <param name="context"></param>
+        /// <param name="responseOptions"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+
+        [HttpGet("base/shape")]
+        [Produces("application/ld+json")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Shape(
+            [FromServices] IConfiguration configuration,
+            [FromServices] LegacyContext context,
+            [FromServices] IOptions<ResponseOptions> responseOptions,
+            CancellationToken cancellationToken = default)
         {
 
-            //TODO
-            var postalInfos = pagedPostalInfoItems.Items.ToList();
-            
+            var ldesConfiguration = configuration.GetSection("LinkedDataEventStream");
 
-            return "Number of items is: " + postalInfos.Count;
+            return Ok(new PostalInformationShaclShapeReponse
+            {
+                Id = new Uri($"{ldesConfiguration["ApiEndpoint"]}/shape")
+            });
         }
 
         private static Uri BuildNextUri(PaginationInfo paginationInfo, string nextUrlBase)

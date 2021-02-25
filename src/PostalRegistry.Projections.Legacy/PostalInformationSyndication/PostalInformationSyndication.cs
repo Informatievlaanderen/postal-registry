@@ -25,7 +25,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
         public DateTimeOffset RecordCreatedAtAsDateTimeOffset { get; set; }
         public DateTimeOffset LastChangedOnAsDateTimeOffset { get; set; }
 
-        public string? EventDataAsJsonLd { get; set; }
+        //public string? EventDataAsJsonLd { get; set; }
 
         public Instant RecordCreatedAt
         {
@@ -97,6 +97,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
             b.ToTable(TableName, Schema.Legacy)
                 .HasKey(x => x.Position)
                 .IsClustered();
+           
 
             b.Property(x => x.Position).ValueGeneratedNever();
             b.HasIndex(x => x.Position).IsColumnStore($"CI_{TableName}_Position");
@@ -109,7 +110,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
             b.Property(x => x.RecordCreatedAtAsDateTimeOffset).HasColumnName("RecordCreatedAt");
             b.Property(x => x.LastChangedOnAsDateTimeOffset).HasColumnName("LastChangedOn");
             b.Property(x => x.PostalNamesAsJson).HasColumnName("PostalNames");
-            b.Property(x => x.EventDataAsJsonLd);
+            //b.Property(x => x.EventDataAsJsonLd);
 
 
             b.Ignore(x => x.PostalNames);

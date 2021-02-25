@@ -32,10 +32,12 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
                 .OrderBy(x => x.PostalCode)
                 .Where(p => !p.IsRetired);
 
+
             if (!filtering.ShouldFilter)
                 return postalInformationSet;
 
             var filterMunicipalityName = filtering.Filter.MunicipalityName.RemoveDiacritics();
+         
             if (!string.IsNullOrEmpty(filterMunicipalityName))
             {
                 var municipalityNisCodes = _syndicationContext
@@ -49,7 +51,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
                     .ToList();
 
                 postalInformationSet = postalInformationSet.Where(x => municipalityNisCodes.Contains(x.NisCode));
-            }
+            } 
 
             return postalInformationSet;
         }

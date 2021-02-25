@@ -24,7 +24,6 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
         public PostalInformationStatus? Status { get; }
         public IEnumerable<PostalName>? PostalNames { get; }
 
-        public string EventDataAsJsonLd { get; }
 
 
         public PostalInformationLinkedDataEventStreamQueryResult(
@@ -34,8 +33,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
             Instant recordCreatedAt,
             Instant lastChangedOn,
             PostalInformationStatus? status,
-            IEnumerable<PostalName>? postalNames,
-            string eventDataAsJsonLd)
+            IEnumerable<PostalName>? postalNames)
         {
             PostalCode = postalCode;
             Position = position;
@@ -44,21 +42,16 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
             LastChangedOn = lastChangedOn;
             Status = status;
             PostalNames = postalNames;
-            EventDataAsJsonLd = eventDataAsJsonLd;
         }
     }
 
     public class PostalInformationLinkedDataEventStreamQuery : Query<PostalInformationSyndicationItem, PostalInformationLDESFilter, PostalInformationLinkedDataEventStreamQueryResult>
     {
         private readonly LegacyContext _context;
-        private readonly int _pageNumber;
-        private readonly int _pageSize;
 
-        public PostalInformationLinkedDataEventStreamQuery(LegacyContext context, int pageNumber, int pageSize)
+        public PostalInformationLinkedDataEventStreamQuery(LegacyContext context)
         {
             _context = context;
-            _pageNumber = pageNumber;
-            _pageSize = pageSize;
         }
 
         protected override ISorting Sorting => new PostalInformationLDESSorting();
@@ -74,19 +67,15 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
                         syndicationItem.RecordCreatedAt,
                         syndicationItem.LastChangedOn,
                         syndicationItem.Status,
-                        syndicationItem.PostalNames,
-                        syndicationItem.EventDataAsJsonLd);
+                        syndicationItem.PostalNames);
             }
         }
 
         protected override IQueryable<PostalInformationSyndicationItem> Filter(FilteringHeader<PostalInformationLDESFilter> filtering)
         {
-            int offset = ((_pageNumber - 1) * _pageSize);
             var postalInformationSet = _context
                 .PostalInformationSyndication
                 .OrderBy(x => x.Position)
-                .Skip(offset)
-                .Take(_pageSize)
                 .AsNoTracking();
 
 

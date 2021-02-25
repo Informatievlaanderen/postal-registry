@@ -36,21 +36,14 @@ namespace PostalRegistry.Projections.Legacy.Migrations
                 schema: "PostalRegistryLegacy",
                 table: "PostalInformationSyndication");
 
-            migrationBuilder.RenameColumn(
+            migrationBuilder.DropColumn(
                 name: "Reason",
                 schema: "PostalRegistryLegacy",
-                table: "PostalInformationSyndication",
-                newName: "EventDataAsJsonLd");
+                table: "PostalInformationSyndication");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "EventDataAsJsonLd",
-                schema: "PostalRegistryLegacy",
-                table: "PostalInformationSyndication",
-                newName: "Reason");
-
             migrationBuilder.AddColumn<int>(
                 name: "Application",
                 schema: "PostalRegistryLegacy",
@@ -91,6 +84,13 @@ namespace PostalRegistry.Projections.Legacy.Migrations
                 schema: "PostalRegistryLegacy",
                 table: "PostalInformationSyndication",
                 type: "int",
+                nullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "Reason",
+                schema: "PostalRegistryLegacy",
+                table: "PostalInformationSyndication",
+                type: "nvarchar(max)",
                 nullable: true);
         }
     }

@@ -97,9 +97,6 @@ namespace PostalRegistry.Projections.Legacy.Migrations
                     b.Property<string>("ChangeType")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("EventDataAsJsonLd")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTimeOffset>("LastChangedOnAsDateTimeOffset")
                         .HasColumnType("datetimeoffset")
                         .HasColumnName("LastChangedOn");

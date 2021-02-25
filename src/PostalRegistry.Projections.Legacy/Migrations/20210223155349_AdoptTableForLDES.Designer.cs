@@ -10,7 +10,7 @@ using PostalRegistry.Projections.Legacy;
 namespace PostalRegistry.Projections.Legacy.Migrations
 {
     [DbContext(typeof(LegacyContext))]
-    [Migration("20210219095744_AdoptTableForLDES")]
+    [Migration("20210223155349_AdoptTableForLDES")]
     partial class AdoptTableForLDES
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -97,9 +97,6 @@ namespace PostalRegistry.Projections.Legacy.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("ChangeType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EventDataAsJsonLd")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTimeOffset>("LastChangedOnAsDateTimeOffset")
