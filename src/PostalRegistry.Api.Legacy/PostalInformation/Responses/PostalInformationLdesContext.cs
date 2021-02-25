@@ -1,4 +1,6 @@
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,7 +49,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         public readonly string EventNameUri = "adms:versionNotes";
 
         [DataMember(Name = "Postinfo")]
-        [JsonConverter(typeof(CapitalCaseConverter))]
+        [JsonProperty(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
         public readonly string VersionObjectTypeUri = "adres:Postinfo";
 
         [DataMember(Name = "postcode")]
@@ -141,48 +143,5 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
     {
         [JsonProperty("@type")]
         private readonly string Type = "@id";
-    }
-
-    public class CapitalCaseConverter : JsonConverter
-    {
-        public override bool CanConvert(Type objectType)
-        {
-            return objectType == typeof(string);
-        }
-
-        public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
-        {
-            bool nullable = Nullable.GetUnderlyingType(objectType) != null;
-
-            if(reader.TokenType == JsonToken.Null)
-            {
-                if (!nullable) {
-                    throw new JsonSerializationException($"Cannot convert null value to {objectType}.");
-                }
-                return null;
-            }
-
-            if(reader.TokenType == JsonToken.String)
-            {
-                var input = (string)reader.Value;
-                var firstChar = input[0];
-                return firstChar.ToString().ToUpper() + input.Substring(1);
-            } else
-            {
-                throw new JsonSerializationException($"Unexpected token while parsing the data. Expected string, got {reader.TokenType}");
-            }
-        }
-
-        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
-        {
-            if(value is string str)
-            {
-                var stringWithCapital = str[0].ToString().ToUpper() + str.Substring(1);
-                writer.WriteValue(stringWithCapital);
-            } else
-            {
-                throw new JsonSerializationException();
-            }
-        }
     }
 }
