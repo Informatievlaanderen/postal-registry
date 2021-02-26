@@ -1,3 +1,4 @@
+using Be.Vlaanderen.Basisregisters.GrAr.Common;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using NodaTime;
@@ -60,7 +61,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 
         [DataMember(Name = "generatedAtTime", Order = 4)]
         [JsonProperty(Required = Required.Always)]
-        public Instant GeneratedAtTime { get; set; }
+        public DateTimeOffset GeneratedAtTime { get; set; }
 
         [DataMember(Name = "eventName", Order = 5)]
         [JsonProperty(Required = Required.Always)]
@@ -82,6 +83,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
             IConfigurationSection configuration,
             long position,
             string changeType,
+            Instant generatedAtTime,
             string postalCode,
             IEnumerable<PostalName>? postalNames,
             PostalInformationStatus? status)
@@ -89,6 +91,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 
             ChangeType = changeType;
             PostalCode = postalCode;
+            GeneratedAtTime = generatedAtTime.ToBelgianDateTimeOffset();
 
             Id = CreateVersionUri(configuration, position);
             Type = GetType(configuration) ;

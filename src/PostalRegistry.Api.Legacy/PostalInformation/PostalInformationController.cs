@@ -284,12 +284,11 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
             [FromServices] IOptions<ResponseOptions> responseOptions,
             CancellationToken cancellationToken = default)
         {
-
             var filtering = Request.ExtractFilteringRequest<PostalInformationLDESFilter>();
             var sorting = Request.ExtractSortingRequest();
             var pagination = Request.ExtractPaginationRequest();
 
-            var xPaginationHeader = Request.Headers["X-pagination"].ToString().Split(",");
+            var xPaginationHeader = Request.Headers["x-pagination"].ToString().Split(",");
             var offset = Int32.Parse(xPaginationHeader[0]);
             var limit = Int32.Parse(xPaginationHeader[1]);
             var pageSize = (limit - offset);
@@ -305,7 +304,13 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
             var pagedPostalInformationVersionObjects =
                 pagedPostalInformationSet
                 .Items
-                .Select(p => new PostalInformationVersionObject(ldesConfiguration, p.Position, p.ChangeType, p.PostalCode, p.PostalNames, p.Status)).ToList();
+                .Select(p => new PostalInformationVersionObject(ldesConfiguration, p.Position, p.ChangeType, p.RecordCreatedAt, p.PostalCode, p.PostalNames, p.Status)).ToList();
+
+            // When a page is full, it will never change so we add cache header
+            if(pagedPostalInformationVersionObjects.Count == pageSize)
+            {
+                Response.Headers["cache-control"] = "public, max-age=31557600";
+            }
 
             return Ok(new PostalInformationLinkedDataEventStreamResponse
             {

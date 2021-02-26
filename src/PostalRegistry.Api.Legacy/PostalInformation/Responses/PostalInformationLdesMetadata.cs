@@ -102,7 +102,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
     public class CompareValue
     {
         [JsonProperty("@value")]
-        public Instant Value { get; set; }
+        public DateTimeOffset Value { get; set; }
 
         [JsonProperty("@type")]
         public string Type { get; set; }
