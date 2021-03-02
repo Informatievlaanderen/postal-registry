@@ -290,9 +290,8 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
 
             var xPaginationHeader = Request.Headers["x-pagination"].ToString().Split(",");
             var offset = Int32.Parse(xPaginationHeader[0]);
-            var limit = Int32.Parse(xPaginationHeader[1]);
-            var pageSize = (limit - offset);
-            var page = limit / pageSize;
+            var pageSize = Int32.Parse(xPaginationHeader[1]);
+            var page = (offset / pageSize) + 1;
 
 
             var pagedPostalInformationSet =
