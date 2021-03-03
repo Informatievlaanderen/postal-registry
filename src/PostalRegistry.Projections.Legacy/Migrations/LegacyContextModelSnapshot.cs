@@ -15,9 +15,9 @@ namespace PostalRegistry.Projections.Legacy.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .UseIdentityColumns()
+                .HasAnnotation("ProductVersion", "3.1.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.2");
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner.ProjectionStates.ProjectionStateItem", b =>
                 {
@@ -37,9 +37,9 @@ namespace PostalRegistry.Projections.Legacy.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Name")
-                        .IsClustered();
+                        .HasAnnotation("SqlServer:Clustered", true);
 
-                    b.ToTable("ProjectionStates", "PostalRegistryLegacy");
+                    b.ToTable("ProjectionStates","PostalRegistryLegacy");
                 });
 
             modelBuilder.Entity("PostalRegistry.Projections.Legacy.PostalInformation.PostalInformation", b =>
@@ -54,15 +54,15 @@ namespace PostalRegistry.Projections.Legacy.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTimeOffset>("VersionTimestampAsDateTimeOffset")
-                        .HasColumnType("datetimeoffset")
-                        .HasColumnName("VersionTimestamp");
+                        .HasColumnName("VersionTimestamp")
+                        .HasColumnType("datetimeoffset");
 
                     b.HasKey("PostalCode")
-                        .IsClustered();
+                        .HasAnnotation("SqlServer:Clustered", true);
 
                     b.HasIndex("NisCode");
 
-                    b.ToTable("PostalInformation", "PostalRegistryLegacy");
+                    b.ToTable("PostalInformation","PostalRegistryLegacy");
                 });
 
             modelBuilder.Entity("PostalRegistry.Projections.Legacy.PostalInformation.PostalInformationName", b =>
@@ -82,11 +82,11 @@ namespace PostalRegistry.Projections.Legacy.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id")
-                        .IsClustered();
+                        .HasAnnotation("SqlServer:Clustered", true);
 
                     b.HasIndex("PostalCode");
 
-                    b.ToTable("PostalInformationName", "PostalRegistryLegacy");
+                    b.ToTable("PostalInformationName","PostalRegistryLegacy");
                 });
 
             modelBuilder.Entity("PostalRegistry.Projections.Legacy.PostalInformationSyndication.PostalInformationSyndicationItem", b =>
@@ -94,24 +94,45 @@ namespace PostalRegistry.Projections.Legacy.Migrations
                     b.Property<long>("Position")
                         .HasColumnType("bigint");
 
+                    b.Property<int?>("Application")
+                        .HasColumnType("int");
+
                     b.Property<string>("ChangeType")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("EventDataAsXml")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTimeOffset>("LastChangedOnAsDateTimeOffset")
-                        .HasColumnType("datetimeoffset")
-                        .HasColumnName("LastChangedOn");
+                        .HasColumnName("LastChangedOn")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<int?>("Modification")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MunicipalityNisCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Operator")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Organisation")
+                        .HasColumnType("int");
 
                     b.Property<string>("PostalCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("PostalNamesAsJson")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("PostalNames");
+                        .HasColumnName("PostalNames")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Reason")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTimeOffset>("RecordCreatedAtAsDateTimeOffset")
-                        .HasColumnType("datetimeoffset")
-                        .HasColumnName("RecordCreatedAt");
+                        .HasColumnName("RecordCreatedAt")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<int?>("Status")
                         .HasColumnType("int");
@@ -120,15 +141,15 @@ namespace PostalRegistry.Projections.Legacy.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.HasKey("Position")
-                        .IsClustered();
+                        .HasAnnotation("SqlServer:Clustered", true);
 
                     b.HasIndex("Position")
-                        .HasDatabaseName("CI_PostalInformationSyndication_Position")
+                        .HasName("CI_PostalInformationSyndication_Position")
                         .HasAnnotation("SqlServer:ColumnStoreIndex", "");
 
                     b.HasIndex("PostalCode");
 
-                    b.ToTable("PostalInformationSyndication", "PostalRegistryLegacy");
+                    b.ToTable("PostalInformationSyndication","PostalRegistryLegacy");
                 });
 
             modelBuilder.Entity("PostalRegistry.Projections.Legacy.PostalInformation.PostalInformationName", b =>
@@ -136,11 +157,6 @@ namespace PostalRegistry.Projections.Legacy.Migrations
                     b.HasOne("PostalRegistry.Projections.Legacy.PostalInformation.PostalInformation", null)
                         .WithMany("PostalNames")
                         .HasForeignKey("PostalCode");
-                });
-
-            modelBuilder.Entity("PostalRegistry.Projections.Legacy.PostalInformation.PostalInformation", b =>
-                {
-                    b.Navigation("PostalNames");
                 });
 #pragma warning restore 612, 618
         }

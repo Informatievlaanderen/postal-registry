@@ -24,8 +24,8 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
                     SyndicationItemCreatedAt = DateTimeOffset.UtcNow
                 };
 
-                //newPostalInformationSyndicationItem.ApplyProvenance(message.Message.Provenance);
-                //newPostalInformationSyndicationItem.SetEventData<PostalInformationSyndicationItem>();
+                newPostalInformationSyndicationItem.ApplyProvenance(message.Message.Provenance);
+                newPostalInformationSyndicationItem.SetEventData(message.Message, message.EventName);
 
                 await context
                     .PostalInformationSyndication
@@ -72,15 +72,14 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
                     ct);
             });
 
-            /*When<Envelope<MunicipalityWasAttached>>(async (context, message, ct) =>
+            When<Envelope<MunicipalityWasAttached>>(async (context, message, ct) =>
             {
                 await context.CreateNewPostalInformationSyndicationItem(
                     message.Message.PostalCode,
                     message,
                     x => x.MunicipalityNisCode = message.Message.NisCode,
                     ct);
-            });*/
-            When<Envelope<MunicipalityWasAttached>>(async (context, message, ct) => DoNothing());
+            });
 
             When<Envelope<PostalInformationWasImportedFromCrab>>(async (context, message, ct) => DoNothing());
             When<Envelope<PostalInformationWasImportedFromBPost>>(async (context, message, ct) => DoNothing());
