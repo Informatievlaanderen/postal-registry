@@ -35,7 +35,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 
         [DataMember(Name = "tree:relation", Order = 6)]
         [JsonProperty(Required = Required.AllowNull, NullValueHandling = NullValueHandling.Ignore)]
-        public List<HypermediaControls>? HypermdiaControls { get; set; }
+        public List<HypermediaControls>? HypermediaControls { get; set; }
 
         [DataMember(Name = "items", Order = 7)]
         [JsonProperty(Required = Required.Always)]
@@ -53,7 +53,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 
         [DataMember(Name = "@type", Order = 2)]
         [JsonProperty(Required = Required.Always)]
-        public string Type { get; set; }
+        public readonly string Type = "Postinfo";
 
         [DataMember(Name = "isVersionOf", Order = 3)]
         [JsonProperty(Required = Required.Always)]
@@ -94,7 +94,6 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
             GeneratedAtTime = generatedAtTime.ToBelgianDateTimeOffset();
 
             Id = CreateVersionUri(configuration, position);
-            Type = GetType(configuration) ;
             IsVersionOf = GetPersistentUri(configuration, PostalCode);
             PostalNames = TransformPostalNames(postalNames);
             Status = GetStatusUri(status);
@@ -109,12 +108,6 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         {
             return new Uri($"{configuration["DataVlaanderenNamespace"]}/{id}");
         }
-
-        private static string GetType(IConfigurationSection configuration)
-        {
-            return configuration["Type"];
-        }
-
 
         private static List<PostalNameTransformed> TransformPostalNames(IEnumerable<PostalName> postalNames)
         {

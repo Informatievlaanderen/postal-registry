@@ -318,7 +318,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
                 Type = "tree:Node",
                 CollectionLink = PostalInformationLdesMetadata.GetCollectionLink(ldesConfiguration),
                 PostalInformationShape = new Uri($"{ldesConfiguration["ApiEndpoint"]}/shape"),
-                HypermdiaControls = PostalInformationLdesMetadata.GetHypermediaControls(pagedPostalInformationVersionObjects, ldesConfiguration, page, pageSize),
+                HypermediaControls = PostalInformationLdesMetadata.GetHypermediaControls(pagedPostalInformationVersionObjects, ldesConfiguration, page, pageSize),
                 Items = pagedPostalInformationVersionObjects
             });
         }
