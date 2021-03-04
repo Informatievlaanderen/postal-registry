@@ -110,9 +110,9 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         private List<PostalNameTransformed> TransformPostalNames(IEnumerable<PostalName> postalNames)
         {
             if (postalNames.ToList().Count == 0)
-                return null;            
+                return null;
 
-            return postalNames.Select(postalname => new PostalNameTransformed { Name = postalname.Name, Language = GetLanguageIdentifier(postalname.Language) }).ToList();          
+            return postalNames.Select(postalname => new PostalNameTransformed { Name = postalname.Name, Language = GetLanguageIdentifier(postalname.Language) }).ToList();       
         }
 
         private Uri? GetStatusUri(PostalInformationStatus? status)
@@ -170,7 +170,6 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 
         public PostalInformationLinkedDataEventStreamResponse GetExamples()
         {
-
             var postalNames = new List<PostalName>()
             {
                 new PostalName("Gent", Language.Dutch)

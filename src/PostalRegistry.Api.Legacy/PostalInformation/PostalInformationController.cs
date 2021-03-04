@@ -258,12 +258,10 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
 
             var pagedPostalInformationSet =
                  new PostalInformationLinkedDataEventStreamQuery(context)
-                 .Fetch(filtering, sorting, pagination);
+                    .Fetch(filtering, sorting, pagination);
 
             var linkedDataEventStreamConfiguration = new LinkedDataEventStreamConfiguration(configuration.GetSection("LinkedDataEventStream"));
-
-            var pagedPostalInformationVersionObjects =
-                pagedPostalInformationSet
+            var pagedPostalInformationVersionObjects = pagedPostalInformationSet
                 .Items
                 .Select(p => new PostalInformationVersionObject(
                     linkedDataEventStreamConfiguration,

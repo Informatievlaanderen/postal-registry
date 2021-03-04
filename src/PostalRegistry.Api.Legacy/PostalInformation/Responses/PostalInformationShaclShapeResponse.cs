@@ -33,8 +33,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
     public class PostalInformationShaclShape
     {
         public static List<PostalInformationShaclProperty> GetShape()
-        {
-            return new List<PostalInformationShaclProperty>
+            =>  new List<PostalInformationShaclProperty>()
             {
                 new PostalInformationShaclProperty
                 {
@@ -75,7 +74,6 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
                     DataType = "skos:Concept"
                 }
             };
-        }
     }
 
     public class PostalInformationShaclProperty
@@ -97,12 +95,11 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
     {
         private readonly LinkedDataEventStreamConfiguration _configuration;
         public PostalInformationShaclShapeResponseExamples(LinkedDataEventStreamConfiguration configuration) => _configuration = configuration;
+
         public PostalInformationShaclShapeReponse GetExamples()
-        {
-            return new PostalInformationShaclShapeReponse
+            => new PostalInformationShaclShapeReponse
             {
                 Id = new Uri($"{_configuration.ApiEndpoint}/shape")
-            };
-        }
+            };       
     }
 }

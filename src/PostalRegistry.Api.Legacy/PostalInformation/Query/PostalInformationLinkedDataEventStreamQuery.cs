@@ -64,12 +64,11 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
         }
 
         protected override IQueryable<PostalInformationLinkedDataEventStreamItem> Filter(FilteringHeader<PostalInformationLinkedDataEventStreamFilter> filtering)
-        {
-            return _context
+            => _context
                 .PostalInformationLinkedDataEventStream
                 .OrderBy(x => x.Position)
                 .AsNoTracking();
-        }
+
     }
 
     internal class PostalInformationLinkedDataEventStreamSorting : ISorting
@@ -78,6 +77,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
         {
             nameof(PostalInformationLinkedDataEventStreamItem.Position)
         };
+
         public SortingHeader DefaultSortingHeader { get; } = new SortingHeader(nameof(PostalInformationLinkedDataEventStreamItem.Position), SortOrder.Ascending);
     }
 

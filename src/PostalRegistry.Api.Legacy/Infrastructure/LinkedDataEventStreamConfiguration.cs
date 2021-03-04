@@ -10,6 +10,7 @@ namespace PostalRegistry.Api.Legacy.Infrastructure
     {
         public string DataVlaanderenNamespace { get; set; }
         public string ApiEndpoint { get; set; }
+
         public LinkedDataEventStreamConfiguration(IConfigurationSection configuration)
         {
             DataVlaanderenNamespace = configuration["DataVlaanderenNamespace"];

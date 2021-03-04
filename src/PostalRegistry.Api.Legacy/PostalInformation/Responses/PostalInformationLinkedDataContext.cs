@@ -115,7 +115,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         [JsonProperty("sh")]
         public readonly Uri ShaclUri = new Uri("https://www.w3.org/ns/shacl#");
 
-	    [JsonProperty("rdf")]
+        [JsonProperty("rdf")]
         public readonly Uri RdfUri = new Uri("http://www.w3.org/1999/02/22-rdf-syntax-ns#");
 
         [JsonProperty("xsd")]
