@@ -67,11 +67,11 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
             item.AddCategory(
                 new SyndicationCategory(category));
 
-            /*item.AddContributor(
+            item.AddContributor(
                 new SyndicationPerson(
                     postalInformation.Organisation == null ? Organisation.Unknown.ToName() : postalInformation.Organisation.Value.ToName(),
                     string.Empty,
-                    AtomContributorTypes.Author));*/
+                    AtomContributorTypes.Author));
 
             await writer.Write(item);
         }
@@ -88,14 +88,17 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
                     postalInformation.PostalCode,
                     postalInformation.LastChangedOn.ToBelgianDateTimeOffset(),
                     postalInformation.Status,
-                    postalInformation.PostalNames);
+                    postalInformation.PostalNames,
+                    postalInformation.MunicipalityNisCode,
+                    postalInformation.Organisation,
+                    postalInformation.Reason);
 
-            /*if (postalInformation.ContainsEvent)
+            if (postalInformation.ContainsEvent)
             {
                 var doc = new XmlDocument();
                 doc.LoadXml(postalInformation.EventDataAsXml);
                 content.Event = doc.DocumentElement;
-            }*/
+            }
 
             return content.ToXml();
         }
@@ -155,17 +158,20 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
             string postcode,
             DateTimeOffset version,
             PostalInformationStatus? status,
-            IEnumerable<PostalName> postalNames)
+            IEnumerable<PostalName> postalNames,
+            string municipalityNisCode,
+            Organisation? organisation,
+            string reason)
         {
             PostalCode = postcode;
             Identificator = new PostinfoIdentificator(naamruimte, postcode, version);
             Status = status?.ConvertFromPostalInformationStatus();
-            //MunicipalityNisCode = municipalityNisCode;
+            MunicipalityNisCode = municipalityNisCode;
             PostalNames = postalNames?
                               .Select(name => new Postnaam(new GeografischeNaam(name.Name, name.Language.ConvertFromLanguage())))
                               .ToList()
                           ?? new List<Postnaam>();
-            //Provenance = new Provenance(version, organisation, new Reason(reason));
+            Provenance = new Provenance(version, organisation, new Reason(reason));
         }
     }
 

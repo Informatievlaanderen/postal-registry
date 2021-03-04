@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 {
     [DataContract(Name = "PostalInformationContext", Namespace = "")]
-    public class PostalInformationLdesContext
+    public class PostalInformationLinkedDataContext
     {
         [DataMember(Name = "tree")]
         public readonly Uri HypermediaSpecificationUri = new Uri("https://w3id.org/tree#");
@@ -64,6 +64,8 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         [DataMember(Name = "status")]
         public readonly PostalInformationStatusContext StatusContext = new PostalInformationStatusContext();
 
+        [DataMember(Name = "tree:path")]
+        public readonly PropertyOverride TreePath = new PropertyOverride();
     }
 
     public class TreeCollectionContext
@@ -73,7 +75,6 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 
         [JsonProperty("@type")]
         public readonly string Type = "@id";
-
     }
 
     public class ProvenanceContext
@@ -103,12 +104,18 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         public readonly string Type = "skos:Concept";
     }
 
+    public class PropertyOverride
+    {
+        [JsonProperty("@type")]
+        public readonly string Type = "@id";
+    }
+
     public class PostalInformationShaclContext
     {
         [JsonProperty("sh")]
         public readonly Uri ShaclUri = new Uri("https://www.w3.org/ns/shacl#");
 
-	[JsonProperty("rdf")]
+	    [JsonProperty("rdf")]
         public readonly Uri RdfUri = new Uri("http://www.w3.org/1999/02/22-rdf-syntax-ns#");
 
         [JsonProperty("xsd")]

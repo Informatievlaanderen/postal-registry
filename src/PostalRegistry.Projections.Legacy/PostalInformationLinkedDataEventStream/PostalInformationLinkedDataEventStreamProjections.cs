@@ -25,7 +25,6 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationLinkedDataEventStre
                     ChangeType = message.EventName
                 };
 
-
                 await context
                     .PostalInformationLinkedDataEventStream
                     .AddAsync(newPostalInformationLinkedDataEventStreamItem, ct);
@@ -70,12 +69,6 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationLinkedDataEventStre
                     },
                     ct);
             });
-
-            When<Envelope<MunicipalityWasAttached>>(async (context, message, ct) => DoNothing());
-            When<Envelope<PostalInformationWasImportedFromCrab>>(async (context, message, ct) => DoNothing());
-            When<Envelope<PostalInformationWasImportedFromBPost>>(async (context, message, ct) => DoNothing());
         }
-
-        private static void DoNothing() { }
     }
 }

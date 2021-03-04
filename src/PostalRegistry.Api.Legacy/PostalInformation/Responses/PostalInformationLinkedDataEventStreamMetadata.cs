@@ -8,52 +8,40 @@ using System.Threading.Tasks;
 
 namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 {
-    public class PostalInformationLdesMetadata
+    public class PostalInformationLinkedDataEventStreamMetadata
     {
-        public static Uri GetPageIdentifier(IConfiguration configuration, int page)
-        {
-            return new Uri($"{configuration["ApiEndpoint"]}?page={page}");
-        }
+        public static Uri GetPageIdentifier(LinkedDataEventStreamConfiguration configuration, int page) => new Uri($"{configuration.ApiEndpoint}?page={page}");
 
-        public static Uri GetCollectionLink(IConfiguration configuration)
-        {
-            return new Uri($"{configuration["ApiEndpoint"]}");
-        }
+        public static Uri GetCollectionLink(LinkedDataEventStreamConfiguration configuration) => new Uri($"{configuration.ApiEndpoint}");
 
-        public static List<HypermediaControls>? GetHypermediaControls(List<PostalInformationVersionObject> items, IConfiguration configuration, int page, int pageSize)
+        public static List<HypermediaControl>? GetHypermediaControls(List<PostalInformationVersionObject> items, LinkedDataEventStreamConfiguration configuration, int page, int pageSize)
         {
-            List<HypermediaControls> controls = new List<HypermediaControls>();
+            List<HypermediaControl> controls = new List<HypermediaControl>();
 
             var previous = AddPrevious(items, configuration, page);
-            if(previous != null)
-            {
+            if (previous != null)
                 controls.Add(previous);
-            }
 
             var next = AddNext(items, configuration, page, pageSize);
-            if(next != null)
-            {
+            if (next != null)
                 controls.Add(next);
-            }
 
             return controls.Count > 0 ? controls: null;
         }
 
-        private static HypermediaControls? AddPrevious(List<PostalInformationVersionObject> items, IConfiguration configuration, int page)
+        private static HypermediaControl? AddPrevious(List<PostalInformationVersionObject> items, LinkedDataEventStreamConfiguration configuration, int page)
         {
-            if(page <= 1)
-            {
-                return null; ;
-            }
+            if (page <= 1)
+                return null;
 
-            var previousUrl = new Uri($"{configuration["ApiEndpoint"]}?page={page - 1}");
+            var previousUrl = new Uri($"{configuration.ApiEndpoint}?page={page - 1}");
 
-            return new HypermediaControls
+            return new HypermediaControl
             {
                 Type = "tree:LessThanOrEqualToRelation",
                 Node = previousUrl,
                 SelectedProperty = "prov:generatedAtTime",
-                CompareValue = new CompareValue
+                TreeValue = new Literal
                 {
                     Value = items.FirstOrDefault().GeneratedAtTime,
                     Type = "xsd:dateTime"
@@ -61,21 +49,19 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
             };
         }
 
-        private static HypermediaControls? AddNext(List<PostalInformationVersionObject> items, IConfiguration configuration, int page, int pageSize)
+        private static HypermediaControl? AddNext(List<PostalInformationVersionObject> items, LinkedDataEventStreamConfiguration configuration, int page, int pageSize)
         {
-            if(items.Count != pageSize)
-            {
+            if (items.Count != pageSize)
                 return null;
-            }
 
-            var nextUrl = new Uri($"{configuration["ApiEndpoint"]}?page={page + 1}");
+            var nextUrl = new Uri($"{configuration.ApiEndpoint}?page={page + 1}");
 
-            return new HypermediaControls
+            return new HypermediaControl
             {
                 Type = "tree:GreaterThanOrEqualToRelation",
                 Node = nextUrl,
                 SelectedProperty = "prov:generatedAtTime",
-                CompareValue = new CompareValue
+                TreeValue = new Literal
                 {
                     Value = items[items.Count - 1].GeneratedAtTime,
                     Type = "xsd:dateTime"
@@ -84,7 +70,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         }
     }
 
-    public class HypermediaControls
+    public class HypermediaControl
     {
         [JsonProperty("@type")]
         public string Type { get; set; }
@@ -96,10 +82,10 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         public string SelectedProperty { get; set; }
 
         [JsonProperty("tree:value")]
-        public CompareValue CompareValue { get; set; }
+        public Literal TreeValue { get; set; }
     }
 
-    public class CompareValue
+    public class Literal
     {
         [JsonProperty("@value")]
         public DateTimeOffset Value { get; set; }

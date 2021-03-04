@@ -29,8 +29,6 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
     using Microsoft.Extensions.Options;
     using Microsoft.SyndicationFeed;
     using Microsoft.SyndicationFeed.Atom;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
     using Projections.Legacy;
     using Projections.Syndication;
     using Query;
@@ -229,6 +227,94 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
             };
         }
 
+        /// <summary>
+        /// Vraag een lijst met wijzigingen van postinfo op, semantisch geannoteerd (Linked Data Event Streams).
+        /// </summary>
+        /// <param name="configuration"></param>
+        /// <param name="context"></param>
+        /// <param name="responseOptions"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpGet("linked-data-event-stream")]
+        [Produces("application/ld+json")]
+        [ProducesResponseType(typeof(PostalInformationLinkedDataEventStreamResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        [SwaggerResponseExample(StatusCodes.Status200OK, typeof(PostalInformationLinkedDataEventStreamResponseExamples))]
+        [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(InternalServerErrorResponseExamples))]
+        public async Task<IActionResult> LinkedDataEventStream(
+            [FromServices] IConfiguration configuration,
+            [FromServices] LegacyContext context,
+            [FromServices] IOptions<ResponseOptions> responseOptions,
+            CancellationToken cancellationToken = default)
+        {
+            var filtering = Request.ExtractFilteringRequest<PostalInformationLinkedDataEventStreamFilter>();
+            var sorting = Request.ExtractSortingRequest();
+            var pagination = Request.ExtractPaginationRequest();
+
+            var xPaginationHeader = Request.Headers["x-pagination"].ToString().Split(",");
+            var offset = Int32.Parse(xPaginationHeader[0]);
+            var pageSize = Int32.Parse(xPaginationHeader[1]);
+            var page = (offset / pageSize) + 1;
+
+            var pagedPostalInformationSet =
+                 new PostalInformationLinkedDataEventStreamQuery(context)
+                 .Fetch(filtering, sorting, pagination);
+
+            var linkedDataEventStreamConfiguration = new LinkedDataEventStreamConfiguration(configuration.GetSection("LinkedDataEventStream"));
+
+            var pagedPostalInformationVersionObjects =
+                pagedPostalInformationSet
+                .Items
+                .Select(p => new PostalInformationVersionObject(
+                    linkedDataEventStreamConfiguration,
+                    p.Position,
+                    p.ChangeType,
+                    p.RecordCreatedAt,
+                    p.PostalCode,
+                    p.PostalNames,
+                    p.Status))
+                .ToList();
+
+            return Ok(new PostalInformationLinkedDataEventStreamResponse
+            {
+                Context = new PostalInformationLinkedDataContext(),
+                Id = PostalInformationLinkedDataEventStreamMetadata.GetPageIdentifier(linkedDataEventStreamConfiguration, page),
+                Type = "tree:Node",
+                CollectionLink = PostalInformationLinkedDataEventStreamMetadata.GetCollectionLink(linkedDataEventStreamConfiguration),
+                PostalInformationShape = new Uri($"{linkedDataEventStreamConfiguration.ApiEndpoint}/shape"),
+                HypermediaControls = PostalInformationLinkedDataEventStreamMetadata.GetHypermediaControls(pagedPostalInformationVersionObjects, linkedDataEventStreamConfiguration, page, pageSize),
+                Items = pagedPostalInformationVersionObjects
+            });
+        }
+
+        /// <summary>
+        /// Vraag de SHACL shape van postinfo op.
+        /// </summary>
+        /// <param name="configuration"></param>
+        /// <param name="context"></param>
+        /// <param name="responseOptions"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpGet("linked-data-event-stream/shape")]
+        [Produces("application/ld+json")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        [SwaggerResponseExample(StatusCodes.Status200OK, typeof(PostalInformationShaclShapeResponseExamples))]
+        [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(InternalServerErrorResponseExamples))]
+        public async Task<IActionResult> Shape(
+            [FromServices] IConfiguration configuration,
+            [FromServices] LegacyContext context,
+            [FromServices] IOptions<ResponseOptions> responseOptions,
+            CancellationToken cancellationToken = default)
+        {
+            var linkedDataEventStreamConfiguration = configuration.GetSection("LinkedDataEventStream");
+
+            return Ok(new PostalInformationShaclShapeReponse
+            {
+                Id = new Uri($"{linkedDataEventStreamConfiguration["ApiEndpoint"]}/shape")
+            });
+        }
+
         private static async Task<string> BuildAtomFeed(
             DateTimeOffset lastFeedUpdate,
             PagedQueryable<PostalInformationSyndicationQueryResult> pagedPostalInfoItems,
@@ -263,92 +349,6 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
             }
 
             return sw.ToString();
-        }
-
-        /// <summary>
-        /// Vraag een lijst met wijzigingen van postinfo op, semantisch geannoteerd (Linked Data Event Streams)
-        /// </summary>
-        /// <param name="configuration"></param>
-        /// <param name="context"></param>
-        /// <param name="responseOptions"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-
-        [HttpGet("base")]
-        [Produces("application/ld+json")]
-        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Base(
-            [FromServices] IConfiguration configuration,
-            [FromServices] LegacyContext context,
-            [FromServices] IOptions<ResponseOptions> responseOptions,
-            CancellationToken cancellationToken = default)
-        {
-            var filtering = Request.ExtractFilteringRequest<PostalInformationLDESFilter>();
-            var sorting = Request.ExtractSortingRequest();
-            var pagination = Request.ExtractPaginationRequest();
-
-            var xPaginationHeader = Request.Headers["x-pagination"].ToString().Split(",");
-            var offset = Int32.Parse(xPaginationHeader[0]);
-            var pageSize = Int32.Parse(xPaginationHeader[1]);
-            var page = (offset / pageSize) + 1;
-
-
-            var pagedPostalInformationSet =
-                 new PostalInformationLinkedDataEventStreamQuery(
-                     context).Fetch(filtering, sorting, pagination);
-
-            var ldesConfiguration = configuration.GetSection("LinkedDataEventStream");
-
-            var pagedPostalInformationVersionObjects =
-                pagedPostalInformationSet
-                .Items
-                .Select(p => new PostalInformationVersionObject(ldesConfiguration, p.Position, p.ChangeType, p.RecordCreatedAt, p.PostalCode, p.PostalNames, p.Status)).ToList();
-
-            // When a page is full, it will never change so we add cache header
-            if(pagedPostalInformationVersionObjects.Count == pageSize)
-            {
-                Response.Headers["cache-control"] = "public, max-age=31557600";
-            }
-
-            return Ok(new PostalInformationLinkedDataEventStreamResponse
-            {
-                Context = new PostalInformationLdesContext(),
-                Id = PostalInformationLdesMetadata.GetPageIdentifier(ldesConfiguration, page),
-                Type = "tree:Node",
-                CollectionLink = PostalInformationLdesMetadata.GetCollectionLink(ldesConfiguration),
-                PostalInformationShape = new Uri($"{ldesConfiguration["ApiEndpoint"]}/shape"),
-                HypermediaControls = PostalInformationLdesMetadata.GetHypermediaControls(pagedPostalInformationVersionObjects, ldesConfiguration, page, pageSize),
-                Items = pagedPostalInformationVersionObjects
-            });
-        }
-
-        /// <summary>
-        /// Vraag de shape van postinfo op
-        /// </summary>
-        /// <param name="configuration"></param>
-        /// <param name="context"></param>
-        /// <param name="responseOptions"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-
-        [HttpGet("base/shape")]
-        [Produces("application/ld+json")]
-        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Shape(
-            [FromServices] IConfiguration configuration,
-            [FromServices] LegacyContext context,
-            [FromServices] IOptions<ResponseOptions> responseOptions,
-            CancellationToken cancellationToken = default)
-        {
-
-            var ldesConfiguration = configuration.GetSection("LinkedDataEventStream");
-
-            return Ok(new PostalInformationShaclShapeReponse
-            {
-                Id = new Uri($"{ldesConfiguration["ApiEndpoint"]}/shape")
-            });
         }
 
         private static Uri BuildNextUri(PaginationInfo paginationInfo, string nextUrlBase)

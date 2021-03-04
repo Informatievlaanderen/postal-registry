@@ -22,10 +22,8 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationLinkedDataEventStre
         {
             var postalInformationLinkedDataEventStreamItem = await context.LatestPosition(postalCode, ct);
 
-            if(postalInformationLinkedDataEventStreamItem == null)
-            {
+            if (postalInformationLinkedDataEventStreamItem == null)
                 throw DatabaseItemNotFound(postalCode);
-            }
 
             var newItem = postalInformationLinkedDataEventStreamItem.CloneAndApplyEventInfo(
                 message.Position,
@@ -52,7 +50,6 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationLinkedDataEventStre
                     .Where(x => x.PostalCode == postalCode)
                     .OrderByDescending(x => x.Position)
                     .FirstOrDefaultAsync(ct);
-
 
         private static ProjectionItemNotFoundException<PostalInformationLinkedDataEventStreamProjections> DatabaseItemNotFound(string postalCode)
            => new ProjectionItemNotFoundException<PostalInformationLinkedDataEventStreamProjections>(postalCode);

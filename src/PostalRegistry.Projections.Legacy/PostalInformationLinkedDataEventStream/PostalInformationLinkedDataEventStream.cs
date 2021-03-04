@@ -101,8 +101,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationLinkedDataEventStre
             builder.Ignore(x => x.PostalNames);
             builder.Ignore(x => x.RecordCreatedAt);
 
-            builder.HasIndex(x => x.PostalCode);
-            
+            builder.HasIndex(x => x.PostalCode);           
         }
     }
 }

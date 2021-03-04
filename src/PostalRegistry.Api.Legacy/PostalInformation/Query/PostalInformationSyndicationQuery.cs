@@ -26,13 +26,20 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
         public Instant LastChangedOn { get; }
         public PostalInformationStatus? Status { get; }
         public IEnumerable<PostalName> PostalNames { get; }
+        public string MunicipalityNisCode { get; }
+        public Organisation? Organisation { get; }
+        public string Reason { get; }
+        public string EventDataAsXml { get; }
 
         public PostalInformationSyndicationQueryResult(
             string postalCode,
             long position,
             string changeType,
             Instant recordCreatedAt,
-            Instant lastChangedOn)
+            Instant lastChangedOn,
+            string municipalityNisCode,
+            Organisation? organisation,
+            string reason)
         {
             ContainsEvent = false;
             ContainsObject = false;
@@ -42,23 +49,34 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
             ChangeType = changeType;
             RecordCreatedAt = recordCreatedAt;
             LastChangedOn = lastChangedOn;
+            MunicipalityNisCode = municipalityNisCode;
+            Organisation = organisation;
+            Reason = reason;
         }
 
-        /*public PostalInformationSyndicationQueryResult(
+        public PostalInformationSyndicationQueryResult(
             string postalCode,
             long position,
             string changeType,
             Instant recordCreatedAt,
-            Instant lastChangedOn)
+            Instant lastChangedOn,
+            string municipalityNisCode,
+            Organisation? organisation,
+            string reason,
+            string eventDataAsXml)
             : this(postalCode,
                 position,
                 changeType,
                 recordCreatedAt,
-                lastChangedOn)
+                lastChangedOn,
+                municipalityNisCode,
+                organisation,
+                reason)
         {
             ContainsEvent = true;
 
-        }*/
+            EventDataAsXml = eventDataAsXml;
+        }
 
         public PostalInformationSyndicationQueryResult(
             string postalCode,
@@ -67,13 +85,19 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
             Instant recordCreatedAt,
             Instant lastChangedOn,
             PostalInformationStatus? status,
-            IEnumerable<PostalName> postalNames) :
+            IEnumerable<PostalName> postalNames,
+            string municipalityNisCode,
+            Organisation? organisation,
+            string reason) :
             this(
                 postalCode,
                 position,
                 changeType,
                 recordCreatedAt,
-                lastChangedOn)
+                lastChangedOn,
+                municipalityNisCode,
+                organisation,
+                reason)
         {
             ContainsObject = true;
 
@@ -81,14 +105,18 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
             PostalNames = postalNames;
         }
 
-        /*public PostalInformationSyndicationQueryResult(
+        public PostalInformationSyndicationQueryResult(
             string postalCode,
             long position,
             string changeType,
             Instant recordCreatedAt,
             Instant lastChangedOn,
             PostalInformationStatus? status,
-            IEnumerable<PostalName> postalNames)
+            IEnumerable<PostalName> postalNames,
+            string municipalityNisCode,
+            Organisation? organisation,
+            string reason,
+            string eventDataAsXml)
             : this(
                 postalCode,
                 position,
@@ -96,10 +124,14 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
                 recordCreatedAt,
                 lastChangedOn,
                 status,
-                postalNames)
+                postalNames,
+                municipalityNisCode,
+                organisation,
+                reason)
         {
             ContainsEvent = true;
-        }*/
+            EventDataAsXml = eventDataAsXml;
+        }
     }
 
     public class PostalInformationSyndicationQuery : Query<PostalInformationSyndicationItem,
@@ -130,7 +162,11 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
                         syndicationItem.RecordCreatedAt,
                         syndicationItem.LastChangedOn,
                         syndicationItem.Status,
-                        syndicationItem.PostalNames);
+                        syndicationItem.PostalNames,
+                        syndicationItem.MunicipalityNisCode,
+                        syndicationItem.Organisation,
+                        syndicationItem.Reason,
+                        syndicationItem.EventDataAsXml);
 
                 if (_embedEvent)
                     return syndicationItem => new PostalInformationSyndicationQueryResult(
@@ -138,9 +174,13 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
                         syndicationItem.Position,
                         syndicationItem.ChangeType,
                         syndicationItem.RecordCreatedAt,
-                        syndicationItem.LastChangedOn);
+                        syndicationItem.LastChangedOn,
+                        syndicationItem.MunicipalityNisCode,
+                        syndicationItem.Organisation,
+                        syndicationItem.Reason,
+                        syndicationItem.EventDataAsXml);
 
-                if(_embedObject)
+                if (_embedObject)
                     return syndicationItem => new PostalInformationSyndicationQueryResult(
                         syndicationItem.PostalCode,
                         syndicationItem.Position,
@@ -148,14 +188,20 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
                         syndicationItem.RecordCreatedAt,
                         syndicationItem.LastChangedOn,
                         syndicationItem.Status,
-                        syndicationItem.PostalNames);
+                        syndicationItem.PostalNames,
+                        syndicationItem.MunicipalityNisCode,
+                        syndicationItem.Organisation,
+                        syndicationItem.Reason);
 
                 return syndicationItem => new PostalInformationSyndicationQueryResult(
                     syndicationItem.PostalCode,
                     syndicationItem.Position,
                     syndicationItem.ChangeType,
                     syndicationItem.RecordCreatedAt,
-                    syndicationItem.LastChangedOn);
+                    syndicationItem.LastChangedOn,
+                    syndicationItem.MunicipalityNisCode,
+                    syndicationItem.Organisation,
+                    syndicationItem.Reason);
             }
         }
 
@@ -189,6 +235,6 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
     public class PostalInformationSyndicationFilter
     {
         public long? Position { get; set; }
-        public EmbedValue Embed  { get; set; }
+        public EmbedValue Embed { get; set; }
     }
 }
