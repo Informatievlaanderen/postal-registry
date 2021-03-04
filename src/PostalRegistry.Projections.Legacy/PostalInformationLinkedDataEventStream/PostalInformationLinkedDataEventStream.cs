@@ -1,17 +1,17 @@
-using Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner.MigrationExtensions;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Newtonsoft.Json;
-using NodaTime;
-using PostalRegistry.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace PostalRegistry.Projections.Legacy.PostalInformationLinkedDataEventStream
 {
+    using Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner.MigrationExtensions;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using Newtonsoft.Json;
+    using NodaTime;
+    using PostalRegistry.Infrastructure;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+
     public class PostalInformationLinkedDataEventStreamItem
     {
         public long Position { get; set; }

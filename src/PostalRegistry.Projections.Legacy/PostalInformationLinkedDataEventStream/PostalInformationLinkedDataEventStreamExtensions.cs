@@ -1,16 +1,16 @@
-using Be.Vlaanderen.Basisregisters.GrAr.Provenance;
-using Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector;
-using Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-
 namespace PostalRegistry.Projections.Legacy.PostalInformationLinkedDataEventStream
 {
+    using Be.Vlaanderen.Basisregisters.GrAr.Provenance;
+    using Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector;
+    using Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore;
+    using Microsoft.EntityFrameworkCore;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     public static class PostalInformationLinkedDataEventStreamExtensions
     {
         public static async Task CreateNewPostalInformationLinkedDataEventStreamItem<T>(
