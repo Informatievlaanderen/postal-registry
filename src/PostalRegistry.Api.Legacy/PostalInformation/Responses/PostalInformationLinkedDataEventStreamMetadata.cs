@@ -1,13 +1,14 @@
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-using NodaTime;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 {
+    using Microsoft.Extensions.Configuration;
+    using Newtonsoft.Json;
+    using NodaTime;
+    using PostalRegistry.Api.Legacy.Infrastructure;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     public class PostalInformationLinkedDataEventStreamMetadata
     {
         public static Uri GetPageIdentifier(LinkedDataEventStreamConfiguration configuration, int page) => new Uri($"{configuration.ApiEndpoint}?page={page}");

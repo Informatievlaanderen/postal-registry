@@ -1,17 +1,18 @@
-using Be.Vlaanderen.Basisregisters.GrAr.Common;
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-using NodaTime;
-using NodaTime.Text;
-using Swashbuckle.AspNetCore.Filters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Threading.Tasks;
-
 namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 {
+    using Be.Vlaanderen.Basisregisters.GrAr.Common;
+    using Microsoft.Extensions.Configuration;
+    using Newtonsoft.Json;
+    using NodaTime;
+    using NodaTime.Text;
+    using PostalRegistry.Api.Legacy.Infrastructure;
+    using Swashbuckle.AspNetCore.Filters;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.Serialization;
+    using System.Threading.Tasks;
+
     [DataContract(Name = "PostinfoLinkedDataEventStream", Namespace = "")]
     public class PostalInformationLinkedDataEventStreamResponse
     {

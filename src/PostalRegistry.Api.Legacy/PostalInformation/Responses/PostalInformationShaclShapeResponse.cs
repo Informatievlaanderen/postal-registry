@@ -1,14 +1,15 @@
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-using Swashbuckle.AspNetCore.Filters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Threading.Tasks;
-
 namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 {
+    using Microsoft.Extensions.Configuration;
+    using Newtonsoft.Json;
+    using PostalRegistry.Api.Legacy.Infrastructure;
+    using Swashbuckle.AspNetCore.Filters;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.Serialization;
+    using System.Threading.Tasks;
+
     [DataContract(Name = "PostalInformationShaclShape", Namespace = "")]
     public class PostalInformationShaclShapeReponse
     {

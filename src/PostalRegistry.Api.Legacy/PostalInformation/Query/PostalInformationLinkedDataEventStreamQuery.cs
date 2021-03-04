@@ -1,19 +1,19 @@
-using Be.Vlaanderen.Basisregisters.Api.Search;
-using Be.Vlaanderen.Basisregisters.Api.Search.Filtering;
-using Be.Vlaanderen.Basisregisters.Api.Search.Sorting;
-using Microsoft.EntityFrameworkCore;
-using NodaTime;
-using PostalRegistry.Projections.Legacy;
-using PostalRegistry.Projections.Legacy.PostalInformationLinkedDataEventStream;
-using PostalRegistry.Projections.Legacy.PostalInformationSyndication;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-
 namespace PostalRegistry.Api.Legacy.PostalInformation.Query
 {
+    using Be.Vlaanderen.Basisregisters.Api.Search;
+    using Be.Vlaanderen.Basisregisters.Api.Search.Filtering;
+    using Be.Vlaanderen.Basisregisters.Api.Search.Sorting;
+    using Microsoft.EntityFrameworkCore;
+    using NodaTime;
+    using PostalRegistry.Projections.Legacy;
+    using PostalRegistry.Projections.Legacy.PostalInformationLinkedDataEventStream;
+    using PostalRegistry.Projections.Legacy.PostalInformationSyndication;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Threading.Tasks;
+
     public class PostalInformationLinkedDataEventStreamQueryResult
     {
         public string PostalCode { get; }
