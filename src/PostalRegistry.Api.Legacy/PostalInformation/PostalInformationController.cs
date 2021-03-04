@@ -307,11 +307,11 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
             [FromServices] IOptions<ResponseOptions> responseOptions,
             CancellationToken cancellationToken = default)
         {
-            var linkedDataEventStreamConfiguration = configuration.GetSection("LinkedDataEventStream");
+            var linkedDataEventStreamConfiguration = new LinkedDataEventStreamConfiguration(configuration.GetSection("LinkedDataEventStream"));
 
             return Ok(new PostalInformationShaclShapeReponse
             {
-                Id = new Uri($"{linkedDataEventStreamConfiguration["ApiEndpoint"]}/shape")
+                Id = new Uri($"{linkedDataEventStreamConfiguration.ApiEndpoint}/shape")
             });
         }
 

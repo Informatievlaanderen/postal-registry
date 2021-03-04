@@ -94,13 +94,13 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 
     public class PostalInformationShaclShapeResponseExamples : IExamplesProvider<PostalInformationShaclShapeReponse>
     {
-        private readonly IConfigurationSection _configuration;
-        public PostalInformationShaclShapeResponseExamples(IConfigurationSection configuration) => _configuration = configuration;
+        private readonly LinkedDataEventStreamConfiguration _configuration;
+        public PostalInformationShaclShapeResponseExamples(LinkedDataEventStreamConfiguration configuration) => _configuration = configuration;
         public PostalInformationShaclShapeReponse GetExamples()
         {
             return new PostalInformationShaclShapeReponse
             {
-                Id = new Uri($"{_configuration["ApiEndpoint"]}/shape")
+                Id = new Uri($"{_configuration.ApiEndpoint}/shape")
             };
         }
     }
