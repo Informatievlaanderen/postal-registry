@@ -97,6 +97,10 @@ namespace PostalRegistry.Projections.Legacy.Migrations
                     b.Property<string>("ChangeType")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTimeOffset>("EventGeneratedAtTimeAsDatetimeOffset")
+                        .HasColumnType("datetimeoffset")
+                        .HasColumnName("EventGeneratedAtTime");
+
                     b.Property<string>("PostalCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -104,10 +108,6 @@ namespace PostalRegistry.Projections.Legacy.Migrations
                     b.Property<string>("PostalNamesAsJson")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("PostalNames");
-
-                    b.Property<DateTimeOffset>("RecordCreatedAtAsDateTimeOffset")
-                        .HasColumnType("datetimeoffset")
-                        .HasColumnName("RecordCreatedAt");
 
                     b.Property<int?>("Status")
                         .HasColumnType("int");

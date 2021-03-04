@@ -21,7 +21,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationLinkedDataEventStre
                 {
                     Position = message.Position,
                     PostalCode = message.Message.PostalCode,
-                    RecordCreatedAt = message.Message.Provenance.Timestamp,
+                    EventGeneratedAtTime = message.Message.Provenance.Timestamp,
                     ChangeType = message.EventName
                 };
 

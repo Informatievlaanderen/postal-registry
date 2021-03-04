@@ -25,9 +25,12 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationLinkedDataEventStre
             if (postalInformationLinkedDataEventStreamItem == null)
                 throw DatabaseItemNotFound(postalCode);
 
+            var provenance = message.Message.Provenance;
+
             var newItem = postalInformationLinkedDataEventStreamItem.CloneAndApplyEventInfo(
                 message.Position,
                 message.EventName,
+                provenance.Timestamp,
                 applyEventInfoOn);
 
             await context

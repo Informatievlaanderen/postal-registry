@@ -44,7 +44,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
     {
         private readonly LegacyContext _context;
 
-        public PostalInformationLinkedDataEventStreamQuery(LegacyContext context) 
+        public PostalInformationLinkedDataEventStreamQuery(LegacyContext context)
             => _context = context;
 
         protected override ISorting Sorting => new PostalInformationLinkedDataEventStreamSorting();
@@ -57,7 +57,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
                         syndicationItem.PostalCode,
                         syndicationItem.Position,
                         syndicationItem.ChangeType,
-                        syndicationItem.RecordCreatedAt,
+                        syndicationItem.EventGeneratedAtTime,
                         syndicationItem.Status,
                         syndicationItem.PostalNames);
             }

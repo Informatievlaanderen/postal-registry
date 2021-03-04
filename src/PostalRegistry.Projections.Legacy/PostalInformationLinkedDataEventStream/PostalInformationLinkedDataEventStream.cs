@@ -25,17 +25,18 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationLinkedDataEventStre
 
         public IReadOnlyList<PostalName> PostalNames => GetPostalNamesAsList();
 
-        public DateTimeOffset RecordCreatedAtAsDateTimeOffset { get; set; }
+        public DateTimeOffset EventGeneratedAtTimeAsDatetimeOffset { get; set; }
 
-        public Instant RecordCreatedAt
+        public Instant EventGeneratedAtTime
         {
-            get => Instant.FromDateTimeOffset(RecordCreatedAtAsDateTimeOffset);
-            set => RecordCreatedAtAsDateTimeOffset = value.ToDateTimeOffset();
+            get => Instant.FromDateTimeOffset(EventGeneratedAtTimeAsDatetimeOffset);
+            set => EventGeneratedAtTimeAsDatetimeOffset = value.ToDateTimeOffset();
         }
 
         public PostalInformationLinkedDataEventStreamItem CloneAndApplyEventInfo(
             long newPosition,
             string eventName,
+            Instant lastChangedOn,
             Action<PostalInformationLinkedDataEventStreamItem> editFunc)
         {
             var newItem = new PostalInformationLinkedDataEventStreamItem
@@ -49,7 +50,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationLinkedDataEventStre
 
                 PostalNamesAsJson = PostalNamesAsJson,
 
-                RecordCreatedAt = RecordCreatedAt
+                EventGeneratedAtTime = lastChangedOn
             };
 
             editFunc(newItem);
@@ -96,12 +97,12 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationLinkedDataEventStre
             builder.Property(x => x.Status);
 
             builder.Property(x => x.PostalNamesAsJson).HasColumnName("PostalNames");
-            builder.Property(x => x.RecordCreatedAtAsDateTimeOffset).HasColumnName("RecordCreatedAt");
+            builder.Property(x => x.EventGeneratedAtTimeAsDatetimeOffset).HasColumnName("EventGeneratedAtTime");
 
             builder.Ignore(x => x.PostalNames);
-            builder.Ignore(x => x.RecordCreatedAt);
+            builder.Ignore(x => x.EventGeneratedAtTime);
 
-            builder.HasIndex(x => x.PostalCode);           
+            builder.HasIndex(x => x.PostalCode);
         }
     }
 }

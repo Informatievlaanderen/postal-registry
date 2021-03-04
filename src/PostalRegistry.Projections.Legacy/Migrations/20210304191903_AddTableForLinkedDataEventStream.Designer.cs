@@ -10,8 +10,8 @@ using PostalRegistry.Projections.Legacy;
 namespace PostalRegistry.Projections.Legacy.Migrations
 {
     [DbContext(typeof(LegacyContext))]
-    [Migration("20210303105145_AddLinkedDataEventStreamProjection")]
-    partial class AddLinkedDataEventStreamProjection
+    [Migration("20210304191903_AddTableForLinkedDataEventStream")]
+    partial class AddTableForLinkedDataEventStream
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -99,6 +99,10 @@ namespace PostalRegistry.Projections.Legacy.Migrations
                     b.Property<string>("ChangeType")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTimeOffset>("EventGeneratedAtTimeAsDatetimeOffset")
+                        .HasColumnType("datetimeoffset")
+                        .HasColumnName("EventGeneratedAtTime");
+
                     b.Property<string>("PostalCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -106,10 +110,6 @@ namespace PostalRegistry.Projections.Legacy.Migrations
                     b.Property<string>("PostalNamesAsJson")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("PostalNames");
-
-                    b.Property<DateTimeOffset>("RecordCreatedAtAsDateTimeOffset")
-                        .HasColumnType("datetimeoffset")
-                        .HasColumnName("RecordCreatedAt");
 
                     b.Property<int?>("Status")
                         .HasColumnType("int");

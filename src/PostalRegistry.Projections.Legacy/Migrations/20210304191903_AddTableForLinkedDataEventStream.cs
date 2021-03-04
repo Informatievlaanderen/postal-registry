@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PostalRegistry.Projections.Legacy.Migrations
 {
-    public partial class AddLinkedDataEventStreamProjection : Migration
+    public partial class AddTableForLinkedDataEventStream : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,7 +17,7 @@ namespace PostalRegistry.Projections.Legacy.Migrations
                     ChangeType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: true),
                     PostalNames = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RecordCreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false)
+                    EventGeneratedAtTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false)
                 },
                 constraints: table =>
                 {
