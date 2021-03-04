@@ -47,7 +47,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
         public PostalInformationLinkedDataEventStreamQuery(LegacyContext context) 
             => _context = context;
 
-        protected override ISorting Sorting => new PostalInformationLDESSorting();
+        protected override ISorting Sorting => new PostalInformationLinkedDataEventStreamSorting();
 
         protected override Expression<Func<PostalInformationLinkedDataEventStreamItem, PostalInformationLinkedDataEventStreamQueryResult>> Transformation
         {
@@ -72,7 +72,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
         }
     }
 
-    internal class PostalInformationLDESSorting : ISorting
+    internal class PostalInformationLinkedDataEventStreamSorting : ISorting
     {
         public IEnumerable<string> SortableFields { get; } = new[]
         {
