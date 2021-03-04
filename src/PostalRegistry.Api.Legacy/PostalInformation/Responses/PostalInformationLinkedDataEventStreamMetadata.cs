@@ -11,11 +11,17 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 
     public class PostalInformationLinkedDataEventStreamMetadata
     {
-        public static Uri GetPageIdentifier(LinkedDataEventStreamConfiguration configuration, int page) => new Uri($"{configuration.ApiEndpoint}?page={page}");
+        public static Uri GetPageIdentifier(LinkedDataEventStreamConfiguration configuration, int page) 
+            => new Uri($"{configuration.ApiEndpoint}?page={page}");
 
-        public static Uri GetCollectionLink(LinkedDataEventStreamConfiguration configuration) => new Uri($"{configuration.ApiEndpoint}");
+        public static Uri GetCollectionLink(LinkedDataEventStreamConfiguration configuration) 
+            => new Uri($"{configuration.ApiEndpoint}");
 
-        public static List<HypermediaControl>? GetHypermediaControls(List<PostalInformationVersionObject> items, LinkedDataEventStreamConfiguration configuration, int page, int pageSize)
+        public static List<HypermediaControl>? GetHypermediaControls(
+            List<PostalInformationVersionObject> items, 
+            LinkedDataEventStreamConfiguration configuration,
+            int page, 
+            int pageSize)
         {
             List<HypermediaControl> controls = new List<HypermediaControl>();
 
@@ -30,7 +36,10 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
             return controls.Count > 0 ? controls: null;
         }
 
-        private static HypermediaControl? AddPrevious(List<PostalInformationVersionObject> items, LinkedDataEventStreamConfiguration configuration, int page)
+        private static HypermediaControl? AddPrevious(
+            List<PostalInformationVersionObject> items, 
+            LinkedDataEventStreamConfiguration configuration,
+            int page)
         {
             if (page <= 1)
                 return null;
@@ -50,7 +59,11 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
             };
         }
 
-        private static HypermediaControl? AddNext(List<PostalInformationVersionObject> items, LinkedDataEventStreamConfiguration configuration, int page, int pageSize)
+        private static HypermediaControl? AddNext(
+            List<PostalInformationVersionObject> items, 
+            LinkedDataEventStreamConfiguration configuration,
+            int page, 
+            int pageSize)
         {
             if (items.Count != pageSize)
                 return null;

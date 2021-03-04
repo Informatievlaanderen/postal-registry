@@ -44,7 +44,8 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
     {
         private readonly LegacyContext _context;
 
-        public PostalInformationLinkedDataEventStreamQuery(LegacyContext context) => _context = context;
+        public PostalInformationLinkedDataEventStreamQuery(LegacyContext context) 
+            => _context = context;
 
         protected override ISorting Sorting => new PostalInformationLDESSorting();
 
