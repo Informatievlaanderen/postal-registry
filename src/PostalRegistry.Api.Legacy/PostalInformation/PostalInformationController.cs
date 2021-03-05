@@ -267,7 +267,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
                     linkedDataEventStreamConfiguration,
                     p.Position,
                     p.ChangeType,
-                    p.RecordCreatedAt,
+                    p.EventGeneratedAtTime,
                     p.PostalCode,
                     p.PostalNames,
                     p.Status))

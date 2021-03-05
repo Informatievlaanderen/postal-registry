@@ -19,7 +19,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
         public string PostalCode { get; }
         public long Position { get; }
         public string ChangeType { get; }
-        public Instant RecordCreatedAt { get; }
+        public Instant EventGeneratedAtTime { get; }
         public PostalInformationStatus? Status { get; }
         public IEnumerable<PostalName>? PostalNames { get; }
 
@@ -27,14 +27,14 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
             string postalCode,
             long position,
             string changeType,
-            Instant recordCreatedAt,
+            Instant eventGeneratedAtTime,
             PostalInformationStatus? status,
             IEnumerable<PostalName>? postalNames)
         {
             PostalCode = postalCode;
             Position = position;
             ChangeType = changeType;
-            RecordCreatedAt = recordCreatedAt;
+            EventGeneratedAtTime = eventGeneratedAtTime;
             Status = status;
             PostalNames = postalNames;
         }

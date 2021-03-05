@@ -112,7 +112,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
             if (postalNames.ToList().Count == 0)
                 return null;
 
-            return postalNames.Select(postalname => new PostalNameTransformed { Name = postalname.Name, Language = GetLanguageIdentifier(postalname.Language) }).ToList();       
+            return postalNames.Select(postalname => new PostalNameTransformed { Name = postalname.Name, Language = GetLanguageIdentifier(postalname.Language) }).ToList();
         }
 
         private Uri? GetStatusUri(PostalInformationStatus? status)
