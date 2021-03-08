@@ -85,7 +85,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 
         public PostalInformationVersionObject(
             LinkedDataEventStreamConfiguration configuration,
-            long position,
+            string objectIdentifier,
             string changeType,
             Instant generatedAtTime,
             string postalCode,
@@ -97,13 +97,13 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
             PostalCode = postalCode;
             GeneratedAtTime = generatedAtTime.ToBelgianDateTimeOffset();
 
-            Id = CreateVersionUri(position);
+            Id = CreateVersionUri(objectIdentifier);
             IsVersionOf = GetPersistentUri(PostalCode);
             PostalNames = TransformPostalNames(postalNames);
             Status = GetStatusUri(status);
         }
 
-        private Uri CreateVersionUri(long code) => new Uri($"{Configuration.ApiEndpoint}#{code}");
+        private Uri CreateVersionUri(string identifier) => new Uri($"{Configuration.ApiEndpoint}#{identifier}");
 
         private Uri GetPersistentUri(string id) => new Uri($"{Configuration.DataVlaanderenNamespace}/{id}");
 
@@ -175,13 +175,13 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
                 new PostalName("Gent", Language.Dutch)
             };
 
-            var generatedAtTime = Instant.FromDateTimeOffset(DateTimeOffset.Parse("2002-11-21T11:23:45+01:00"));
+            var generatedAtTime = Instant.FromDateTimeOffset(DateTimeOffset.Parse("2019-11-21 08:34:51.6721003 +00:00"));
             var versionObjects = new List<PostalInformationVersionObject>()
             {
                 new PostalInformationVersionObject(
                     _configuration,
-                    0,
-                    "PostalInformationWasRealized",
+                    "42C1E3C14343FF85314CDB75759978C6",
+                    "PostalInformationPostalNameWasAdded",
                     generatedAtTime,
                     "9000",
                     postalNames,
@@ -192,13 +192,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
                 new HypermediaControl
                 {
                     Type = "tree:GreaterThanOrEqualToRelation",
-                    Node = new Uri("https://data.vlaanderen.be/base/postinfo?page=2"),
-                    SelectedProperty = "prov:generatedAtTime",
-                    TreeValue = new Literal
-                    {
-                        Value = DateTimeOffset.Parse("2002-11-21T11:23:45+01:00"),
-                        Type = "xsd:dateTime"
-                    }
+                    Node = new Uri("https://data.vlaanderen.be/base/postinfo?page=2")
                 }
             };
 

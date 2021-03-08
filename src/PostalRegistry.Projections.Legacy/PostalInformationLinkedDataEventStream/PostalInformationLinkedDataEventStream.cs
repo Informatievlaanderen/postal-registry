@@ -33,6 +33,8 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationLinkedDataEventStre
             set => EventGeneratedAtTimeAsDatetimeOffset = value.ToDateTimeOffset();
         }
 
+        public string ObjectHash { get; set; }
+
         public PostalInformationLinkedDataEventStreamItem CloneAndApplyEventInfo(
             long newPosition,
             string eventName,
@@ -98,6 +100,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationLinkedDataEventStre
 
             builder.Property(x => x.PostalNamesAsJson).HasColumnName("PostalNames");
             builder.Property(x => x.EventGeneratedAtTimeAsDatetimeOffset).HasColumnName("EventGeneratedAtTime");
+            builder.Property(x => x.ObjectHash).HasColumnName("ObjectIdentifier");
 
             builder.Ignore(x => x.PostalNames);
             builder.Ignore(x => x.EventGeneratedAtTime);

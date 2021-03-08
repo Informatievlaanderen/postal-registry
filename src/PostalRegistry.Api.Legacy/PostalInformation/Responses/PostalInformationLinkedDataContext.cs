@@ -64,8 +64,11 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         [DataMember(Name = "status")]
         public readonly PostalInformationStatusContext StatusContext = new PostalInformationStatusContext();
 
-        [DataMember(Name = "tree:path")]
+        [DataMember(Name = "tree:node")]
         public readonly PropertyOverride TreePath = new PropertyOverride();
+
+        [DataMember(Name = "tree:shape")]
+        public readonly PropertyOverride TreeShape = new PropertyOverride();
     }
 
     public class TreeCollectionContext

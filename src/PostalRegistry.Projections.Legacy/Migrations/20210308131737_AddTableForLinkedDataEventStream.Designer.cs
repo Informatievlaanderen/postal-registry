@@ -10,7 +10,7 @@ using PostalRegistry.Projections.Legacy;
 namespace PostalRegistry.Projections.Legacy.Migrations
 {
     [DbContext(typeof(LegacyContext))]
-    [Migration("20210304191903_AddTableForLinkedDataEventStream")]
+    [Migration("20210308131737_AddTableForLinkedDataEventStream")]
     partial class AddTableForLinkedDataEventStream
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -102,6 +102,11 @@ namespace PostalRegistry.Projections.Legacy.Migrations
                     b.Property<DateTimeOffset>("EventGeneratedAtTimeAsDatetimeOffset")
                         .HasColumnType("datetimeoffset")
                         .HasColumnName("EventGeneratedAtTime");
+
+                    b.Property<string>("ObjectHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ObjectIdentifier");
 
                     b.Property<string>("PostalCode")
                         .IsRequired()

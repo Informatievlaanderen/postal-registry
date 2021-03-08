@@ -265,7 +265,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
                 .Items
                 .Select(p => new PostalInformationVersionObject(
                     linkedDataEventStreamConfiguration,
-                    p.Position,
+                    p.ObjectIdentifier,
                     p.ChangeType,
                     p.EventGeneratedAtTime,
                     p.PostalCode,

@@ -17,7 +17,8 @@ namespace PostalRegistry.Projections.Legacy.Migrations
                     ChangeType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: true),
                     PostalNames = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EventGeneratedAtTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false)
+                    EventGeneratedAtTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    ObjectIdentifier = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {

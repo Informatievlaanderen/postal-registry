@@ -11,16 +11,16 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 
     public class PostalInformationLinkedDataEventStreamMetadata
     {
-        public static Uri GetPageIdentifier(LinkedDataEventStreamConfiguration configuration, int page) 
+        public static Uri GetPageIdentifier(LinkedDataEventStreamConfiguration configuration, int page)
             => new Uri($"{configuration.ApiEndpoint}?page={page}");
 
-        public static Uri GetCollectionLink(LinkedDataEventStreamConfiguration configuration) 
+        public static Uri GetCollectionLink(LinkedDataEventStreamConfiguration configuration)
             => new Uri($"{configuration.ApiEndpoint}");
 
         public static List<HypermediaControl>? GetHypermediaControls(
-            List<PostalInformationVersionObject> items, 
+            List<PostalInformationVersionObject> items,
             LinkedDataEventStreamConfiguration configuration,
-            int page, 
+            int page,
             int pageSize)
         {
             List<HypermediaControl> controls = new List<HypermediaControl>();
@@ -37,7 +37,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         }
 
         private static HypermediaControl? AddPrevious(
-            List<PostalInformationVersionObject> items, 
+            List<PostalInformationVersionObject> items,
             LinkedDataEventStreamConfiguration configuration,
             int page)
         {
@@ -48,21 +48,15 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 
             return new HypermediaControl
             {
-                Type = "tree:LessThanOrEqualToRelation",
-                Node = previousUrl,
-                SelectedProperty = "prov:generatedAtTime",
-                TreeValue = new Literal
-                {
-                    Value = items.FirstOrDefault().GeneratedAtTime,
-                    Type = "xsd:dateTime"
-                }
+                Type = "tree:Relation",
+                Node = previousUrl
             };
         }
 
         private static HypermediaControl? AddNext(
-            List<PostalInformationVersionObject> items, 
+            List<PostalInformationVersionObject> items,
             LinkedDataEventStreamConfiguration configuration,
-            int page, 
+            int page,
             int pageSize)
         {
             if (items.Count != pageSize)
@@ -72,14 +66,8 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 
             return new HypermediaControl
             {
-                Type = "tree:GreaterThanOrEqualToRelation",
-                Node = nextUrl,
-                SelectedProperty = "prov:generatedAtTime",
-                TreeValue = new Literal
-                {
-                    Value = items[items.Count - 1].GeneratedAtTime,
-                    Type = "xsd:dateTime"
-                }
+                Type = "tree:Relation",
+                Node = nextUrl
             };
         }
     }
@@ -91,20 +79,5 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 
         [JsonProperty("tree:node")]
         public Uri Node { get; set; }
-
-        [JsonProperty("tree:path")]
-        public string SelectedProperty { get; set; }
-
-        [JsonProperty("tree:value")]
-        public Literal TreeValue { get; set; }
-    }
-
-    public class Literal
-    {
-        [JsonProperty("@value")]
-        public DateTimeOffset Value { get; set; }
-
-        [JsonProperty("@type")]
-        public string Type { get; set; }
     }
 }

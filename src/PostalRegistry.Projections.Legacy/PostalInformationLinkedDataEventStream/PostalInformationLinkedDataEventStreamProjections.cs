@@ -25,6 +25,8 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationLinkedDataEventStre
                     ChangeType = message.EventName
                 };
 
+                newPostalInformationLinkedDataEventStreamItem.SetObjectHash();
+
                 await context
                     .PostalInformationLinkedDataEventStream
                     .AddAsync(newPostalInformationLinkedDataEventStreamItem, ct);

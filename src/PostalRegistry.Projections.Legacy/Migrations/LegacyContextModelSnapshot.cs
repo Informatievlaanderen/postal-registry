@@ -101,6 +101,11 @@ namespace PostalRegistry.Projections.Legacy.Migrations
                         .HasColumnType("datetimeoffset")
                         .HasColumnName("EventGeneratedAtTime");
 
+                    b.Property<string>("ObjectHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ObjectIdentifier");
+
                     b.Property<string>("PostalCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");

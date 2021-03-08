@@ -4,9 +4,11 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationLinkedDataEventStre
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore;
     using Microsoft.EntityFrameworkCore;
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Cryptography;
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
@@ -33,6 +35,8 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationLinkedDataEventStre
                 provenance.Timestamp,
                 applyEventInfoOn);
 
+            newItem.SetObjectHash();
+
             await context
                 .PostalInformationLinkedDataEventStream
                 .AddAsync(newItem, ct);
@@ -56,5 +60,14 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationLinkedDataEventStre
 
         private static ProjectionItemNotFoundException<PostalInformationLinkedDataEventStreamProjections> DatabaseItemNotFound(string postalCode)
            => new ProjectionItemNotFoundException<PostalInformationLinkedDataEventStreamProjections>(postalCode);
+
+        public static void SetObjectHash(this PostalInformationLinkedDataEventStreamItem linkedDataEventStreamItem)
+        {
+            var objectString = JsonConvert.SerializeObject(linkedDataEventStreamItem);
+
+            using var md5Hash = MD5.Create();
+            var hashBytes = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(objectString));
+            linkedDataEventStreamItem.ObjectHash = BitConverter.ToString(hashBytes).Replace("-", string.Empty);
+        }
     }
 }

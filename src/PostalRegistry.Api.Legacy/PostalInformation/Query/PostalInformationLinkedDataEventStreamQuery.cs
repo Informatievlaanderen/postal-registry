@@ -17,22 +17,22 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
     public class PostalInformationLinkedDataEventStreamQueryResult
     {
         public string PostalCode { get; }
-        public long Position { get; }
         public string ChangeType { get; }
         public Instant EventGeneratedAtTime { get; }
         public PostalInformationStatus? Status { get; }
         public IEnumerable<PostalName>? PostalNames { get; }
+        public string ObjectIdentifier { get; }
 
         public PostalInformationLinkedDataEventStreamQueryResult(
             string postalCode,
-            long position,
+            string objectIdentifier,
             string changeType,
             Instant eventGeneratedAtTime,
             PostalInformationStatus? status,
             IEnumerable<PostalName>? postalNames)
         {
             PostalCode = postalCode;
-            Position = position;
+            ObjectIdentifier = objectIdentifier;
             ChangeType = changeType;
             EventGeneratedAtTime = eventGeneratedAtTime;
             Status = status;
@@ -53,13 +53,13 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
         {
             get
             {
-                return syndicationItem => new PostalInformationLinkedDataEventStreamQueryResult(
-                        syndicationItem.PostalCode,
-                        syndicationItem.Position,
-                        syndicationItem.ChangeType,
-                        syndicationItem.EventGeneratedAtTime,
-                        syndicationItem.Status,
-                        syndicationItem.PostalNames);
+                return linkedDataEventStreamItem => new PostalInformationLinkedDataEventStreamQueryResult(
+                        linkedDataEventStreamItem.PostalCode,
+                        linkedDataEventStreamItem.ObjectHash,
+                        linkedDataEventStreamItem.ChangeType,
+                        linkedDataEventStreamItem.EventGeneratedAtTime,
+                        linkedDataEventStreamItem.Status,
+                        linkedDataEventStreamItem.PostalNames);
             }
         }
 
