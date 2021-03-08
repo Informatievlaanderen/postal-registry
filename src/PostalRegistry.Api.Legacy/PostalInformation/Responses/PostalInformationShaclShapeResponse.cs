@@ -94,7 +94,9 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
     public class PostalInformationShaclShapeResponseExamples : IExamplesProvider<PostalInformationShaclShapeReponse>
     {
         private readonly LinkedDataEventStreamConfiguration _configuration;
-        public PostalInformationShaclShapeResponseExamples(LinkedDataEventStreamConfiguration configuration) => _configuration = configuration;
+        
+        public PostalInformationShaclShapeResponseExamples(LinkedDataEventStreamConfiguration configuration) 
+            => _configuration = configuration;
 
         public PostalInformationShaclShapeReponse GetExamples()
             => new PostalInformationShaclShapeReponse
