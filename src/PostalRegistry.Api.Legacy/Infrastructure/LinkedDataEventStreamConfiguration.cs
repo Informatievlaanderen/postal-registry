@@ -8,8 +8,8 @@ namespace PostalRegistry.Api.Legacy.Infrastructure
 
     public class LinkedDataEventStreamConfiguration
     {
-        public string DataVlaanderenNamespace { get; set; }
-        public string ApiEndpoint { get; set; }
+        public string DataVlaanderenNamespace { get; }
+        public string ApiEndpoint { get; }
 
         public LinkedDataEventStreamConfiguration(IConfigurationSection configuration)
         {

@@ -68,7 +68,6 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
                 .PostalInformationLinkedDataEventStream
                 .OrderBy(x => x.Position)
                 .AsNoTracking();
-
     }
 
     internal class PostalInformationLinkedDataEventStreamSorting : ISorting

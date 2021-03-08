@@ -36,7 +36,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationLinkedDataEventStre
         public PostalInformationLinkedDataEventStreamItem CloneAndApplyEventInfo(
             long newPosition,
             string eventName,
-            Instant lastChangedOn,
+            Instant generatedAtTime,
             Action<PostalInformationLinkedDataEventStreamItem> editFunc)
         {
             var newItem = new PostalInformationLinkedDataEventStreamItem
@@ -50,7 +50,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationLinkedDataEventStre
 
                 PostalNamesAsJson = PostalNamesAsJson,
 
-                EventGeneratedAtTime = lastChangedOn
+                EventGeneratedAtTime = generatedAtTime
             };
 
             editFunc(newItem);
