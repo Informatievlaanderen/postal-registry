@@ -242,7 +242,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
         [SwaggerResponseExample(StatusCodes.Status200OK, typeof(PostalInformationLinkedDataEventStreamResponseExamples))]
         [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(InternalServerErrorResponseExamples))]
         public async Task<IActionResult> LinkedDataEventStream(
-            [FromServices] IConfiguration configuration,
+            [FromServices] LinkedDataEventStreamConfiguration configuration,
             [FromServices] LegacyContext context,
             [FromServices] IOptions<ResponseOptions> responseOptions,
             CancellationToken cancellationToken = default)
@@ -260,11 +260,10 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
                  new PostalInformationLinkedDataEventStreamQuery(context)
                     .Fetch(filtering, sorting, pagination);
 
-            var linkedDataEventStreamConfiguration = new LinkedDataEventStreamConfiguration(configuration.GetSection("LinkedDataEventStream"));
             var pagedPostalInformationVersionObjects = pagedPostalInformationSet
                 .Items
                 .Select(p => new PostalInformationVersionObject(
-                    linkedDataEventStreamConfiguration,
+                    configuration,
                     p.ObjectIdentifier,
                     p.ChangeType,
                     p.EventGeneratedAtTime,
@@ -276,11 +275,11 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
             return Ok(new PostalInformationLinkedDataEventStreamResponse
             {
                 Context = new PostalInformationLinkedDataContext(),
-                Id = PostalInformationLinkedDataEventStreamMetadata.GetPageIdentifier(linkedDataEventStreamConfiguration, page),
+                Id = PostalInformationLinkedDataEventStreamMetadata.GetPageIdentifier(configuration, page),
                 Type = "tree:Node",
-                CollectionLink = PostalInformationLinkedDataEventStreamMetadata.GetCollectionLink(linkedDataEventStreamConfiguration),
-                PostalInformationShape = new Uri($"{linkedDataEventStreamConfiguration.ApiEndpoint}/shape"),
-                HypermediaControls = PostalInformationLinkedDataEventStreamMetadata.GetHypermediaControls(pagedPostalInformationVersionObjects, linkedDataEventStreamConfiguration, page, pageSize),
+                CollectionLink = PostalInformationLinkedDataEventStreamMetadata.GetCollectionLink(configuration),
+                PostalInformationShape = new Uri($"{configuration.ApiEndpoint}/shape"),
+                HypermediaControls = PostalInformationLinkedDataEventStreamMetadata.GetHypermediaControls(pagedPostalInformationVersionObjects, configuration, page, pageSize),
                 Items = pagedPostalInformationVersionObjects
             });
         }
@@ -300,16 +299,14 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
         [SwaggerResponseExample(StatusCodes.Status200OK, typeof(PostalInformationShaclShapeResponseExamples))]
         [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(InternalServerErrorResponseExamples))]
         public async Task<IActionResult> Shape(
-            [FromServices] IConfiguration configuration,
+            [FromServices] LinkedDataEventStreamConfiguration configuration,
             [FromServices] LegacyContext context,
             [FromServices] IOptions<ResponseOptions> responseOptions,
             CancellationToken cancellationToken = default)
         {
-            var linkedDataEventStreamConfiguration = new LinkedDataEventStreamConfiguration(configuration.GetSection("LinkedDataEventStream"));
-
             return Ok(new PostalInformationShaclShapeReponse
             {
-                Id = new Uri($"{linkedDataEventStreamConfiguration.ApiEndpoint}/shape")
+                Id = new Uri($"{configuration.ApiEndpoint}/shape")
             });
         }
 
