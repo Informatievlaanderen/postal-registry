@@ -10,6 +10,8 @@ namespace PostalRegistry.Projections.Legacy.PostalInformation
     using PostalRegistry.PostalInformation.Events.BPost;
     using PostalRegistry.PostalInformation.Events.Crab;
 
+    [ConnectedProjectionName("Legacy - PostalInformation")]
+    [ConnectedProjectionDescription("Postinfo detail data.")]
     public class PostalInformationProjections : ConnectedProjection<LegacyContext>
     {
         public PostalInformationProjections()
