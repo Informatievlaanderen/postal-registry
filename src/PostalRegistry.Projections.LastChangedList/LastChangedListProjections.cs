@@ -1,11 +1,14 @@
 namespace PostalRegistry.Projections.LastChangedList
 {
+    using Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.LastChangedList;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore;
     using PostalInformation.Events;
     using PostalInformation.Events.BPost;
     using PostalInformation.Events.Crab;
 
+    [ConnectedProjectionName("LastChangedList")]
+    [ConnectedProjectionDescription("Markeert de postinfo waarvan de cached data moet geupdate worden.")]
     public class LastChangedListProjections : LastChangedListConnectedProjection
     {
         protected override string CacheKeyFormat => "legacy/postalinfo:{0}.{1}";
