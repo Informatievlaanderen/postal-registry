@@ -1,3 +1,15 @@
+# [2.16.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.15.4...v2.16.0) (2021-03-11)
+
+
+### Bug Fixes
+
+* update projector dependency GRAR-1876 ([b709d64](https://github.com/informatievlaanderen/postal-registry/commit/b709d64395cd1d71505fcf934596f82478a40d8c))
+
+
+### Features
+
+* add projection attributes GRAR-1876 ([491a4e9](https://github.com/informatievlaanderen/postal-registry/commit/491a4e9d0c55dc76855afd5c50db9e1ff32d57bf))
+
 ## [2.15.4](https://github.com/informatievlaanderen/postal-registry/compare/v2.15.3...v2.15.4) (2021-02-15)
 
 
