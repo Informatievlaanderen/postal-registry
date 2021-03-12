@@ -26,7 +26,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 
         [DataMember(Name = "@type", Order = 3)]
         [JsonProperty(Required = Required.Always)]
-        public string Type { get; set; }
+        public readonly string Type = "tree:Node";
 
         [DataMember(Name = "viewOf", Order = 4)]
         [JsonProperty(Required = Required.Always)]
@@ -74,7 +74,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 
         [DataMember(Name = "postnaam", Order = 7)]
         [JsonProperty(Required = Required.AllowNull, NullValueHandling = NullValueHandling.Ignore)]
-        public List<PostalNameTransformed>? PostalNames { get; set; }
+        public List<LanguageValue>? PostalNames { get; set; }
 
         [DataMember(Name = "status", Order = 7)]
         [JsonProperty(Required = Required.AllowNull, NullValueHandling = NullValueHandling.Ignore)]
@@ -107,12 +107,12 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 
         private Uri GetPersistentUri(string id) => new Uri($"{Configuration.DataVlaanderenNamespace}/{id}");
 
-        private List<PostalNameTransformed> TransformPostalNames(IEnumerable<PostalName> postalNames)
+        private List<LanguageValue> TransformPostalNames(IEnumerable<PostalName> postalNames)
         {
             if (postalNames.ToList().Count == 0)
                 return null;
 
-            return postalNames.Select(postalname => new PostalNameTransformed { Name = postalname.Name, Language = GetLanguageIdentifier(postalname.Language) }).ToList();
+            return postalNames.Select(postalname => new LanguageValue { Value = postalname.Name, Language = GetLanguageIdentifier(postalname.Language) }).ToList();
         }
 
         private Uri? GetStatusUri(PostalInformationStatus? status)
@@ -154,10 +154,10 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         }
     }
 
-    public class PostalNameTransformed
+    public class LanguageValue
     {
         [JsonProperty("@value")]
-        public string Name { get; set; }
+        public string Value { get; set; }
 
         [JsonProperty("@language")]
         public string Language { get; set; }
@@ -191,7 +191,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
             {
                 new HypermediaControl
                 {
-                    Type = "tree:GreaterThanOrEqualToRelation",
+                    Type = "tree:Relation",
                     Node = new Uri("https://data.vlaanderen.be/base/postinfo?page=2")
                 }
             };
@@ -200,7 +200,6 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
             {
                 Context = new PostalInformationLinkedDataContext(),
                 Id = new Uri("https://data.vlaanderen.be/base/postinfo?page=1"),
-                Type = "tree:Node",
                 CollectionLink = new Uri("https://data.vlaanderen/base/postinfo"),
                 HypermediaControls = hypermediaControls,
                 PostalInformationShape = new Uri("https://data.vlaanderen.be/base/postinfo/shape"),

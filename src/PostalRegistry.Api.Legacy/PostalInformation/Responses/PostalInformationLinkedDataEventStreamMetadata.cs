@@ -17,6 +17,9 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         public static Uri GetCollectionLink(LinkedDataEventStreamConfiguration configuration)
             => new Uri($"{configuration.ApiEndpoint}");
 
+        public static Uri GetShapeUri(LinkedDataEventStreamConfiguration configuration)
+            => new Uri($"{configuration.ApiEndpoint}/shape");
+
         public static List<HypermediaControl>? GetHypermediaControls(
             List<PostalInformationVersionObject> items,
             LinkedDataEventStreamConfiguration configuration,

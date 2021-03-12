@@ -276,9 +276,8 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
             {
                 Context = new PostalInformationLinkedDataContext(),
                 Id = PostalInformationLinkedDataEventStreamMetadata.GetPageIdentifier(configuration, page),
-                Type = "tree:Node",
                 CollectionLink = PostalInformationLinkedDataEventStreamMetadata.GetCollectionLink(configuration),
-                PostalInformationShape = new Uri($"{configuration.ApiEndpoint}/shape"),
+                PostalInformationShape = PostalInformationLinkedDataEventStreamMetadata.GetShapeUri(configuration),
                 HypermediaControls = PostalInformationLinkedDataEventStreamMetadata.GetHypermediaControls(pagedPostalInformationVersionObjects, configuration, page, pageSize),
                 Items = pagedPostalInformationVersionObjects
             });
