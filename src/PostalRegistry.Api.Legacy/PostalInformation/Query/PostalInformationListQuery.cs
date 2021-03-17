@@ -49,7 +49,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
                     .ToList();
 
                 postalInformationSet = postalInformationSet.Where(x => municipalityNisCodes.Contains(x.NisCode));
-            } 
+            }
 
             return postalInformationSet;
         }

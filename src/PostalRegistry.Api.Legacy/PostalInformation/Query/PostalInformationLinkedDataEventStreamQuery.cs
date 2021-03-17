@@ -51,16 +51,13 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
 
         protected override Expression<Func<PostalInformationLinkedDataEventStreamItem, PostalInformationLinkedDataEventStreamQueryResult>> Transformation
         {
-            get
-            {
-                return linkedDataEventStreamItem => new PostalInformationLinkedDataEventStreamQueryResult(
+            get => linkedDataEventStreamItem => new PostalInformationLinkedDataEventStreamQueryResult(
                         linkedDataEventStreamItem.PostalCode,
                         linkedDataEventStreamItem.ObjectHash,
                         linkedDataEventStreamItem.ChangeType,
                         linkedDataEventStreamItem.EventGeneratedAtTime,
                         linkedDataEventStreamItem.Status,
                         linkedDataEventStreamItem.PostalNames);
-            }
         }
 
         protected override IQueryable<PostalInformationLinkedDataEventStreamItem> Filter(FilteringHeader<PostalInformationLinkedDataEventStreamFilter> filtering)
