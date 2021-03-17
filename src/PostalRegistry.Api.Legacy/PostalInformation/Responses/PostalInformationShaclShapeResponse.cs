@@ -38,7 +38,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
                 new PostalInformationShaclProperty
                 {
                     PropertyPath = "dct:isVersionOf",
-                    DataType = "sh:IRI",
+                    NodeKind = "sh:IRI",
                     MinimumCount = 1,
                     MaximumCount = 1
                 },
@@ -81,8 +81,11 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         [JsonProperty("sh:path")]
         public string PropertyPath { get; set; }
 
-        [JsonProperty("sh:datatype")]
-        public string DataType { get; set; }
+        [JsonProperty("sh:datatype", NullValueHandling = NullValueHandling.Ignore)]
+        public string? DataType { get; set; }
+        
+        [JsonProperty("sh:nodeKind", NullValueHandling = NullValueHandling.Ignore)]
+        public string? NodeKind { get; set; }
 
         [JsonProperty(PropertyName = "sh:minCount", NullValueHandling = NullValueHandling.Ignore)]
         public int? MinimumCount { get; set; }
