@@ -15,7 +15,7 @@ namespace PostalRegistry.PostalInformation.Events
         [EventPropertyDescription("Officiële spelling van de postnaam.")]
         public string Name { get; }
 
-        [EventPropertyDescription("Taal (voluit, EN) waarin de officiële naam staat.")]
+        [EventPropertyDescription("Taal waarin de officiële naam staat. Mogelijkheden: Dutch, French of German.")]
         public Language Language { get; }
 
         [EventPropertyDescription("Metadata bij het event.")]
