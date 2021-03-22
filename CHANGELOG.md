@@ -1,3 +1,10 @@
+## [2.16.1](https://github.com/informatievlaanderen/postal-registry/compare/v2.16.0...v2.16.1) (2021-03-22)
+
+
+### Bug Fixes
+
+* remove ridingwolf, collaboration ended ([ae54ab0](https://github.com/informatievlaanderen/postal-registry/commit/ae54ab034ca5470501faa033dc6a83534f8a1690))
+
 # [2.16.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.15.4...v2.16.0) (2021-03-11)
 
 
