@@ -1,3 +1,15 @@
+# [2.17.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.16.1...v2.17.0) (2021-03-31)
+
+
+### Bug Fixes
+
+* update docs projections ([786ad79](https://github.com/informatievlaanderen/postal-registry/commit/786ad79d0f01af7600e29a1bbd5e22f6c119d9c1))
+
+
+### Features
+
+* bump projector & projection handling ([f744edf](https://github.com/informatievlaanderen/postal-registry/commit/f744edfe8217697bcaad2de883b36468db544896))
+
 ## [2.16.1](https://github.com/informatievlaanderen/postal-registry/compare/v2.16.0...v2.16.1) (2021-03-22)
 
 
