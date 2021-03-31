@@ -8,8 +8,8 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
     using PostalRegistry.PostalInformation.Events.BPost;
     using PostalRegistry.PostalInformation.Events.Crab;
 
-    [ConnectedProjectionName("Legacy - PostalInformationSyndication")]
-    [ConnectedProjectionDescription("Postinfo data voor de feed.")]
+    [ConnectedProjectionName("Feed endpoint postinfo")]
+    [ConnectedProjectionDescription("Projectie die de postinfo data voor de postinfo feed voorziet.")]
     public class PostalInformationSyndicationProjections : ConnectedProjection<LegacyContext>
     {
         public PostalInformationSyndicationProjections()
