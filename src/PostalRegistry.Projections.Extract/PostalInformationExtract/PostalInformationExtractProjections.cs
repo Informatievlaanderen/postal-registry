@@ -12,8 +12,8 @@ namespace PostalRegistry.Projections.Extract.PostalInformationExtract
     using PostalInformation.Events.BPost;
     using PostalInformation.Events.Crab;
 
-    [ConnectedProjectionName("Extract - PostalInformationExtract")]
-    [ConnectedProjectionDescription("Postinfo data voor testbestand.")]
+    [ConnectedProjectionName("Extract postinfo")]
+    [ConnectedProjectionDescription("Projectie die de postinfo data voor het postinfo extract voorziet.")]
     public class PostalInformationExtractProjections : ConnectedProjection<ExtractContext>
     {
         // TODO: Probably need to get these from enums from config

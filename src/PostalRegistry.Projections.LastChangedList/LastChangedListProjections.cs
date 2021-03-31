@@ -7,8 +7,8 @@ namespace PostalRegistry.Projections.LastChangedList
     using PostalInformation.Events.BPost;
     using PostalInformation.Events.Crab;
 
-    [ConnectedProjectionName("LastChangedList")]
-    [ConnectedProjectionDescription("Markeert de postinfo waarvan de cached data moet geupdate worden.")]
+    [ConnectedProjectionName("Cache markering postinfo")]
+    [ConnectedProjectionDescription("Projectie die markeert voor hoeveel postinfo de gecachte data nog geüpdated moeten worden.")]
     public class LastChangedListProjections : LastChangedListConnectedProjection
     {
         protected override string CacheKeyFormat => "legacy/postalinfo:{0}.{1}";
