@@ -10,8 +10,8 @@ namespace PostalRegistry.Projections.Legacy.PostalInformation
     using PostalRegistry.PostalInformation.Events.BPost;
     using PostalRegistry.PostalInformation.Events.Crab;
 
-    [ConnectedProjectionName("API endpoint detail postinfo")]
-    [ConnectedProjectionDescription("Projectie die de postinfo data voor het postinfo detail voorziet.")]
+    [ConnectedProjectionName("API endpoint detail/lijst postinfo")]
+    [ConnectedProjectionDescription("Projectie die de postinfo data voor het postinfo detail & lijst voorziet.")]
     public class PostalInformationProjections : ConnectedProjection<LegacyContext>
     {
         public PostalInformationProjections()
