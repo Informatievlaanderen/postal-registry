@@ -1,3 +1,10 @@
+## [2.17.1](https://github.com/informatievlaanderen/postal-registry/compare/v2.17.0...v2.17.1) (2021-04-01)
+
+
+### Bug Fixes
+
+* update projections docs ([9ac0dc5](https://github.com/informatievlaanderen/postal-registry/commit/9ac0dc5a933717850222fb4d6cef1479cfa72947))
+
 # [2.17.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.16.1...v2.17.0) (2021-03-31)
 
 
