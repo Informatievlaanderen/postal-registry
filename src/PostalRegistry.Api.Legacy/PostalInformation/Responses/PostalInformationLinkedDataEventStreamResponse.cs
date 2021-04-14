@@ -12,6 +12,8 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
     using System.Linq;
     using System.Runtime.Serialization;
     using System.Threading.Tasks;
+    using Infrastructure.Options;
+    using Microsoft.Extensions.Options;
 
     [DataContract(Name = "PostinfoLinkedDataEventStream", Namespace = "")]
     public class PostalInformationLinkedDataEventStreamResponse
@@ -48,6 +50,9 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
     [DataContract(Name = "PostinfoVersieObject", Namespace = "")]
     public class PostalInformationVersionObject
     {
+        private readonly string _apiEndPoint;
+        private readonly string _dataVlaanderenNamespace;
+
         [DataMember(Name = "@id", Order = 1)]
         [JsonProperty(Required = Required.Always)]
         public Uri Id { get; set; }
@@ -80,11 +85,9 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         [JsonProperty(Required = Required.AllowNull, NullValueHandling = NullValueHandling.Ignore)]
         public Uri Status { get; set; }
 
-        [IgnoreDataMember]
-        public LinkedDataEventStreamConfiguration Configuration { get; set; }
-
         public PostalInformationVersionObject(
-            LinkedDataEventStreamConfiguration configuration,
+            string apiEndPoint,
+            string dataVlaanderenNamespace,
             string objectIdentifier,
             string changeType,
             Instant generatedAtTime,
@@ -92,7 +95,8 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
             IEnumerable<PostalName>? postalNames,
             PostalInformationStatus? status)
         {
-            Configuration = configuration;
+            _apiEndPoint = apiEndPoint;
+            _dataVlaanderenNamespace = dataVlaanderenNamespace;
             ChangeType = changeType;
             PostalCode = postalCode;
             GeneratedAtTime = generatedAtTime.ToBelgianDateTimeOffset();
@@ -103,9 +107,9 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
             Status = GetStatusUri(status);
         }
 
-        private Uri CreateVersionUri(string identifier) => new Uri($"{Configuration.ApiEndpoint}#{identifier}");
+        private Uri CreateVersionUri(string identifier) => new Uri($"{_apiEndPoint}#{identifier}");
 
-        private Uri GetPersistentUri(string id) => new Uri($"{Configuration.DataVlaanderenNamespace}/{id}");
+        private Uri GetPersistentUri(string id) => new Uri($"{_dataVlaanderenNamespace}/{id}");
 
         private List<LanguageValue> TransformPostalNames(IEnumerable<PostalName> postalNames)
         {
@@ -115,21 +119,19 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
             return postalNames.Select(postalname => new LanguageValue { Value = postalname.Name, Language = GetLanguageIdentifier(postalname.Language) }).ToList();
         }
 
-        private Uri? GetStatusUri(PostalInformationStatus? status)
+        private Uri GetStatusUri(PostalInformationStatus? status)
         {
-            Uri statusUri = null;
             switch (status)
             {
                 case PostalInformationStatus.Current:
-                    statusUri = new Uri("https://data.vlaanderen.be/id/concept/binairestatus/gerealiseerd");
-                    break;
+                    return new Uri("https://data.vlaanderen.be/id/concept/binairestatus/gerealiseerd");
 
                 case PostalInformationStatus.Retired:
-                    statusUri = new Uri("https://data.vlaanderen.be/id/concept/binairestatus/gehistoreerd");
-                    break;
-            }
+                    return new Uri("https://data.vlaanderen.be/id/concept/binairestatus/gehistoreerd");
 
-            return statusUri;
+                default:
+                    return null;
+            }
         }
 
         private static string GetLanguageIdentifier(Language language)
@@ -165,8 +167,16 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 
     public class PostalInformationLinkedDataEventStreamResponseExamples : IExamplesProvider<PostalInformationLinkedDataEventStreamResponse>
     {
-        private readonly LinkedDataEventStreamConfiguration _configuration;
-        public PostalInformationLinkedDataEventStreamResponseExamples(LinkedDataEventStreamConfiguration configuration) => _configuration = configuration;
+        private readonly string _apiEndPoint;
+        private readonly string _dataVlaanderenNamespace;
+
+        public PostalInformationLinkedDataEventStreamResponseExamples(
+            IOptions<LinkedDataEventStreamOptions> linkedDataOptions,
+            IOptions<ResponseOptions> responseOptions)
+        {
+            _apiEndPoint = linkedDataOptions.Value.ApiEndpoint;
+            _dataVlaanderenNamespace = responseOptions.Value.Naamruimte;
+        }
 
         public PostalInformationLinkedDataEventStreamResponse GetExamples()
         {
@@ -179,7 +189,8 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
             var versionObjects = new List<PostalInformationVersionObject>()
             {
                 new PostalInformationVersionObject(
-                    _configuration,
+                    _apiEndPoint,
+                    _dataVlaanderenNamespace,
                     "42C1E3C14343FF85314CDB75759978C6",
                     "PostalInformationPostalNameWasAdded",
                     generatedAtTime,

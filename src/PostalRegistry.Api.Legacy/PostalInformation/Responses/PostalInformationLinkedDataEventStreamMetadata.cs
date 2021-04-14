@@ -8,21 +8,22 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Infrastructure.Options;
 
     public class PostalInformationLinkedDataEventStreamMetadata
     {
-        public static Uri GetPageIdentifier(LinkedDataEventStreamConfiguration configuration, int page)
+        public static Uri GetPageIdentifier(LinkedDataEventStreamOptions configuration, int page)
             => new Uri($"{configuration.ApiEndpoint}?page={page}");
 
-        public static Uri GetCollectionLink(LinkedDataEventStreamConfiguration configuration)
+        public static Uri GetCollectionLink(LinkedDataEventStreamOptions configuration)
             => new Uri($"{configuration.ApiEndpoint}");
 
-        public static Uri GetShapeUri(LinkedDataEventStreamConfiguration configuration)
+        public static Uri GetShapeUri(LinkedDataEventStreamOptions configuration)
             => new Uri($"{configuration.ApiEndpoint}/shape");
 
         public static List<HypermediaControl>? GetHypermediaControls(
             List<PostalInformationVersionObject> items,
-            LinkedDataEventStreamConfiguration configuration,
+            LinkedDataEventStreamOptions configuration,
             int page,
             int pageSize)
         {
@@ -41,7 +42,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 
         private static HypermediaControl? AddPrevious(
             List<PostalInformationVersionObject> items,
-            LinkedDataEventStreamConfiguration configuration,
+            LinkedDataEventStreamOptions configuration,
             int page)
         {
             if (page <= 1)
@@ -58,7 +59,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 
         private static HypermediaControl? AddNext(
             List<PostalInformationVersionObject> items,
-            LinkedDataEventStreamConfiguration configuration,
+            LinkedDataEventStreamOptions configuration,
             int page,
             int pageSize)
         {

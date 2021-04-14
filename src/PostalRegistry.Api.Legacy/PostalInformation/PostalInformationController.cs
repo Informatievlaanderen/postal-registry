@@ -230,8 +230,8 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
         /// <summary>
         /// Vraag een lijst met wijzigingen van postinfo op, semantisch geannoteerd (Linked Data Event Streams).
         /// </summary>
-        /// <param name="configuration"></param>
         /// <param name="context"></param>
+        /// <param name="linkedDataEventStreamOptions"></param>
         /// <param name="responseOptions"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
@@ -242,8 +242,8 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
         [SwaggerResponseExample(StatusCodes.Status200OK, typeof(PostalInformationLinkedDataEventStreamResponseExamples))]
         [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(InternalServerErrorResponseExamples))]
         public async Task<IActionResult> LinkedDataEventStream(
-            [FromServices] LinkedDataEventStreamConfiguration configuration,
             [FromServices] LegacyContext context,
+            [FromServices] IOptions<LinkedDataEventStreamOptions> linkedDataEventStreamOptions,
             [FromServices] IOptions<ResponseOptions> responseOptions,
             CancellationToken cancellationToken = default)
         {
@@ -251,9 +251,9 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
             var sorting = Request.ExtractSortingRequest();
             var pagination = Request.ExtractPaginationRequest();
 
-            var xPaginationHeader = Request.Headers["x-pagination"].ToString().Split(",");
-            var offset = Int32.Parse(xPaginationHeader[0]);
-            var pageSize = Int32.Parse(xPaginationHeader[1]);
+            var paginationHeader = Request.Headers["x-pagination"].ToString().Split(",");
+            var offset = Int32.Parse(paginationHeader[0]);
+            var pageSize = Int32.Parse(paginationHeader[1]);
             var page = (offset / pageSize) + 1;
 
             var pagedPostalInformationSet =
@@ -263,7 +263,8 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
             var pagedPostalInformationVersionObjects = pagedPostalInformationSet
                 .Items
                 .Select(p => new PostalInformationVersionObject(
-                    configuration,
+                    linkedDataEventStreamOptions.Value.ApiEndpoint,
+                    responseOptions.Value.Naamruimte,
                     p.ObjectIdentifier,
                     p.ChangeType,
                     p.EventGeneratedAtTime,
@@ -275,10 +276,10 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
             return Ok(new PostalInformationLinkedDataEventStreamResponse
             {
                 Context = new PostalInformationLinkedDataContext(),
-                Id = PostalInformationLinkedDataEventStreamMetadata.GetPageIdentifier(configuration, page),
-                CollectionLink = PostalInformationLinkedDataEventStreamMetadata.GetCollectionLink(configuration),
-                PostalInformationShape = PostalInformationLinkedDataEventStreamMetadata.GetShapeUri(configuration),
-                HypermediaControls = PostalInformationLinkedDataEventStreamMetadata.GetHypermediaControls(pagedPostalInformationVersionObjects, configuration, page, pageSize),
+                Id = PostalInformationLinkedDataEventStreamMetadata.GetPageIdentifier(linkedDataEventStreamOptions.Value, page),
+                CollectionLink = PostalInformationLinkedDataEventStreamMetadata.GetCollectionLink(linkedDataEventStreamOptions.Value),
+                PostalInformationShape = PostalInformationLinkedDataEventStreamMetadata.GetShapeUri(linkedDataEventStreamOptions.Value),
+                HypermediaControls = PostalInformationLinkedDataEventStreamMetadata.GetHypermediaControls(pagedPostalInformationVersionObjects, linkedDataEventStreamOptions.Value, page, pageSize),
                 Items = pagedPostalInformationVersionObjects
             });
         }
@@ -298,7 +299,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
         [SwaggerResponseExample(StatusCodes.Status200OK, typeof(PostalInformationShaclShapeResponseExamples))]
         [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(InternalServerErrorResponseExamples))]
         public async Task<IActionResult> Shape(
-            [FromServices] LinkedDataEventStreamConfiguration configuration,
+            [FromServices] LinkedDataEventStreamOptions configuration,
             [FromServices] LegacyContext context,
             [FromServices] IOptions<ResponseOptions> responseOptions,
             CancellationToken cancellationToken = default)

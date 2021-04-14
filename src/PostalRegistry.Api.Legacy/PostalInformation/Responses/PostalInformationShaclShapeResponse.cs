@@ -9,6 +9,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
     using System.Linq;
     using System.Runtime.Serialization;
     using System.Threading.Tasks;
+    using Infrastructure.Options;
 
     [DataContract(Name = "PostalInformationShaclShape", Namespace = "")]
     public class PostalInformationShaclShapeReponse
@@ -96,9 +97,9 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 
     public class PostalInformationShaclShapeResponseExamples : IExamplesProvider<PostalInformationShaclShapeReponse>
     {
-        private readonly LinkedDataEventStreamConfiguration _configuration;
+        private readonly LinkedDataEventStreamOptions _configuration;
         
-        public PostalInformationShaclShapeResponseExamples(LinkedDataEventStreamConfiguration configuration) 
+        public PostalInformationShaclShapeResponseExamples(LinkedDataEventStreamOptions configuration) 
             => _configuration = configuration;
 
         public PostalInformationShaclShapeReponse GetExamples()
