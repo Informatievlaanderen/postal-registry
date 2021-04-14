@@ -1,17 +1,13 @@
 namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 {
     using Be.Vlaanderen.Basisregisters.GrAr.Common;
-    using Microsoft.Extensions.Configuration;
     using Newtonsoft.Json;
     using NodaTime;
-    using NodaTime.Text;
-    using PostalRegistry.Api.Legacy.Infrastructure;
     using Swashbuckle.AspNetCore.Filters;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.Serialization;
-    using System.Threading.Tasks;
     using Infrastructure.Options;
     using Microsoft.Extensions.Options;
 
@@ -45,12 +41,84 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         [DataMember(Name = "items", Order = 7)]
         [JsonProperty(Required = Required.Always)]
         public List<PostalInformationVersionObject> Items { get; set; }
+
+        public PostalInformationLinkedDataEventStreamResponse(
+            string apiEndpoint,
+            int page,
+            int pageSize,
+            List<PostalInformationVersionObject> pagedPostalInformationVersionObjects)
+        {
+            Context = new PostalInformationLinkedDataContext();
+            Id = new Uri($"{apiEndpoint}?page={page}");
+            CollectionLink = new Uri($"{apiEndpoint}");
+            PostalInformationShape = new Uri($"{apiEndpoint}/shape");
+            HypermediaControls = GetHypermediaControls(
+                apiEndpoint,
+                page,
+                pageSize,
+                pagedPostalInformationVersionObjects);
+            Items = pagedPostalInformationVersionObjects;
+        }
+
+        private static List<HypermediaControl> GetHypermediaControls(
+            string apiEndpoint,
+            int page,
+            int pageSize,
+            List<PostalInformationVersionObject> items)
+        {
+            var controls = new List<HypermediaControl>();
+
+            var previous = AddPrevious(apiEndpoint, page, items);
+            if (previous != null)
+                controls.Add(previous);
+
+            var next = AddNext(apiEndpoint, page, pageSize, items);
+            if (next != null)
+                controls.Add(next);
+
+            return controls.Count > 0 ? controls : null;
+        }
+
+        private static HypermediaControl AddPrevious(
+            string apiEndpoint,
+            int page,
+            List<PostalInformationVersionObject> items)
+        {
+            if (page <= 1)
+                return null;
+
+            var previousUrl = new Uri($"{apiEndpoint}?page={page - 1}");
+
+            return new HypermediaControl
+            {
+                Type = "tree:Relation",
+                Node = previousUrl
+            };
+        }
+
+        private static HypermediaControl AddNext(
+            string apiEndpoint,
+            int page,
+            int pageSize,
+            List<PostalInformationVersionObject> items)
+        {
+            if (items.Count != pageSize)
+                return null;
+
+            var nextUrl = new Uri($"{apiEndpoint}?page={page + 1}");
+
+            return new HypermediaControl
+            {
+                Type = "tree:Relation",
+                Node = nextUrl
+            };
+        }
     }
 
     [DataContract(Name = "PostinfoVersieObject", Namespace = "")]
     public class PostalInformationVersionObject
     {
-        private readonly string _apiEndPoint;
+        private readonly string _apiEndpoint;
         private readonly string _dataVlaanderenNamespace;
 
         [DataMember(Name = "@id", Order = 1)]
@@ -86,7 +154,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         public Uri Status { get; set; }
 
         public PostalInformationVersionObject(
-            string apiEndPoint,
+            string apiEndpoint,
             string dataVlaanderenNamespace,
             string objectIdentifier,
             string changeType,
@@ -95,7 +163,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
             IEnumerable<PostalName>? postalNames,
             PostalInformationStatus? status)
         {
-            _apiEndPoint = apiEndPoint;
+            _apiEndpoint = apiEndpoint;
             _dataVlaanderenNamespace = dataVlaanderenNamespace;
             ChangeType = changeType;
             PostalCode = postalCode;
@@ -107,7 +175,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
             Status = GetStatusUri(status);
         }
 
-        private Uri CreateVersionUri(string identifier) => new Uri($"{_apiEndPoint}#{identifier}");
+        private Uri CreateVersionUri(string identifier) => new Uri($"{_apiEndpoint}#{identifier}");
 
         private Uri GetPersistentUri(string id) => new Uri($"{_dataVlaanderenNamespace}/{id}");
 
@@ -165,16 +233,25 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         public string Language { get; set; }
     }
 
+    public class HypermediaControl
+    {
+        [JsonProperty("@type")]
+        public string Type { get; set; }
+
+        [JsonProperty("tree:node")]
+        public Uri Node { get; set; }
+    }
+
     public class PostalInformationLinkedDataEventStreamResponseExamples : IExamplesProvider<PostalInformationLinkedDataEventStreamResponse>
     {
-        private readonly string _apiEndPoint;
+        private readonly string _apiEndpoint;
         private readonly string _dataVlaanderenNamespace;
 
         public PostalInformationLinkedDataEventStreamResponseExamples(
             IOptions<LinkedDataEventStreamOptions> linkedDataOptions,
             IOptions<ResponseOptions> responseOptions)
         {
-            _apiEndPoint = linkedDataOptions.Value.ApiEndpoint;
+            _apiEndpoint = linkedDataOptions.Value.ApiEndpoint;
             _dataVlaanderenNamespace = responseOptions.Value.Naamruimte;
         }
 
@@ -189,7 +266,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
             var versionObjects = new List<PostalInformationVersionObject>()
             {
                 new PostalInformationVersionObject(
-                    _apiEndPoint,
+                    _apiEndpoint,
                     _dataVlaanderenNamespace,
                     "42C1E3C14343FF85314CDB75759978C6",
                     "PostalInformationPostalNameWasAdded",
@@ -207,14 +284,13 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
                 }
             };
 
-            return new PostalInformationLinkedDataEventStreamResponse
+            return new PostalInformationLinkedDataEventStreamResponse(
+                _apiEndpoint,
+                1,
+                100,
+                versionObjects)
             {
-                Context = new PostalInformationLinkedDataContext(),
-                Id = new Uri("https://data.vlaanderen.be/base/postinfo?page=1"),
-                CollectionLink = new Uri("https://data.vlaanderen/base/postinfo"),
                 HypermediaControls = hypermediaControls,
-                PostalInformationShape = new Uri("https://data.vlaanderen.be/base/postinfo/shape"),
-                Items = versionObjects
             };
         }
     }

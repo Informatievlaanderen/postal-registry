@@ -249,13 +249,9 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
         {
             var filtering = Request.ExtractFilteringRequest<PostalInformationLinkedDataEventStreamFilter>();
             var sorting = Request.ExtractSortingRequest();
-            var pagination = Request.ExtractPaginationRequest();
+            var pagination = (PaginationRequest)Request.ExtractPaginationRequest();
 
-            var paginationHeader = Request.Headers["x-pagination"].ToString().Split(",");
-            var offset = Int32.Parse(paginationHeader[0]);
-            var pageSize = Int32.Parse(paginationHeader[1]);
-            var page = (offset / pageSize) + 1;
-
+            var page = (pagination.Offset / pagination.Limit) + 1;
             var pagedPostalInformationSet =
                  new PostalInformationLinkedDataEventStreamQuery(context)
                     .Fetch(filtering, sorting, pagination);
@@ -274,14 +270,12 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
                 .ToList();
 
             return Ok(new PostalInformationLinkedDataEventStreamResponse
-            {
-                Context = new PostalInformationLinkedDataContext(),
-                Id = PostalInformationLinkedDataEventStreamMetadata.GetPageIdentifier(linkedDataEventStreamOptions.Value, page),
-                CollectionLink = PostalInformationLinkedDataEventStreamMetadata.GetCollectionLink(linkedDataEventStreamOptions.Value),
-                PostalInformationShape = PostalInformationLinkedDataEventStreamMetadata.GetShapeUri(linkedDataEventStreamOptions.Value),
-                HypermediaControls = PostalInformationLinkedDataEventStreamMetadata.GetHypermediaControls(pagedPostalInformationVersionObjects, linkedDataEventStreamOptions.Value, page, pageSize),
-                Items = pagedPostalInformationVersionObjects
-            });
+            (
+                linkedDataEventStreamOptions.Value.ApiEndpoint,
+                page,
+                pagination.Limit,
+                pagedPostalInformationVersionObjects
+            ));
         }
 
         /// <summary>
