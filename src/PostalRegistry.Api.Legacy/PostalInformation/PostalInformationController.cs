@@ -281,9 +281,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
         /// <summary>
         /// Vraag de SHACL shape van postinfo op.
         /// </summary>
-        /// <param name="configuration"></param>
-        /// <param name="context"></param>
-        /// <param name="responseOptions"></param>
+        /// <param name="linkedDataEventStreamOptions"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet("linked-data-event-stream/shape")]
@@ -293,15 +291,10 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
         [SwaggerResponseExample(StatusCodes.Status200OK, typeof(PostalInformationShaclShapeResponseExamples))]
         [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(InternalServerErrorResponseExamples))]
         public async Task<IActionResult> Shape(
-            [FromServices] LinkedDataEventStreamOptions configuration,
-            [FromServices] LegacyContext context,
-            [FromServices] IOptions<ResponseOptions> responseOptions,
+            [FromServices] IOptions<LinkedDataEventStreamOptions> linkedDataEventStreamOptions,
             CancellationToken cancellationToken = default)
         {
-            return Ok(new PostalInformationShaclShapeReponse
-            {
-                Id = new Uri($"{configuration.ApiEndpoint}/shape")
-            });
+            return Ok(new PostalInformationShaclShapeReponse(linkedDataEventStreamOptions.Value.ApiEndpoint));
         }
 
         private static async Task<string> BuildAtomFeed(

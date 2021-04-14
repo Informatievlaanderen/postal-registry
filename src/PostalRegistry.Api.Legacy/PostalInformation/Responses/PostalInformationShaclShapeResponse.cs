@@ -1,15 +1,12 @@
 namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 {
-    using Microsoft.Extensions.Configuration;
     using Newtonsoft.Json;
-    using PostalRegistry.Api.Legacy.Infrastructure;
     using Swashbuckle.AspNetCore.Filters;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Runtime.Serialization;
-    using System.Threading.Tasks;
     using Infrastructure.Options;
+    using Microsoft.Extensions.Options;
 
     [DataContract(Name = "PostalInformationShaclShape", Namespace = "")]
     public class PostalInformationShaclShapeReponse
@@ -29,12 +26,17 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         [DataMember(Name = "sh:property", Order = 4)]
         [JsonProperty(Required = Required.Always)]
         public readonly List<PostalInformationShaclProperty> Shape = PostalInformationShaclShape.GetShape();
+
+        public PostalInformationShaclShapeReponse(string apiEndpoint)
+        {
+            Id = new Uri($"{apiEndpoint}/shape");
+        }
     }
 
     public class PostalInformationShaclShape
     {
         public static List<PostalInformationShaclProperty> GetShape()
-            =>  new List<PostalInformationShaclProperty>()
+            =>  new List<PostalInformationShaclProperty>
             {
                 new PostalInformationShaclProperty
                 {
@@ -97,15 +99,12 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 
     public class PostalInformationShaclShapeResponseExamples : IExamplesProvider<PostalInformationShaclShapeReponse>
     {
-        private readonly LinkedDataEventStreamOptions _configuration;
+        private readonly LinkedDataEventStreamOptions _linkedDataEventStreamOptions;
         
-        public PostalInformationShaclShapeResponseExamples(LinkedDataEventStreamOptions configuration) 
-            => _configuration = configuration;
+        public PostalInformationShaclShapeResponseExamples(IOptions<LinkedDataEventStreamOptions> linkedDataEventStreamOptions)
+            => _linkedDataEventStreamOptions = linkedDataEventStreamOptions.Value;
 
         public PostalInformationShaclShapeReponse GetExamples()
-            => new PostalInformationShaclShapeReponse
-            {
-                Id = new Uri($"{_configuration.ApiEndpoint}/shape")
-            };       
+            => new PostalInformationShaclShapeReponse(_linkedDataEventStreamOptions.ApiEndpoint);
     }
 }
