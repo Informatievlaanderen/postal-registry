@@ -7,12 +7,10 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
     using NodaTime;
     using PostalRegistry.Projections.Legacy;
     using PostalRegistry.Projections.Legacy.PostalInformationLinkedDataEventStream;
-    using PostalRegistry.Projections.Legacy.PostalInformationSyndication;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
-    using System.Threading.Tasks;
 
     public class PostalInformationLinkedDataEventStreamQueryResult
     {
@@ -20,7 +18,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
         public string ChangeType { get; }
         public Instant EventGeneratedAtTime { get; }
         public PostalInformationStatus? Status { get; }
-        public IEnumerable<PostalName>? PostalNames { get; }
+        public IEnumerable<PostalName> PostalNames { get; }
         public string ObjectIdentifier { get; }
 
         public PostalInformationLinkedDataEventStreamQueryResult(
@@ -29,7 +27,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
             string changeType,
             Instant eventGeneratedAtTime,
             PostalInformationStatus? status,
-            IEnumerable<PostalName>? postalNames)
+            IEnumerable<PostalName> postalNames)
         {
             PostalCode = postalCode;
             ObjectIdentifier = objectIdentifier;
@@ -77,8 +75,5 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
         public SortingHeader DefaultSortingHeader { get; } = new SortingHeader(nameof(PostalInformationLinkedDataEventStreamItem.Position), SortOrder.Ascending);
     }
 
-    public class PostalInformationLinkedDataEventStreamFilter
-    {
-        public int PageNumber { get; set; }
-    }
+    public class PostalInformationLinkedDataEventStreamFilter { }
 }

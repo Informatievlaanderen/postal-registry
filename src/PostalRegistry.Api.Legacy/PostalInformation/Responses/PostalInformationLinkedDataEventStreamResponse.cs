@@ -68,7 +68,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         {
             var controls = new List<HypermediaControl>();
 
-            var previous = AddPrevious(apiEndpoint, page, items);
+            var previous = AddPrevious(apiEndpoint, page);
             if (previous != null)
                 controls.Add(previous);
 
@@ -81,8 +81,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 
         private static HypermediaControl AddPrevious(
             string apiEndpoint,
-            int page,
-            List<PostalInformationVersionObject> items)
+            int page)
         {
             if (page <= 1)
                 return null;
@@ -147,7 +146,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 
         [DataMember(Name = "postnaam", Order = 7)]
         [JsonProperty(Required = Required.AllowNull, NullValueHandling = NullValueHandling.Ignore)]
-        public List<LanguageValue>? PostalNames { get; set; }
+        public List<LanguageValue> PostalNames { get; set; }
 
         [DataMember(Name = "status", Order = 7)]
         [JsonProperty(Required = Required.AllowNull, NullValueHandling = NullValueHandling.Ignore)]
@@ -160,7 +159,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
             string changeType,
             Instant generatedAtTime,
             string postalCode,
-            IEnumerable<PostalName>? postalNames,
+            IEnumerable<PostalName> postalNames,
             PostalInformationStatus? status)
         {
             _apiEndpoint = apiEndpoint;
@@ -179,15 +178,18 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 
         private Uri GetPersistentUri(string id) => new Uri($"{_dataVlaanderenNamespace}/{id}");
 
-        private List<LanguageValue> TransformPostalNames(IEnumerable<PostalName> postalNames)
+        private static List<LanguageValue> TransformPostalNames(IEnumerable<PostalName> postalNames)
         {
-            if (postalNames.ToList().Count == 0)
-                return null;
-
-            return postalNames.Select(postalname => new LanguageValue { Value = postalname.Name, Language = GetLanguageIdentifier(postalname.Language) }).ToList();
+            return postalNames
+                .Select(postalname =>
+                    new LanguageValue
+                    {
+                        Value = postalname.Name,
+                        Language = GetLanguageIdentifier(postalname.Language)
+                    }).ToList();
         }
 
-        private Uri GetStatusUri(PostalInformationStatus? status)
+        private static Uri GetStatusUri(PostalInformationStatus? status)
         {
             switch (status)
             {
