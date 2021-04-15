@@ -33,10 +33,22 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         public readonly Uri BaseRegistryImplementationModelUri = new Uri("https://basisregisters.vlaanderen.be/ns/adres#");
 
         [DataMember(Name = "items")]
-        public readonly string ItemsDefinitionUri = "tree:member";
+        public readonly string ItemsDefinitionUri = "@included";
+
+        [DataMember(Name = "shacl")]
+        public readonly string ShaclDefinitionUri = "@included";
 
         [DataMember(Name = "viewOf")]
-        public readonly TreeCollectionContext ViewOf = new TreeCollectionContext();
+        public readonly TreeReverseRelationContext ViewOf = new TreeReverseRelationContext
+        {
+            ReverseRelation = "tree:view"
+        };
+
+        [DataMember(Name = "memberOf")]
+        public readonly TreeReverseRelationContext MemberOf = new TreeReverseRelationContext
+        {
+            ReverseRelation = "tree:member"
+        };
 
         [DataMember(Name = "generatedAtTime")]
         public readonly ProvenanceContext Provenance = new ProvenanceContext();
@@ -51,7 +63,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         [DataMember(Name = "postcode")]
         public readonly string PostalCodeUri = "adres:postcode";
 
-        [DataMember(Name = "postnamen")]
+        [DataMember(Name = "postnaam")]
         public readonly string PostalNamesUri = "adres:postnaam";
 
         [DataMember(Name = "isVersionOf")]
@@ -67,10 +79,10 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         public readonly PropertyOverride TreeShape = new PropertyOverride();
     }
 
-    public class TreeCollectionContext
+    public class TreeReverseRelationContext
     {
         [JsonProperty("@reverse")]
-        public readonly string ReverseRelation = "tree:view";
+        public string ReverseRelation;
 
         [JsonProperty("@type")]
         public readonly string Type = "@id";

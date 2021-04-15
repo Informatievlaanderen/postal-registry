@@ -28,11 +28,11 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 
         [DataMember(Name = "viewOf", Order = 4)]
         [JsonProperty(Required = Required.Always)]
-        public Uri CollectionLink { get; set; }
+        public CollectionReference CollectionReference { get; set; }
 
-        [DataMember(Name = "tree:shape", Order = 5)]
+        [DataMember(Name = "shacl", Order = 5)]
         [JsonProperty(Required = Required.Always)]
-        public Uri PostalInformationShape { get; set; }
+        public CollectionShape PostalInformationShape { get; set; }
 
         [DataMember(Name = "tree:relation", Order = 6)]
         [JsonProperty(Required = Required.AllowNull, NullValueHandling = NullValueHandling.Ignore)]
@@ -50,8 +50,15 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         {
             Context = new PostalInformationLinkedDataContext();
             Id = new Uri($"{apiEndpoint}?page={page}");
-            CollectionLink = new Uri($"{apiEndpoint}");
-            PostalInformationShape = new Uri($"{apiEndpoint}/shape");
+            CollectionReference = new CollectionReference
+            {
+                CollectionUri = new Uri($"{apiEndpoint}")
+            };
+            PostalInformationShape = new CollectionShape
+            {
+                CollectionUri = new Uri($"{apiEndpoint}"),
+                CollectionShapeUri = new Uri($"{apiEndpoint}/shape")
+            };
             HypermediaControls = GetHypermediaControls(
                 apiEndpoint,
                 page,
@@ -140,15 +147,19 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         [JsonProperty(Required = Required.Always)]
         public string ChangeType { get; set; }
 
-        [DataMember(Name = "postcode", Order = 6)]
+        [DataMember(Name = "memberOf", Order = 6)]
+        [JsonProperty(Required = Required.Always)]
+        public Uri IsMemberOf { get; set; }
+
+        [DataMember(Name = "postcode", Order = 7)]
         [JsonProperty(Required = Required.Always)]
         public string PostalCode { get; set; }
 
-        [DataMember(Name = "postnaam", Order = 7)]
+        [DataMember(Name = "postnaam", Order = 8)]
         [JsonProperty(Required = Required.AllowNull, NullValueHandling = NullValueHandling.Ignore)]
-        public List<LanguageValue> PostalNames { get; set; }
+        public List<LanguageValue>? PostalNames { get; set; }
 
-        [DataMember(Name = "status", Order = 7)]
+        [DataMember(Name = "status", Order = 9)]
         [JsonProperty(Required = Required.AllowNull, NullValueHandling = NullValueHandling.Ignore)]
         public Uri Status { get; set; }
 
@@ -172,14 +183,20 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
             IsVersionOf = GetPersistentUri(PostalCode);
             PostalNames = TransformPostalNames(postalNames);
             Status = GetStatusUri(status);
+            IsMemberOf = GetCollectionUri();
         }
 
         private Uri CreateVersionUri(string identifier) => new Uri($"{_apiEndpoint}#{identifier}");
 
+        private Uri GetCollectionUri() => new Uri($"{_apiEndpoint}");
+
         private Uri GetPersistentUri(string id) => new Uri($"{_dataVlaanderenNamespace}/{id}");
 
-        private static List<LanguageValue> TransformPostalNames(IEnumerable<PostalName> postalNames)
+        private static List<LanguageValue>? TransformPostalNames(IEnumerable<PostalName> postalNames)
         {
+            if (postalNames.Count() == 0)
+                return null;
+
             return postalNames
                 .Select(postalname =>
                     new LanguageValue
@@ -242,6 +259,24 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 
         [JsonProperty("tree:node")]
         public Uri Node { get; set; }
+    }
+
+    public class CollectionShape
+    {
+        [JsonProperty("@id")]
+        public Uri CollectionUri { get; set; }
+
+        [JsonProperty("tree:shape")]
+        public Uri CollectionShapeUri { get; set; }
+    }
+
+    public class CollectionReference
+    {
+        [JsonProperty("@id")]
+        public Uri CollectionUri { get; set; }
+
+        [JsonProperty("@type")]
+        public readonly string Type = "tree:Collection";    //TODO: change to ldes:EventStream once URI is available
     }
 
     public class PostalInformationLinkedDataEventStreamResponseExamples : IExamplesProvider<PostalInformationLinkedDataEventStreamResponse>
