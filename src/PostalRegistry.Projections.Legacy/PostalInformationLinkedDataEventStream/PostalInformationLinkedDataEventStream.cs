@@ -5,12 +5,11 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationLinkedDataEventStre
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
     using Newtonsoft.Json;
     using NodaTime;
-    using PostalRegistry.Infrastructure;
+    using Infrastructure;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
+    using System.Security.Cryptography;
     using System.Text;
-    using System.Threading.Tasks;
 
     public class PostalInformationLinkedDataEventStreamItem
     {
@@ -33,7 +32,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationLinkedDataEventStre
             set => EventGeneratedAtTimeAsDatetimeOffset = value.ToDateTimeOffset();
         }
 
-        public string ObjectHash { get; set; }
+        public string ObjectHash { get; private set; }
 
         public PostalInformationLinkedDataEventStreamItem CloneAndApplyEventInfo(
             long newPosition,
@@ -56,8 +55,19 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationLinkedDataEventStre
             };
 
             editFunc(newItem);
+            newItem.SetObjectHash();
 
             return newItem;
+        }
+
+        public void SetObjectHash()
+        {
+            ObjectHash = string.Empty;
+            var objectString = JsonConvert.SerializeObject(this);
+
+            using var md5Hash = MD5.Create();
+            var hashBytes = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(objectString));
+            ObjectHash = BitConverter.ToString(hashBytes).Replace("-", string.Empty);
         }
 
         public void AddPostalName(PostalName postalName)
@@ -82,11 +92,11 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationLinkedDataEventStre
 
     public class PostalInformationLinkedDataEventStreamConfiguration : IEntityTypeConfiguration<PostalInformationLinkedDataEventStreamItem>
     {
-        private const string TableName = "PostalInformationLinkedDataEventStream";
+        private const string TableName = "PostalInformation";
 
         public void Configure(EntityTypeBuilder<PostalInformationLinkedDataEventStreamItem> builder)
         {
-            builder.ToTable(TableName, Schema.Legacy)
+            builder.ToTable(TableName, Schema.LinkedDataEventStream)
                 .HasKey(x => x.Position)
                 .IsClustered();
 

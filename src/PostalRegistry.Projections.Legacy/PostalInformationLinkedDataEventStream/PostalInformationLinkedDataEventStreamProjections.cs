@@ -3,13 +3,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationLinkedDataEventStre
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore;
     using PostalRegistry.PostalInformation.Events;
-    using PostalRegistry.PostalInformation.Events.BPost;
-    using PostalRegistry.PostalInformation.Events.Crab;
-    using System;
-    using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     public class PostalInformationLinkedDataEventStreamProjections : ConnectedProjection<LegacyContext>
     {

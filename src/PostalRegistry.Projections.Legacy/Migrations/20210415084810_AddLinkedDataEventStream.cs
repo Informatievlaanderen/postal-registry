@@ -3,13 +3,16 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PostalRegistry.Projections.Legacy.Migrations
 {
-    public partial class AddTableForLinkedDataEventStream : Migration
+    public partial class AddLinkedDataEventStream : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "PostalRegistryLdes");
+
             migrationBuilder.CreateTable(
-                name: "PostalInformationLinkedDataEventStream",
-                schema: "PostalRegistryLegacy",
+                name: "PostalInformation",
+                schema: "PostalRegistryLdes",
                 columns: table => new
                 {
                     Position = table.Column<long>(type: "bigint", nullable: false),
@@ -22,28 +25,28 @@ namespace PostalRegistry.Projections.Legacy.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PostalInformationLinkedDataEventStream", x => x.Position)
+                    table.PrimaryKey("PK_PostalInformation", x => x.Position)
                         .Annotation("SqlServer:Clustered", true);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "CI_PostalInformationLinkedDataEventStream_Position",
-                schema: "PostalRegistryLegacy",
-                table: "PostalInformationLinkedDataEventStream",
+                name: "CI_PostalInformation_Position",
+                schema: "PostalRegistryLdes",
+                table: "PostalInformation",
                 column: "Position");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PostalInformationLinkedDataEventStream_PostalCode",
-                schema: "PostalRegistryLegacy",
-                table: "PostalInformationLinkedDataEventStream",
+                name: "IX_PostalInformation_PostalCode",
+                schema: "PostalRegistryLdes",
+                table: "PostalInformation",
                 column: "PostalCode");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "PostalInformationLinkedDataEventStream",
-                schema: "PostalRegistryLegacy");
+                name: "PostalInformation",
+                schema: "PostalRegistryLdes");
         }
     }
 }

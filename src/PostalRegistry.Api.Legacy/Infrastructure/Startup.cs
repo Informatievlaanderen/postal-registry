@@ -101,7 +101,8 @@ namespace PostalRegistry.Api.Legacy.Infrastructure
                         }
                     }
                 })
-                .Configure<ResponseOptions>(_configuration);
+                .Configure<ResponseOptions>(_configuration)
+                .Configure<LinkedDataEventStreamOptions>(_configuration.GetSection("LinkedDataEventStream"));
 
             var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterModule(new ApiModule(_configuration, services, _loggerFactory));

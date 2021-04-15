@@ -10,8 +10,8 @@ using PostalRegistry.Projections.Legacy;
 namespace PostalRegistry.Projections.Legacy.Migrations
 {
     [DbContext(typeof(LegacyContext))]
-    [Migration("20210308131737_AddTableForLinkedDataEventStream")]
-    partial class AddTableForLinkedDataEventStream
+    [Migration("20210415084810_AddLinkedDataEventStream")]
+    partial class AddLinkedDataEventStream
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -123,12 +123,12 @@ namespace PostalRegistry.Projections.Legacy.Migrations
                         .IsClustered();
 
                     b.HasIndex("Position")
-                        .HasDatabaseName("CI_PostalInformationLinkedDataEventStream_Position")
+                        .HasDatabaseName("CI_PostalInformation_Position")
                         .HasAnnotation("SqlServer:ColumnStoreIndex", "");
 
                     b.HasIndex("PostalCode");
 
-                    b.ToTable("PostalInformationLinkedDataEventStream", "PostalRegistryLegacy");
+                    b.ToTable("PostalInformation", "PostalRegistryLdes");
                 });
 
             modelBuilder.Entity("PostalRegistry.Projections.Legacy.PostalInformationSyndication.PostalInformationSyndicationItem", b =>

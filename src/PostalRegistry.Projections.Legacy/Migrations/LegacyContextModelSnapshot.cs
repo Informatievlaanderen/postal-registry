@@ -121,12 +121,12 @@ namespace PostalRegistry.Projections.Legacy.Migrations
                         .IsClustered();
 
                     b.HasIndex("Position")
-                        .HasDatabaseName("CI_PostalInformationLinkedDataEventStream_Position")
+                        .HasDatabaseName("CI_PostalInformation_Position")
                         .HasAnnotation("SqlServer:ColumnStoreIndex", "");
 
                     b.HasIndex("PostalCode");
 
-                    b.ToTable("PostalInformationLinkedDataEventStream", "PostalRegistryLegacy");
+                    b.ToTable("PostalInformation", "PostalRegistryLdes");
                 });
 
             modelBuilder.Entity("PostalRegistry.Projections.Legacy.PostalInformationSyndication.PostalInformationSyndicationItem", b =>
