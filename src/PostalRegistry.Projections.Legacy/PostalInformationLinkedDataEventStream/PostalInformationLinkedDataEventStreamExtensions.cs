@@ -4,12 +4,8 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationLinkedDataEventStre
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore;
     using Microsoft.EntityFrameworkCore;
-    using Newtonsoft.Json;
     using System;
-    using System.Collections.Generic;
     using System.Linq;
-    using System.Security.Cryptography;
-    using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -34,8 +30,6 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationLinkedDataEventStre
                 message.EventName,
                 provenance.Timestamp,
                 applyEventInfoOn);
-
-            newItem.SetObjectHash();
 
             await context
                 .PostalInformationLinkedDataEventStream

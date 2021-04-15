@@ -55,6 +55,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationLinkedDataEventStre
             };
 
             editFunc(newItem);
+            newItem.SetObjectHash();
 
             return newItem;
         }
