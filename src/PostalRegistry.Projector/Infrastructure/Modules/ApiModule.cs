@@ -22,6 +22,7 @@ namespace PostalRegistry.Projector.Infrastructure.Modules
     using PostalRegistry.Projections.LastChangedList;
     using PostalRegistry.Projections.Legacy;
     using PostalRegistry.Projections.Legacy.PostalInformation;
+    using PostalRegistry.Projections.Legacy.PostalInformationLinkedDataEventStream;
     using PostalRegistry.Projections.Legacy.PostalInformationSyndication;
 
     public class ApiModule : Module
@@ -115,7 +116,8 @@ namespace PostalRegistry.Projector.Infrastructure.Modules
                     _configuration,
                     _loggerFactory)
                 .RegisterProjections<PostalInformationProjections, LegacyContext>(ConnectedProjectionSettings.Default)
-                .RegisterProjections<PostalInformationSyndicationProjections, LegacyContext>(ConnectedProjectionSettings.Default);
+                .RegisterProjections<PostalInformationSyndicationProjections, LegacyContext>(ConnectedProjectionSettings.Default)
+                .RegisterProjections<PostalInformationLinkedDataEventStreamProjections, LegacyContext>(ConnectedProjectionSettings.Default);
         }
     }
 }

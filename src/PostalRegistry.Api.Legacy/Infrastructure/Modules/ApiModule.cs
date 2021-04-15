@@ -7,6 +7,7 @@ namespace PostalRegistry.Api.Legacy.Infrastructure.Modules
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
+    using Options;
     using Projections.Legacy;
     using Projections.Syndication.Modules;
 

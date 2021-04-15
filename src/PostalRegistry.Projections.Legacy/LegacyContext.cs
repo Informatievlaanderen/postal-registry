@@ -10,6 +10,7 @@ namespace PostalRegistry.Projections.Legacy
 
         public DbSet<PostalInformation.PostalInformation> PostalInformation { get; set; }
         public DbSet<PostalInformationSyndication.PostalInformationSyndicationItem> PostalInformationSyndication { get; set; }
+        public DbSet<PostalInformationLinkedDataEventStream.PostalInformationLinkedDataEventStreamItem> PostalInformationLinkedDataEventStream { get; set; }
 
         // This needs to be here to please EF
         public LegacyContext() { }

@@ -180,7 +180,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
                         syndicationItem.Reason,
                         syndicationItem.EventDataAsXml);
 
-                if(_embedObject)
+                if (_embedObject)
                     return syndicationItem => new PostalInformationSyndicationQueryResult(
                         syndicationItem.PostalCode,
                         syndicationItem.Position,
@@ -235,6 +235,6 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
     public class PostalInformationSyndicationFilter
     {
         public long? Position { get; set; }
-        public EmbedValue Embed  { get; set; }
+        public EmbedValue Embed { get; set; }
     }
 }

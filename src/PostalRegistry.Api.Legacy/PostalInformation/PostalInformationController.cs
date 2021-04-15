@@ -3,7 +3,6 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
     using System;
     using System.Linq;
     using System.Net.Mime;
-    using System.Reflection;
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
@@ -29,7 +28,6 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
     using Microsoft.Extensions.Options;
     using Microsoft.SyndicationFeed;
     using Microsoft.SyndicationFeed.Atom;
-    using Newtonsoft.Json.Converters;
     using Projections.Legacy;
     using Projections.Syndication;
     using Query;
@@ -226,6 +224,76 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
                 ContentType = MediaTypeNames.Text.Xml,
                 StatusCode = StatusCodes.Status200OK
             };
+        }
+
+        /// <summary>
+        /// Vraag een lijst met wijzigingen van postinfo op, semantisch geannoteerd (Linked Data Event Streams).
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="linkedDataEventStreamOptions"></param>
+        /// <param name="responseOptions"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpGet("linked-data-event-stream")]
+        [Produces("application/ld+json")]
+        [ProducesResponseType(typeof(PostalInformationLinkedDataEventStreamResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        [SwaggerResponseExample(StatusCodes.Status200OK, typeof(PostalInformationLinkedDataEventStreamResponseExamples))]
+        [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(InternalServerErrorResponseExamples))]
+        public async Task<IActionResult> LinkedDataEventStream(
+            [FromServices] LegacyContext context,
+            [FromServices] IOptions<LinkedDataEventStreamOptions> linkedDataEventStreamOptions,
+            [FromServices] IOptions<ResponseOptions> responseOptions,
+            CancellationToken cancellationToken = default)
+        {
+            var filtering = Request.ExtractFilteringRequest<PostalInformationLinkedDataEventStreamFilter>();
+            var sorting = Request.ExtractSortingRequest();
+            var pagination = (PaginationRequest)Request.ExtractPaginationRequest();
+
+            var page = (pagination.Offset / pagination.Limit) + 1;
+            var pagedPostalInformationSet =
+                 new PostalInformationLinkedDataEventStreamQuery(context)
+                    .Fetch(filtering, sorting, pagination);
+
+            var pagedPostalInformationVersionObjects = pagedPostalInformationSet
+                .Items
+                .Select(p => new PostalInformationVersionObject(
+                    linkedDataEventStreamOptions.Value.ApiEndpoint,
+                    responseOptions.Value.Naamruimte,
+                    p.ObjectIdentifier,
+                    p.ChangeType,
+                    p.EventGeneratedAtTime,
+                    p.PostalCode,
+                    p.PostalNames,
+                    p.Status))
+                .ToList();
+
+            return Ok(new PostalInformationLinkedDataEventStreamResponse
+            (
+                linkedDataEventStreamOptions.Value.ApiEndpoint,
+                page,
+                pagination.Limit,
+                pagedPostalInformationVersionObjects
+            ));
+        }
+
+        /// <summary>
+        /// Vraag de SHACL shape van postinfo op.
+        /// </summary>
+        /// <param name="linkedDataEventStreamOptions"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpGet("linked-data-event-stream/shape")]
+        [Produces("application/ld+json")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        [SwaggerResponseExample(StatusCodes.Status200OK, typeof(PostalInformationShaclShapeResponseExamples))]
+        [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(InternalServerErrorResponseExamples))]
+        public async Task<IActionResult> Shape(
+            [FromServices] IOptions<LinkedDataEventStreamOptions> linkedDataEventStreamOptions,
+            CancellationToken cancellationToken = default)
+        {
+            return Ok(new PostalInformationShaclShapeReponse(linkedDataEventStreamOptions.Value.ApiEndpoint));
         }
 
         private static async Task<string> BuildAtomFeed(
