@@ -60,14 +60,5 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationLinkedDataEventStre
 
         private static ProjectionItemNotFoundException<PostalInformationLinkedDataEventStreamProjections> DatabaseItemNotFound(string postalCode)
            => new ProjectionItemNotFoundException<PostalInformationLinkedDataEventStreamProjections>(postalCode);
-
-        public static void SetObjectHash(this PostalInformationLinkedDataEventStreamItem linkedDataEventStreamItem)
-        {
-            var objectString = JsonConvert.SerializeObject(linkedDataEventStreamItem);
-
-            using var md5Hash = MD5.Create();
-            var hashBytes = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(objectString));
-            linkedDataEventStreamItem.ObjectHash = BitConverter.ToString(hashBytes).Replace("-", string.Empty);
-        }
     }
 }

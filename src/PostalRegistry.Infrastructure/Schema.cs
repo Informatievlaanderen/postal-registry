@@ -6,6 +6,7 @@ namespace PostalRegistry.Infrastructure
 
         public const string Import = "PostalRegistryImport";
         public const string Legacy = "PostalRegistryLegacy";
+        public const string LinkedDataEventStream = "PostalRegistryLdes";
         public const string Extract = "PostalRegistryExtract";
         public const string Syndication = "PostalRegistrySyndication";
     }
