@@ -34,7 +34,7 @@ namespace PostalRegistry.Projector.Caches
             {
                 new
                 {
-                    name = "LastChangedList",
+                    name = "Cache detail postinfo",
                     numberOfRecordsToProcess = numberOfRecords
                 }
             });
