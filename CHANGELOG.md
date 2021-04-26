@@ -1,3 +1,10 @@
+## [2.17.2](https://github.com/informatievlaanderen/postal-registry/compare/v2.17.1...v2.17.2) (2021-04-26)
+
+
+### Bug Fixes
+
+* rename cache status endpoint in projector ([83e281e](https://github.com/informatievlaanderen/postal-registry/commit/83e281eff3bf122da3fef149f27937f3654e41ae))
+
 ## [2.17.1](https://github.com/informatievlaanderen/postal-registry/compare/v2.17.0...v2.17.1) (2021-04-01)
 
 
