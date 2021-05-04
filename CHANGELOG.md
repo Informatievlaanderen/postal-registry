@@ -1,3 +1,10 @@
+# [2.18.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.17.2...v2.18.0) (2021-05-04)
+
+
+### Features
+
+* bump packages ([736beb2](https://github.com/informatievlaanderen/postal-registry/commit/736beb2352e31231b53e62e81d71519b4a62454c))
+
 ## [2.17.2](https://github.com/informatievlaanderen/postal-registry/compare/v2.17.1...v2.17.2) (2021-04-26)
 
 
