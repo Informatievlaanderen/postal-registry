@@ -141,7 +141,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
         private readonly bool _embedEvent;
         private readonly bool _embedObject;
 
-        public PostalInformationSyndicationQuery(LegacyContext context, EmbedValue embed)
+        public PostalInformationSyndicationQuery(LegacyContext context, SyncEmbedValue embed)
         {
             _context = context;
             _embedEvent = embed?.Event ?? false;
@@ -235,6 +235,6 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Query
     public class PostalInformationSyndicationFilter
     {
         public long? Position { get; set; }
-        public EmbedValue Embed  { get; set; }
+        public SyncEmbedValue Embed  { get; set; }
     }
 }
