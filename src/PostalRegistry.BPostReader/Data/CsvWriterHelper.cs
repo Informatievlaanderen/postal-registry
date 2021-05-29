@@ -12,7 +12,7 @@ namespace PostalRegistry.BPostReader.Data
         {
             using (var writer = new StreamWriter(path))
             {
-                var csvWriter = new CsvWriter(writer, new CsvConfiguration(CultureInfo.InvariantCulture, delimiter: ",", hasHeaderRecord: true));
+                var csvWriter = new CsvWriter(writer, new CsvConfiguration(CultureInfo.InvariantCulture) { Delimiter = ",", HasHeaderRecord = true });
 
                 csvWriter.WriteHeader<BPostData>();
                 csvWriter.NextRecord();
