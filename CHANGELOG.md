@@ -1,3 +1,10 @@
+## [2.18.2](https://github.com/informatievlaanderen/postal-registry/compare/v2.18.1...v2.18.2) (2021-05-29)
+
+
+### Bug Fixes
+
+* move to 5.0.6 ([f471dfb](https://github.com/informatievlaanderen/postal-registry/commit/f471dfb84944b27d1f0e449e3dc1378adb0dbd5a))
+
 ## [2.18.1](https://github.com/informatievlaanderen/postal-registry/compare/v2.18.0...v2.18.1) (2021-05-04)
 
 
