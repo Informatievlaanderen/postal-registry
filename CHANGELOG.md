@@ -1,3 +1,10 @@
+## [2.18.5](https://github.com/informatievlaanderen/postal-registry/compare/v2.18.4...v2.18.5) (2021-06-17)
+
+
+### Bug Fixes
+
+* update nuget pakage ([92c40a9](https://github.com/informatievlaanderen/postal-registry/commit/92c40a9efe0d36d97695c0de1953b09cfa06b850))
+
 ## [2.18.4](https://github.com/informatievlaanderen/postal-registry/compare/v2.18.3...v2.18.4) (2021-05-31)
 
 
