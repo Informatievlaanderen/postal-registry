@@ -1,3 +1,10 @@
+## [2.18.6](https://github.com/informatievlaanderen/postal-registry/compare/v2.18.5...v2.18.6) (2021-06-25)
+
+
+### Bug Fixes
+
+* update aws DistributedMutex package ([664f975](https://github.com/informatievlaanderen/postal-registry/commit/664f975614155a81b8a6e7cc093822bb164b0561))
+
 ## [2.18.5](https://github.com/informatievlaanderen/postal-registry/compare/v2.18.4...v2.18.5) (2021-06-17)
 
 
