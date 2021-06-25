@@ -151,7 +151,7 @@ NUGET
       NSwag.CodeGeneration.CSharp (>= 13.11.1)
       NSwag.CodeGeneration.TypeScript (>= 13.11.1)
       Swashbuckle.AspNetCore (6.1.4)
-    Be.Vlaanderen.Basisregisters.Aws.DistributedMutex (2.3.1)
+    Be.Vlaanderen.Basisregisters.Aws.DistributedMutex (2.4)
       AWSSDK.DynamoDBv2 (>= 3.7.0.29)
       Microsoft.Extensions.Logging (>= 5.0)
     Be.Vlaanderen.Basisregisters.Build.Pipeline (5.0.4)
