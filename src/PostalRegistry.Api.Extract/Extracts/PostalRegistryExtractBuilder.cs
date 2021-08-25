@@ -1,5 +1,6 @@
 namespace PostalRegistry.Api.Extract.Extracts
 {
+    using System.Collections.Generic;
     using System.Linq;
     using Be.Vlaanderen.Basisregisters.Api.Extract;
     using Be.Vlaanderen.Basisregisters.GrAr.Extracts;
@@ -8,13 +9,13 @@ namespace PostalRegistry.Api.Extract.Extracts
 
     public class PostalRegistryExtractBuilder
     {
-        public static ExtractFile CreatePostalFile(ExtractContext context)
+        public static IEnumerable<ExtractFile> CreatePostalFiles(ExtractContext context)
         {
             var extractItems = context
                 .PostalInformationExtract
                 .AsNoTracking();
 
-            return ExtractBuilder.CreateDbfFile<PostalDbaseRecord>(
+            yield return ExtractBuilder.CreateDbfFile<PostalDbaseRecord>(
                 ExtractController.ZipName,
                 new PostalDbaseSchema(),
                 extractItems.OrderBy(x => x.PostalCode).Select(org => org.DbaseRecord),
