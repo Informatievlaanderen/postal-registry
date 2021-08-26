@@ -1,3 +1,10 @@
+# [2.19.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.18.6...v2.19.0) (2021-08-26)
+
+
+### Features
+
+* add metadata file with latest event id to postal extract GRAR-2060 ([41d9c21](https://github.com/informatievlaanderen/postal-registry/commit/41d9c218d51bbc9bdd51ad636f7ee3ea52685068))
+
 ## [2.18.6](https://github.com/informatievlaanderen/postal-registry/compare/v2.18.5...v2.18.6) (2021-06-25)
 
 
