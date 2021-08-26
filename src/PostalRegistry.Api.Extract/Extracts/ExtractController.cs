@@ -36,7 +36,7 @@ namespace PostalRegistry.Api.Extract.Extracts
         public IActionResult Get(
             [FromServices] ExtractContext context,
             CancellationToken cancellationToken) =>
-            new ExtractArchive($"{ZipName}-{DateTime.Now:yyyy-MM-dd}") { PostalRegistryExtractBuilder.CreatePostalFile(context) }
+            new IsolationExtractArchive($"{ZipName}-{DateTime.Now:yyyy-MM-dd}", context) { PostalRegistryExtractBuilder.CreatePostalFiles(context) }
                 .CreateFileCallbackResult(cancellationToken);
     }
 }

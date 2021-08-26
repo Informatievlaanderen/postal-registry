@@ -16,14 +16,15 @@ namespace PostalRegistry.Projections.Extract
         public ExtractModule(
             IConfiguration configuration,
             IServiceCollection services,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory,
+            bool enableRetry = true)
         {
             var logger = loggerFactory.CreateLogger<ExtractModule>();
             var connectionString = configuration.GetConnectionString("ExtractProjections");
 
             var hasConnectionString = !string.IsNullOrWhiteSpace(connectionString);
             if (hasConnectionString)
-                RunOnSqlServer(configuration, services, loggerFactory, connectionString);
+                RunOnSqlServer(configuration, services, loggerFactory, connectionString, enableRetry);
             else
                 RunInMemoryDb(services, loggerFactory, logger);
 
@@ -36,11 +37,11 @@ namespace PostalRegistry.Projections.Extract
                 nameof(ExtractContext), Schema.Extract, MigrationTables.Extract);
         }
 
-        private static void RunOnSqlServer(
-            IConfiguration configuration,
+        private static void RunOnSqlServer(IConfiguration configuration,
             IServiceCollection services,
             ILoggerFactory loggerFactory,
-            string backofficeProjectionsConnectionString)
+            string backofficeProjectionsConnectionString,
+            bool enableRetry)
         {
             services
                 .AddScoped(s => new TraceDbConnection<ExtractContext>(
@@ -50,7 +51,9 @@ namespace PostalRegistry.Projections.Extract
                     .UseLoggerFactory(loggerFactory)
                     .UseSqlServer(provider.GetRequiredService<TraceDbConnection<ExtractContext>>(), sqlServerOptions =>
                     {
-                        sqlServerOptions.EnableRetryOnFailure();
+                        if (enableRetry)
+                            sqlServerOptions.EnableRetryOnFailure();
+
                         sqlServerOptions.MigrationsHistoryTable(MigrationTables.Extract, Schema.Extract);
                     })
                     .UseExtendedSqlServerMigrations());
