@@ -1,3 +1,10 @@
+## [2.19.1](https://github.com/informatievlaanderen/postal-registry/compare/v2.19.0...v2.19.1) (2021-08-26)
+
+
+### Bug Fixes
+
+* update grar-common packages GRAR-2060 ([2559098](https://github.com/informatievlaanderen/postal-registry/commit/25590989bd50e29cfa23a6dbbdc2c1f70d4fc008))
+
 # [2.19.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.18.6...v2.19.0) (2021-08-26)
 
 
