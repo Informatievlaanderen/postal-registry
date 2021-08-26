@@ -29,7 +29,7 @@ namespace PostalRegistry.Api.Extract.Infrastructure.Modules
         {
             containerBuilder
                 .RegisterModule(new DataDogModule(_configuration))
-                .RegisterModule(new ExtractModule(_configuration, _services, _loggerFactory));
+                .RegisterModule(new ExtractModule(_configuration, _services, _loggerFactory, false));
 
             containerBuilder
                 .RegisterType<ProblemDetailsHelper>()

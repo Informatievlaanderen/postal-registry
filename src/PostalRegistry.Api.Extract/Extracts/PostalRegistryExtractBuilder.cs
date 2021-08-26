@@ -6,6 +6,7 @@ namespace PostalRegistry.Api.Extract.Extracts
     using Be.Vlaanderen.Basisregisters.GrAr.Extracts;
     using Microsoft.EntityFrameworkCore;
     using Projections.Extract;
+    using Projections.Extract.PostalInformationExtract;
 
     public class PostalRegistryExtractBuilder
     {
@@ -15,11 +16,24 @@ namespace PostalRegistry.Api.Extract.Extracts
                 .PostalInformationExtract
                 .AsNoTracking();
 
+            var postalInformationProjectionState = context
+                .ProjectionStates
+                .AsNoTracking()
+                .Single(m => m.Name == typeof(PostalInformationExtractProjections).FullName);
+            var extractMetadata = new Dictionary<string,string>
+            {
+                { ExtractMetadataKeys.LatestEventId, postalInformationProjectionState.Position.ToString()}
+            };
+
             yield return ExtractBuilder.CreateDbfFile<PostalDbaseRecord>(
                 ExtractController.ZipName,
                 new PostalDbaseSchema(),
                 extractItems.OrderBy(x => x.PostalCode).Select(org => org.DbaseRecord),
                 extractItems.Count);
+
+            yield return ExtractBuilder.CreateMetadataDbfFile(
+                ExtractController.ZipName,
+                extractMetadata);
         }
     }
 }
