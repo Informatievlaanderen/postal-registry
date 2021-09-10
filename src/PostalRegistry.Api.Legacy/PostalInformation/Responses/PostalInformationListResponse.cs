@@ -60,7 +60,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         public PostInfoStatus PostInfoStatus { get; set; }
 
         /// <summary>
-        /// De namen van de gebieden die de postcode beslaat, in het Nederlands.
+        /// De namen van het gebied dat de postcode beslaat, in de taal afkomstig uit het bPost bestand.
         /// </summary>
         [DataMember(Name = "Postnamen", Order = 3)]
         [JsonProperty(Required = Required.DisallowNull)]
