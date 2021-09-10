@@ -1,3 +1,10 @@
+## [2.19.2](https://github.com/informatievlaanderen/postal-registry/compare/v2.19.1...v2.19.2) (2021-09-10)
+
+
+### Bug Fixes
+
+* api documentation GAWR-631 GAWR-630 ([4aaf16f](https://github.com/informatievlaanderen/postal-registry/commit/4aaf16f75398bd5ddd9d7b6eec9e7393bea13193))
+
 ## [2.19.1](https://github.com/informatievlaanderen/postal-registry/compare/v2.19.0...v2.19.1) (2021-08-26)
 
 
