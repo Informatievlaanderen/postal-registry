@@ -87,7 +87,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         public ProblemDetails GetExamples()
             => new ProblemDetails
             {
-                ProblemTypeUri = "urn:be.vlaanderen.basisregisters.api:postal:not-found",
+                ProblemTypeUri = "urn:be.vlaanderen.basisregisters.api:postalcode:not-found",
                 HttpStatus = StatusCodes.Status404NotFound,
                 Title = ProblemDetails.DefaultTitle,
                 Detail = "Onbestaande postcode.",
