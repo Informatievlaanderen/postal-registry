@@ -1,3 +1,10 @@
+## [2.19.5](https://github.com/informatievlaanderen/postal-registry/compare/v2.19.4...v2.19.5) (2021-10-01)
+
+
+### Bug Fixes
+
+* update packages ([e4df121](https://github.com/informatievlaanderen/postal-registry/commit/e4df1212b509682685197d5fb79664d7a40f7e08))
+
 ## [2.19.4](https://github.com/informatievlaanderen/postal-registry/compare/v2.19.3...v2.19.4) (2021-09-24)
 
 
