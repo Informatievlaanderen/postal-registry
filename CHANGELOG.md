@@ -1,3 +1,10 @@
+## [2.19.8](https://github.com/informatievlaanderen/postal-registry/compare/v2.19.7...v2.19.8) (2021-10-06)
+
+
+### Bug Fixes
+
+* gawr-615 add offset to version id ([a66a022](https://github.com/informatievlaanderen/postal-registry/commit/a66a022320cdb1cdcb09e93cfa2de0b9a11e98ed))
+
 ## [2.19.7](https://github.com/informatievlaanderen/postal-registry/compare/v2.19.6...v2.19.7) (2021-10-06)
 
 
