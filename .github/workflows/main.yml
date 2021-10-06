@@ -118,11 +118,11 @@ jobs:
       if: env.RELEASE_VERSION != 'none'
       shell: bash
       run: |
-        docker push $BUILD_DOCKER_REGISTRY/postal-registry/api-legacy:$SEMVER
-        docker push $BUILD_DOCKER_REGISTRY/postal-registry/api-crab-import:$SEMVER
-        docker push $BUILD_DOCKER_REGISTRY/postal-registry/api-extract:$SEMVER
-        docker push $BUILD_DOCKER_REGISTRY/postal-registry/projector:$SEMVER
-        docker push $BUILD_DOCKER_REGISTRY/postal-registry/projections-syndication:$SEMVER
+        docker push $BUILD_DOCKER_REGISTRY_TST/postal-registry/api-legacy:$SEMVER
+        docker push $BUILD_DOCKER_REGISTRY_TST/postal-registry/api-crab-import:$SEMVER
+        docker push $BUILD_DOCKER_REGISTRY_TST/postal-registry/api-extract:$SEMVER
+        docker push $BUILD_DOCKER_REGISTRY_TST/postal-registry/projector:$SEMVER
+        docker push $BUILD_DOCKER_REGISTRY_TST/postal-registry/projections-syndication:$SEMVER
       env:
         BUILD_DOCKER_REGISTRY_TST: ${{ secrets.VBR_BUILD_DOCKER_REGISTRY_TST }}
         SEMVER: ${{ env.RELEASE_VERSION }}
