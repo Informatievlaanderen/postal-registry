@@ -3,6 +3,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
     using System;
     using System.Collections.Generic;
     using System.Runtime.Serialization;
+    using Be.Vlaanderen.Basisregisters.GrAr.Common;
     using Be.Vlaanderen.Basisregisters.GrAr.Legacy;
     using Be.Vlaanderen.Basisregisters.GrAr.Legacy.PostInfo;
     using Infrastructure.Options;
@@ -88,7 +89,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         public PostalInformationListResponse GetExamples()
         {
             var postalInformationSampleGent =
-                new PostalInformationListItemResponse("9000", _responseOptions.Naamruimte, _responseOptions.DetailUrl, PostInfoStatus.Gerealiseerd, DateTimeOffset.Now.LocalDateTime)
+                new PostalInformationListItemResponse("9000", _responseOptions.Naamruimte, _responseOptions.DetailUrl, PostInfoStatus.Gerealiseerd, DateTimeOffset.Now.ToExampleOffset())
                 {
                     Postnamen = new List<Postnaam>
                     {
@@ -97,7 +98,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
                 };
 
             var postalInformationSampleTemse =
-                new PostalInformationListItemResponse("9140", _responseOptions.Naamruimte, _responseOptions.DetailUrl, PostInfoStatus.Gerealiseerd, DateTimeOffset.Now)
+                new PostalInformationListItemResponse("9140", _responseOptions.Naamruimte, _responseOptions.DetailUrl, PostInfoStatus.Gerealiseerd, DateTimeOffset.Now.ToExampleOffset())
                 {
                     Postnamen = new List<Postnaam>
                     {

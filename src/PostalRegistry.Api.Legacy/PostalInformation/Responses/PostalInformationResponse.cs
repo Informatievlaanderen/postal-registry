@@ -4,6 +4,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
     using System.Collections.Generic;
     using System.Runtime.Serialization;
     using Be.Vlaanderen.Basisregisters.Api.Exceptions;
+    using Be.Vlaanderen.Basisregisters.GrAr.Common;
     using Be.Vlaanderen.Basisregisters.GrAr.Legacy;
     using Be.Vlaanderen.Basisregisters.GrAr.Legacy.PostInfo;
     using Infrastructure.Options;
@@ -60,7 +61,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
             return new PostalInformationResponse(
                 _responseOptions.Naamruimte,
                 "9000",
-                DateTimeOffset.Now,
+                DateTimeOffset.Now.ToExampleOffset(),
                 PostInfoStatus.Gerealiseerd)
             {
                 Postnamen = new List<Postnaam>
