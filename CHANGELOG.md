@@ -1,3 +1,10 @@
+## [2.19.7](https://github.com/informatievlaanderen/postal-registry/compare/v2.19.6...v2.19.7) (2021-10-06)
+
+
+### Bug Fixes
+
+* add Test to ECR ([1e4a48e](https://github.com/informatievlaanderen/postal-registry/commit/1e4a48e5cd02786637d1b38fa625c3c20eba3eb6))
+
 ## [2.19.6](https://github.com/informatievlaanderen/postal-registry/compare/v2.19.5...v2.19.6) (2021-10-06)
 
 
