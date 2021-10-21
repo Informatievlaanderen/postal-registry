@@ -1,3 +1,10 @@
+## [2.19.9](https://github.com/informatievlaanderen/postal-registry/compare/v2.19.8...v2.19.9) (2021-10-21)
+
+
+### Bug Fixes
+
+* gawr-2202 api docu changes ([d670019](https://github.com/informatievlaanderen/postal-registry/commit/d670019bad1b57ff6b024849b993e50e35021c5b))
+
 ## [2.19.8](https://github.com/informatievlaanderen/postal-registry/compare/v2.19.7...v2.19.8) (2021-10-06)
 
 
