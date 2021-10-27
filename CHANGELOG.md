@@ -1,3 +1,10 @@
+## [2.19.11](https://github.com/informatievlaanderen/postal-registry/compare/v2.19.10...v2.19.11) (2021-10-27)
+
+
+### Bug Fixes
+
+* remove accesskey/secret from settings ([2e6b643](https://github.com/informatievlaanderen/postal-registry/commit/2e6b643b31cb9f2c2fbc8b0d633e9b22a844aa58))
+
 ## [2.19.10](https://github.com/informatievlaanderen/postal-registry/compare/v2.19.9...v2.19.10) (2021-10-25)
 
 
