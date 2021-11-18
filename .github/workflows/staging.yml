@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix: 
-        services: ['postal-registry-api', 'postal-registry-import-api', 'postal-registry-projections']
+        services: ['postal-registry-api', 'postal-registry-projections']
     steps:
     - name: CD
       env:
