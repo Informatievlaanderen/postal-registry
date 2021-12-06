@@ -1,3 +1,16 @@
+# [2.20.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.19.11...v2.20.0) (2021-12-06)
+
+
+### Bug Fixes
+
+* remove msil ([b833eb1](https://github.com/informatievlaanderen/postal-registry/commit/b833eb1f9b0222f9fc1c3e4c8cb3d6bdc82d7674))
+* remove syndication & add msil ([af3dbaa](https://github.com/informatievlaanderen/postal-registry/commit/af3dbaa00fbf5df0853fad064cec15cb4e1a9a63))
+
+
+### Features
+
+* add oslo endpoint ([8045bad](https://github.com/informatievlaanderen/postal-registry/commit/8045bad2aa5e6b26850b9b2d0539bffe5a23f799))
+
 ## [2.19.11](https://github.com/informatievlaanderen/postal-registry/compare/v2.19.10...v2.19.11) (2021-10-27)
 
 
