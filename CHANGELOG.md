@@ -1,3 +1,10 @@
+## [2.20.1](https://github.com/informatievlaanderen/postal-registry/compare/v2.20.0...v2.20.1) (2021-12-06)
+
+
+### Bug Fixes
+
+* update paket.template ([bad135d](https://github.com/informatievlaanderen/postal-registry/commit/bad135dd33fec3e6e54cf9f9e0fc4dcd0ea78f8a))
+
 # [2.20.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.19.11...v2.20.0) (2021-12-06)
 
 
