@@ -20,9 +20,6 @@ files
   PostalRegistry.Api.Oslo.xml => lib\net5.0
   PostalRegistry.Api.Oslo.xml => content
 
-  PostalRegistry.Projections.Oslo.dll => lib\net5.0
-  PostalRegistry.Projections.Oslo.pdb => lib\net5.0
-
   PostalRegistry.Projections.Syndication.dll => lib\net5.0
   PostalRegistry.Projections.Syndication.pdb => lib\net5.0
   
