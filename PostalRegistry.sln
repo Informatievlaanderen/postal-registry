@@ -57,6 +57,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "adr", "adr", "{C509B2AD-FD2
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostalRegistry.Projector", "src\PostalRegistry.Projector\PostalRegistry.Projector.csproj", "{212F0A79-44B8-4D16-AA40-75A2500136B7}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostalRegistry.Api.Oslo", "src\PostalRegistry.Api.Oslo\PostalRegistry.Api.Oslo.csproj", "{D13F985B-F16B-4F38-B170-F86E5D447926}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -119,6 +121,10 @@ Global
 		{212F0A79-44B8-4D16-AA40-75A2500136B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{212F0A79-44B8-4D16-AA40-75A2500136B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{212F0A79-44B8-4D16-AA40-75A2500136B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D13F985B-F16B-4F38-B170-F86E5D447926}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D13F985B-F16B-4F38-B170-F86E5D447926}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D13F985B-F16B-4F38-B170-F86E5D447926}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D13F985B-F16B-4F38-B170-F86E5D447926}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -138,6 +144,7 @@ Global
 		{7C287DDB-BEB7-4ABF-8A42-9AF45E0F4990} = {81BE6CDF-434E-42AB-9CB1-B5E7A26DC317}
 		{D4CB75F3-0145-40EC-A186-2F0E21DF414A} = {81BE6CDF-434E-42AB-9CB1-B5E7A26DC317}
 		{212F0A79-44B8-4D16-AA40-75A2500136B7} = {81BE6CDF-434E-42AB-9CB1-B5E7A26DC317}
+		{D13F985B-F16B-4F38-B170-F86E5D447926} = {81BE6CDF-434E-42AB-9CB1-B5E7A26DC317}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {14E5CC1E-7FCC-4086-A7DD-CEFDAD492801}
