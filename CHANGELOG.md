@@ -1,3 +1,15 @@
+# [2.21.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.20.2...v2.21.0) (2021-12-07)
+
+
+### Bug Fixes
+
+* sql script ([b62f233](https://github.com/informatievlaanderen/postal-registry/commit/b62f233fcb5a9434d072598a609f48125e8e0f66))
+
+
+### Features
+
+* add projection handler GAWR-653 ([a0e6b9b](https://github.com/informatievlaanderen/postal-registry/commit/a0e6b9bbd65caaf0bd50085d95a97623c144a631))
+
 ## [2.20.2](https://github.com/informatievlaanderen/postal-registry/compare/v2.20.1...v2.20.2) (2021-12-07)
 
 
