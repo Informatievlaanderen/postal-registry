@@ -13,7 +13,7 @@ INSERT INTO [{LastChangedListContext.Schema}].[{LastChangedListContext.TableName
 SELECT
   CONCAT(SUBSTRING(Id, 0, LEN(Id) - 4), '.jsonld'),
   CONCAT(
-	'oslo/municipality:',
+	'oslo/postalinfo:',
 	SUBSTRING(CacheKey, LEN(LEFT(CacheKey, CHARINDEX (':', CacheKey))) + 1, LEN(CacheKey) - LEN(LEFT(CacheKey,
 		CHARINDEX (':', CacheKey))) - LEN(RIGHT(CacheKey, LEN(CacheKey) - CHARINDEX ('.', CacheKey))) - 1),
 	'.jsonld'),
