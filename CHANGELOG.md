@@ -1,3 +1,10 @@
+## [2.20.2](https://github.com/informatievlaanderen/postal-registry/compare/v2.20.1...v2.20.2) (2021-12-07)
+
+
+### Bug Fixes
+
+* trigger new build with MSIL packages ([8b8298d](https://github.com/informatievlaanderen/postal-registry/commit/8b8298dcf079876c8dfd61df40f2b4525ae7faa6))
+
 ## [2.20.1](https://github.com/informatievlaanderen/postal-registry/compare/v2.20.0...v2.20.1) (2021-12-06)
 
 
