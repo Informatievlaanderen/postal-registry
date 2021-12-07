@@ -1,5 +1,6 @@
 namespace PostalRegistry.Projections.LastChangedList
 {
+    using System;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.LastChangedList;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore;
@@ -11,10 +12,8 @@ namespace PostalRegistry.Projections.LastChangedList
     [ConnectedProjectionDescription("Projectie die markeert voor hoeveel postinfo de gecachte data nog geüpdated moeten worden.")]
     public class LastChangedListProjections : LastChangedListConnectedProjection
     {
-        protected override string CacheKeyFormat => "legacy/postalinfo:{0}.{1}";
-        protected override string UriFormat => "/v1/postcodes/{0}";
 
-        private static readonly AcceptType[] SupportedAcceptTypes = { AcceptType.Json, AcceptType.Xml };
+        private static readonly AcceptType[] SupportedAcceptTypes = { AcceptType.Json, AcceptType.Xml, AcceptType.JsonLd };
 
         public LastChangedListProjections()
          : base(SupportedAcceptTypes)
@@ -47,6 +46,29 @@ namespace PostalRegistry.Projections.LastChangedList
             When<Envelope<MunicipalityWasAttached>>(async (context, message, ct) => DoNothing());
             When<Envelope<PostalInformationWasImportedFromCrab>>(async (context, message, ct) => DoNothing());
             When<Envelope<PostalInformationWasImportedFromBPost>>(async (context, message, ct) => DoNothing());
+        }
+
+        protected override string BuildCacheKey(AcceptType acceptType, string identifier)
+        {
+            var shortenedAcceptType = acceptType.ToString().ToLowerInvariant();
+            return acceptType switch
+            {
+                AcceptType.Json => string.Format("legacy/postalinfo:{{0}}.{1}", identifier, shortenedAcceptType),
+                AcceptType.Xml => string.Format("legacy/postalinfo:{{0}}.{1}", identifier, shortenedAcceptType),
+                AcceptType.JsonLd => string.Format("oslo/postalinfo:{{0}}.{1}", identifier, shortenedAcceptType),
+                _ => throw new NotImplementedException($"Cannot build CacheKey for type {typeof(AcceptType)}")
+            };
+        }
+
+        protected override string BuildUri(AcceptType acceptType, string identifier)
+        {
+            return acceptType switch
+            {
+                AcceptType.Json => string.Format("/v1/postcodes/{{0}}", identifier),
+                AcceptType.Xml => string.Format("/v1/postcodes/{{0}}", identifier),
+                AcceptType.JsonLd => string.Format("/v2/postcodes/{{0}}", identifier),
+                _ => throw new NotImplementedException($"Cannot build Uri for type {typeof(AcceptType)}")
+            };
         }
 
         private static void DoNothing() { }

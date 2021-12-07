@@ -27,6 +27,7 @@
   <ItemGroup>
     <ProjectReference Include="..\PostalRegistry.Projections.Extract\PostalRegistry.Projections.Extract.csproj" />
     <ProjectReference Include="..\PostalRegistry.Projections.Legacy\PostalRegistry.Projections.Legacy.csproj" />
+    <ProjectReference Include="..\PostalRegistry.Projections.LastChangedList\PostalRegistry.Projections.LastChangedList.csproj" />
     <ProjectReference Include="..\PostalRegistry.Projections.Syndication\PostalRegistry.Projections.Syndication.csproj" />
   </ItemGroup>
 
