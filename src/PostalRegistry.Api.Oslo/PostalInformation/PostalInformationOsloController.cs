@@ -155,7 +155,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
         [Produces(AcceptTypes.JsonLd)]
         [ProducesResponseType(typeof(TotaalAantalResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        [SwaggerResponseExample(StatusCodes.Status200OK, typeof(TotalCountResponseExample))]
+        [SwaggerResponseExample(StatusCodes.Status200OK, typeof(TotalCountOsloResponseExample))]
         [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(InternalServerErrorResponseExamples))]
         public async Task<IActionResult> Count(
             [FromServices] LegacyContext context,
@@ -179,7 +179,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
                             .CountAsync(cancellationToken)
                 });
         }
-      
+
         private static Uri BuildNextUri(PaginationInfo paginationInfo, string nextUrlBase)
         {
             var offset = paginationInfo.Offset;
