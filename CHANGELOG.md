@@ -1,3 +1,10 @@
+## [2.21.2](https://github.com/informatievlaanderen/postal-registry/compare/v2.21.1...v2.21.2) (2021-12-08)
+
+
+### Bug Fixes
+
+*  remove Events connections string in Oslo appsettings ([a3394fa](https://github.com/informatievlaanderen/postal-registry/commit/a3394fa6717c7ecde7279cbb78ee85a193dbb604))
+
 ## [2.21.1](https://github.com/informatievlaanderen/postal-registry/compare/v2.21.0...v2.21.1) (2021-12-08)
 
 
