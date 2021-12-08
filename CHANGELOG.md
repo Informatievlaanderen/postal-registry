@@ -1,3 +1,10 @@
+## [2.21.1](https://github.com/informatievlaanderen/postal-registry/compare/v2.21.0...v2.21.1) (2021-12-08)
+
+
+### Bug Fixes
+
+* remove SyndicationProjectionsAdmin connectionstring from oslo appsettings ([b73ed90](https://github.com/informatievlaanderen/postal-registry/commit/b73ed90e6d58f370698e60e831e554579f8db455))
+
 # [2.21.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.20.2...v2.21.0) (2021-12-07)
 
 
