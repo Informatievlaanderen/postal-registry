@@ -18,37 +18,48 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.Responses
         [DataMember(Name = "@context", Order = 0)]
         [JsonProperty(Required = Required.DisallowNull)]
         [JsonConverter(typeof(PlainStringJsonConverter))]
-        public object Context => @"{ 
-            ""identificator"": ""@nest"",
-            ""id"": ""@id"",
-            ""versieId"": {
-                ""@id"": ""https://data.vlaanderen.be/ns/generiek#versieIdentificator"",
-                ""@type"": ""http://www.w3.org/2001/XMLSchema#string""
-            },   
-            ""postnamen"": {
-                ""@id"": ""https://data.vlaanderen.be/ns/adres#postnaam"",
-                ""@type"": ""@id"",
-                ""@context"": {
-                    ""straatnaam"": ""@nest"",
-                    ""geografischeNaam"": {
-                        ""@id"": ""http://www.w3.org/2000/01/rdf-schema#label"",
-                        ""@context"": {
-                            ""spelling"": ""@value"",
-                            ""taal"": ""@language""
-                        }
-                    }
-                }
-            },
-            ""postInfoStatus"": {
-                ""@id"": ""https://data.vlaanderen.be/ns/adres#Postinfo.status"",
-                ""@type"": ""@id"",
-                ""@context"": {
-                    ""@base"": ""https://data.vlaanderen.be/id/concept/postinfostatus/""
-                }
-            },
-            ""detail"": ""http://www.iana.org/assignments/relation/self"",
-            ""postInfoObjecten"": ""@graph""
-        }";
+        public object Context => @"{
+    ""@base"": ""https://basisregisters.vlaanderen.be/ns/adres"",
+    ""@vocab"": ""#"",
+    ""identificator"": ""@nest"",
+    ""id"": ""@id"",
+    ""versieId"": {
+      ""@id"": ""https://data.vlaanderen.be/ns/generiek#versieIdentificator"",
+      ""@type"": ""http://www.w3.org/2001/XMLSchema#string""
+    },
+    ""naamruimte"": {
+      ""@id"": ""https://data.vlaanderen.be/ns/generiek#naamruimte"",
+      ""@type"": ""http://www.w3.org/2001/XMLSchema#string""
+    },
+    ""objectId"": {
+      ""@id"": ""https://data.vlaanderen.be/ns/generiek#lokaleIdentificator"",
+      ""@type"": ""http://www.w3.org/2001/XMLSchema#string""
+    },
+    ""PostInfo"": ""https://data.vlaanderen.be/ns/adres#Postinfo"",
+    ""postnamen"": {
+      ""@id"": ""https://data.vlaanderen.be/ns/adres#postnaam"",
+      ""@type"": ""@id"",
+      ""@context"": {
+        ""straatnaam"": ""@nest"",
+        ""geografischeNaam"": {
+          ""@id"": ""http://www.w3.org/2000/01/rdf-schema#label"",
+          ""@context"": {
+            ""spelling"": ""@value"",
+            ""taal"": ""@language""
+          }
+        }
+      }
+    },
+    ""postInfoStatus"": {
+      ""@id"": ""https://data.vlaanderen.be/ns/adres#Postinfo.status"",
+      ""@type"": ""@id"",
+      ""@context"": {
+        ""@base"": ""https://data.vlaanderen.be/id/concept/postinfostatus/""
+      }
+    },
+    ""detail"": ""http://www.iana.org/assignments/relation/self"",
+    ""postInfoObjecten"": ""@graph""
+  }";
 
         /// <summary>
         /// De verzameling van postcodes.
@@ -56,6 +67,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.Responses
         [DataMember(Name = "PostInfoObjecten", Order = 1)]
         [JsonProperty(Required = Required.DisallowNull)]
         public List<PostalInformationListItemOsloResponse> PostInfoObjecten { get; set; }
+
         /// <summary>
         /// Het totaal aantal gemeenten die overeenkomen met de vraag.
         /// </summary>
@@ -79,7 +91,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.Responses
         /// </summary>
         [DataMember(Name = "@type", Order = 0)]
         [JsonProperty(Required = Required.DisallowNull)]
-        public string Type => "https://data.vlaanderen.be/id/postinfo";
+        public string Type => "PostInfo";
 
         /// <summary>
         /// De identificator van de postcode.
