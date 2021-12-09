@@ -1,3 +1,10 @@
+## [2.21.3](https://github.com/informatievlaanderen/postal-registry/compare/v2.21.2...v2.21.3) (2021-12-09)
+
+
+### Bug Fixes
+
+* change oslo context and type ([a8e25d7](https://github.com/informatievlaanderen/postal-registry/commit/a8e25d727ad230dd1ded856f8ba0dde31aa79458))
+
 ## [2.21.2](https://github.com/informatievlaanderen/postal-registry/compare/v2.21.1...v2.21.2) (2021-12-08)
 
 
