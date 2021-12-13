@@ -40,7 +40,6 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.Responses
       ""@id"": ""https://data.vlaanderen.be/ns/adres#postnaam"",
       ""@type"": ""@id"",
       ""@context"": {
-        ""straatnaam"": ""@nest"",
         ""geografischeNaam"": {
           ""@id"": ""http://www.w3.org/2000/01/rdf-schema#label"",
           ""@context"": {
