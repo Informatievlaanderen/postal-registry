@@ -48,7 +48,7 @@ nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner 9.0.0
 nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector.Testing 9.0.0
 nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Syndication 9.0.0
 
-nuget Be.Vlaanderen.Basisregisters.Projector 10.1.1
+nuget Be.Vlaanderen.Basisregisters.Projector 11.1.0
 
 nuget Be.Vlaanderen.Basisregisters.DataDog.Tracing.Autofac 4.5.7
 nuget Be.Vlaanderen.Basisregisters.DataDog.Tracing.Sql 4.5.7
