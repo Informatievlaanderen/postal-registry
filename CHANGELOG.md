@@ -1,3 +1,10 @@
+## [2.21.5](https://github.com/informatievlaanderen/postal-registry/compare/v2.21.4...v2.21.5) (2021-12-17)
+
+
+### Bug Fixes
+
+* use async startup of projections to fix hanging migrations ([8cee9ce](https://github.com/informatievlaanderen/postal-registry/commit/8cee9ce262f51506d41d8dcdc02bfce8738bb5fd))
+
 ## [2.21.4](https://github.com/informatievlaanderen/postal-registry/compare/v2.21.3...v2.21.4) (2021-12-13)
 
 
