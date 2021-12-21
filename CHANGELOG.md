@@ -1,3 +1,10 @@
+## [2.21.6](https://github.com/informatievlaanderen/postal-registry/compare/v2.21.5...v2.21.6) (2021-12-21)
+
+
+### Bug Fixes
+
+* replaced contextobject in responses with perma link ([0b1602c](https://github.com/informatievlaanderen/postal-registry/commit/0b1602c56351c5414382aaf121a557c5a8c554bf))
+
 ## [2.21.5](https://github.com/informatievlaanderen/postal-registry/compare/v2.21.4...v2.21.5) (2021-12-17)
 
 
