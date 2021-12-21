@@ -15,11 +15,14 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.Responses
     [DataContract(Name = "PostinfoCollectie", Namespace = "")]
     public class PostalInformationListOsloResponse
     {
+        /// <summary>
+        /// De linked-data context van de postinfo.
+        /// </summary>
         [DataMember(Name = "@context", Order = 0)]
         [JsonProperty(Required = Required.DisallowNull)]
         [JsonConverter(typeof(PlainStringJsonConverter))]
         public object Context =>
-            @"https://raw.githubusercontent.com/Informatievlaanderen/OSLOthema-gebouwEnAdres/d44fbba69aeb9f02d10d4e372449c404f3ebd06c/site-skeleton/adressenregister/context/postinfo_list.jsonld";
+            "[\"https://raw.githubusercontent.com/Informatievlaanderen/OSLOthema-gebouwEnAdres/d44fbba69aeb9f02d10d4e372449c404f3ebd06c/site-skeleton/adressenregister/context/postinfo_list.jsonld\"]";
 
         /// <summary>
         /// De verzameling van postcodes.
@@ -47,7 +50,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.Responses
     public class PostalInformationListItemOsloResponse
     {
         /// <summary>
-        /// Het linked-data type van de postcode.
+        /// Het linked-data type van de postinfo.
         /// </summary>
         [DataMember(Name = "@type", Order = 0)]
         [JsonProperty(Required = Required.DisallowNull)]

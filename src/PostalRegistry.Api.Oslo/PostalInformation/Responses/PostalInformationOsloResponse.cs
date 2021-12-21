@@ -18,13 +18,16 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.Responses
     [DataContract(Name = "PostinfoDetail", Namespace = "")]
     public class PostalInformationOsloResponse
     {
+        /// <summary>
+        /// De linked-data context van de postinfo.
+        /// </summary>
         [DataMember(Name = "@context", Order = 0)]
         [JsonProperty(Required = Required.DisallowNull)]
         [JsonConverter(typeof(PlainStringJsonConverter))]
-        public object Context => @"https://raw.githubusercontent.com/Informatievlaanderen/OSLOthema-gebouwEnAdres/d44fbba69aeb9f02d10d4e372449c404f3ebd06c/site-skeleton/adressenregister/context/postinfo_detail.jsonld";
+        public object Context => "[\"https://raw.githubusercontent.com/Informatievlaanderen/OSLOthema-gebouwEnAdres/d44fbba69aeb9f02d10d4e372449c404f3ebd06c/site-skeleton/adressenregister/context/postinfo_detail.jsonld\"]";
 
         /// <summary>
-        /// Het linked-data type van de postcode.
+        /// Het linked-data type van de postinfo.
         /// </summary>
         [DataMember(Name = "@type", Order = 1)]
         [JsonProperty(Required = Required.DisallowNull)]
