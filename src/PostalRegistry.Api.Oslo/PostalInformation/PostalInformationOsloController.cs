@@ -77,6 +77,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
             return Ok(
                 new PostalInformationOsloResponse(
                     responseOptions.Value.Naamruimte,
+                    responseOptions.Value.ContextUrlDetail,
                     postalCode,
                     postalInformation.VersionTimestamp.ToBelgianDateTimeOffset(),
                     postalInformation.IsRetired
@@ -95,7 +96,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
         /// </summary>
         /// <param name="legacyContext"></param>
         /// <param name="syndicationContext"></param>
-        /// <param name="reponseOptions"></param>
+        /// <param name="responseOptions"></param>
         /// <param name="cancellationToken"></param>
         /// <response code="200">Als de opvraging van een lijst met postcodes gelukt is.</response>
         /// <response code="500">Als er een interne fout is opgetreden.</response>
@@ -108,7 +109,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
         public async Task<IActionResult> List(
             [FromServices] LegacyContext legacyContext,
             [FromServices] SyndicationContext syndicationContext,
-            [FromServices] IOptions<ResponseOptions> reponseOptions,
+            [FromServices] IOptions<ResponseOptions> responseOptions,
             CancellationToken cancellationToken = default)
         {
             var filtering = Request.ExtractFilteringRequest<PostalInformationFilter>();
@@ -128,8 +129,8 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
             var items = postalInformationSet
                 .Select(p => new PostalInformationListItemOsloResponse(
                     p.PostalCode,
-                    reponseOptions.Value.Naamruimte,
-                    reponseOptions.Value.DetailUrl,
+                    responseOptions.Value.Naamruimte,
+                    responseOptions.Value.DetailUrl,
                     p.IsRetired ? PostInfoStatus.Gehistoreerd : PostInfoStatus.Gerealiseerd,
                     p.VersionTimestamp.ToBelgianDateTimeOffset())
                 {
@@ -139,7 +140,8 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
             return Ok(new PostalInformationListOsloResponse
             {
                 PostInfoObjecten = items,
-                Volgende = BuildNextUri(pagedPostalInformationSet.PaginationInfo, reponseOptions.Value.VolgendeUrl)
+                Volgende = BuildNextUri(pagedPostalInformationSet.PaginationInfo, responseOptions.Value.VolgendeUrl),
+                Context = responseOptions.Value.ContextUrlList
             });
         }
 
