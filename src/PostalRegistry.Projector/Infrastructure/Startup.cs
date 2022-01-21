@@ -6,9 +6,9 @@ namespace PostalRegistry.Projector.Infrastructure
     using Autofac;
     using Autofac.Extensions.DependencyInjection;
     using Be.Vlaanderen.Basisregisters.Api;
-    using Be.Vlaanderen.Basisregisters.DataDog.Tracing.Autofac;
+    using Be.Vlaanderen.Basisregisters.DataDog.Tracing.Autofac;    
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.LastChangedList;
-    using Be.Vlaanderen.Basisregisters.Projector;
+    using Be.Vlaanderen.Basisregisters.Projector.ConnectedProjections;
     using Configuration;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -22,6 +22,7 @@ namespace PostalRegistry.Projector.Infrastructure
     using PostalRegistry.Projections.Extract;
     using PostalRegistry.Projections.Legacy;
     using Microsoft.OpenApi.Models;
+    using System.Threading;    
 
     /// <summary>Represents the startup process for the application.</summary>
     public class Startup
@@ -32,6 +33,7 @@ namespace PostalRegistry.Projector.Infrastructure
 
         private readonly IConfiguration _configuration;
         private readonly ILoggerFactory _loggerFactory;
+        private readonly CancellationTokenSource _projectionsCancellationTokenSource = new CancellationTokenSource();
 
         public Startup(
             IConfiguration configuration,
@@ -186,16 +188,14 @@ namespace PostalRegistry.Projector.Infrastructure
                     {
                         AfterMiddleware = x => x.UseMiddleware<AddNoCacheHeadersMiddleware>()
                     }
-                })
-
-                .UseProjectionsManagerAsync(new ProjectionsManagerOptions
-                {
-                    Common =
-                    {
-                        ServiceProvider = serviceProvider,
-                        ApplicationLifetime = appLifetime
-                    }
                 });
+
+            appLifetime.ApplicationStopping.Register(() => _projectionsCancellationTokenSource.Cancel());
+            appLifetime.ApplicationStarted.Register(() =>
+            {
+                var projectionsManager = _applicationContainer.Resolve<IConnectedProjectionsManager>();
+                projectionsManager.Resume(_projectionsCancellationTokenSource.Token);
+            });
         }
 
         private static string GetApiLeadingText(ApiVersionDescription description)
