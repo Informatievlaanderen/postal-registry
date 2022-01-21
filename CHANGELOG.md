@@ -1,3 +1,10 @@
+## [2.21.8](https://github.com/informatievlaanderen/postal-registry/compare/v2.21.7...v2.21.8) (2022-01-21)
+
+
+### Bug Fixes
+
+* correctly resume projections async ([4504095](https://github.com/informatievlaanderen/postal-registry/commit/4504095484a9e2f1a82927af99fc8ad9e7eaa4f6))
+
 ## [2.21.7](https://github.com/informatievlaanderen/postal-registry/compare/v2.21.6...v2.21.7) (2022-01-18)
 
 ## [2.21.6](https://github.com/informatievlaanderen/postal-registry/compare/v2.21.5...v2.21.6) (2021-12-21)
