@@ -1,3 +1,10 @@
+## [2.21.9](https://github.com/informatievlaanderen/postal-registry/compare/v2.21.8...v2.21.9) (2022-02-10)
+
+
+### Bug Fixes
+
+* update Api dependency to fix exception handler ([b23eae2](https://github.com/informatievlaanderen/postal-registry/commit/b23eae25401c80236644bfcaedb5a59e8ce1daf8))
+
 ## [2.21.8](https://github.com/informatievlaanderen/postal-registry/compare/v2.21.7...v2.21.8) (2022-01-21)
 
 
