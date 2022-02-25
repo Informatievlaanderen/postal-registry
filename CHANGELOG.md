@@ -1,3 +1,10 @@
+# [2.22.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.21.9...v2.22.0) (2022-02-25)
+
+
+### Features
+
+* update api to 17.0.0 ([#353](https://github.com/informatievlaanderen/postal-registry/issues/353)) ([df81f3d](https://github.com/informatievlaanderen/postal-registry/commit/df81f3d0733765a0f3cf4d93c8ebef917cefcb38))
+
 ## [2.21.9](https://github.com/informatievlaanderen/postal-registry/compare/v2.21.8...v2.21.9) (2022-02-10)
 
 
