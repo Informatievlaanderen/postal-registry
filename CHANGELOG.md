@@ -1,3 +1,15 @@
+# [3.0.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.22.0...v3.0.0) (2022-03-28)
+
+
+### Features
+
+* move to dotnet 6.0.3 ([db6a46c](https://github.com/informatievlaanderen/postal-registry/commit/db6a46cd232c3c71fecdf237bb2f0d69fa7e97b0))
+
+
+### BREAKING CHANGES
+
+* move to dotnet 6.0.3
+
 # [2.22.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.21.9...v2.22.0) (2022-02-25)
 
 
