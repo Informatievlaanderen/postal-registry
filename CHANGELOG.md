@@ -1,3 +1,10 @@
+## [3.0.1](https://github.com/informatievlaanderen/postal-registry/compare/v3.0.0...v3.0.1) (2022-04-04)
+
+
+### Bug Fixes
+
+* set oslo context type to string GAWR-2931 ([a263850](https://github.com/informatievlaanderen/postal-registry/commit/a26385014cb613997aea5a2780d2d1035d452f51))
+
 # [3.0.0](https://github.com/informatievlaanderen/postal-registry/compare/v2.22.0...v3.0.0) (2022-03-28)
 
 
