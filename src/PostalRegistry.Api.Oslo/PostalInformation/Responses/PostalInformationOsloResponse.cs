@@ -4,7 +4,6 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.Responses
     using System.Collections.Generic;
     using System.Runtime.Serialization;
     using Be.Vlaanderen.Basisregisters.Api.Exceptions;
-    using Be.Vlaanderen.Basisregisters.Api.JsonConverters;
     using Be.Vlaanderen.Basisregisters.GrAr.Common;
     using Be.Vlaanderen.Basisregisters.GrAr.Legacy;
     using Be.Vlaanderen.Basisregisters.GrAr.Legacy.PostInfo;
@@ -23,8 +22,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.Responses
         /// </summary>
         [DataMember(Name = "@context", Order = 0)]
         [JsonProperty(Required = Required.DisallowNull)]
-        [JsonConverter(typeof(PlainStringJsonConverter))]
-        public object Context { get; }
+        public string Context { get; }
 
         /// <summary>
         /// Het linked-data type van de postinfo.
