@@ -1,3 +1,10 @@
+## [3.0.2](https://github.com/informatievlaanderen/postal-registry/compare/v3.0.1...v3.0.2) (2022-04-27)
+
+
+### Bug Fixes
+
+* redirect sonar to /dev/null ([066da16](https://github.com/informatievlaanderen/postal-registry/commit/066da16c89002ffed7123347f3140d9803d9afdd))
+
 ## [3.0.1](https://github.com/informatievlaanderen/postal-registry/compare/v3.0.0...v3.0.1) (2022-04-04)
 
 
