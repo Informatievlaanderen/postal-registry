@@ -2,7 +2,7 @@
 version 7.0.2
 framework: net6.0
 source https://api.nuget.org/v3/index.json
-nuget Be.Vlaanderen.Basisregisters.Build.Pipeline 6.0.3 //"
+nuget Be.Vlaanderen.Basisregisters.Build.Pipeline 6.0.4 //"
 
 #load "packages/Be.Vlaanderen.Basisregisters.Build.Pipeline/Content/build-generic.fsx"
 
@@ -19,6 +19,7 @@ let dockerRepository = "postal-registry"
 let assemblyVersionNumber = (sprintf "2.%s")
 let nugetVersionNumber = (sprintf "%s")
 
+let buildSolution = buildSolution assemblyVersionNumber
 let buildSource = build assemblyVersionNumber
 let buildTest = buildTest assemblyVersionNumber
 let setVersions = (setSolutionVersions assemblyVersionNumber product copyright company)
@@ -36,23 +37,9 @@ Target.create "Restore_Solution" (fun _ -> restore "PostalRegistry")
 
 Target.create "Build_Solution" (fun _ ->
   setVersions "SolutionInfo.cs"
-  buildSource "PostalRegistry.Projector"
-  buildSource "PostalRegistry.Api.Legacy"
-  buildSource "PostalRegistry.Api.Oslo"
-  buildSource "PostalRegistry.Api.Extract"
-  buildSource "PostalRegistry.Api.CrabImport"
-  buildSource "PostalRegistry.Projections.Legacy"
-  buildSource "PostalRegistry.Projections.Extract"
-  buildSource "PostalRegistry.Projections.LastChangedList"
-  buildSource "PostalRegistry.Projections.Syndication"
-  buildTest "PostalRegistry.Tests"
-)
+  buildSolution "PostalRegistry")
 
-Target.create "Test_Solution" (fun _ ->
-    [
-        "test" @@ "PostalRegistry.Tests"
-    ] |> List.iter testWithDotNet
-)
+Target.create "Test_Solution" (fun _ -> test "PostalRegistry")
 
 Target.create "Publish_Solution" (fun _ ->
   [
