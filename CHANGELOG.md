@@ -1,3 +1,10 @@
+## [3.0.3](https://github.com/informatievlaanderen/postal-registry/compare/v3.0.2...v3.0.3) (2022-04-29)
+
+
+### Bug Fixes
+
+* run sonar end when release version != none ([946652b](https://github.com/informatievlaanderen/postal-registry/commit/946652b6c5f2bce5599fafc0c0b1b080ca0a8b0f))
+
 ## [3.0.2](https://github.com/informatievlaanderen/postal-registry/compare/v3.0.1...v3.0.2) (2022-04-27)
 
 
