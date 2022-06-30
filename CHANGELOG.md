@@ -1,3 +1,10 @@
+## [3.0.5](https://github.com/informatievlaanderen/postal-registry/compare/v3.0.4...v3.0.5) (2022-06-30)
+
+
+### Bug Fixes
+
+* add LABEL to Dockerfile (for easier DataDog filtering) ([99da1ae](https://github.com/informatievlaanderen/postal-registry/commit/99da1ae6f9a41c641c056a54a1763183fde6ad2f))
+
 ## [3.0.4](https://github.com/informatievlaanderen/postal-registry/compare/v3.0.3...v3.0.4) (2022-04-29)
 
 
