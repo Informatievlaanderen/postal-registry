@@ -48,9 +48,9 @@ namespace PostalRegistry.Projections.Syndication.Municipality
                 municipalityLatestItem = new MunicipalityLatestItem
                 {
                     MunicipalityId = entry.Content.Object.Id,
-                    NisCode = entry.Content.Object.Identificator?.ObjectId,
+                    NisCode = entry.Content.Object.Identificator.ObjectId,
                     LastUpdatedOn = entry.FeedEntry.LastUpdated,
-                    Version = entry.Content.Object.Identificator?.Versie,
+                    Version = entry.Content.Object.Identificator.Versie,
                     Position = long.Parse(entry.FeedEntry.Id)
                 };
 
@@ -62,26 +62,27 @@ namespace PostalRegistry.Projections.Syndication.Municipality
             }
             else
             {
-                municipalityLatestItem.NisCode = entry.Content.Object.Identificator?.ObjectId;
+                municipalityLatestItem.NisCode = entry.Content.Object.Identificator.ObjectId;
                 municipalityLatestItem.LastUpdatedOn = entry.FeedEntry.LastUpdated;
-                municipalityLatestItem.Version = entry.Content.Object.Identificator?.Versie;
+                municipalityLatestItem.Version = entry.Content.Object.Identificator.Versie;
                 municipalityLatestItem.Position = long.Parse(entry.FeedEntry.Id);
 
                 UpdateNamesByGemeentenamen(municipalityLatestItem, entry.Content.Object.Gemeentenamen);
             }
         }
 
-        private static void UpdateNamesByGemeentenamen(MunicipalityLatestItem syndicationItem, List<GeografischeNaam> gemeentenamen)
+        private static void UpdateNamesByGemeentenamen(MunicipalityLatestItem syndicationItem, List<GeografischeNaam>? gemeentenamen)
         {
             if (gemeentenamen == null || !gemeentenamen.Any())
+            {
                 return;
+            }
 
             foreach (var naam in gemeentenamen)
             {
                 switch (naam.Taal)
                 {
                     default:
-                    case Taal.NL:
                         syndicationItem.NameDutch = naam.Spelling;
                         syndicationItem.NameDutchSearch = naam.Spelling.RemoveDiacritics();
                         break;
