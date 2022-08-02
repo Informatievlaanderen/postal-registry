@@ -10,7 +10,9 @@ namespace PostalRegistry.PostalInformation
         public Provenance CreateFrom(object provenanceHolder, PostalInformation aggregate)
         {
             if (!(provenanceHolder is IHasCrabProvenance crabProvenance))
-                throw new ApplicationException($"Cannot create provenance from {provenanceHolder.GetType().Name}");
+            {
+                throw new InvalidOperationException($"Cannot create provenance from {provenanceHolder.GetType().Name}");
+            }
 
             return CreateFrom(
                 aggregate.LastModification,
