@@ -16,7 +16,9 @@ namespace PostalRegistry.Infrastructure
             var connectionString = configuration.GetConnectionString("Events");
 
             if (string.IsNullOrWhiteSpace(connectionString))
-                throw new ApplicationException("Missing 'Events' connectionstring.");
+            {
+                throw new InvalidOperationException("Missing 'Events' connectionstring.");
+            }
 
             builder
                 .RegisterModule(new SqlStreamStoreModule(connectionString, Schema.Default))
@@ -32,7 +34,9 @@ namespace PostalRegistry.Infrastructure
             var connectionString = configuration.GetConnectionString("Events");
 
             if (string.IsNullOrWhiteSpace(connectionString))
-                throw new ApplicationException("Missing 'Events' connectionstring.");
+            {
+                throw new InvalidOperationException("Missing 'Events' connectionstring.");
+            }
 
             return builder
                 .RegisterModule(new SqlStreamStoreModule(connectionString, Schema.Default))
