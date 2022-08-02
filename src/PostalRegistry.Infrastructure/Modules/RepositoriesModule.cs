@@ -6,9 +6,9 @@ namespace PostalRegistry.Infrastructure.Modules
 
     public class RepositoriesModule : Module
     {
-        protected override void Load(ContainerBuilder containerBuilder)
+        protected override void Load(ContainerBuilder builder)
         {
-            containerBuilder
+            builder
                 .RegisterType<PostalInformationSet>()
                 .As<IPostalInformationSet>();
         }
