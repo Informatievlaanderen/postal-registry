@@ -3,7 +3,7 @@ namespace PostalRegistry.Api.CrabImport.Infrastructure
     using Be.Vlaanderen.Basisregisters.Api;
     using Microsoft.AspNetCore.Hosting;
 
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args) => CreateWebHostBuilder(args).Build().Run();
 
@@ -14,7 +14,7 @@ namespace PostalRegistry.Api.CrabImport.Infrastructure
                     {
                         Hosting =
                         {
-                            HttpPort = 3000,
+                            HttpPort = 3000
                         },
                         Logging =
                         {

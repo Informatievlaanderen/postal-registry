@@ -8,7 +8,7 @@ namespace PostalRegistry.Api.Extract.Extracts
     using Projections.Extract;
     using Projections.Extract.PostalInformationExtract;
 
-    public class PostalRegistryExtractBuilder
+    public static class PostalRegistryExtractBuilder
     {
         public static IEnumerable<ExtractFile> CreatePostalFiles(ExtractContext context)
         {
@@ -28,7 +28,7 @@ namespace PostalRegistry.Api.Extract.Extracts
             yield return ExtractBuilder.CreateDbfFile<PostalDbaseRecord>(
                 ExtractController.ZipName,
                 new PostalDbaseSchema(),
-                extractItems.OrderBy(x => x.PostalCode).Select(org => org.DbaseRecord),
+                extractItems.OrderBy(x => x.PostalCode).Select(org => org.DbaseRecord!),
                 extractItems.Count);
 
             yield return ExtractBuilder.CreateMetadataDbfFile(
