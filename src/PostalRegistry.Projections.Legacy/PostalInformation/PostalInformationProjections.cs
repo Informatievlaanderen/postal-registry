@@ -3,6 +3,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformation
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore;
     using NodaTime;
@@ -57,16 +58,22 @@ namespace PostalRegistry.Projections.Legacy.PostalInformation
                     message.Message.PostalCode,
                     postalInformation =>
                     {
-                        if (postalInformation.PostalNames != null &&
-                            postalInformation.PostalNames.Any(p => p.Name.Equals(message.Message.Name, StringComparison.OrdinalIgnoreCase)))
+                        if (postalInformation.PostalNames != null
+                            && postalInformation.PostalNames.Any(p => p.Name.Equals(message.Message.Name, StringComparison.OrdinalIgnoreCase)))
+                        {
                             return;
+                        }
 
                         var postalInformationName = new PostalInformationName(message.Message.Name, postalInformation.PostalCode, message.Message.Language);
 
                         if (postalInformation.PostalNames == null)
+                        {
                             postalInformation.PostalNames = new List<PostalInformationName> { postalInformationName };
+                        }
                         else
+                        {
                             postalInformation.PostalNames.Add(postalInformationName);
+                        }
 
                         UpdateVersionTimestamp(postalInformation, message.Message.Provenance.Timestamp);
                     },
@@ -97,11 +104,14 @@ namespace PostalRegistry.Projections.Legacy.PostalInformation
                     ct);
             });
 
-            When<Envelope<PostalInformationWasImportedFromCrab>>(async (context, message, ct) => DoNothing());
-            When<Envelope<PostalInformationWasImportedFromBPost>>(async (context, message, ct) => DoNothing());
+            When<Envelope<PostalInformationWasImportedFromCrab>>(async (context, message, ct) => await DoNothing());
+            When<Envelope<PostalInformationWasImportedFromBPost>>(async (context, message, ct) => await DoNothing());
         }
 
-        private static void DoNothing() { }
+        private static async Task DoNothing()
+        {
+            await Task.Yield();
+        }
 
         private static void UpdateVersionTimestamp(PostalInformation postalInformation, Instant versionTimestamp)
             => postalInformation.VersionTimestamp = versionTimestamp;
