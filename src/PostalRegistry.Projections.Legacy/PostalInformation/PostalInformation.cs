@@ -9,7 +9,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformation
 
     public class PostalInformation
     {
-        public static string VersionTimestampBackingPropertyName = nameof(VersionTimestampAsDateTimeOffset);
+        public const string VersionTimestampBackingPropertyName = nameof(VersionTimestampAsDateTimeOffset);
 
         public string PostalCode { get; set; }
         public string? NisCode { get; set; }
