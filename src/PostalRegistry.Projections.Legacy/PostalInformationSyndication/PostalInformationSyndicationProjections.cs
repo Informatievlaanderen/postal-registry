@@ -2,6 +2,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
 {
     using System;
     using System.Linq;
+    using System.Threading.Tasks;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore;
     using PostalRegistry.PostalInformation.Events;
@@ -83,10 +84,13 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
                     ct);
             });
 
-            When<Envelope<PostalInformationWasImportedFromCrab>>(async (context, message, ct) => DoNothing());
-            When<Envelope<PostalInformationWasImportedFromBPost>>(async (context, message, ct) => DoNothing());
+            When<Envelope<PostalInformationWasImportedFromCrab>>(async (context, message, ct) => await DoNothing());
+            When<Envelope<PostalInformationWasImportedFromBPost>>(async (context, message, ct) => await DoNothing());
         }
 
-        private static void DoNothing() { }
+        private static async Task DoNothing()
+        {
+            await Task.Yield();
+        }
     }
 }
