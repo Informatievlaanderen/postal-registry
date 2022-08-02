@@ -8,10 +8,8 @@ namespace PostalRegistry.PostalInformation
 
     public partial class PostalInformation
     {
-        public PostalCode PostalCode { get; private set; }
+        public PostalCode? PostalCode { get; private set; }
         private PostalInformationStatus? _status;
-
-        private NisCode _nisCode;
 
         private readonly List<PostalName> _postalNames = new List<PostalName>();
 
@@ -71,7 +69,7 @@ namespace PostalRegistry.PostalInformation
 
         private void When(MunicipalityWasAttached @event)
         {
-            _nisCode = new NisCode(@event.NisCode);
+            _ = new NisCode(@event.NisCode);
         }
     }
 }
