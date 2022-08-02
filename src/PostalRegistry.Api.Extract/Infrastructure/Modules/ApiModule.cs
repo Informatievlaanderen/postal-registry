@@ -25,17 +25,17 @@ namespace PostalRegistry.Api.Extract.Infrastructure.Modules
             _loggerFactory = loggerFactory;
         }
 
-        protected override void Load(ContainerBuilder containerBuilder)
+        protected override void Load(ContainerBuilder builder)
         {
-            containerBuilder
+            builder
                 .RegisterModule(new DataDogModule(_configuration))
                 .RegisterModule(new ExtractModule(_configuration, _services, _loggerFactory, false));
 
-            containerBuilder
+            builder
                 .RegisterType<ProblemDetailsHelper>()
                 .AsSelf();
 
-            containerBuilder.Populate(_services);
+            builder.Populate(_services);
         }
     }
 }

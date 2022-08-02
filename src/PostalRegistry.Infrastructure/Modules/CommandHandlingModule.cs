@@ -13,21 +13,21 @@ namespace PostalRegistry.Infrastructure.Modules
         public CommandHandlingModule(IConfiguration configuration)
             => _configuration = configuration;
 
-        protected override void Load(ContainerBuilder containerBuilder)
+        protected override void Load(ContainerBuilder builder)
         {
-            containerBuilder
+            builder
                 .RegisterModule<RepositoriesModule>();
 
-            containerBuilder
+            builder
                 .RegisterType<ConcurrentUnitOfWork>()
                 .InstancePerLifetimeScope();
 
-            containerBuilder
+            builder
                 .RegisterEventstreamModule(_configuration);
 
-            CommandHandlerModules.Register(containerBuilder);
+            CommandHandlerModules.Register(builder);
 
-            containerBuilder
+            builder
                 .RegisterType<CommandHandlerResolver>()
                 .As<ICommandHandlerResolver>();
         }
