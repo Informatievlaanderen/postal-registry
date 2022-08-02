@@ -13,14 +13,14 @@ namespace PostalRegistry.EventGenerator.CrabPostinfo
     using System.Text;
     using PostalInformation.Commands.Crab;
 
-    public class Program
+    public static class Program
     {
         private const string ImportUrlConfigKey = "importUrl";
         private const string CrabConnectionStringConfigKey = "crabConnectionString";
 
         private static IConfigurationRoot _configuration;
 
-        public static void Main(string[] args)
+        public static void Main(string[] _)
         {
             var configureForPostalRegistry = JsonSerializerSettingsProvider.CreateSerializerSettings().ConfigureForPostalRegistry();
             JsonConvert.DefaultSettings = () => configureForPostalRegistry;
@@ -68,7 +68,9 @@ namespace PostalRegistry.EventGenerator.CrabPostinfo
             Console.ReadKey();
 
             foreach (var importPostalInfoFromCrab in commands)
+            {
                 SendCrabImportCommand(importPostalInfoFromCrab.PostalCode, importPostalInfoFromCrab, importPostalInfoFromCrab.CreateCommandId());
+            }
 
             Console.WriteLine("Finished");
         }
@@ -83,27 +85,25 @@ namespace PostalRegistry.EventGenerator.CrabPostinfo
             var username = _configuration["AuthUserName"];
             var password = _configuration["AuthPassword"];
 
-            using (var client = new HttpClient { BaseAddress = new Uri(_configuration[ImportUrlConfigKey]) })
+            using var client = new HttpClient { BaseAddress = new Uri(_configuration[ImportUrlConfigKey]) };
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
             {
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
-                {
-                    var encodedString = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{username}:{password}"));
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", encodedString);
-                }
-
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
-                content.Headers.Add("CommandId", commandId.ToString("D"));
-
-                Console.Write($"Posting postal code: {id} ");
-
-                var response = client.PostAsync("v1/crabimport", content).GetAwaiter().GetResult();
-                response.EnsureSuccessStatusCode();
-
-                Console.WriteLine("[OK]");
+                var encodedString = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{username}:{password}"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", encodedString);
             }
+
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            content.Headers.Add("CommandId", commandId.ToString("D"));
+
+            Console.Write($"Posting postal code: {id} ");
+
+            var response = client.PostAsync("v1/crabimport", content).GetAwaiter().GetResult();
+            response.EnsureSuccessStatusCode();
+
+            Console.WriteLine("[OK]");
         }
     }
 }

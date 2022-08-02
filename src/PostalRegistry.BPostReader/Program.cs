@@ -18,7 +18,7 @@ namespace PostalRegistry.BPostReader
     using NodaTime;
     using PostalInformation.Commands.BPost;
 
-    public class Program
+    public static class Program
     {
         private const string ImportedPathConfigKey = "importedPath";
         private const string BpostUrlConfigKey = "bpostUrl";
@@ -28,7 +28,7 @@ namespace PostalRegistry.BPostReader
         private static IConfigurationRoot _configuration;
         private static string _importPath;
 
-        public static void Main(string[] args)
+        public static void Main(string[] _)
         {
             var configureForPostalRegistry = JsonSerializerSettingsProvider.CreateSerializerSettings().ConfigureForPostalRegistry();
             JsonConvert.DefaultSettings = () => configureForPostalRegistry;
@@ -68,7 +68,9 @@ namespace PostalRegistry.BPostReader
         private static void ImportCommands(IReadOnlyCollection<ImportPostalInformationFromBPost> commands)
         {
             if (!commands.Any())
+            {
                 return;
+            }
 
             Console.WriteLine("Press key to start import");
             Console.ReadKey();
@@ -164,7 +166,9 @@ namespace PostalRegistry.BPostReader
 
             string htmlString;
             using (var webClient = new WebClient())
+            {
                 htmlString = webClient.DownloadString(_configuration[BpostUrlConfigKey]);
+            }
 
             Console.WriteLine("Downloaded postal codes");
 
@@ -193,7 +197,7 @@ namespace PostalRegistry.BPostReader
                     PostalCode = columns[0],
                     PostalName = HttpUtility.HtmlDecode(columns[1]),
                     IsSubMunicipality = GetSubmunicipalityFromColumn(columns[2]),
-                    Province = HttpUtility.HtmlDecode(columns[3]),
+                    Province = HttpUtility.HtmlDecode(columns[3])
                 })
                 .ToList();
         }
@@ -203,7 +207,9 @@ namespace PostalRegistry.BPostReader
             bool? isSubmunicipality = null;
 
             if (!string.IsNullOrWhiteSpace(column))
+            {
                 isSubmunicipality = string.Equals(column, "Ja", StringComparison.OrdinalIgnoreCase);
+            }
 
             return isSubmunicipality;
         }
@@ -221,7 +227,9 @@ namespace PostalRegistry.BPostReader
 
                 // If the file date is smaller than our last import, we skip it
                 if (timeStamp <= latestImport)
+                {
                     continue;
+                }
 
                 latestImport = timeStamp;
                 latestFile = importedFile;
@@ -248,27 +256,25 @@ namespace PostalRegistry.BPostReader
             var username = _configuration["AuthUserName"];
             var password = _configuration["AuthPassword"];
 
-            using (var client = new HttpClient { BaseAddress = new Uri(_configuration[ImportUrlConfigKey]) })
+            using var client = new HttpClient { BaseAddress = new Uri(_configuration[ImportUrlConfigKey]) };
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
             {
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
-                {
-                    var encodedString = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{username}:{password}"));
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", encodedString);
-                }
-
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
-                content.Headers.Add("CommandId", commandId.ToString("D"));
-
-                Console.Write($"Posting postal code: {id} ");
-
-                var response = client.PostAsync("v1/bpostimport", content).GetAwaiter().GetResult();
-                response.EnsureSuccessStatusCode();
-
-                Console.WriteLine("[OK]");
+                var encodedString = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{username}:{password}"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", encodedString);
             }
+
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            content.Headers.Add("CommandId", commandId.ToString("D"));
+
+            Console.Write($"Posting postal code: {id} ");
+
+            var response = client.PostAsync("v1/bpostimport", content).GetAwaiter().GetResult();
+            response.EnsureSuccessStatusCode();
+
+            Console.WriteLine("[OK]");
         }
     }
 }
