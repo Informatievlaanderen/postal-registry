@@ -1,3 +1,18 @@
+## [3.0.6](https://github.com/informatievlaanderen/postal-registry/compare/v3.0.5...v3.0.6) (2022-08-02)
+
+
+### Bug Fixes
+
+* bump commandhandling dependency ([0c10e5c](https://github.com/informatievlaanderen/postal-registry/commit/0c10e5c180bc75a73b51bff924b1f2a566da9f28))
+* correct format strings ([538375f](https://github.com/informatievlaanderen/postal-registry/commit/538375f8a3e7291b37ac6d6ef0ce2d3faddefe2e))
+* correct parameter names ([f5fc551](https://github.com/informatievlaanderen/postal-registry/commit/f5fc5516283aa29c07a5f9183bd481302e931e07))
+* don't throw general exceptions ([a60d1b7](https://github.com/informatievlaanderen/postal-registry/commit/a60d1b7d04b4e03a54d7aadb11d32bd829cde866))
+* empty methods ([da35f38](https://github.com/informatievlaanderen/postal-registry/commit/da35f3843ffedc33932f245e7497314bbe9f7504))
+* make utility classes static or protected ctor ([2993357](https://github.com/informatievlaanderen/postal-registry/commit/299335772e768f3d0c7d8da79f0c1d314e2c12f3))
+* remove empty case clauses ([b393b40](https://github.com/informatievlaanderen/postal-registry/commit/b393b4027bae797a5cd03185d1ed757fc47135bc))
+* unused private fields ([d4366d8](https://github.com/informatievlaanderen/postal-registry/commit/d4366d8bc89ab0ab390df81f54716457df270027))
+* visibility of fields ([d3467b7](https://github.com/informatievlaanderen/postal-registry/commit/d3467b796eec537fb4c22f4e048fd95beac88165))
+
 ## [3.0.5](https://github.com/informatievlaanderen/postal-registry/compare/v3.0.4...v3.0.5) (2022-06-30)
 
 
