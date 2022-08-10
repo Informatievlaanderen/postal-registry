@@ -1,7 +1,6 @@
 namespace PostalRegistry.Projections.LastChangedList
 {
     using System;
-    using System.Threading.Tasks;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.LastChangedList;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore;
@@ -44,9 +43,9 @@ namespace PostalRegistry.Projections.LastChangedList
                 await GetLastChangedRecordsAndUpdatePosition(message.Message.PostalCode, message.Position, context, ct);
             });
 
-            When<Envelope<MunicipalityWasAttached>>(async (context, message, ct) => await DoNothing());
-            When<Envelope<PostalInformationWasImportedFromCrab>>(async (context, message, ct) => await DoNothing());
-            When<Envelope<PostalInformationWasImportedFromBPost>>(async (context, message, ct) => await DoNothing());
+            When<Envelope<MunicipalityWasAttached>>(async (context, message, ct) => DoNothing());
+            When<Envelope<PostalInformationWasImportedFromCrab>>(async (context, message, ct) => DoNothing());
+            When<Envelope<PostalInformationWasImportedFromBPost>>(async (context, message, ct) => DoNothing());
         }
 
         protected override string BuildCacheKey(AcceptType acceptType, string identifier)
@@ -54,9 +53,9 @@ namespace PostalRegistry.Projections.LastChangedList
             var shortenedAcceptType = acceptType.ToString().ToLowerInvariant();
             return acceptType switch
             {
-                AcceptType.Json => $"legacy/postalinfo:{{{identifier}}}.{shortenedAcceptType}",
-                AcceptType.Xml => $"legacy/postalinfo:{{{identifier}}}.{shortenedAcceptType}",
-                AcceptType.JsonLd => $"oslo/postalinfo:{{{identifier}}}.{shortenedAcceptType}",
+                AcceptType.Json => string.Format("legacy/postalinfo:{{0}}.{1}", identifier, shortenedAcceptType),
+                AcceptType.Xml => string.Format("legacy/postalinfo:{{0}}.{1}", identifier, shortenedAcceptType),
+                AcceptType.JsonLd => string.Format("oslo/postalinfo:{{0}}.{1}", identifier, shortenedAcceptType),
                 _ => throw new NotImplementedException($"Cannot build CacheKey for type {typeof(AcceptType)}")
             };
         }
@@ -65,16 +64,13 @@ namespace PostalRegistry.Projections.LastChangedList
         {
             return acceptType switch
             {
-                AcceptType.Json => $"/v1/postcodes/{{{identifier}}}",
-                AcceptType.Xml => $"/v1/postcodes/{{{identifier}}}",
-                AcceptType.JsonLd => $"/v2/postcodes/{{{identifier}}}",
+                AcceptType.Json => string.Format("/v1/postcodes/{{0}}", identifier),
+                AcceptType.Xml => string.Format("/v1/postcodes/{{0}}", identifier),
+                AcceptType.JsonLd => string.Format("/v2/postcodes/{{0}}", identifier),
                 _ => throw new NotImplementedException($"Cannot build Uri for type {typeof(AcceptType)}")
             };
         }
 
-        private static async Task DoNothing()
-        {
-            await Task.Yield();
-        }
+        private static void DoNothing() { }
     }
 }
