@@ -1,3 +1,10 @@
+# [3.1.0](https://github.com/informatievlaanderen/postal-registry/compare/v3.0.7...v3.1.0) (2022-08-24)
+
+
+### Features
+
+* update dependencies ([3b1c2f7](https://github.com/informatievlaanderen/postal-registry/commit/3b1c2f79f703e9933ec7e26a422e8344297e14fd))
+
 ## [3.0.7](https://github.com/informatievlaanderen/postal-registry/compare/v3.0.6...v3.0.7) (2022-08-11)
 
 
