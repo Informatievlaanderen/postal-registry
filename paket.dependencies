@@ -20,36 +20,36 @@ nuget AspNetCore.HealthChecks.SqlServer 6.0.2
 nuget Microsoft.EntityFrameworkCore.Design 6.0.3
 
 // VBR STUFF
-nuget Be.Vlaanderen.Basisregisters.Build.Pipeline 6.0.4
+nuget Be.Vlaanderen.Basisregisters.Build.Pipeline 6.0.5
 nuget Be.Vlaanderen.Basisregisters.Testing.Infrastructure.Events 3.0.0 content: true, copy_content_to_output_dir: always, copy_local: true
 
-nuget Be.Vlaanderen.Basisregisters.AggregateSource 6.2.2
-nuget Be.Vlaanderen.Basisregisters.AggregateSource.ExplicitRouting 6.2.2
-nuget Be.Vlaanderen.Basisregisters.AggregateSource.SqlStreamStore.Autofac 6.2.2
-nuget Be.Vlaanderen.Basisregisters.AggregateSource.Testing 6.2.2
-nuget Be.Vlaanderen.Basisregisters.AggregateSource.Testing.CommandHandling 6.2.2
-nuget Be.Vlaanderen.Basisregisters.AggregateSource.Testing.SqlStreamStore.Autofac 6.2.2
-nuget Be.Vlaanderen.Basisregisters.AggregateSource.Testing.Xunit 6.2.2
+nuget Be.Vlaanderen.Basisregisters.AggregateSource 7.0.0
+nuget Be.Vlaanderen.Basisregisters.AggregateSource.ExplicitRouting 7.0.0
+nuget Be.Vlaanderen.Basisregisters.AggregateSource.SqlStreamStore.Autofac 7.0.0
+nuget Be.Vlaanderen.Basisregisters.AggregateSource.Testing 7.0.0
+nuget Be.Vlaanderen.Basisregisters.AggregateSource.Testing.CommandHandling 7.0.0
+nuget Be.Vlaanderen.Basisregisters.AggregateSource.Testing.SqlStreamStore.Autofac 7.0.0
+nuget Be.Vlaanderen.Basisregisters.AggregateSource.Testing.Xunit 7.0.0
 
-nuget Be.Vlaanderen.Basisregisters.Api 18.0.0
+nuget Be.Vlaanderen.Basisregisters.Api 18.1.0
 
 nuget Be.Vlaanderen.Basisregisters.Aws.DistributedMutex 3.0.0
 
-nuget Be.Vlaanderen.Basisregisters.CommandHandling 6.2.2
-nuget Be.Vlaanderen.Basisregisters.CommandHandling.Idempotency 6.2.2
-nuget Be.Vlaanderen.Basisregisters.CommandHandling.SqlStreamStore 6.2.2
+nuget Be.Vlaanderen.Basisregisters.CommandHandling 7.0.0
+nuget Be.Vlaanderen.Basisregisters.CommandHandling.Idempotency 7.0.0
+nuget Be.Vlaanderen.Basisregisters.CommandHandling.SqlStreamStore 7.0.0
 
-nuget Be.Vlaanderen.Basisregisters.EventHandling 4.0.0
-nuget Be.Vlaanderen.Basisregisters.EventHandling.Autofac 4.0.0
+nuget Be.Vlaanderen.Basisregisters.EventHandling 4.2.0
+nuget Be.Vlaanderen.Basisregisters.EventHandling.Autofac 4.2.0
 
-nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.LastChangedList 10.0.1
-nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore 10.0.1
-nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore.Autofac 10.0.1
-nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner 10.0.1
-nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector.Testing 10.0.1
-nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Syndication 10.0.1
+nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.LastChangedList 11.0.1
+nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore 11.0.1
+nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore.Autofac 11.0.1
+nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner 11.0.1
+nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector.Testing 11.0.1
+nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Syndication 11.0.1
 
-nuget Be.Vlaanderen.Basisregisters.Projector 12.0.0
+nuget Be.Vlaanderen.Basisregisters.Projector 12.0.1
 
 nuget Be.Vlaanderen.Basisregisters.DataDog.Tracing.Autofac 5.0.0
 nuget Be.Vlaanderen.Basisregisters.DataDog.Tracing.Sql 5.0.0
@@ -57,11 +57,11 @@ nuget Be.Vlaanderen.Basisregisters.DataDog.Tracing.SqlStreamStore 5.0.0
 
 nuget Be.Vlaanderen.Basisregisters.Crab 3.0.0
 
-nuget Be.Vlaanderen.Basisregisters.GrAr.Common 17.0.0
-nuget Be.Vlaanderen.Basisregisters.GrAr.Import 17.0.0
-nuget Be.Vlaanderen.Basisregisters.GrAr.Legacy 17.0.0
-nuget Be.Vlaanderen.Basisregisters.GrAr.Provenance 17.0.0
-nuget Be.Vlaanderen.Basisregisters.GrAr.Extracts 17.0.0
+nuget Be.Vlaanderen.Basisregisters.GrAr.Common 17.18.0
+nuget Be.Vlaanderen.Basisregisters.GrAr.Import 17.18.0
+nuget Be.Vlaanderen.Basisregisters.GrAr.Legacy 17.18.0
+nuget Be.Vlaanderen.Basisregisters.GrAr.Provenance 17.18.0
+nuget Be.Vlaanderen.Basisregisters.GrAr.Extracts 17.18.0
 
 nuget Be.Vlaanderen.Basisregisters.Shaperon 9.0.1
 

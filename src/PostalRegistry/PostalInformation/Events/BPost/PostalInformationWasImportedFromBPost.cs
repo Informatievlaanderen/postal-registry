@@ -9,14 +9,14 @@ namespace PostalRegistry.PostalInformation.Events.BPost
 
     [EventName("BPost-PostalInformationWasImported")]
     [EventDescription("Er werd postinformatie geïmporteerd van bpost.")]
-    public class PostalInformationWasImportedFromBPost : IHasProvenance, ISetProvenance
+    public class PostalInformationWasImportedFromBPost : IHasProvenance, ISetProvenance, IMessage
     {
         [EventPropertyDescription("Postcode.")]
         public string PostalCode { get; }
-        
+
         [EventPropertyDescription("Postnamen die bij de postcode horen.")]
         public List<PostalNameData> PostalNames { get; }
-        
+
         [EventPropertyDescription("Aanduiding of de postcode naar een deelgemeente of andere postbedelingszone (binnen een gemeente) verwijst.")]
         public bool? IsSubMunicipality { get; }
 
