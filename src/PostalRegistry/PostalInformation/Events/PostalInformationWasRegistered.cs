@@ -7,7 +7,7 @@ namespace PostalRegistry.PostalInformation.Events
     [EventTags(EventTag.For.Sync)]
     [EventName("PostalInformationWasRegistered")]
     [EventDescription("Het PostInfo-object werd aangemaakt in het register met zijn persistente lokale identificator.")]
-    public class PostalInformationWasRegistered : IHasProvenance, ISetProvenance
+    public class PostalInformationWasRegistered : IHasProvenance, ISetProvenance, IMessage
     {
         [EventPropertyDescription("Postcode (= objectidentificator) van het PostInfo-object.")]
         public string PostalCode { get; }

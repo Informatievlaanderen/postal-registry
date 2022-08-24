@@ -7,7 +7,7 @@ namespace PostalRegistry.PostalInformation.Events
     [EventTags(EventTag.For.Sync)]
     [EventName("PostalInformationPostalNameWasRemoved")]
     [EventDescription("Er werd een postnaam verwijderd uit het PostInfo-object.")]
-    public class PostalInformationPostalNameWasRemoved : IHasProvenance, ISetProvenance
+    public class PostalInformationPostalNameWasRemoved : IHasProvenance, ISetProvenance, IMessage
     {
         [EventPropertyDescription("Postcode (= objectidentificator) van het PostInfo-object.")]
         public string PostalCode { get; }

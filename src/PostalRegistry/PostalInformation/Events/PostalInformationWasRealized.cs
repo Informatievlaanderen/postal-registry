@@ -7,7 +7,7 @@ namespace PostalRegistry.PostalInformation.Events
     [EventTags(EventTag.For.Sync)]
     [EventName("PostalInformationWasRealized")]
     [EventDescription("Het PostInfo-object kreeg status 'gerealiseerd'.")]
-    public class PostalInformationWasRealized : IHasProvenance, ISetProvenance
+    public class PostalInformationWasRealized : IHasProvenance, ISetProvenance, IMessage
     {
         [EventPropertyDescription("Postcode (= objectidentificator) van het PostInfo-object.")]
         public string PostalCode { get; }

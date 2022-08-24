@@ -7,7 +7,7 @@ namespace PostalRegistry.PostalInformation.Events
     [EventTags(EventTag.For.Sync)]
     [EventName("PostalInformationPostalNameWasAdded")]
     [EventDescription("Er werd een postnaam toegevoegd aan het PostInfo-object.")]
-    public class PostalInformationPostalNameWasAdded : IHasProvenance, ISetProvenance
+    public class PostalInformationPostalNameWasAdded : IHasProvenance, ISetProvenance, IMessage
     {
         [EventPropertyDescription("Postcode (= objectidentificator) van het PostInfo-object.")]
         public string PostalCode { get; }

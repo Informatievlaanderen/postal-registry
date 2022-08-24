@@ -7,7 +7,7 @@ namespace PostalRegistry.PostalInformation.Events
     [EventTags(EventTag.For.Sync)]
     [EventName("PostalInformationWasRetired")]
     [EventDescription("Het PostInfo-object kreeg status 'gehistoreerd'.")]
-    public class PostalInformationWasRetired : IHasProvenance, ISetProvenance
+    public class PostalInformationWasRetired : IHasProvenance, ISetProvenance, IMessage
     {
         [EventPropertyDescription("Postcode (= objectidentificator) van het PostInfo-object.")]
         public string PostalCode { get; }
