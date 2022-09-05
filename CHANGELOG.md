@@ -1,3 +1,10 @@
+## [3.1.1](https://github.com/informatievlaanderen/postal-registry/compare/v3.1.0...v3.1.1) (2022-09-05)
+
+
+### Bug Fixes
+
+* fix format strings ([3f4614e](https://github.com/informatievlaanderen/postal-registry/commit/3f4614ef0045efeabe515bc3fc24c72290c02dff))
+
 # [3.1.0](https://github.com/informatievlaanderen/postal-registry/compare/v3.0.7...v3.1.0) (2022-08-24)
 
 
