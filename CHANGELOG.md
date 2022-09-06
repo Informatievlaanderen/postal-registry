@@ -1,3 +1,10 @@
+## [3.1.2](https://github.com/informatievlaanderen/postal-registry/compare/v3.1.1...v3.1.2) (2022-09-06)
+
+
+### Bug Fixes
+
+* change workflow ([18ffccc](https://github.com/informatievlaanderen/postal-registry/commit/18ffccc9dcb8be90cf43fd51d6be645528529c66))
+
 ## [3.1.1](https://github.com/informatievlaanderen/postal-registry/compare/v3.1.0...v3.1.1) (2022-09-05)
 
 
