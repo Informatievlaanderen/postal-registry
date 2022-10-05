@@ -1,3 +1,10 @@
+## [3.1.3](https://github.com/informatievlaanderen/postal-registry/compare/v3.1.2...v3.1.3) (2022-10-05)
+
+
+### Bug Fixes
+
+* syndication xml serialization ([b762184](https://github.com/informatievlaanderen/postal-registry/commit/b76218460b8cd1fd016fbb1d69bbcd48824dadd5))
+
 ## [3.1.2](https://github.com/informatievlaanderen/postal-registry/compare/v3.1.1...v3.1.2) (2022-09-06)
 
 
