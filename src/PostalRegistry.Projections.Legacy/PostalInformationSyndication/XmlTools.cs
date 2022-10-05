@@ -2,6 +2,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
 {
     using System;
     using System.Collections;
+    using System.Globalization;
     using System.Linq;
     using System.Reflection;
     using System.Xml;
@@ -57,12 +58,16 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
             if (string.IsNullOrEmpty(element))
             {
                 var name = input.GetType().Name;
-                var elementValue = arrayIndex != null
-                    ? arrayName + "_" + arrayIndex
-                    : name;
+                string GetArrayElement()
+                {
+                    return arrayIndex != null
+                        ? arrayName + "_" + arrayIndex
+                        : name;
+                }
+
                 element = name.Contains("AnonymousType")
                     ? "Object"
-                    : elementValue;
+                    : GetArrayElement();
             }
 
             element = XmlConvert.EncodeName(element);
@@ -72,19 +77,38 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
             var props = type.GetProperties();
 
             var elements = from prop in props
-                           let pType = Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType
-                           let name = XmlConvert.EncodeName(prop.Name)
-                           let val = pType.IsArray ? "array" : prop.GetValue(input, null)
-                           let elementValue = pType.IsSimpleType() ? new XElement(name, val) : val.ToXml(name)
-                           let value = pType.IsEnumerable()
-                               ? GetEnumerableElements(prop, (IEnumerable)prop.GetValue(input, null))
-                               : elementValue
-                           where value != null && !pType.IsExcludedType() && !name.IsExcludedPropertyName()
-                           select value;
+                let pType = Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType
+                let name = XmlConvert.EncodeName(prop.Name)
+                let val = pType.IsArray ? "array" : prop.GetValue(input, null)
+                let value = pType.IsEnumerable()
+                    ? GetEnumerableElements(prop, (IEnumerable)prop.GetValue(input, null)!)
+                    : GetElement(pType, name, val)
+                where value != null && !pType.IsExcludedType() && !name.IsExcludedPropertyName()
+                select value;
+
+            XElement? GetElement(Type pType, string s, object o)
+                => pType.IsSimpleType() ? new XElement(s, GetValue(o)) : o.ToXml(s);
 
             ret.Add(elements);
 
             return ret;
+        }
+
+        private static object? GetValue(object? val)
+        {
+            switch (val)
+            {
+                case LocalDate localDate:
+                    return localDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+                case LocalDateTime localDateTime:
+                    return localDateTime.ToString("o", CultureInfo.InvariantCulture);
+                case DateTime dateTime:
+                    return dateTime.ToString("o", CultureInfo.InvariantCulture);
+                case DateTimeOffset dateTimeOffset:
+                    return dateTimeOffset.ToString("o", CultureInfo.InvariantCulture);
+                default:
+                    return val;
+            }
         }
 
         private static readonly Type[] FlatternTypes = {
