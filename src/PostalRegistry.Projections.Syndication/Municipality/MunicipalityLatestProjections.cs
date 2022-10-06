@@ -19,10 +19,10 @@ namespace PostalRegistry.Projections.Syndication.Municipality
             When(MunicipalityEvent.MunicipalityNameWasCleared, AddSyndicationItemEntry);
             When(MunicipalityEvent.MunicipalityNameWasCorrected, AddSyndicationItemEntry);
             When(MunicipalityEvent.MunicipalityNameWasCorrectedToCleared, AddSyndicationItemEntry);
-
-            // only version is updated
             When(MunicipalityEvent.MunicipalityOfficialLanguageWasAdded, AddSyndicationItemEntry);
             When(MunicipalityEvent.MunicipalityOfficialLanguageWasRemoved, AddSyndicationItemEntry);
+
+            // only version is updated
             When(MunicipalityEvent.MunicipalityFacilityLanguageWasAdded, AddSyndicationItemEntry);
             When(MunicipalityEvent.MunicipalityFacilityLanguageWasRemoved, AddSyndicationItemEntry);
 
@@ -41,7 +41,7 @@ namespace PostalRegistry.Projections.Syndication.Municipality
             var municipalityLatestItem =
                 await context
                     .MunicipalityLatestItems
-                    .FindAsync(entry.Content.Object.Id);
+                    .FindAsync(new object?[] { entry.Content.Object.Id }, ct);
 
             if (municipalityLatestItem == null)
             {
@@ -51,7 +51,8 @@ namespace PostalRegistry.Projections.Syndication.Municipality
                     NisCode = entry.Content.Object.Identificator.ObjectId,
                     LastUpdatedOn = entry.FeedEntry.LastUpdated,
                     Version = entry.Content.Object.Identificator.Versie,
-                    Position = long.Parse(entry.FeedEntry.Id)
+                    Position = long.Parse(entry.FeedEntry.Id),
+                    PrimaryLanguage = entry.Content.Object.OfficialLanguages.FirstOrDefault()
                 };
 
                 UpdateNamesByGemeentenamen(municipalityLatestItem, entry.Content.Object.Gemeentenamen);
@@ -66,6 +67,7 @@ namespace PostalRegistry.Projections.Syndication.Municipality
                 municipalityLatestItem.LastUpdatedOn = entry.FeedEntry.LastUpdated;
                 municipalityLatestItem.Version = entry.Content.Object.Identificator.Versie;
                 municipalityLatestItem.Position = long.Parse(entry.FeedEntry.Id);
+                municipalityLatestItem.PrimaryLanguage = entry.Content.Object.OfficialLanguages.FirstOrDefault();
 
                 UpdateNamesByGemeentenamen(municipalityLatestItem, entry.Content.Object.Gemeentenamen);
             }

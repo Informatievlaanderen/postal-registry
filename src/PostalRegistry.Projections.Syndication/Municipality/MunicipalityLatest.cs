@@ -1,6 +1,7 @@
 namespace PostalRegistry.Projections.Syndication.Municipality
 {
     using System;
+    using Be.Vlaanderen.Basisregisters.GrAr.Legacy;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
     using Infrastructure;
@@ -19,6 +20,7 @@ namespace PostalRegistry.Projections.Syndication.Municipality
         public string? NameEnglish { get; set; }
         public string? NameEnglishSearch { get; set; }
 
+        public Taal? PrimaryLanguage { get; set; }
         public string? Version { get; set; }
 
         public long Position { get; set; }
@@ -28,7 +30,7 @@ namespace PostalRegistry.Projections.Syndication.Municipality
 
     public class MunicipalityItemConfiguration : IEntityTypeConfiguration<MunicipalityLatestItem>
     {
-        private const string TableName = "MunicipalityLatestSyndication";
+        internal const string TableName = "MunicipalityLatestSyndication";
 
         public void Configure(EntityTypeBuilder<MunicipalityLatestItem> builder)
         {
@@ -46,6 +48,7 @@ namespace PostalRegistry.Projections.Syndication.Municipality
             builder.Property(x => x.NameGermanSearch);
             builder.Property(x => x.NameEnglish);
             builder.Property(x => x.NameEnglishSearch);
+            builder.Property(x => x.PrimaryLanguage);
 
             builder.Property(x => x.Version);
             builder.Property(x => x.Position);
