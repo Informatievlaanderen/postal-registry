@@ -1,6 +1,7 @@
 namespace PostalRegistry.Projections.Syndication.Municipality
 {
     using System;
+    using System.Collections.Generic;
     using Be.Vlaanderen.Basisregisters.GrAr.Legacy;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -26,6 +27,21 @@ namespace PostalRegistry.Projections.Syndication.Municipality
         public long Position { get; set; }
 
         public DateTimeOffset LastUpdatedOn { get; set; }
+
+        public KeyValuePair<Taal, string> DefaultName
+        {
+            get
+            {
+                return PrimaryLanguage switch
+                {
+                    Taal.NL => new KeyValuePair<Taal, string>(Taal.NL, NameDutch),
+                    Taal.FR => new KeyValuePair<Taal, string>(Taal.FR, NameFrench),
+                    Taal.DE => new KeyValuePair<Taal, string>(Taal.DE, NameGerman),
+                    Taal.EN => new KeyValuePair<Taal, string>(Taal.EN, NameEnglish),
+                    _ => new KeyValuePair<Taal, string>(Taal.NL, NameDutch)
+                };
+            }
+        }
     }
 
     public class MunicipalityItemConfiguration : IEntityTypeConfiguration<MunicipalityLatestItem>
@@ -53,6 +69,8 @@ namespace PostalRegistry.Projections.Syndication.Municipality
             builder.Property(x => x.Version);
             builder.Property(x => x.Position);
             builder.Property(x => x.LastUpdatedOn);
+
+            builder.Ignore(x => x.DefaultName);
 
             builder.HasIndex(x => x.LastUpdatedOn);
             builder.HasIndex(x => x.Position);
