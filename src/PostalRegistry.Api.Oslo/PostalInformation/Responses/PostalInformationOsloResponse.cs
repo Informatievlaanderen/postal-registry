@@ -42,8 +42,8 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.Responses
         /// <summary>
         /// De gemeente aan dewelke de postinfo is toegewezen.
         /// </summary>
-        [DataMember(Name = "Gemeente", Order = 3)]
-        [JsonProperty(Required = Required.AllowNull)]
+        [DataMember(Name = "Gemeente", Order = 3, EmitDefaultValue = false)]
+        [JsonProperty(Required = Required.Default, DefaultValueHandling = DefaultValueHandling.Ignore)]
         public PostinfoDetailGemeente? Gemeente { get; set; }
 
         /// <summary>

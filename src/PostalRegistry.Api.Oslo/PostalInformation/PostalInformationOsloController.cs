@@ -204,7 +204,6 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
             var municipality = await syndicationContext
                 .MunicipalityLatestItems
                 .AsNoTracking()
-                .OrderByDescending(m => m.Position)
                 .FirstOrDefaultAsync(m => m.NisCode == nisCode, ct);
 
             if (municipality is null)
