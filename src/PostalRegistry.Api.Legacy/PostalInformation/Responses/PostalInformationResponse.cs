@@ -28,8 +28,8 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
         /// <summary>
         /// De gemeente aan dewelke de postinfo is toegewezen.
         /// </summary>
-        [DataMember(Name = "Gemeente", Order = 2)]
-        [JsonProperty(Required = Required.AllowNull)]
+        [DataMember(Name = "Gemeente", Order = 2, EmitDefaultValue = false)]
+        [JsonProperty(Required = Required.Default, DefaultValueHandling = DefaultValueHandling.Ignore)]
         public PostinfoDetailGemeente? Gemeente { get; set; }
 
         /// <summary>
