@@ -2,32 +2,24 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
 {
     using System;
     using System.Linq;
-    using System.Net.Mime;
-    using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
-    using System.Xml;
     using Be.Vlaanderen.Basisregisters.Api;
     using Be.Vlaanderen.Basisregisters.Api.Exceptions;
     using Be.Vlaanderen.Basisregisters.Api.Search;
     using Be.Vlaanderen.Basisregisters.Api.Search.Filtering;
     using Be.Vlaanderen.Basisregisters.Api.Search.Pagination;
     using Be.Vlaanderen.Basisregisters.Api.Search.Sorting;
-    using Be.Vlaanderen.Basisregisters.Api.Syndication;
     using Be.Vlaanderen.Basisregisters.GrAr.Common;
-    using Be.Vlaanderen.Basisregisters.GrAr.Common.Syndication;
     using Be.Vlaanderen.Basisregisters.GrAr.Legacy;
+    using Be.Vlaanderen.Basisregisters.GrAr.Legacy.Gemeente;
     using Be.Vlaanderen.Basisregisters.GrAr.Legacy.PostInfo;
     using Convertors;
-    using Infrastructure;
     using Infrastructure.Options;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Options;
-    using Microsoft.SyndicationFeed;
-    using Microsoft.SyndicationFeed.Atom;
     using Projections.Legacy;
     using Projections.Syndication;
     using Query;
@@ -45,6 +37,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
         /// Vraag info over een postcode op.
         /// </summary>
         /// <param name="context"></param>
+        /// <param name="syndicationContext"></param>
         /// <param name="responseOptions"></param>
         /// <param name="postalCode">De postcode.</param>
         /// <param name="cancellationToken"></param>
@@ -61,6 +54,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
         [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(InternalServerErrorResponseExamples))]
         public async Task<IActionResult> Get(
             [FromServices] LegacyContext context,
+            [FromServices] SyndicationContext syndicationContext,
             [FromServices] IOptions<ResponseOptions> responseOptions,
             [FromRoute] string postalCode,
             CancellationToken cancellationToken = default)
@@ -72,13 +66,22 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
                 .SingleOrDefaultAsync(item => item.PostalCode == postalCode, cancellationToken);
 
             if (postalInformation == null)
+            {
                 throw new ApiException("Onbestaande postcode.", StatusCodes.Status404NotFound);
+            }
+
+            var gemeente = await GetPostinfoDetailGemeente(
+                syndicationContext,
+                postalInformation.NisCode,
+                responseOptions.Value.GemeenteDetailUrl,
+                cancellationToken);
 
             return Ok(
                 new PostalInformationOsloResponse(
                     responseOptions.Value.Naamruimte,
                     responseOptions.Value.ContextUrlDetail,
                     postalCode,
+                    gemeente,
                     postalInformation.VersionTimestamp.ToBelgianDateTimeOffset(),
                     postalInformation.IsRetired
                         ? PostInfoStatus.Gehistoreerd
@@ -182,7 +185,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
                 });
         }
 
-        private static Uri BuildNextUri(PaginationInfo paginationInfo, string nextUrlBase)
+        private static Uri? BuildNextUri(PaginationInfo paginationInfo, string nextUrlBase)
         {
             var offset = paginationInfo.Offset;
             var limit = paginationInfo.Limit;
@@ -190,6 +193,33 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
             return paginationInfo.HasNextPage
                 ? new Uri(string.Format(nextUrlBase, offset + limit, limit))
                 : null;
+        }
+
+        private async Task<PostinfoDetailGemeente?> GetPostinfoDetailGemeente(
+            SyndicationContext syndicationContext,
+            string? nisCode,
+            string gemeenteDetailUrl,
+            CancellationToken ct)
+        {
+            var municipality = await syndicationContext
+                .MunicipalityLatestItems
+                .AsNoTracking()
+                .OrderByDescending(m => m.Position)
+                .FirstOrDefaultAsync(m => m.NisCode == nisCode, ct);
+
+            if (municipality is null)
+            {
+                return null;
+            }
+
+            var municipalityDefaultName = municipality.DefaultName;
+            var gemeente = new PostinfoDetailGemeente
+            {
+                ObjectId = nisCode,
+                Detail = string.Format(gemeenteDetailUrl, nisCode),
+                Gemeentenaam = new Gemeentenaam(new GeografischeNaam(municipalityDefaultName.Value, municipalityDefaultName.Key))
+            };
+            return gemeente;
         }
     }
 }

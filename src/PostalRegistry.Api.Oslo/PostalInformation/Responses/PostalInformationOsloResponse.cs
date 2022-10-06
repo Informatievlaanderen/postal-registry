@@ -6,6 +6,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.Responses
     using Be.Vlaanderen.Basisregisters.Api.Exceptions;
     using Be.Vlaanderen.Basisregisters.GrAr.Common;
     using Be.Vlaanderen.Basisregisters.GrAr.Legacy;
+    using Be.Vlaanderen.Basisregisters.GrAr.Legacy.Gemeente;
     using Be.Vlaanderen.Basisregisters.GrAr.Legacy.PostInfo;
     using Infrastructure.Options;
     using Microsoft.AspNetCore.Http;
@@ -39,16 +40,23 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.Responses
         public PostinfoIdentificator Identificator { get; set; }
 
         /// <summary>
+        /// De gemeente aan dewelke de postinfo is toegewezen.
+        /// </summary>
+        [DataMember(Name = "Gemeente", Order = 3)]
+        [JsonProperty(Required = Required.AllowNull)]
+        public PostinfoDetailGemeente? Gemeente { get; set; }
+
+        /// <summary>
         /// De namen van het gebied dat de postcode beslaat, in de taal afkomstig uit het bPost bestand.
         /// </summary>
-        [DataMember(Name = "Postnamen", Order = 3)]
+        [DataMember(Name = "Postnamen", Order = 4)]
         [JsonProperty(Required = Required.DisallowNull)]
         public List<Postnaam> Postnamen { get; set; }
 
         /// <summary>
         /// De huidige fase in de doorlooptijd van de postcode.
         /// </summary>
-        [DataMember(Name = "PostInfoStatus", Order = 4)]
+        [DataMember(Name = "PostInfoStatus", Order = 5)]
         [JsonProperty(Required = Required.DisallowNull)]
         public PostInfoStatus PostInfoStatus { get; set; }
 
@@ -56,11 +64,13 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.Responses
             string naamruimte,
             string contextUrlDetail,
             string postcode,
+            PostinfoDetailGemeente? gemeente,
             DateTimeOffset version,
             PostInfoStatus postInfoStatus)
         {
             Context = contextUrlDetail;
             Identificator = new PostinfoIdentificator(naamruimte, postcode, version);
+            Gemeente = gemeente;
             PostInfoStatus = postInfoStatus;
             Postnamen = new List<Postnaam>();
         }
@@ -74,16 +84,25 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.Responses
 
         public PostalInformationOsloResponse GetExamples()
         {
+            var gemeente = new PostinfoDetailGemeente
+            {
+                ObjectId = "31005",
+                Detail = string.Format(_responseOptions.GemeenteDetailUrl, "31005"),
+                Gemeentenaam = new Gemeentenaam(new GeografischeNaam("Brugge", Taal.NL))
+            };
+
             return new PostalInformationOsloResponse(
                 _responseOptions.Naamruimte,
                 _responseOptions.ContextUrlDetail,
-                "9000",
+                "8200",
+                gemeente,
                 DateTimeOffset.Now.ToExampleOffset(),
                 PostInfoStatus.Gerealiseerd)
             {
                 Postnamen = new List<Postnaam>
                 {
-                    new Postnaam(new GeografischeNaam("Gent", Taal.NL))
+                    new Postnaam(new GeografischeNaam("Sint-Andries", Taal.NL)),
+                    new Postnaam(new GeografischeNaam("Sint-Michiels", Taal.NL))
                 }
             };
         }
