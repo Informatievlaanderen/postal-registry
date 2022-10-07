@@ -1,3 +1,17 @@
+# [3.2.0](https://github.com/informatievlaanderen/postal-registry/compare/v3.1.3...v3.2.0) (2022-10-07)
+
+
+### Bug Fixes
+
+* no default value when no gemeente in detail response ([4b0cf22](https://github.com/informatievlaanderen/postal-registry/commit/4b0cf2299512a2cad796498e040635e7bb606451))
+
+
+### Features
+
+* add municipality to postinfo detail legacy ([9855b2e](https://github.com/informatievlaanderen/postal-registry/commit/9855b2e83e20120a8651b8e1b84d7a8b045ecbc3))
+* add municipality to postinfo detail oslo ([449cb9c](https://github.com/informatievlaanderen/postal-registry/commit/449cb9c8648d171653322f21bd7db195a76cd95e))
+* add primary language municipality syndication ([4fa076c](https://github.com/informatievlaanderen/postal-registry/commit/4fa076c05587cea568e8e95905f620020a67538b))
+
 ## [3.1.3](https://github.com/informatievlaanderen/postal-registry/compare/v3.1.2...v3.1.3) (2022-10-05)
 
 
