@@ -12,7 +12,7 @@ namespace PostalRegistry.Projections.Syndication.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.Sql($"TRUNCATE TABLE {Schema.Syndication}.{MunicipalityItemConfiguration.TableName}");
-            migrationBuilder.Sql($"UPDATE {Schema.Syndication}.ProjectionStates SET [Position] = -1 WHERE [Name] = '{typeof(MunicipalityLatestProjections).FullName}'");
+            migrationBuilder.Sql($"UPDATE {Schema.Syndication}.ProjectionStates SET [Position] = -1 WHERE [Name] = 'municipality'");
 
             migrationBuilder.AddColumn<int>(
                 name: "PrimaryLanguage",
