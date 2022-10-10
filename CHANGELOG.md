@@ -1,3 +1,10 @@
+## [3.2.1](https://github.com/informatievlaanderen/postal-registry/compare/v3.2.0...v3.2.1) (2022-10-10)
+
+
+### Bug Fixes
+
+* correct update reset position migration syndication ([69d608b](https://github.com/informatievlaanderen/postal-registry/commit/69d608b22c83bfaeee65b4a3874eae1cc30cae1e))
+
 # [3.2.0](https://github.com/informatievlaanderen/postal-registry/compare/v3.1.3...v3.2.0) (2022-10-07)
 
 
