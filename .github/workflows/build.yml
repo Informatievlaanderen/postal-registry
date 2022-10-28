@@ -1,9 +1,10 @@
 name: Build
 
 on:
-#  push:
-#    branches: [ main ]
-  workflow_dispatch:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch: 
 
 jobs:
   build:
@@ -38,6 +39,12 @@ jobs:
       shell: bash
       run: dotnet --info
 
+    - name: Restore packages
+      shell: bash
+      run: |
+        dotnet tool restore
+        dotnet paket install
+
     - name: Cache SonarCloud packages
       uses: actions/cache@v1
       with:
@@ -53,6 +60,11 @@ jobs:
         key: ${{ runner.os }}-sonar-scanner
         restore-keys: ${{ runner.os }}-sonar-scanner
         
+    - name: Install DotCover
+      shell: bash
+      run: |
+        dotnet tool install --global JetBrains.dotCover.GlobalTool
+        
     - name: Install SonarCloud scanner
       if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
       shell: bash
@@ -67,24 +79,21 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       shell: bash
       run: |
-        ./.sonar/scanner/dotnet-sonarscanner begin /k:"Informatievlaanderen_streetname-registry" /o:"informatievlaanderen" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" > /dev/null 2>&1
+        ./.sonar/scanner/dotnet-sonarscanner begin /k:"Informatievlaanderen_postal-registry" /o:"informatievlaanderen" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.dotcover.reportsPaths=dotCover.Output.html > /dev/null 2>&1
 
     - name: Build
       shell: bash
       run: |
-        dotnet tool restore
-        dotnet paket install
-        dotnet build --nologo --no-restore --configuration Debug
-        
+        dotnet build --nologo --no-restore --no-incremental --configuration Debug PostalRegistry.sln
+
+    - name: Test
+      shell: bash
+      run: dotnet dotcover test --dcReportType=HTML --nologo --no-build PostalRegistry.sln
+
     - name: Sonar end build & analyze
-      if: env.RELEASE_VERSION != 'none'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       shell: bash
       run: |
         ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}" > /dev/null 2>&1
-
-    - name: Test
-      shell: bash
-      run: dotnet test --nologo --no-build
