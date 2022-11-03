@@ -1,3 +1,13 @@
+## [3.2.2](https://github.com/informatievlaanderen/postal-registry/compare/v3.2.1...v3.2.2) (2022-11-03)
+
+
+### Bug Fixes
+
+* add nuget to dependabot ([52c02a4](https://github.com/informatievlaanderen/postal-registry/commit/52c02a4c222f5f1c3a3248ef4ef9c83f33a29b02))
+* enable pr's & coverage ([a5fb890](https://github.com/informatievlaanderen/postal-registry/commit/a5fb890381b9682968826745940145d4f4a66806))
+* update ci and test branch protection ([40a0289](https://github.com/informatievlaanderen/postal-registry/commit/40a0289f52be39770f3b7313e782c6c0cac274b4))
+* use VBR_SONAR_TOKEN ([88848d3](https://github.com/informatievlaanderen/postal-registry/commit/88848d308b9d31c1df4481bdceb159a7b1a711b9))
+
 ## [3.2.1](https://github.com/informatievlaanderen/postal-registry/compare/v3.2.0...v3.2.1) (2022-10-10)
 
 
