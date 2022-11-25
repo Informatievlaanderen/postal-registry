@@ -30,6 +30,7 @@
     <ProjectReference Include="..\PostalRegistry.Projections.LastChangedList\PostalRegistry.Projections.LastChangedList.csproj" />
     <ProjectReference Include="..\PostalRegistry.Projections.Syndication\PostalRegistry.Projections.Syndication.csproj" />
     <ProjectReference Include="..\PostalRegistry.Producer\PostalRegistry.Producer.csproj" />
+    <ProjectReference Include="..\PostalRegistry.Producer.Snapshot.Oslo\PostalRegistry.Producer.Snapshot.Oslo.csproj" />
   </ItemGroup>
 
   <Import Project="..\..\.paket\Paket.Restore.targets" />
