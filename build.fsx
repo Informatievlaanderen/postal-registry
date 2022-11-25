@@ -48,6 +48,7 @@ Target.create "Publish_Solution" (fun _ ->
     "PostalRegistry.Api.Oslo"
     "PostalRegistry.Api.Extract"
     "PostalRegistry.Api.CrabImport"
+    "PostalRegistry.Producer"
     "PostalRegistry.Projections.Legacy"
     "PostalRegistry.Projections.Extract"
     "PostalRegistry.Projections.LastChangedList"
@@ -77,6 +78,9 @@ Target.create "PushContainer_ApiExtract" (fun _ -> push "api-extract")
 
 Target.create "Containerize_ApiCrabImport" (fun _ -> containerize "PostalRegistry.Api.CrabImport" "api-crab-import")
 Target.create "PushContainer_ApiCrabImport" (fun _ -> push "api-crab-import")
+
+Target.create "Containerize_Producer" (fun _ -> containerize "PostalRegistry.Producer" "producer")
+Target.create "PushContainer_Producer" (fun _ -> push "producer")
 
 Target.create "Containerize_ProjectionsSyndication" (fun _ -> containerize "PostalRegistry.Projections.Syndication" "projections-syndication")
 Target.create "PushContainer_ProjectionsSyndication" (fun _ -> push "projections-syndication")
@@ -116,6 +120,7 @@ Target.create "Push" ignore
   ==> "Containerize_ApiExtract"
   ==> "Containerize_ApiCrabImport"
   ==> "Containerize_ProjectionsSyndication"
+  ==> "Containerize_Producer"
   ==> "Containerize"
 // Possibly add more projects to containerize here
 
@@ -127,6 +132,7 @@ Target.create "Push" ignore
   ==> "PushContainer_ApiExtract"
   ==> "PushContainer_ApiCrabImport"
   ==> "PushContainer_ProjectionsSyndication"
+  ==> "PushContainer_Producer"
   ==> "Push"
 // Possibly add more projects to push here
 

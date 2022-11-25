@@ -8,6 +8,8 @@ namespace PostalRegistry.Infrastructure
         public const string Legacy = "PostalRegistryLegacy";
         public const string Extract = "PostalRegistryExtract";
         public const string Syndication = "PostalRegistrySyndication";
+
+        public const string Producer = "PostalRegistryProducer";
     }
 
     public static class MigrationTables
@@ -16,5 +18,7 @@ namespace PostalRegistry.Infrastructure
         public const string Extract = "__EFMigrationsHistoryExtract";
         public const string RedisDataMigration = "__EFMigrationsHistoryDataMigration";
         public const string Syndication = "__EFMigrationsHistorySyndication";
+
+        public const string Producer = "__EFMigrationsHistoryProducer";
     }
 }

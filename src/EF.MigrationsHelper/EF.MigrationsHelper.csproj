@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <LangVersion>latest</LangVersion>
 
-    <RuntimeFrameworkVersion>5.0.1</RuntimeFrameworkVersion>
+    <RuntimeFrameworkVersion>6.0.3</RuntimeFrameworkVersion>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <OutputType>Exe</OutputType>
 
@@ -29,6 +29,7 @@
     <ProjectReference Include="..\PostalRegistry.Projections.Legacy\PostalRegistry.Projections.Legacy.csproj" />
     <ProjectReference Include="..\PostalRegistry.Projections.LastChangedList\PostalRegistry.Projections.LastChangedList.csproj" />
     <ProjectReference Include="..\PostalRegistry.Projections.Syndication\PostalRegistry.Projections.Syndication.csproj" />
+    <ProjectReference Include="..\PostalRegistry.Producer\PostalRegistry.Producer.csproj" />
   </ItemGroup>
 
   <Import Project="..\..\.paket\Paket.Restore.targets" />
