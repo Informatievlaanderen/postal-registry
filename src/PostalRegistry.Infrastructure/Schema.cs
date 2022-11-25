@@ -10,6 +10,7 @@ namespace PostalRegistry.Infrastructure
         public const string Syndication = "PostalRegistrySyndication";
 
         public const string Producer = "PostalRegistryProducer";
+        public const string ProducerSnapshotOslo = "PostalRegistryProducerSnapshotOslo";
     }
 
     public static class MigrationTables
@@ -20,5 +21,6 @@ namespace PostalRegistry.Infrastructure
         public const string Syndication = "__EFMigrationsHistorySyndication";
 
         public const string Producer = "__EFMigrationsHistoryProducer";
+        public const string ProducerSnapshotOslo = "__EFMigrationsHistoryProducerSnapshotOslo";
     }
 }

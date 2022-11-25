@@ -125,6 +125,7 @@ jobs:
         docker push $BUILD_DOCKER_REGISTRY_TST/postal-registry/projector:$SEMVER
         docker push $BUILD_DOCKER_REGISTRY_TST/postal-registry/projections-syndication:$SEMVER
         docker push $BUILD_DOCKER_REGISTRY_TST/postal-registry/producer:$SEMVER
+        docker push $BUILD_DOCKER_REGISTRY_TST/postal-registry/producer-snapshot-oslo:$SEMVER
       env:
         BUILD_DOCKER_REGISTRY_TST: ${{ secrets.VBR_BUILD_DOCKER_REGISTRY_TST }}
         SEMVER: ${{ env.RELEASE_VERSION }}
@@ -153,6 +154,7 @@ jobs:
         docker tag $BUILD_DOCKER_REGISTRY_TST/postal-registry/projector:$SEMVER $BUILD_DOCKER_REGISTRY/postal-registry/projector:$SEMVER
         docker tag $BUILD_DOCKER_REGISTRY_TST/postal-registry/projections-syndication:$SEMVER $BUILD_DOCKER_REGISTRY/postal-registry/projections-syndication:$SEMVER
         docker tag $BUILD_DOCKER_REGISTRY_TST/postal-registry/producer:$SEMVER $BUILD_DOCKER_REGISTRY/postal-registry/producer:$SEMVER
+        docker tag $BUILD_DOCKER_REGISTRY_TST/postal-registry/producer-snapshot-oslo:$SEMVER $BUILD_DOCKER_REGISTRY/postal-registry/producer-snapshot-oslo:$SEMVER
         
         docker push $BUILD_DOCKER_REGISTRY/postal-registry/api-legacy:$SEMVER
         docker push $BUILD_DOCKER_REGISTRY/postal-registry/api-oslo:$SEMVER
@@ -161,6 +163,7 @@ jobs:
         docker push $BUILD_DOCKER_REGISTRY/postal-registry/projector:$SEMVER
         docker push $BUILD_DOCKER_REGISTRY/postal-registry/projections-syndication:$SEMVER
         docker push $BUILD_DOCKER_REGISTRY/postal-registry/producer:$SEMVER
+        docker push $BUILD_DOCKER_REGISTRY/postal-registry/producer-snapshot-oslo:$SEMVER
       env:
         BUILD_DOCKER_REGISTRY_TST: ${{ secrets.VBR_BUILD_DOCKER_REGISTRY_TST }}
         BUILD_DOCKER_REGISTRY: ${{ secrets.VBR_BUILD_DOCKER_REGISTRY }}
@@ -203,6 +206,9 @@ jobs:
 
         docker tag  $BUILD_DOCKER_REGISTRY_TST/postal-registry/producer:$SEMVER $BUILD_DOCKER_REGISTRY_PRD/postal-registry/producer:$SEMVER
         docker push $BUILD_DOCKER_REGISTRY_PRD/postal-registry/producer:$SEMVER
+
+        docker tag  $BUILD_DOCKER_REGISTRY_TST/postal-registry/producer-snapshot-oslo:$SEMVER $BUILD_DOCKER_REGISTRY_PRD/postal-registry/producer-snapshot-oslo:$SEMVER
+        docker push $BUILD_DOCKER_REGISTRY_PRD/postal-registry/producer-snapshot-oslo:$SEMVER
       env:
         BUILD_DOCKER_REGISTRY_TST: ${{ secrets.VBR_BUILD_DOCKER_REGISTRY_TST }}
         BUILD_DOCKER_REGISTRY_PRD: ${{ secrets.VBR_BUILD_DOCKER_REGISTRY_PRD }}
