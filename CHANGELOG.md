@@ -1,3 +1,11 @@
+# [3.3.0](https://github.com/informatievlaanderen/postal-registry/compare/v3.2.2...v3.3.0) (2022-11-28)
+
+
+### Features
+
+* add producer ([52f2000](https://github.com/informatievlaanderen/postal-registry/commit/52f2000be60a42da35009e1e03984e1c2ea36ea2))
+* add producer snapshot oslo ([71d3674](https://github.com/informatievlaanderen/postal-registry/commit/71d36740e96c492350fad767721596feec1da6a2))
+
 ## [3.2.2](https://github.com/informatievlaanderen/postal-registry/compare/v3.2.1...v3.2.2) (2022-11-03)
 
 
