@@ -6,8 +6,10 @@ on:
 jobs:
   build:
     if: github.repository_owner == 'Informatievlaanderen'
-    name: Build
+    name: Release
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.set-version.outputs.version }}
 
     steps:
     - name: Checkout Code
@@ -24,7 +26,7 @@ jobs:
         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-build-${{ env.cache-name }}-
-          
+
     - name: Cache Paket
       uses: actions/cache@v3
       env:
@@ -34,7 +36,7 @@ jobs:
         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('paket.lock') }}
         restore-keys: |
           ${{ runner.os }}-build-${{ env.cache-name }}-
-          
+
     - name: Cache Python
       uses: actions/cache@v3
       env:
@@ -48,14 +50,14 @@ jobs:
       shell: bash
 
     - name: Setup Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v3.5.1
 
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: ${{ secrets.VBR_DOTNET_VERSION }}
 
-    - name: Set up Python
+    - name: Setup Python
       uses: actions/setup-python@v3
       with:
         python-version: '3.x'
@@ -74,14 +76,14 @@ jobs:
 
     - name: Install NPM dependencies
       shell: bash
-      run: npm install
+      run: npm ci
 
     - name: Install Python dependencies
       shell: bash
       run: |
         python -m pip install --upgrade pip
         pip install requests markdown argparse
-        
+
     - name: Run Semantic Release
       shell: bash
       run: npx semantic-release
@@ -97,155 +99,792 @@ jobs:
         GIT_COMMITTER_EMAIL: ${{ secrets.VBR_GIT_EMAIL }}
 
     - name: Set Release Version
+      id: set-version
       run: |
         [ ! -f semver ] && echo none > semver
+        echo ::set-output name=version::$(cat semver)
         echo RELEASE_VERSION=$(cat semver) >> $GITHUB_ENV
       shell: bash
 
-    - name: Configure AWS credentials (Test)
+     #
+     # Save artifacts
+     #
+
+    - name: Save artifacts
       if: env.RELEASE_VERSION != 'none'
-      uses: aws-actions/configure-aws-credentials@v1
+      shell: bash
+      run: |
+        docker image save $BUILD_DOCKER_REGISTRY/postal-registry/projector:$SEMVER -o ~/ir-projector-image.tar
+        docker image save $BUILD_DOCKER_REGISTRY/postal-registry/api-legacy:$SEMVER -o ~/ir-api-legacy-image.tar
+        docker image save $BUILD_DOCKER_REGISTRY/postal-registry/api-oslo:$SEMVER -o ~/ir-api-oslo-image.tar
+        docker image save $BUILD_DOCKER_REGISTRY/postal-registry/api-extract:$SEMVER -o ~/ir-api-extract-image.tar
+        docker image save $BUILD_DOCKER_REGISTRY/postal-registry/api-crab-import:$SEMVER -o ~/ir-api-crab-import-image.tar
+        docker image save $BUILD_DOCKER_REGISTRY/postal-registry/producer:$SEMVER -o ~/ir-producer-image.tar
+        docker image save $BUILD_DOCKER_REGISTRY/postal-registry/producer-snapshot-oslo:$SEMVER -o ~/ir-producer-snapshot-oslo-image.tar
+        docker image save $BUILD_DOCKER_REGISTRY/postal-registry/projections-syndication:$SEMVER -o ~/ir-projections-syndication-image.tar
+      env:
+        BUILD_DOCKER_REGISTRY: ${{ secrets.VBR_BUILD_DOCKER_REGISTRY_TST }}
+        SEMVER: ${{ env.RELEASE_VERSION }}
+
+    #
+    # Upload NuGet packages
+    #
+
+    - name: Upload NuGet package be-.-vlaanderen-.-basisregisters-.-postal-registry-.-api-.-oslo
+      if: env.RELEASE_VERSION != 'none'
+      uses: actions/upload-artifact@v3
       with:
-        aws-access-key-id: ${{ secrets.VBR_AWS_ACCESS_KEY_ID_TST }}
-        aws-secret-access-key: ${{ secrets.VBR_AWS_SECRET_ACCESS_KEY_TST }}
-        aws-region: ${{ secrets.VBR_AWS_REGION_PRD }}
-
-    - name: Login to Amazon ECR (Test)
-      if: env.RELEASE_VERSION != 'none'
-      uses: aws-actions/amazon-ecr-login@v1.5.1
-
-    - name: Push to Test
-      if: env.RELEASE_VERSION != 'none'
-      shell: bash
-      run: |
-        docker push $BUILD_DOCKER_REGISTRY_TST/postal-registry/api-legacy:$SEMVER
-        docker push $BUILD_DOCKER_REGISTRY_TST/postal-registry/api-oslo:$SEMVER
-        docker push $BUILD_DOCKER_REGISTRY_TST/postal-registry/api-crab-import:$SEMVER
-        docker push $BUILD_DOCKER_REGISTRY_TST/postal-registry/api-extract:$SEMVER
-        docker push $BUILD_DOCKER_REGISTRY_TST/postal-registry/projector:$SEMVER
-        docker push $BUILD_DOCKER_REGISTRY_TST/postal-registry/projections-syndication:$SEMVER
-        docker push $BUILD_DOCKER_REGISTRY_TST/postal-registry/producer:$SEMVER
-        docker push $BUILD_DOCKER_REGISTRY_TST/postal-registry/producer-snapshot-oslo:$SEMVER
+        name: nuget-be-.-vlaanderen-.-basisregisters-.-postal-registry-.-api-.-oslo
+        path: /home/runner/work/postal-registry/postal-registry/dist/nuget/Be.Vlaanderen.Basisregisters.PostalRegistry.Api.Oslo.*.nupkg
       env:
-        BUILD_DOCKER_REGISTRY_TST: ${{ secrets.VBR_BUILD_DOCKER_REGISTRY_TST }}
         SEMVER: ${{ env.RELEASE_VERSION }}
-        WORKSPACE: ${{ github.workspace }}
 
-    - name: Configure AWS credentials (Staging)
+    - name: Upload NuGet package be-.-vlaanderen-.-basisregisters-.-postal-registry-.-api-.-crab-import
       if: env.RELEASE_VERSION != 'none'
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: actions/upload-artifact@v3
       with:
-        aws-access-key-id: ${{ secrets.VBR_AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.VBR_AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ secrets.VBR_AWS_REGION }}
-
-    - name: Login to Amazon ECR (Staging)
-      if: env.RELEASE_VERSION != 'none'
-      uses: aws-actions/amazon-ecr-login@v1.5.1
-
-    - name: Push to Staging
-      if: env.RELEASE_VERSION != 'none'
-      shell: bash
-      run: |
-        docker tag $BUILD_DOCKER_REGISTRY_TST/postal-registry/api-legacy:$SEMVER $BUILD_DOCKER_REGISTRY/postal-registry/api-legacy:$SEMVER
-        docker tag $BUILD_DOCKER_REGISTRY_TST/postal-registry/api-oslo:$SEMVER $BUILD_DOCKER_REGISTRY/postal-registry/api-oslo:$SEMVER
-        docker tag $BUILD_DOCKER_REGISTRY_TST/postal-registry/api-crab-import:$SEMVER $BUILD_DOCKER_REGISTRY/postal-registry/api-crab-import:$SEMVER
-        docker tag $BUILD_DOCKER_REGISTRY_TST/postal-registry/api-extract:$SEMVER $BUILD_DOCKER_REGISTRY/postal-registry/api-extract:$SEMVER
-        docker tag $BUILD_DOCKER_REGISTRY_TST/postal-registry/projector:$SEMVER $BUILD_DOCKER_REGISTRY/postal-registry/projector:$SEMVER
-        docker tag $BUILD_DOCKER_REGISTRY_TST/postal-registry/projections-syndication:$SEMVER $BUILD_DOCKER_REGISTRY/postal-registry/projections-syndication:$SEMVER
-        docker tag $BUILD_DOCKER_REGISTRY_TST/postal-registry/producer:$SEMVER $BUILD_DOCKER_REGISTRY/postal-registry/producer:$SEMVER
-        docker tag $BUILD_DOCKER_REGISTRY_TST/postal-registry/producer-snapshot-oslo:$SEMVER $BUILD_DOCKER_REGISTRY/postal-registry/producer-snapshot-oslo:$SEMVER
-        
-        docker push $BUILD_DOCKER_REGISTRY/postal-registry/api-legacy:$SEMVER
-        docker push $BUILD_DOCKER_REGISTRY/postal-registry/api-oslo:$SEMVER
-        docker push $BUILD_DOCKER_REGISTRY/postal-registry/api-crab-import:$SEMVER
-        docker push $BUILD_DOCKER_REGISTRY/postal-registry/api-extract:$SEMVER
-        docker push $BUILD_DOCKER_REGISTRY/postal-registry/projector:$SEMVER
-        docker push $BUILD_DOCKER_REGISTRY/postal-registry/projections-syndication:$SEMVER
-        docker push $BUILD_DOCKER_REGISTRY/postal-registry/producer:$SEMVER
-        docker push $BUILD_DOCKER_REGISTRY/postal-registry/producer-snapshot-oslo:$SEMVER
+        name: nuget-be-.-vlaanderen-.-basisregisters-.-postal-registry-.-api-.-crab-import
+        path: /home/runner/work/postal-registry/postal-registry/dist/nuget/Be.Vlaanderen.Basisregisters.PostalRegistry.Api.CrabImport.*.nupkg
       env:
-        BUILD_DOCKER_REGISTRY_TST: ${{ secrets.VBR_BUILD_DOCKER_REGISTRY_TST }}
-        BUILD_DOCKER_REGISTRY: ${{ secrets.VBR_BUILD_DOCKER_REGISTRY }}
         SEMVER: ${{ env.RELEASE_VERSION }}
-        WORKSPACE: ${{ github.workspace }}
 
-    - name: Configure AWS credentials (Production)
+    #
+    # Upload build artifacts
+    #
+
+    - name: Upload projector artifact
       if: env.RELEASE_VERSION != 'none'
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: actions/upload-artifact@v3
       with:
-        aws-access-key-id: ${{ secrets.VBR_AWS_ACCESS_KEY_ID_PRD }}
-        aws-secret-access-key: ${{ secrets.VBR_AWS_SECRET_ACCESS_KEY_PRD }}
-        aws-region: ${{ secrets.VBR_AWS_REGION_PRD }}
+        name: projector
+        path: ~/ir-projector-image.tar
 
-    - name: Login to Amazon ECR (Production)
+    - name: Upload api-legacy artifact
       if: env.RELEASE_VERSION != 'none'
-      uses: aws-actions/amazon-ecr-login@v1.5.1
+      uses: actions/upload-artifact@v3
+      with:
+        name: api-legacy
+        path: ~/ir-api-legacy-image.tar
 
-    - name: Push to Production
+    - name: Upload api-oslo artifact
       if: env.RELEASE_VERSION != 'none'
+      uses: actions/upload-artifact@v3
+      with:
+        name: api-oslo
+        path: ~/ir-api-oslo-image.tar
+
+    - name: Upload api-extract artifact
+      if: env.RELEASE_VERSION != 'none'
+      uses: actions/upload-artifact@v3
+      with:
+        name: api-extract
+        path: ~/ir-api-extract-image.tar
+
+    - name: Upload api-crab-import artifact
+      if: env.RELEASE_VERSION != 'none'
+      uses: actions/upload-artifact@v3
+      with:
+        name: api-crab-import
+        path: ~/ir-api-crab-import-image.tar
+
+    - name: Upload producer artifact
+      if: env.RELEASE_VERSION != 'none'
+      uses: actions/upload-artifact@v3
+      with:
+        name: producer
+        path: ~/ir-producer-image.tar
+
+    - name: Upload producer-snapshot-oslo artifact
+      if: env.RELEASE_VERSION != 'none'
+      uses: actions/upload-artifact@v3
+      with:
+        name: producer-snapshot-oslo
+        path: ~/ir-producer-snapshot-oslo-image.tar
+
+    - name: Upload projections-syndication artifact
+      if: env.RELEASE_VERSION != 'none'
+      uses: actions/upload-artifact@v3
+      with:
+        name: projections-syndication
+        path: ~/ir-projections-syndication-image.tar
+
+
+
+  publish_to_atlassian:
+    if: needs.build.outputs.version != 'none'
+    needs: build
+    name: Publish to Atlassian
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Parse repository name
+        run: echo REPOSITORY_NAME=$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $2}' | sed -e "s/:refs//") >> $GITHUB_ENV
+        shell: bash
+
+      - name: Cache Paket
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-paket
+        with:
+          path: packages
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('paket.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+
+      - name: Cache Python
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-pip
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-build-${{ env.cache-name }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.x'
+
+      - name: Install Python dependencies
+        shell: bash
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests markdown argparse
+
+      - name: Publish to Confluence
+        if: needs.build.outputs.version != 'none'
+        shell: bash
+        run: ./packages/Be.Vlaanderen.Basisregisters.Build.Pipeline/Content/ci-confluence.sh
+        env:
+          CONFLUENCE_TITLE: ${{ env.REPOSITORY_NAME }}
+          CONFLUENCE_USERNAME: ${{ secrets.VBR_CONFLUENCE_USER }}
+          CONFLUENCE_PASSWORD: ${{ secrets.VBR_CONFLUENCE_PASSWORD }}
+
+      - name: Create Jira Release
+        if: env.RELEASE_VERSION != 'none'
+        shell: bash
+        run: ./packages/Be.Vlaanderen.Basisregisters.Build.Pipeline/Content/ci-jira.sh
+        env:
+          CONFLUENCE_TITLE: ${{ env.REPOSITORY_NAME }}
+          CONFLUENCE_USERNAME: ${{ secrets.VBR_CONFLUENCE_USER }}
+          CONFLUENCE_PASSWORD: ${{ secrets.VBR_CONFLUENCE_PASSWORD }}
+          JIRA_PREFIX: Postal
+          JIRA_PROJECT: GAWR
+          JIRA_VERSION: ${{ needs.build.outputs.version }}
+
+  publish_to_nuget:
+    if: needs.build.outputs.version != 'none'
+    needs: build
+    name: Publish to NuGet
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: ${{ secrets.VBR_DOTNET_VERSION }}
+
+    - name: .NET version
+      shell: bash
+      run: dotnet --info
+
+    - name: Download NuGet package be-.-vlaanderen-.-basisregisters-.-postal-registry-.-api-.-oslo
+      if: env.RELEASE_VERSION != 'none'
+      uses: actions/download-artifact@v3
+      with:
+        name: nuget-be-.-vlaanderen-.-basisregisters-.-postal-registry-.-api-.-oslo
+        path: ~/
+
+    - name: Download NuGet package be-.-vlaanderen-.-basisregisters-.-postal-registry-.-api-.-crab-import
+      if: env.RELEASE_VERSION != 'none'
+      uses: actions/download-artifact@v3
+      with:
+        name: nuget-be-.-vlaanderen-.-basisregisters-.-postal-registry-.-api-.-crab-import
+        path: ~/
+
+
+    - name: Publish packages to NuGet
       shell: bash
       run: |
-        docker tag  $BUILD_DOCKER_REGISTRY_TST/postal-registry/api-legacy:$SEMVER $BUILD_DOCKER_REGISTRY_PRD/postal-registry/api-legacy:$SEMVER
-        docker push $BUILD_DOCKER_REGISTRY_PRD/postal-registry/api-legacy:$SEMVER
-        
-        docker tag  $BUILD_DOCKER_REGISTRY_TST/postal-registry/api-oslo:$SEMVER $BUILD_DOCKER_REGISTRY_PRD/postal-registry/api-oslo:$SEMVER
-        docker push $BUILD_DOCKER_REGISTRY_PRD/postal-registry/api-oslo:$SEMVER
-
-        docker tag  $BUILD_DOCKER_REGISTRY_TST/postal-registry/api-crab-import:$SEMVER $BUILD_DOCKER_REGISTRY_PRD/postal-registry/api-crab-import:$SEMVER
-        docker push $BUILD_DOCKER_REGISTRY_PRD/postal-registry/api-crab-import:$SEMVER
-
-        docker tag  $BUILD_DOCKER_REGISTRY_TST/postal-registry/api-extract:$SEMVER $BUILD_DOCKER_REGISTRY_PRD/postal-registry/api-extract:$SEMVER
-        docker push $BUILD_DOCKER_REGISTRY_PRD/postal-registry/api-extract:$SEMVER
-
-        docker tag  $BUILD_DOCKER_REGISTRY_TST/postal-registry/projector:$SEMVER $BUILD_DOCKER_REGISTRY_PRD/postal-registry/projector:$SEMVER
-        docker push $BUILD_DOCKER_REGISTRY_PRD/postal-registry/projector:$SEMVER
-
-        docker tag  $BUILD_DOCKER_REGISTRY_TST/postal-registry/projections-syndication:$SEMVER $BUILD_DOCKER_REGISTRY_PRD/postal-registry/projections-syndication:$SEMVER
-        docker push $BUILD_DOCKER_REGISTRY_PRD/postal-registry/projections-syndication:$SEMVER
-
-        docker tag  $BUILD_DOCKER_REGISTRY_TST/postal-registry/producer:$SEMVER $BUILD_DOCKER_REGISTRY_PRD/postal-registry/producer:$SEMVER
-        docker push $BUILD_DOCKER_REGISTRY_PRD/postal-registry/producer:$SEMVER
-
-        docker tag  $BUILD_DOCKER_REGISTRY_TST/postal-registry/producer-snapshot-oslo:$SEMVER $BUILD_DOCKER_REGISTRY_PRD/postal-registry/producer-snapshot-oslo:$SEMVER
-        docker push $BUILD_DOCKER_REGISTRY_PRD/postal-registry/producer-snapshot-oslo:$SEMVER
+        dotnet nuget push ~/Be.Vlaanderen.Basisregisters.PostalRegistry.Api.Oslo.$SEMVER.nupkg --source nuget.org --api-key $NUGET_API_KEY
+        dotnet nuget push ~/Be.Vlaanderen.Basisregisters.PostalRegistry.Api.CrabImport.$SEMVER.nupkg --source nuget.org --api-key $NUGET_API_KEY
       env:
-        BUILD_DOCKER_REGISTRY_TST: ${{ secrets.VBR_BUILD_DOCKER_REGISTRY_TST }}
-        BUILD_DOCKER_REGISTRY_PRD: ${{ secrets.VBR_BUILD_DOCKER_REGISTRY_PRD }}
-        SEMVER: ${{ env.RELEASE_VERSION }}
+        SEMVER: ${{ needs.build.outputs.version }}
         WORKSPACE: ${{ github.workspace }}
-
-    - name: Publish to NuGet
-      if: env.RELEASE_VERSION != 'none'
-      shell: bash
-      run: |
-        node packages/Be.Vlaanderen.Basisregisters.Build.Pipeline/Content/ci-nuget.js dist/nuget/Be.Vlaanderen.Basisregisters.PostalRegistry.Api.Legacy.$SEMVER.nupkg
-        node packages/Be.Vlaanderen.Basisregisters.Build.Pipeline/Content/ci-nuget.js dist/nuget/Be.Vlaanderen.Basisregisters.PostalRegistry.Api.Oslo.$SEMVER.nupkg
-        node packages/Be.Vlaanderen.Basisregisters.Build.Pipeline/Content/ci-nuget.js dist/nuget/Be.Vlaanderen.Basisregisters.PostalRegistry.Api.Extract.$SEMVER.nupkg
-        node packages/Be.Vlaanderen.Basisregisters.Build.Pipeline/Content/ci-nuget.js dist/nuget/Be.Vlaanderen.Basisregisters.PostalRegistry.Api.CrabImport.$SEMVER.nupkg
-        node packages/Be.Vlaanderen.Basisregisters.Build.Pipeline/Content/ci-nuget.js dist/nuget/Be.Vlaanderen.Basisregisters.PostalRegistry.Projector.$SEMVER.nupkg
-      env:
-        SEMVER: ${{ env.RELEASE_VERSION }}
-        NUGET_HOST: ${{ secrets.NUGET_HOST }}
         NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
 
-    - name: Publish to Confluence
-      if: env.RELEASE_VERSION != 'none'
-      shell: bash
-      run: ./packages/Be.Vlaanderen.Basisregisters.Build.Pipeline/Content/ci-confluence.sh
-      env:
-        CONFLUENCE_TITLE: ${{ env.REPOSITORY_NAME }}
-        CONFLUENCE_USERNAME: ${{ secrets.VBR_CONFLUENCE_USER }}
-        CONFLUENCE_PASSWORD: ${{ secrets.VBR_CONFLUENCE_PASSWORD }}
+  push_images_to_test:
+    if: needs.build.outputs.version != 'none'
+    needs: build
+    name: Push images to Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure AWS credentials (Test)
+        if: needs.build.outputs.version != 'none'
+        uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          aws-access-key-id: ${{ secrets.VBR_AWS_ACCESS_KEY_ID_TST }}
+          aws-secret-access-key: ${{ secrets.VBR_AWS_SECRET_ACCESS_KEY_TST }}
+          aws-region: ${{ secrets.VBR_AWS_REGION_PRD }}
 
-    - name: Create Jira Release
-      if: env.RELEASE_VERSION != 'none'
+      - name: Login to Amazon ECR (Test)
+        if: needs.build.outputs.version != 'none'
+        uses: aws-actions/amazon-ecr-login@v1.5.2
+
+      #
+      # Download artifacts
+      #
+
+      - name: Download projector
+        uses: actions/download-artifact@v3
+        with:
+          name: projector
+          path: ~/
+
+      - name: Download api-legacy
+        uses: actions/download-artifact@v3
+        with:
+          name: api-legacy
+          path: ~/
+
+      - name: Download api-oslo
+        uses: actions/download-artifact@v3
+        with:
+          name: api-oslo
+          path: ~/
+
+      - name: Download api-extract
+        uses: actions/download-artifact@v3
+        with:
+          name: api-extract
+          path: ~/
+
+      - name: Download api-crab-import
+        uses: actions/download-artifact@v3
+        with:
+          name: api-crab-import
+          path: ~/
+
+      - name: Download producer
+        uses: actions/download-artifact@v3
+        with:
+          name: producer
+          path: ~/
+
+      - name: Download producer-snapshot-oslo
+        uses: actions/download-artifact@v3
+        with:
+          name: producer-snapshot-oslo
+          path: ~/
+
+      - name: Download projections-syndication
+        uses: actions/download-artifact@v3
+        with:
+          name: projections-syndication
+          path: ~/
+
+      #
+      # Load artifacts
+      #
+
+      - name: Load artifacts
+        shell: bash
+        run: |
+          docker image load -i ~/ir-projector-image.tar
+          docker image load -i ~/ir-api-legacy-image.tar
+          docker image load -i ~/ir-api-oslo-image.tar
+          docker image load -i ~/ir-api-extract-image.tar
+          docker image load -i ~/ir-api-crab-import-image.tar
+          docker image load -i ~/ir-producer-image.tar
+          docker image load -i ~/ir-producer-snapshot-oslo-image.tar
+          docker image load -i ~/ir-projections-syndication-image.tar
+
+      - name: Push artifacts to ECR Test
+        if: needs.build.outputs.version != 'none'
+        shell: bash
+        run: |
+          echo $SEMVER
+          docker push $BUILD_DOCKER_REGISTRY/postal-registry/projector:$SEMVER
+          docker push $BUILD_DOCKER_REGISTRY/postal-registry/api-legacy:$SEMVER
+          docker push $BUILD_DOCKER_REGISTRY/postal-registry/api-oslo:$SEMVER
+          docker push $BUILD_DOCKER_REGISTRY/postal-registry/api-extract:$SEMVER
+          docker push $BUILD_DOCKER_REGISTRY/postal-registry/api-crab-import:$SEMVER
+          docker push $BUILD_DOCKER_REGISTRY/postal-registry/producer:$SEMVER
+          docker push $BUILD_DOCKER_REGISTRY/postal-registry/producer-snapshot-oslo:$SEMVER
+          docker push $BUILD_DOCKER_REGISTRY/postal-registry/projections-syndication:$SEMVER
+        env:
+          BUILD_DOCKER_REGISTRY: ${{ secrets.VBR_BUILD_DOCKER_REGISTRY_TST }}
+          SEMVER: ${{ needs.build.outputs.version }}
+          WORKSPACE: ${{ github.workspace }}
+
+  push_images_to_staging:
+    if: needs.build.outputs.version != 'none'
+    needs: build
+    name: Push images to Staging
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure AWS credentials (Staging)
+        if: needs.build.outputs.version != 'none'
+        uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          aws-access-key-id: ${{ secrets.VBR_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.VBR_AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.VBR_AWS_REGION_PRD }}
+
+      - name: Login to Amazon ECR (Staging)
+        if: needs.build.outputs.version != 'none'
+        uses: aws-actions/amazon-ecr-login@v1.5.2
+
+      #
+      # Download artifacts
+      #
+
+      - name: Download projector
+        uses: actions/download-artifact@v3
+        with:
+          name: projector
+          path: ~/
+
+      - name: Download api-legacy
+        uses: actions/download-artifact@v3
+        with:
+          name: api-legacy
+          path: ~/
+
+      - name: Download api-oslo
+        uses: actions/download-artifact@v3
+        with:
+          name: api-oslo
+          path: ~/
+
+      - name: Download api-extract
+        uses: actions/download-artifact@v3
+        with:
+          name: api-extract
+          path: ~/
+
+      - name: Download api-crab-import
+        uses: actions/download-artifact@v3
+        with:
+          name: api-crab-import
+          path: ~/
+
+      - name: Download producer
+        uses: actions/download-artifact@v3
+        with:
+          name: producer
+          path: ~/
+
+      - name: Download producer-snapshot-oslo
+        uses: actions/download-artifact@v3
+        with:
+          name: producer-snapshot-oslo
+          path: ~/
+
+      - name: Download projections-syndication
+        uses: actions/download-artifact@v3
+        with:
+          name: projections-syndication
+          path: ~/
+
+      #
+      # Load artifacts
+      #
+
+      - name: Load artifacts
+        shell: bash
+        run: |
+          docker image load -i ~/ir-projector-image.tar
+          docker image load -i ~/ir-api-legacy-image.tar
+          docker image load -i ~/ir-api-oslo-image.tar
+          docker image load -i ~/ir-api-extract-image.tar
+          docker image load -i ~/ir-api-crab-import-image.tar
+          docker image load -i ~/ir-producer-image.tar
+          docker image load -i ~/ir-producer-snapshot-oslo-image.tar
+          docker image load -i ~/ir-projections-syndication-image.tar
+
+      - name: Push artifacts to ECR Staging
+        if: needs.build.outputs.version != 'none'
+        shell: bash
+        run: |
+          docker tag $BUILD_DOCKER_REGISTRY_TST/postal-registry/projector:$SEMVER $BUILD_DOCKER_REGISTRY/postal-registry/projector:$SEMVER
+          docker push $BUILD_DOCKER_REGISTRY/postal-registry/projector:$SEMVER
+
+          docker tag $BUILD_DOCKER_REGISTRY_TST/postal-registry/api-legacy:$SEMVER $BUILD_DOCKER_REGISTRY/postal-registry/api-legacy:$SEMVER
+          docker push $BUILD_DOCKER_REGISTRY/postal-registry/api-legacy:$SEMVER
+
+          docker tag $BUILD_DOCKER_REGISTRY_TST/postal-registry/api-oslo:$SEMVER $BUILD_DOCKER_REGISTRY/postal-registry/api-oslo:$SEMVER
+          docker push $BUILD_DOCKER_REGISTRY/postal-registry/api-oslo:$SEMVER
+
+          docker tag $BUILD_DOCKER_REGISTRY_TST/postal-registry/api-extract:$SEMVER $BUILD_DOCKER_REGISTRY/postal-registry/api-extract:$SEMVER
+          docker push $BUILD_DOCKER_REGISTRY/postal-registry/api-extract:$SEMVER
+
+          docker tag $BUILD_DOCKER_REGISTRY_TST/postal-registry/api-crab-import:$SEMVER $BUILD_DOCKER_REGISTRY/postal-registry/api-crab-import:$SEMVER
+          docker push $BUILD_DOCKER_REGISTRY/postal-registry/api-crab-import:$SEMVER
+
+          docker tag $BUILD_DOCKER_REGISTRY_TST/postal-registry/producer:$SEMVER $BUILD_DOCKER_REGISTRY/postal-registry/producer:$SEMVER
+          docker push $BUILD_DOCKER_REGISTRY/postal-registry/producer:$SEMVER
+
+          docker tag $BUILD_DOCKER_REGISTRY_TST/postal-registry/producer-snapshot-oslo:$SEMVER $BUILD_DOCKER_REGISTRY/postal-registry/producer-snapshot-oslo:$SEMVER
+          docker push $BUILD_DOCKER_REGISTRY/postal-registry/producer-snapshot-oslo:$SEMVER
+
+          docker tag $BUILD_DOCKER_REGISTRY_TST/postal-registry/projections-syndication:$SEMVER $BUILD_DOCKER_REGISTRY/postal-registry/projections-syndication:$SEMVER
+          docker push $BUILD_DOCKER_REGISTRY/postal-registry/projections-syndication:$SEMVER
+
+        env:
+          BUILD_DOCKER_REGISTRY_TST: ${{ secrets.VBR_BUILD_DOCKER_REGISTRY_TST }}
+          BUILD_DOCKER_REGISTRY: ${{ secrets.VBR_BUILD_DOCKER_REGISTRY }}
+          SEMVER: ${{ needs.build.outputs.version }}
+          WORKSPACE: ${{ github.workspace }}
+
+  push_images_to_production:
+    if: needs.build.outputs.version != 'none'
+    needs: build
+    name: Push images to Production
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure AWS credentials (Production)
+        if: needs.build.outputs.version != 'none'
+        uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          aws-access-key-id: ${{ secrets.VBR_AWS_ACCESS_KEY_ID_PRD }}
+          aws-secret-access-key: ${{ secrets.VBR_AWS_SECRET_ACCESS_KEY_PRD }}
+          aws-region: ${{ secrets.VBR_AWS_REGION_PRD }}
+
+      - name: Login to Amazon ECR (Production)
+        if: needs.build.outputs.version != 'none'
+        uses: aws-actions/amazon-ecr-login@v1.5.2
+
+      #
+      # Download artifacts
+      #
+
+      - name: Download projector
+        uses: actions/download-artifact@v3
+        with:
+          name: projector
+          path: ~/
+
+      - name: Download api-legacy
+        uses: actions/download-artifact@v3
+        with:
+          name: api-legacy
+          path: ~/
+
+      - name: Download api-oslo
+        uses: actions/download-artifact@v3
+        with:
+          name: api-oslo
+          path: ~/
+
+      - name: Download api-extract
+        uses: actions/download-artifact@v3
+        with:
+          name: api-extract
+          path: ~/
+
+      - name: Download api-crab-import
+        uses: actions/download-artifact@v3
+        with:
+          name: api-crab-import
+          path: ~/
+
+      - name: Download producer
+        uses: actions/download-artifact@v3
+        with:
+          name: producer
+          path: ~/
+
+      - name: Download producer-snapshot-oslo
+        uses: actions/download-artifact@v3
+        with:
+          name: producer-snapshot-oslo
+          path: ~/
+
+      - name: Download projections-syndication
+        uses: actions/download-artifact@v3
+        with:
+          name: projections-syndication
+          path: ~/
+
+      #
+      # Load artifacts
+      #
+
+      - name: Load artifacts
+        shell: bash
+        run: |
+          docker image load -i ~/ir-projector-image.tar
+          docker image load -i ~/ir-api-legacy-image.tar
+          docker image load -i ~/ir-api-oslo-image.tar
+          docker image load -i ~/ir-api-extract-image.tar
+          docker image load -i ~/ir-api-crab-import-image.tar
+          docker image load -i ~/ir-producer-image.tar
+          docker image load -i ~/ir-producer-snapshot-oslo-image.tar
+          docker image load -i ~/ir-projections-syndication-image.tar
+
+      - name: Push artifacts to ECR Production
+        if: needs.build.outputs.version != 'none'
+        shell: bash
+        run: |
+          docker tag $BUILD_DOCKER_REGISTRY_TST/postal-registry/projector:$SEMVER $BUILD_DOCKER_REGISTRY_PRD/postal-registry/projector:$SEMVER
+          docker push $BUILD_DOCKER_REGISTRY_PRD/postal-registry/projector:$SEMVER
+
+          docker tag $BUILD_DOCKER_REGISTRY_TST/postal-registry/api-legacy:$SEMVER $BUILD_DOCKER_REGISTRY_PRD/postal-registry/api-legacy:$SEMVER
+          docker push $BUILD_DOCKER_REGISTRY_PRD/postal-registry/api-legacy:$SEMVER
+
+          docker tag $BUILD_DOCKER_REGISTRY_TST/postal-registry/api-oslo:$SEMVER $BUILD_DOCKER_REGISTRY_PRD/postal-registry/api-oslo:$SEMVER
+          docker push $BUILD_DOCKER_REGISTRY_PRD/postal-registry/api-oslo:$SEMVER
+
+          docker tag $BUILD_DOCKER_REGISTRY_TST/postal-registry/api-extract:$SEMVER $BUILD_DOCKER_REGISTRY_PRD/postal-registry/api-extract:$SEMVER
+          docker push $BUILD_DOCKER_REGISTRY_PRD/postal-registry/api-extract:$SEMVER
+
+          docker tag $BUILD_DOCKER_REGISTRY_TST/postal-registry/api-crab-import:$SEMVER $BUILD_DOCKER_REGISTRY_PRD/postal-registry/api-crab-import:$SEMVER
+          docker push $BUILD_DOCKER_REGISTRY_PRD/postal-registry/api-crab-import:$SEMVER
+
+          docker tag $BUILD_DOCKER_REGISTRY_TST/postal-registry/producer:$SEMVER $BUILD_DOCKER_REGISTRY_PRD/postal-registry/producer:$SEMVER
+          docker push $BUILD_DOCKER_REGISTRY_PRD/postal-registry/producer:$SEMVER
+
+          docker tag $BUILD_DOCKER_REGISTRY_TST/postal-registry/producer-snapshot-oslo:$SEMVER $BUILD_DOCKER_REGISTRY_PRD/postal-registry/producer-snapshot-oslo:$SEMVER
+          docker push $BUILD_DOCKER_REGISTRY_PRD/postal-registry/producer-snapshot-oslo:$SEMVER
+
+          docker tag $BUILD_DOCKER_REGISTRY_TST/postal-registry/projections-syndication:$SEMVER $BUILD_DOCKER_REGISTRY_PRD/postal-registry/projections-syndication:$SEMVER
+          docker push $BUILD_DOCKER_REGISTRY_PRD/postal-registry/projections-syndication:$SEMVER
+
+        env:
+          BUILD_DOCKER_REGISTRY_TST: ${{ secrets.VBR_BUILD_DOCKER_REGISTRY_TST }}
+          BUILD_DOCKER_REGISTRY_PRD: ${{ secrets.VBR_BUILD_DOCKER_REGISTRY_PRD }}
+          SEMVER: ${{ needs.build.outputs.version }}
+          WORKSPACE: ${{ github.workspace }}
+
+  deploy_to_test_start_slack:
+    if: github.repository_owner == 'Informatievlaanderen'
+    needs: [push_images_to_test, build]
+    name: Deploy to test started
+    environment: test
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Parse repository name
+      run: echo REPOSITORY_NAME=$(echo ""$GITHUB_REPOSITORY"" | awk -F / '{print $2}' | sed -e ""s/:refs//"") >> $GITHUB_ENV
       shell: bash
-      run: ./packages/Be.Vlaanderen.Basisregisters.Build.Pipeline/Content/ci-jira.sh
+
+    - name: Notify deployment started
+      uses: slackapi/slack-github-action@v1.23.0
+      with:
+        channel-id: '#team-dinosaur-dev'
+        slack-message: Deployment of postal-registry to test has started
       env:
-        CONFLUENCE_TITLE: ${{ env.REPOSITORY_NAME }}
-        CONFLUENCE_USERNAME: ${{ secrets.VBR_CONFLUENCE_USER }}
-        CONFLUENCE_PASSWORD: ${{ secrets.VBR_CONFLUENCE_PASSWORD }}
-        JIRA_PREFIX: Postal
-        JIRA_PROJECT: GAWR
-        JIRA_VERSION: ${{ env.RELEASE_VERSION }}
+        SLACK_BOT_TOKEN: ${{ secrets.VBR_SLACK_BOT_TOKEN }}
+        SLACK_CHANNEL: ${{ secrets.VBR_NOTIFIER_CHANNEL_NAME }}
+        REPOSITORY_NAME: ${{ env.REPOSITORY_NAME }}
+
+  deploy_to_test:
+    if: github.repository_owner == 'Informatievlaanderen'
+    needs: [deploy_to_test_start_slack, build]
+    name: Deploy to test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        services: ['postal-registry-api', 'postal-registry-import-api', 'postal-registry-projections', 'postal-registry-producer', 'postal-registry-producer-snapshot-oslo']
+
+    steps:
+    - name: Deploy services
+      env:
+        BUILD_URL: ${{ secrets.VBR_AWS_BUILD_API }}/${{matrix.services}}
+        STATUS_URL: ${{ secrets.VBR_AWS_BUILD_STATUS_API }}/${{matrix.services}}
+      uses: informatievlaanderen/awscurl-polling-action/polling-action@main
+      with:
+          environment: test
+          version: ${{ needs.build.outputs.version }}
+          status-url: $STATUS_URL
+          deploy-url: $BUILD_URL
+          access-key: ${{ secrets.VBR_AWS_BUILD_USER_ACCESS_KEY_ID }}
+          secret-key: ${{ secrets.VBR_AWS_BUILD_USER_SECRET_ACCESS_KEY }}
+          region: eu-west-1
+          interval: 2
+
+    - name: Deploy services output
+      shell: bash
+      run: |
+        echo build-uuid: ${{ steps.awscurl-polling-action.outputs.build-uuid }}
+        echo Status: ${{ steps.awscurl-polling-action.outputs.status }}
+        echo ${{ steps.awscurl-polling-action.outputs.final-message }}
+
+
+  deploy_to_test_finish_slack:
+    if: github.repository_owner == 'Informatievlaanderen'
+    needs:  [deploy_to_test]  
+    name: Deploy to test finished
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Parse repository name
+      run: echo REPOSITORY_NAME=$(echo ""$GITHUB_REPOSITORY"" | awk -F / '{print $2}' | sed -e ""s/:refs//"") >> $GITHUB_ENV
+      shell: bash
+
+    - name: Notify deployment finished
+      uses: slackapi/slack-github-action@v1.23.0
+      with:
+        channel-id: '#team-dinosaur-dev'
+        slack-message: Deployment of postal-registry to test has finished
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.VBR_SLACK_BOT_TOKEN }}
+        SLACK_CHANNEL: ${{ secrets.VBR_NOTIFIER_CHANNEL_NAME }}
+        REPOSITORY_NAME: ${{ env.REPOSITORY_NAME }}
+
+  deploy_to_staging_start_slack:
+    if: github.repository_owner == 'Informatievlaanderen'
+    needs: [push_images_to_staging, deploy_to_test_finish_slack, build]
+    name: Deploy to staging started
+    environment: stg
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Parse repository name
+      run: echo REPOSITORY_NAME=$(echo ""$GITHUB_REPOSITORY"" | awk -F / '{print $2}' | sed -e ""s/:refs//"") >> $GITHUB_ENV
+      shell: bash
+
+    - name: Notify deployment started
+      uses: slackapi/slack-github-action@v1.23.0
+      with:
+        channel-id: '#team-dinosaur-dev'
+        slack-message: Deployment of postal-registry to staging has started
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.VBR_SLACK_BOT_TOKEN }}
+        SLACK_CHANNEL: ${{ secrets.VBR_NOTIFIER_CHANNEL_NAME }}
+        REPOSITORY_NAME: ${{ env.REPOSITORY_NAME }}
+
+  deploy_to_staging:
+    if: github.repository_owner == 'Informatievlaanderen'
+    needs: [deploy_to_staging_start_slack, build]
+    name: Deploy to staging
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        services: ['postal-registry-api', 'postal-registry-projections']
+
+    steps:
+    - name: CD services
+      env:
+        BUILD_URL: ${{ secrets.VBR_AWS_BUILD_API }}/${{matrix.services}}
+        STATUS_URL: ${{ secrets.VBR_AWS_BUILD_STATUS_API }}/${{matrix.services}}
+      uses: informatievlaanderen/awscurl-polling-action/polling-action@main
+      with:
+          environment: stg
+          version: ${{ needs.build.outputs.version }}
+          status-url: $STATUS_URL
+          deploy-url: $BUILD_URL
+          access-key: ${{ secrets.VBR_AWS_BUILD_USER_ACCESS_KEY_ID }}
+          secret-key: ${{ secrets.VBR_AWS_BUILD_USER_SECRET_ACCESS_KEY }}
+          region: eu-west-1
+          interval: 2
+          
+    - name: output CD services
+      shell: bash
+      run: |
+        echo build-uuid: ${{ steps.awscurl-polling-action.outputs.build-uuid }}
+        echo Status: ${{ steps.awscurl-polling-action.outputs.status }}
+        echo ${{ steps.awscurl-polling-action.outputs.final-message }}
+
+
+  deploy_to_staging_finish_slack:
+    if: github.repository_owner == 'Informatievlaanderen'
+    needs:  [deploy_to_staging]  
+    name: Deploy to staging finished
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Parse repository name
+      run: echo REPOSITORY_NAME=$(echo ""$GITHUB_REPOSITORY"" | awk -F / '{print $2}' | sed -e ""s/:refs//"") >> $GITHUB_ENV
+      shell: bash
+
+    - name: Notify deployment finished
+      uses: slackapi/slack-github-action@v1.23.0
+      with:
+        channel-id: '#team-dinosaur-dev'
+        slack-message: Deployment of postal-registry to staging has finished
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.VBR_SLACK_BOT_TOKEN }}
+        SLACK_CHANNEL: ${{ secrets.VBR_NOTIFIER_CHANNEL_NAME }}
+        REPOSITORY_NAME: ${{ env.REPOSITORY_NAME }}
+
+  deploy_to_production_start_slack:
+    if: github.repository_owner == 'Informatievlaanderen'
+    needs: [push_images_to_production, deploy_to_staging_finish_slack, build]
+    name: Deploy to production started
+    environment: prd
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Parse repository name
+      run: echo REPOSITORY_NAME=$(echo ""$GITHUB_REPOSITORY"" | awk -F / '{print $2}' | sed -e ""s/:refs//"") >> $GITHUB_ENV
+      shell: bash
+
+    - name: Notify deployment started
+      uses: slackapi/slack-github-action@v1.23.0
+      with:
+        channel-id: '#team-dinosaur-dev'
+        slack-message: Deployment of postal-registry to production has started
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.VBR_SLACK_BOT_TOKEN }}
+        SLACK_CHANNEL: ${{ secrets.VBR_NOTIFIER_CHANNEL_NAME }}
+        REPOSITORY_NAME: ${{ env.REPOSITORY_NAME }}
+        
+  deploy_to_production:
+    if: github.repository_owner == 'Informatievlaanderen'
+    needs: [deploy_to_production_start_slack, build]
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: 
+        services: ['postal-registry-api', 'postal-registry-import-api', 'postal-registry-projections']
+
+    steps:
+    - name: CD services
+      env:
+        BUILD_URL: ${{ secrets.VBR_AWS_BUILD_API }}/${{matrix.services}}
+        STATUS_URL: ${{ secrets.VBR_AWS_BUILD_STATUS_API }}/${{matrix.services}}
+      uses: informatievlaanderen/awscurl-polling-action/polling-action@main
+      with:
+          environment: prd
+          version: ${{ needs.build.outputs.version }}
+          status-url: $STATUS_URL
+          deploy-url: $BUILD_URL
+          access-key: ${{ secrets.VBR_AWS_BUILD_USER_ACCESS_KEY_ID }}
+          secret-key: ${{ secrets.VBR_AWS_BUILD_USER_SECRET_ACCESS_KEY }}
+          region: eu-west-1
+          interval: 2
+
+    - name: output CD services
+      shell: bash
+      run: |
+        echo build-uuid: ${{ steps.awscurl-polling-action.outputs.build-uuid }}
+        echo Status: ${{ steps.awscurl-polling-action.outputs.status }}
+        echo ${{ steps.awscurl-polling-action.outputs.final-message }}
+
+
+  deploy_to_production_finish_slack:
+    if: github.repository_owner == 'Informatievlaanderen'
+    needs:  [deploy_to_production]  
+    name: Deploy to production finished
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Parse repository name
+      run: echo REPOSITORY_NAME=$(echo ""$GITHUB_REPOSITORY"" | awk -F / '{print $2}' | sed -e ""s/:refs//"") >> $GITHUB_ENV
+      shell: bash
+
+    - name: Notify deployment finished
+      uses: slackapi/slack-github-action@v1.23.0
+      with:
+        channel-id: '#team-dinosaur-dev'
+        slack-message: Deployment of postal-registry to production has finished
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.VBR_SLACK_BOT_TOKEN }}
+        SLACK_CHANNEL: ${{ secrets.VBR_NOTIFIER_CHANNEL_NAME }}
+        REPOSITORY_NAME: ${{ env.REPOSITORY_NAME }}
