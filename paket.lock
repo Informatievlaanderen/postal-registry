@@ -281,7 +281,7 @@ NUGET
       Be.Vlaanderen.Basisregisters.Crab (>= 3.0)
       Be.Vlaanderen.Basisregisters.GrAr.Common (17.36)
       Microsoft.CSharp (>= 4.7)
-    Be.Vlaanderen.Basisregisters.MessageHandling.Kafka.Simple (4.5)
+    Be.Vlaanderen.Basisregisters.MessageHandling.Kafka.Producer (4.6.1)
       Confluent.Kafka (>= 1.8.2)
       Microsoft.Extensions.Logging (>= 6.0)
     Be.Vlaanderen.Basisregisters.Middleware.AddProblemJsonHeader (2.0)

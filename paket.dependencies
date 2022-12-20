@@ -65,7 +65,7 @@ nuget Be.Vlaanderen.Basisregisters.GrAr.Oslo 17.36.0
 nuget Be.Vlaanderen.Basisregisters.GrAr.Provenance 17.36.0
 nuget Be.Vlaanderen.Basisregisters.GrAr.Extracts 17.36.0
 
-nuget Be.Vlaanderen.Basisregisters.MessageHandling.Kafka.Simple 4.5.0
+nuget Be.Vlaanderen.Basisregisters.MessageHandling.Kafka.Producer 4.6.1
 
 nuget Be.Vlaanderen.Basisregisters.Shaperon 9.0.1
 

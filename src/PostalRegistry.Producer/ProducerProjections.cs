@@ -1,70 +1,72 @@
 namespace PostalRegistry.Producer
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    using Be.Vlaanderen.Basisregisters.EventHandling;
     using Be.Vlaanderen.Basisregisters.GrAr.Contracts;
-    using Be.Vlaanderen.Basisregisters.MessageHandling.Kafka.Simple;
+    using Be.Vlaanderen.Basisregisters.MessageHandling.Kafka;
+    using Be.Vlaanderen.Basisregisters.MessageHandling.Kafka.Producer;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector;
     using Extensions;
-    using Microsoft.Extensions.Configuration;
     using Domain = PostalInformation.Events;
 
     [ConnectedProjectionName("Kafka producer")]
     [ConnectedProjectionDescription("Projectie die berichten naar de kafka broker stuurt.")]
     public class ProducerProjections : ConnectedProjection<ProducerContext>
     {
-        private readonly KafkaProducerOptions _kafkaOptions;
-        private readonly string topicKey = "Topic";
+        public const string TopicKey = "Topic";
 
-        public ProducerProjections(IConfiguration configuration)
+        private readonly IProducer _producer;
+
+        public ProducerProjections(IProducer producer)
         {
-            var bootstrapServers = configuration["Kafka:BootstrapServers"];
-            var topic = $"{configuration[topicKey]}" ?? throw new ArgumentException($"Configuration has no value for {topicKey}");
-            _kafkaOptions = new KafkaProducerOptions(
-                bootstrapServers,
-                configuration["Kafka:SaslUserName"],
-                configuration["Kafka:SaslPassword"],
-                topic,
-                false,
-                EventsJsonSerializerSettingsProvider.CreateSerializerSettings());
+            _producer = producer;
 
-            When<Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore.Envelope<Domain.PostalInformationWasRegistered>>(async (context, message, ct) =>
+            When<Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore.Envelope<Domain.PostalInformationWasRegistered>>(async (_, message, ct) =>
             {
-                await Produce(message.Message.PostalCode, message.Message.ToContract(), ct);
+                await Produce(message.Message.PostalCode, message.Message.ToContract(), message.Position, ct);
             });
 
-            When<Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore.Envelope<Domain.PostalInformationWasRealized>>(async (context, message, ct) =>
+            When<Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore.Envelope<Domain.PostalInformationWasRealized>>(async (_, message, ct) =>
             {
-                await Produce(message.Message.PostalCode, message.Message.ToContract(), ct);
+                await Produce(message.Message.PostalCode, message.Message.ToContract(), message.Position, ct);
             });
 
-            When<Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore.Envelope<Domain.PostalInformationWasRetired>>(async (context, message, ct) =>
+            When<Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore.Envelope<Domain.PostalInformationWasRetired>>(async (_, message, ct) =>
             {
-                await Produce(message.Message.PostalCode, message.Message.ToContract(), ct);
+                await Produce(message.Message.PostalCode, message.Message.ToContract(), message.Position, ct);
             });
 
-            When<Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore.Envelope<Domain.PostalInformationPostalNameWasAdded>>(async (context, message, ct) =>
+            When<Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore.Envelope<Domain.PostalInformationPostalNameWasAdded>>(async (_, message, ct) =>
             {
-                await Produce(message.Message.PostalCode, message.Message.ToContract(), ct);
+                await Produce(message.Message.PostalCode, message.Message.ToContract(), message.Position, ct);
             });
 
-            When<Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore.Envelope<Domain.PostalInformationPostalNameWasRemoved>>(async (context, message, ct) =>
+            When<Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore.Envelope<Domain.PostalInformationPostalNameWasRemoved>>(async (_, message, ct) =>
             {
-                await Produce(message.Message.PostalCode, message.Message.ToContract(), ct);
+                await Produce(message.Message.PostalCode, message.Message.ToContract(), message.Position, ct);
             });
 
-            When<Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore.Envelope<Domain.MunicipalityWasAttached>>(async (context, message, ct) =>
+            When<Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore.Envelope<Domain.MunicipalityWasAttached>>(async (_, message, ct) =>
             {
-                await Produce(message.Message.PostalCode, message.Message.ToContract(), ct);
+                await Produce(message.Message.PostalCode, message.Message.ToContract(), message.Position, ct);
             });
         }
 
-        private async Task Produce<T>(string postalCode, T message, CancellationToken cancellationToken = default)
+        private async Task Produce<T>(
+            string postalCode,
+            T message,
+            long storePosition,
+            CancellationToken cancellationToken = default)
             where T : class, IQueueMessage
         {
-            var result = await KafkaProducer.Produce(_kafkaOptions, postalCode, message, cancellationToken);
+            var result = await _producer.ProduceJsonMessage(
+                new MessageKey(postalCode),
+                message,
+                new List<MessageHeader> { new MessageHeader(MessageHeader.IdempotenceKey, storePosition.ToString()) },
+                cancellationToken);
+
             if (!result.IsSuccess)
             {
                 throw new InvalidOperationException(result.Error + Environment.NewLine + result.ErrorReason); //TODO: create custom exception
