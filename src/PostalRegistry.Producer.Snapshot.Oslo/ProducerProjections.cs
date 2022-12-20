@@ -1,116 +1,126 @@
 namespace PostalRegistry.Producer.Snapshot.Oslo
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    using Be.Vlaanderen.Basisregisters.EventHandling;
     using Be.Vlaanderen.Basisregisters.GrAr.Oslo.SnapshotProducer;
-    using Be.Vlaanderen.Basisregisters.MessageHandling.Kafka.Simple;
+    using Be.Vlaanderen.Basisregisters.MessageHandling.Kafka;
+    using Be.Vlaanderen.Basisregisters.MessageHandling.Kafka.Producer;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore;
-    using Microsoft.Extensions.Configuration;
     using PostalInformation.Events;
 
     [ConnectedProjectionName("Kafka producer")]
     [ConnectedProjectionDescription("Projectie die berichten naar de kafka broker stuurt.")]
     public sealed class ProducerProjections : ConnectedProjection<ProducerContext>
     {
-        private readonly KafkaProducerOptions _kafkaOptions;
-        private const string TopicKey = "Topic";
+        public const string TopicKey = "Topic";
 
-        public ProducerProjections(IConfiguration configuration, ISnapshotManager snapshotManager)
+        private readonly IProducer _producer;
+
+        public ProducerProjections(IProducer producer, ISnapshotManager snapshotManager)
         {
-            var bootstrapServers = configuration["Kafka:BootstrapServers"];            
-
-            var topic = $"{configuration[TopicKey]}" ?? throw new ArgumentException($"Configuration has no value for {TopicKey}");
-            _kafkaOptions = new KafkaProducerOptions(
-                bootstrapServers,
-                configuration["Kafka:SaslUserName"],
-                configuration["Kafka:SaslPassword"],
-                topic,
-                false,
-                EventsJsonSerializerSettingsProvider.CreateSerializerSettings());
+            _producer = producer;
 
             When<Envelope<PostalInformationWasRegistered>>(async (_, message, ct) =>
             {
                 await FindAndProduce(async () =>
-                        await snapshotManager.FindMatchingSnapshot(
-                            message.Message.PostalCode,
-                            message.Message.Provenance.Timestamp,
-                            throwStaleWhenGone: false,
-                            ct),
+                    await snapshotManager.FindMatchingSnapshot(
+                        message.Message.PostalCode,
+                        message.Message.Provenance.Timestamp,
+                        throwStaleWhenGone: false,
+                        ct),
+                    message.Position,
                     ct);
             });
 
             When<Envelope<PostalInformationPostalNameWasAdded>>(async (_, message, ct) =>
             {
                 await FindAndProduce(async () =>
-                        await snapshotManager.FindMatchingSnapshot(
-                            message.Message.PostalCode,
-                            message.Message.Provenance.Timestamp,
-                            throwStaleWhenGone: false,
-                            ct),
+                    await snapshotManager.FindMatchingSnapshot(
+                        message.Message.PostalCode,
+                        message.Message.Provenance.Timestamp,
+                        throwStaleWhenGone: false,
+                        ct),
+                    message.Position,
                     ct);
             });
 
             When<Envelope<PostalInformationPostalNameWasRemoved>>(async (_, message, ct) =>
             {
                 await FindAndProduce(async () =>
-                        await snapshotManager.FindMatchingSnapshot(
-                            message.Message.PostalCode,
-                            message.Message.Provenance.Timestamp,
-                            throwStaleWhenGone: false,
-                            ct),
+                    await snapshotManager.FindMatchingSnapshot(
+                        message.Message.PostalCode,
+                        message.Message.Provenance.Timestamp,
+                        throwStaleWhenGone: false,
+                        ct),
+                    message.Position,
                     ct);
             });
 
             When<Envelope<PostalInformationWasRealized>>(async (_, message, ct) =>
             {
                 await FindAndProduce(async () =>
-                        await snapshotManager.FindMatchingSnapshot(
-                            message.Message.PostalCode,
-                            message.Message.Provenance.Timestamp,
-                            throwStaleWhenGone: false,
-                            ct),
+                    await snapshotManager.FindMatchingSnapshot(
+                        message.Message.PostalCode,
+                        message.Message.Provenance.Timestamp,
+                        throwStaleWhenGone: false,
+                        ct),
+                    message.Position,
                     ct);
             });
 
             When<Envelope<PostalInformationWasRetired>>(async (_, message, ct) =>
             {
                 await FindAndProduce(async () =>
-                        await snapshotManager.FindMatchingSnapshot(
-                            message.Message.PostalCode,
-                            message.Message.Provenance.Timestamp,
-                            throwStaleWhenGone: false,
-                            ct),
+                    await snapshotManager.FindMatchingSnapshot(
+                        message.Message.PostalCode,
+                        message.Message.Provenance.Timestamp,
+                        throwStaleWhenGone: false,
+                        ct),
+                    message.Position,
                     ct);
             });
 
             When<Envelope<MunicipalityWasAttached>>(async (_, message, ct) =>
             {
                 await FindAndProduce(async () =>
-                        await snapshotManager.FindMatchingSnapshot(
-                            message.Message.PostalCode,
-                            message.Message.Provenance.Timestamp,
-                            throwStaleWhenGone: false,
-                            ct),
+                    await snapshotManager.FindMatchingSnapshot(
+                        message.Message.PostalCode,
+                        message.Message.Provenance.Timestamp,
+                        throwStaleWhenGone: false,
+                        ct),
+                    message.Position,
                     ct);
             });
         }
 
-        private async Task FindAndProduce(Func<Task<OsloResult?>> findMatchingSnapshot, CancellationToken ct)
+        private async Task FindAndProduce(
+            Func<Task<OsloResult?>> findMatchingSnapshot,
+            long storePosition,
+            CancellationToken ct)
         {
             var result = await findMatchingSnapshot.Invoke();
 
             if (result != null)
             {
-                await Produce(result.Identificator.Id, result.JsonContent, ct);
+                await Produce(result.Identificator.Id, result.JsonContent, storePosition, ct);
             }
         }
 
-        private async Task Produce(string objectId, string jsonContent, CancellationToken cancellationToken = default)
+        private async Task Produce(
+            string objectId,
+            string jsonContent,
+            long storePosition,
+            CancellationToken cancellationToken = default)
         {
-            var result = await KafkaProducer.Produce(_kafkaOptions, objectId, jsonContent, cancellationToken);
+            var result = await _producer.ProduceJsonMessage(
+                new MessageKey(objectId),
+                jsonContent,
+                new List<MessageHeader> { new MessageHeader(MessageHeader.IdempotenceKey, storePosition.ToString()) },
+                cancellationToken);
+
             if (!result.IsSuccess)
             {
                 throw new InvalidOperationException(result.Error + Environment.NewLine + result.ErrorReason); //TODO: create custom exception
