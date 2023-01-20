@@ -63,7 +63,6 @@ Target.create "Publish_Solution" (fun _ ->
 
 Target.create "Pack_Solution" (fun _ ->
   [
-    "PostalRegistry.Projector"
     "PostalRegistry.Api.Legacy"
     "PostalRegistry.Api.Oslo"
     "PostalRegistry.Api.Extract"
