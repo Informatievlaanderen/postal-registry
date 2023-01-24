@@ -129,6 +129,24 @@ jobs:
     #
     # Upload NuGet packages
     #
+    
+    - name: Upload NuGet package be-.-vlaanderen-.-basisregisters-.-postal-registry-.-api-.-legacy
+      if: env.RELEASE_VERSION != 'none'
+      uses: actions/upload-artifact@v3
+      with:
+        name: nuget-be-.-vlaanderen-.-basisregisters-.-postal-registry-.-api-.-legacy
+        path: /home/runner/work/postal-registry/postal-registry/dist/nuget/Be.Vlaanderen.Basisregisters.PostalRegistry.Api.Legacy.*.nupkg
+      env:
+        SEMVER: ${{ env.RELEASE_VERSION }}
+        
+    - name: Upload NuGet package be-.-vlaanderen-.-basisregisters-.-postal-registry-.-api-.-extract
+      if: env.RELEASE_VERSION != 'none'
+      uses: actions/upload-artifact@v3
+      with:
+        name: nuget-be-.-vlaanderen-.-basisregisters-.-postal-registry-.-api-.-extract
+        path: /home/runner/work/postal-registry/postal-registry/dist/nuget/Be.Vlaanderen.Basisregisters.PostalRegistry.Api.Extract.*.nupkg
+      env:
+        SEMVER: ${{ env.RELEASE_VERSION }}
 
     - name: Upload NuGet package be-.-vlaanderen-.-basisregisters-.-postal-registry-.-api-.-oslo
       if: env.RELEASE_VERSION != 'none'
