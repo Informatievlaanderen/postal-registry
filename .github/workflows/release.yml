@@ -310,6 +310,20 @@ jobs:
       shell: bash
       run: dotnet --info
 
+    - name: Download NuGet package be-.-vlaanderen-.-basisregisters-.-postal-registry-.-api-.-legacy
+      if: env.RELEASE_VERSION != 'none'
+      uses: actions/download-artifact@v3
+      with:
+        name: nuget-be-.-vlaanderen-.-basisregisters-.-postal-registry-.-api-.-legacy
+        path: ~/
+        
+    - name: Download NuGet package be-.-vlaanderen-.-basisregisters-.-postal-registry-.-api-.-extract
+      if: env.RELEASE_VERSION != 'none'
+      uses: actions/download-artifact@v3
+      with:
+        name: nuget-be-.-vlaanderen-.-basisregisters-.-postal-registry-.-api-.-extract
+        path: ~/
+
     - name: Download NuGet package be-.-vlaanderen-.-basisregisters-.-postal-registry-.-api-.-oslo
       if: env.RELEASE_VERSION != 'none'
       uses: actions/download-artifact@v3
@@ -329,6 +343,8 @@ jobs:
       shell: bash
       run: |
         dotnet nuget push ~/Be.Vlaanderen.Basisregisters.PostalRegistry.Api.Oslo.$SEMVER.nupkg --source nuget.org --api-key $NUGET_API_KEY
+        dotnet nuget push ~/Be.Vlaanderen.Basisregisters.PostalRegistry.Api.Legacy.$SEMVER.nupkg --source nuget.org --api-key $NUGET_API_KEY
+        dotnet nuget push ~/Be.Vlaanderen.Basisregisters.PostalRegistry.Api.Extract.$SEMVER.nupkg --source nuget.org --api-key $NUGET_API_KEY
         dotnet nuget push ~/Be.Vlaanderen.Basisregisters.PostalRegistry.Api.CrabImport.$SEMVER.nupkg --source nuget.org --api-key $NUGET_API_KEY
       env:
         SEMVER: ${{ needs.build.outputs.version }}
