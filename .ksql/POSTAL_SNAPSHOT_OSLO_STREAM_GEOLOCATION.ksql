@@ -1,0 +1,13 @@
+CREATE OR REPLACE STREAM postal_snapshot_oslo_stream_flatten_geolocation
+   WITH (KAFKA_TOPIC='stg.postal.snapshot.oslo.flatten.geolocation', PARTITIONS=6, VALUE_FORMAT='JSON_SR') 
+   AS SELECT identificator->id AS IDENTIFICATOR_ID, 
+             identificator->naamruimte AS IDENTIFICATOR_NAAMRUIMTE,
+             CAST(identificator->objectId AS INT) AS IDENTIFICATOR_OBJECTID,
+             identificator->versieId AS IDENTIFICATOR_VERSIEID,
+             CAST(gemeente->objectId AS INT) AS GEMEENTE_OBJECTID,
+             ARRAY_JOIN(ARRAY_SORT(TRANSFORM(FILTER(POSTNAMEN, (X) => (X->geografischeNaam->TAAL = 'nl')), (y) => y->geografischeNaam->SPELLING), 'ASC'), ', ') AS POSTNAAM_NL,
+             ARRAY_JOIN(ARRAY_SORT(TRANSFORM(FILTER(POSTNAMEN, (X) => (X->geografischeNaam->TAAL = 'fr')), (y) => y->geografischeNaam->SPELLING), 'ASC'), ', ') AS POSTNAAM_FR,
+             ARRAY_JOIN(ARRAY_SORT(TRANSFORM(FILTER(POSTNAMEN, (X) => (X->geografischeNaam->TAAL = 'de')), (y) => y->geografischeNaam->SPELLING), 'ASC'), ', ') AS POSTNAAM_DE,
+             ARRAY_JOIN(ARRAY_SORT(TRANSFORM(FILTER(POSTNAMEN, (X) => (X->geografischeNaam->TAAL = 'en')), (y) => y->geografischeNaam->SPELLING), 'ASC'), ', ') AS POSTNAAM_EN,
+             postInfoStatus AS POSTINFOSTATUS
+   FROM POSTAL_SNAPSHOT_OSLO_STREAM;
