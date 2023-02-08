@@ -1,5 +1,5 @@
 CREATE OR REPLACE STREAM postal_snapshot_oslo_stream_flatten_geolocation
-   WITH (KAFKA_TOPIC='stg.postal.snapshot.oslo.flatten.geolocation', PARTITIONS=6, VALUE_FORMAT='JSON_SR') 
+   WITH (KAFKA_TOPIC='stg.postal.snapshot.oslo.flatten.geolocation', PARTITIONS=1, VALUE_FORMAT='JSON_SR', KEY_FORMAT='JSON_SR') 
    AS SELECT REDUCE(SPLIT(URL_EXTRACT_PATH(MESSAGEKEY), '/'), '', (S, X) => X) MSGKEY,
              identificator->id AS IDENTIFICATOR_ID, 
              identificator->naamruimte AS IDENTIFICATOR_NAAMRUIMTE,
@@ -10,6 +10,7 @@ CREATE OR REPLACE STREAM postal_snapshot_oslo_stream_flatten_geolocation
              ARRAY_JOIN(ARRAY_SORT(TRANSFORM(FILTER(POSTNAMEN, (X) => (X->geografischeNaam->TAAL = 'fr')), (y) => y->geografischeNaam->SPELLING), 'ASC'), ', ') AS POSTNAAM_FR,
              ARRAY_JOIN(ARRAY_SORT(TRANSFORM(FILTER(POSTNAMEN, (X) => (X->geografischeNaam->TAAL = 'de')), (y) => y->geografischeNaam->SPELLING), 'ASC'), ', ') AS POSTNAAM_DE,
              ARRAY_JOIN(ARRAY_SORT(TRANSFORM(FILTER(POSTNAMEN, (X) => (X->geografischeNaam->TAAL = 'en')), (y) => y->geografischeNaam->SPELLING), 'ASC'), ', ') AS POSTNAAM_EN,
-             postInfoStatus AS POSTINFOSTATUS
+             postInfoStatus AS POSTINFOSTATUS,
+             CASE WHEN IDENTIFICATOR->ID is null THEN TRUE ELSE FALSE END REMOVED
    FROM POSTAL_SNAPSHOT_OSLO_STREAM
    PARTITION BY REDUCE(SPLIT(URL_EXTRACT_PATH(MESSAGEKEY), '/'), '', (S, X) => X);
