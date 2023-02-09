@@ -6,7 +6,7 @@ namespace PostalRegistry.Projector.Infrastructure
     using Autofac;
     using Autofac.Extensions.DependencyInjection;
     using Be.Vlaanderen.Basisregisters.Api;
-    using Be.Vlaanderen.Basisregisters.DataDog.Tracing.Autofac;    
+    using Be.Vlaanderen.Basisregisters.DataDog.Tracing.Microsoft;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.LastChangedList;
     using Be.Vlaanderen.Basisregisters.Projector.ConnectedProjections;
     using Configuration;
@@ -22,7 +22,7 @@ namespace PostalRegistry.Projector.Infrastructure
     using PostalRegistry.Projections.Extract;
     using PostalRegistry.Projections.Legacy;
     using Microsoft.OpenApi.Models;
-    using System.Threading;    
+    using System.Threading;
 
     /// <summary>Represents the startup process for the application.</summary>
     public class Startup

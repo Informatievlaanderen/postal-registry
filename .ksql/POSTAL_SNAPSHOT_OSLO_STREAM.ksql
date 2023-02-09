@@ -1,0 +1,9 @@
+CREATE OR REPLACE STREAM IF NOT EXISTS postal_snapshot_oslo_stream (
+  messagekey varchar KEY,
+  `@context` varchar,
+  `@type` varchar,
+  identificator STRUCT<id varchar, naamruimte varchar, objectId varchar, versieId varchar>,
+  gemeente STRUCT<objectId varchar, detail varchar, gemeentenaam STRUCT<geografischenaam STRUCT<spelling varchar, taal varchar>>>,
+  postnamen Array<STRUCT<geografischeNaam STRUCT<spelling varchar, taal varchar>>>,
+  postInfoStatus varchar)
+WITH (KAFKA_TOPIC='stg.postal.snapshot.oslo', VALUE_FORMAT='JSON');

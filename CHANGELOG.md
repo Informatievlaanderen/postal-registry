@@ -1,3 +1,15 @@
+# [3.4.0](https://github.com/informatievlaanderen/postal-registry/compare/v3.3.1...v3.4.0) (2023-01-12)
+
+
+### Bug Fixes
+
+* remove unused workflows ([9ffd103](https://github.com/informatievlaanderen/postal-registry/commit/9ffd1033b5aa362f566884f2cbbe288383056bc2))
+
+
+### Features
+
+* update Be.Vlaanderen.Basisregisters.Api to 19.0.1 ([4b0dc3b](https://github.com/informatievlaanderen/postal-registry/commit/4b0dc3b3266151ccc1679c3eba8fdf0d20f4d016))
+
 ## [3.3.1](https://github.com/informatievlaanderen/postal-registry/compare/v3.3.0...v3.3.1) (2022-12-10)
 
 
