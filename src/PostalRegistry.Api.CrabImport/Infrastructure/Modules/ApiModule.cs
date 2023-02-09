@@ -38,15 +38,15 @@ namespace PostalRegistry.Api.CrabImport.Infrastructure.Modules
             _services.RegisterModule(new DataDogModule(_configuration));
 
             builder
-                .RegisterModule(new IdempotencyModule(
-                    _services,
-                    _configuration.GetSection(IdempotencyConfiguration.Section).Get<IdempotencyConfiguration>().ConnectionString,
-                    new IdempotencyMigrationsTableInfo(Schema.Import),
-                    new IdempotencyTableInfo(Schema.Import),
-                    _loggerFactory))
                 .RegisterModule(new EventHandlingModule(typeof(DomainAssemblyMarker).Assembly, eventSerializerSettings))
                 .RegisterModule(new EnvelopeModule())
                 .RegisterModule(new CommandHandlingModule(_configuration));
+
+            _services.ConfigureIdempotency(
+                _configuration.GetSection(IdempotencyConfiguration.Section).Get<IdempotencyConfiguration>().ConnectionString,
+                new IdempotencyMigrationsTableInfo(Schema.Import),
+                new IdempotencyTableInfo(Schema.Import),
+                _loggerFactory);
 
             builder
                 .RegisterType<ProblemDetailsHelper>()
