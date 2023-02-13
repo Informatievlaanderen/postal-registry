@@ -1,3 +1,11 @@
+## [3.4.1](https://github.com/informatievlaanderen/postal-registry/compare/v3.4.0...v3.4.1) (2023-02-13)
+
+
+### Bug Fixes
+
+* bump commandhandling to 8.0.0 ([e15f65c](https://github.com/informatievlaanderen/postal-registry/commit/e15f65c2a9825bc3e8bde4559f905d735960b4cf))
+* ksql geolocation removed field + number of partitions ([e1a3338](https://github.com/informatievlaanderen/postal-registry/commit/e1a3338a2066bfc908d857f8ff19c77ac755b175))
+
 # [3.4.0](https://github.com/informatievlaanderen/postal-registry/compare/v3.3.1...v3.4.0) (2023-01-12)
 
 
