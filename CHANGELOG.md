@@ -1,3 +1,11 @@
+## [3.4.2](https://github.com/informatievlaanderen/postal-registry/compare/v3.4.1...v3.4.2) (2023-02-23)
+
+
+### Bug Fixes
+
+* number ksql ([82781a8](https://github.com/informatievlaanderen/postal-registry/commit/82781a8f04a77f37554d0fdda2e74dde04be4b81))
+* use new ci flow ([ae702e4](https://github.com/informatievlaanderen/postal-registry/commit/ae702e43d49a8f5f7e7c110317aa5d9fbc382d90))
+
 ## [3.4.1](https://github.com/informatievlaanderen/postal-registry/compare/v3.4.0...v3.4.1) (2023-02-13)
 
 
