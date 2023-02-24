@@ -1,4 +1,4 @@
-CREATE OR REPLACE STREAM postal_snapshot_oslo_stream_flatten_geolocation
+CREATE OR REPLACE STREAM IF NOT EXISTS postal_snapshot_oslo_stream_flatten_geolocation
    WITH (KAFKA_TOPIC='stg.postal.snapshot.oslo.flatten.geolocation', PARTITIONS=1, VALUE_FORMAT='JSON_SR', KEY_FORMAT='JSON_SR') 
    AS SELECT REDUCE(SPLIT(URL_EXTRACT_PATH(MESSAGEKEY), '/'), '', (S, X) => X) MSGKEY,
              identificator->id AS IDENTIFICATOR_ID, 
