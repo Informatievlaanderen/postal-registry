@@ -1,3 +1,10 @@
+## [3.4.3](https://github.com/informatievlaanderen/postal-registry/compare/v3.4.2...v3.4.3) (2023-02-27)
+
+
+### Bug Fixes
+
+* bump grar common ([9d90d8f](https://github.com/informatievlaanderen/postal-registry/commit/9d90d8fa2e4e10476da9c393a8511d480d07c0fe))
+
 ## [3.4.2](https://github.com/informatievlaanderen/postal-registry/compare/v3.4.1...v3.4.2) (2023-02-23)
 
 
