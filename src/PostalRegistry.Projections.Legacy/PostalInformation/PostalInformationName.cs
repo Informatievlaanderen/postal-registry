@@ -8,21 +8,23 @@ namespace PostalRegistry.Projections.Legacy.PostalInformation
     public class PostalInformationName
     {
         public Guid Id { get; set; }
-        public string? Name { get; set; }
+        public string Name { get; set; }
+        public string SearchName { get; set; }
         public Language Language { get; set; }
         public string? PostalCode { get; set; }
 
         public PostalInformationName() { }
 
-        public PostalInformationName(string name, string postalCode, Language language)
+        public PostalInformationName(string name, string searchName, string postalCode, Language language)
         {
             Name = name;
+            SearchName = searchName;
             PostalCode = postalCode;
             Language = language;
         }
     }
 
-    public class PostalInformationNameonfiguration : IEntityTypeConfiguration<PostalInformationName>
+    public class PostalInformationNameConfiguration : IEntityTypeConfiguration<PostalInformationName>
     {
         private const string TableName = "PostalInformationName";
 
@@ -36,10 +38,12 @@ namespace PostalRegistry.Projections.Legacy.PostalInformation
                 .ValueGeneratedOnAdd();
 
             builder.Property(p => p.Name).IsRequired();
+            builder.Property(p => p.SearchName).IsRequired();
             builder.Property(p => p.PostalCode);
             builder.Property(p => p.Language);
 
             builder.HasIndex(x => x.PostalCode);
+            builder.HasIndex(x => x.SearchName);
         }
     }
 }

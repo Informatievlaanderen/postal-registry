@@ -51,6 +51,13 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.Query
                 postalInformationSet = postalInformationSet.Where(x => municipalityNisCodes.Contains(x.NisCode));
             }
 
+            var filterPostalName = filtering.Filter.PostalName.RemoveDiacritics();
+            if (!string.IsNullOrEmpty(filterPostalName))
+            {
+                postalInformationSet = postalInformationSet
+                    .Where(x => x.PostalNames.Any(y => y.SearchName == filterPostalName));
+            }
+
             return postalInformationSet;
         }
     }
@@ -69,5 +76,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.Query
     public class PostalInformationFilter
     {
         public string MunicipalityName { get; set; }
+
+        public string PostalName { get; set; }
     }
 }
