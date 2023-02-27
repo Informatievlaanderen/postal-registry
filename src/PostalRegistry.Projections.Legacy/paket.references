@@ -8,5 +8,7 @@ Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore.Autofac
 Be.Vlaanderen.Basisregisters.GrAr.Common
 Be.Vlaanderen.Basisregisters.GrAr.Legacy
 
+Dapper
+
 SourceLink.Embed.AllSourceFiles
 SourceLink.Copy.PdbFiles

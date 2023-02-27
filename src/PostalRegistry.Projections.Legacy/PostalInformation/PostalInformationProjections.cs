@@ -4,6 +4,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformation
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Be.Vlaanderen.Basisregisters.GrAr.Common;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore;
     using NodaTime;
@@ -64,7 +65,11 @@ namespace PostalRegistry.Projections.Legacy.PostalInformation
                             return;
                         }
 
-                        var postalInformationName = new PostalInformationName(message.Message.Name, postalInformation.PostalCode, message.Message.Language);
+                        var postalInformationName = new PostalInformationName(
+                            message.Message.Name,
+                            message.Message.Name.RemoveDiacritics(),
+                            postalInformation.PostalCode,
+                            message.Message.Language);
 
                         if (postalInformation.PostalNames == null)
                         {
