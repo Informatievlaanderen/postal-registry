@@ -1,3 +1,15 @@
+# [3.5.0](https://github.com/informatievlaanderen/postal-registry/compare/v3.4.3...v3.5.0) (2023-02-28)
+
+
+### Bug Fixes
+
+* no merge group for ksql ([4cba247](https://github.com/informatievlaanderen/postal-registry/commit/4cba24754aadb42c0bc03ae8501301235aac2794))
+
+
+### Features
+
+* add filter on postname for postalinformationname ([e566cd7](https://github.com/informatievlaanderen/postal-registry/commit/e566cd76d05a3f10e012cf081ba481374be38718))
+
 ## [3.4.3](https://github.com/informatievlaanderen/postal-registry/compare/v3.4.2...v3.4.3) (2023-02-27)
 
 
