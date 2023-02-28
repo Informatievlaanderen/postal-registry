@@ -1,3 +1,10 @@
+## [3.5.1](https://github.com/informatievlaanderen/postal-registry/compare/v3.5.0...v3.5.1) (2023-02-28)
+
+
+### Bug Fixes
+
+* style to bump version ([c7acf8f](https://github.com/informatievlaanderen/postal-registry/commit/c7acf8f2cf7a58be2ed0358b121fd786b7ed5867))
+
 # [3.5.0](https://github.com/informatievlaanderen/postal-registry/compare/v3.4.3...v3.5.0) (2023-02-28)
 
 
