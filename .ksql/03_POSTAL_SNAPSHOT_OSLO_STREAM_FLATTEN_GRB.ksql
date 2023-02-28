@@ -1,0 +1,20 @@
+CREATE OR REPLACE STREAM IF NOT EXISTS postal_snapshot_oslo_stream_flatten_grb
+   WITH (KAFKA_TOPIC='postal.snapshot.oslo.flatten.grb', PARTITIONS=1, VALUE_FORMAT='JSON_SR', KEY_FORMAT='JSON_SR') 
+   AS SELECT
+
+      CAST(REDUCE(SPLIT(URL_EXTRACT_PATH(MESSAGEKEY), '/'), '', (s,x) => x) as INT) as Objectid,
+      IDENTIFICATOR->ID Id,
+      IDENTIFICATOR->VERSIEID Versieid,
+      IDENTIFICATOR->OBJECTID Postcode,
+      IFNULL(GEMEENTE->OBJECTID, '') Niscode,
+
+      IFNULL(FILTER(POSTNAMEN, (X) => (X->geografischeNaam->TAAL = 'nl'))[1]->geografischeNaam->SPELLING,
+         IFNULL(FILTER(POSTNAMEN, (X) => (X->geografischeNaam->TAAL = 'fr'))[1]->geografischeNaam->SPELLING,
+            IFNULL(FILTER(POSTNAMEN, (X) => (X->geografischeNaam->TAAL = 'de'))[1]->geografischeNaam->SPELLING,
+               FILTER(POSTNAMEN, (X) => (X->geografischeNaam->TAAL = 'en'))[1]->geografischeNaam->SPELLING))) Postinfo,
+    
+      POSTINFOSTATUS Status,
+      CASE WHEN IDENTIFICATOR->ID is null THEN TRUE ELSE FALSE END REMOVED
+
+   FROM POSTAL_SNAPSHOT_OSLO_STREAM
+   PARTITION BY CAST(REDUCE(SPLIT(URL_EXTRACT_PATH(MESSAGEKEY), '/'), '', (s,x) => x) as INT);
