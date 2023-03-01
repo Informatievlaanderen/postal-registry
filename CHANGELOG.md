@@ -1,3 +1,10 @@
+# [3.6.0](https://github.com/informatievlaanderen/postal-registry/compare/v3.5.1...v3.6.0) (2023-03-01)
+
+
+### Features
+
+* add v2 examples ([360682c](https://github.com/informatievlaanderen/postal-registry/commit/360682cc56ec24eab11605d944b3b3593ba76322))
+
 ## [3.5.1](https://github.com/informatievlaanderen/postal-registry/compare/v3.5.0...v3.5.1) (2023-02-28)
 
 
