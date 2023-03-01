@@ -1,3 +1,15 @@
+# [3.7.0](https://github.com/informatievlaanderen/postal-registry/compare/v3.6.0...v3.7.0) (2023-03-01)
+
+
+### Bug Fixes
+
+* response examples ([539247e](https://github.com/informatievlaanderen/postal-registry/commit/539247ecf28f67141c69b7919801d03f5b91d5cb))
+
+
+### Features
+
+* add flatten grb ksql ([7e43b20](https://github.com/informatievlaanderen/postal-registry/commit/7e43b2055f3f9d4514e4b1af6d2251fa9dc9d20c))
+
 # [3.6.0](https://github.com/informatievlaanderen/postal-registry/compare/v3.5.1...v3.6.0) (2023-03-01)
 
 
