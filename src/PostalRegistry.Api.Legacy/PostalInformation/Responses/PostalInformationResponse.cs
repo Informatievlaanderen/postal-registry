@@ -94,15 +94,18 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
 
     public class PostalInformationNotFoundResponseExamples : IExamplesProvider<ProblemDetails>
     {
+        protected string ApiVersion { get; }
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ProblemDetailsHelper _problemDetailsHelper;
 
         public PostalInformationNotFoundResponseExamples(
             IHttpContextAccessor httpContextAccessor,
-            ProblemDetailsHelper problemDetailsHelper)
+            ProblemDetailsHelper problemDetailsHelper,
+            string apiVersion = "v1")
         {
             _httpContextAccessor = httpContextAccessor;
             _problemDetailsHelper = problemDetailsHelper;
+            ApiVersion = apiVersion;
         }
 
         public ProblemDetails GetExamples()
@@ -112,7 +115,15 @@ namespace PostalRegistry.Api.Legacy.PostalInformation.Responses
                 HttpStatus = StatusCodes.Status404NotFound,
                 Title = ProblemDetails.DefaultTitle,
                 Detail = "Onbestaande postcode.",
-                ProblemInstanceUri = _problemDetailsHelper.GetInstanceUri(_httpContextAccessor.HttpContext)
+                ProblemInstanceUri = _problemDetailsHelper.GetInstanceUri(_httpContextAccessor.HttpContext, ApiVersion)
             };
+    }
+
+    public class PostalInformationNotFoundResponseExamplesV2 : PostalInformationNotFoundResponseExamples
+    {
+        public PostalInformationNotFoundResponseExamplesV2(
+            IHttpContextAccessor httpContextAccessor,
+            ProblemDetailsHelper problemDetailsHelper) : base(httpContextAccessor, problemDetailsHelper, "v2")
+        { }
     }
 }
