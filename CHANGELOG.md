@@ -1,3 +1,10 @@
+## [3.7.1](https://github.com/informatievlaanderen/postal-registry/compare/v3.7.0...v3.7.1) (2023-03-07)
+
+
+### Bug Fixes
+
+* make producer reliable ([35aff0b](https://github.com/informatievlaanderen/postal-registry/commit/35aff0bf68ab2b2aa41e3cfea6e1c5755ffbbe0a))
+
 # [3.7.0](https://github.com/informatievlaanderen/postal-registry/compare/v3.6.0...v3.7.0) (2023-03-01)
 
 
