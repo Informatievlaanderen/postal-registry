@@ -8,11 +8,11 @@ CREATE OR REPLACE STREAM IF NOT EXISTS postal_snapshot_oslo_stream_flatten_grb
       IDENTIFICATOR->OBJECTID Postcode,
       IFNULL(GEMEENTE->OBJECTID, '') Niscode,
 
-      IFNULL(FILTER(POSTNAMEN, (X) => (X->geografischeNaam->TAAL = 'nl'))[1]->geografischeNaam->SPELLING,
-         IFNULL(FILTER(POSTNAMEN, (X) => (X->geografischeNaam->TAAL = 'fr'))[1]->geografischeNaam->SPELLING,
-            IFNULL(FILTER(POSTNAMEN, (X) => (X->geografischeNaam->TAAL = 'de'))[1]->geografischeNaam->SPELLING,
-               FILTER(POSTNAMEN, (X) => (X->geografischeNaam->TAAL = 'en'))[1]->geografischeNaam->SPELLING))) Postinfo,
-    
+      IFNULL(ARRAY_JOIN(ARRAY_SORT(TRANSFORM(FILTER(POSTNAMEN, (X) => (X->geografischeNaam->TAAL = 'nl')), (y) => y->geografischeNaam->SPELLING), 'ASC'), ', '),
+         IFNULL(ARRAY_JOIN(ARRAY_SORT(TRANSFORM(FILTER(POSTNAMEN, (X) => (X->geografischeNaam->TAAL = 'fr')), (y) => y->geografischeNaam->SPELLING), 'ASC'), ', '),
+            IFNULL(ARRAY_JOIN(ARRAY_SORT(TRANSFORM(FILTER(POSTNAMEN, (X) => (X->geografischeNaam->TAAL = 'de')), (y) => y->geografischeNaam->SPELLING), 'ASC'), ', '),
+               ARRAY_JOIN(ARRAY_SORT(TRANSFORM(FILTER(POSTNAMEN, (X) => (X->geografischeNaam->TAAL = 'en')), (y) => y->geografischeNaam->SPELLING), 'ASC'), ', ')))) Postinfo,
+
       POSTINFOSTATUS Status,
       CASE WHEN IDENTIFICATOR->ID is null THEN TRUE ELSE FALSE END REMOVED
 
