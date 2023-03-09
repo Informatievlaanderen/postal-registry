@@ -8,10 +8,15 @@ CREATE OR REPLACE STREAM IF NOT EXISTS postal_snapshot_oslo_stream_flatten_grb
       IDENTIFICATOR->OBJECTID Postcode,
       IFNULL(GEMEENTE->OBJECTID, '') Niscode,
 
-      IFNULL(ARRAY_JOIN(ARRAY_SORT(TRANSFORM(FILTER(POSTNAMEN, (X) => (X->geografischeNaam->TAAL = 'nl')), (y) => y->geografischeNaam->SPELLING), 'ASC'), ', '),
-         IFNULL(ARRAY_JOIN(ARRAY_SORT(TRANSFORM(FILTER(POSTNAMEN, (X) => (X->geografischeNaam->TAAL = 'fr')), (y) => y->geografischeNaam->SPELLING), 'ASC'), ', '),
-            IFNULL(ARRAY_JOIN(ARRAY_SORT(TRANSFORM(FILTER(POSTNAMEN, (X) => (X->geografischeNaam->TAAL = 'de')), (y) => y->geografischeNaam->SPELLING), 'ASC'), ', '),
-               ARRAY_JOIN(ARRAY_SORT(TRANSFORM(FILTER(POSTNAMEN, (X) => (X->geografischeNaam->TAAL = 'en')), (y) => y->geografischeNaam->SPELLING), 'ASC'), ', ')))) Postinfo,
+      CASE 
+         WHEN ARRAY_JOIN(ARRAY_SORT(TRANSFORM(FILTER(POSTNAMEN, (X) => (X->geografischeNaam->TAAL = 'nl')), (y) => y->geografischeNaam->SPELLING), 'ASC'), ', ') <> ''
+            THEN ARRAY_JOIN(ARRAY_SORT(TRANSFORM(FILTER(POSTNAMEN, (X) => (X->geografischeNaam->TAAL = 'nl')), (y) => y->geografischeNaam->SPELLING), 'ASC'), ', ')
+         WHEN ARRAY_JOIN(ARRAY_SORT(TRANSFORM(FILTER(POSTNAMEN, (X) => (X->geografischeNaam->TAAL = 'fr')), (y) => y->geografischeNaam->SPELLING), 'ASC'), ', ') <> ''
+            THEN ARRAY_JOIN(ARRAY_SORT(TRANSFORM(FILTER(POSTNAMEN, (X) => (X->geografischeNaam->TAAL = 'fr')), (y) => y->geografischeNaam->SPELLING), 'ASC'), ', ')
+         WHEN ARRAY_JOIN(ARRAY_SORT(TRANSFORM(FILTER(POSTNAMEN, (X) => (X->geografischeNaam->TAAL = 'de')), (y) => y->geografischeNaam->SPELLING), 'ASC'), ', ') <> ''
+            THEN ARRAY_JOIN(ARRAY_SORT(TRANSFORM(FILTER(POSTNAMEN, (X) => (X->geografischeNaam->TAAL = 'de')), (y) => y->geografischeNaam->SPELLING), 'ASC'), ', ')
+         ELSE ARRAY_JOIN(ARRAY_SORT(TRANSFORM(FILTER(POSTNAMEN, (X) => (X->geografischeNaam->TAAL = 'en')), (y) => y->geografischeNaam->SPELLING), 'ASC'), ', ')
+      END Postinfo, 
 
       POSTINFOSTATUS Status,
       CASE WHEN IDENTIFICATOR->ID is null THEN TRUE ELSE FALSE END REMOVED
