@@ -149,7 +149,7 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
             return Ok(new PostalInformationListResponse
             {
                 PostInfoObjecten = items,
-                Volgende = BuildNextUri(pagedPostalInformationSet.PaginationInfo, reponseOptions.Value.VolgendeUrl)
+                Volgende = BuildNextUri(pagedPostalInformationSet.PaginationInfo, items.Count, reponseOptions.Value.VolgendeUrl)
             });
         }
 
@@ -274,12 +274,12 @@ namespace PostalRegistry.Api.Legacy.PostalInformation
             return sw.ToString();
         }
 
-        private static Uri? BuildNextUri(PaginationInfo paginationInfo, string nextUrlBase)
+        private static Uri? BuildNextUri(PaginationInfo paginationInfo, int itemsInCollection, string nextUrlBase)
         {
             var offset = paginationInfo.Offset;
             var limit = paginationInfo.Limit;
 
-            return paginationInfo.HasNextPage
+            return paginationInfo.HasNextPage(itemsInCollection)
                 ? new Uri(string.Format(nextUrlBase, offset + limit, limit))
                 : null;
         }
