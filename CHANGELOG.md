@@ -1,3 +1,11 @@
+## [3.7.2](https://github.com/informatievlaanderen/postal-registry/compare/v3.7.1...v3.7.2) (2023-03-13)
+
+
+### Bug Fixes
+
+* ksql grb postinfo ([0cec26e](https://github.com/informatievlaanderen/postal-registry/commit/0cec26eecc02c5da5ec0eab474baf57a5319e1cb))
+* ksql grb Postinfo column all values ([7e5aa79](https://github.com/informatievlaanderen/postal-registry/commit/7e5aa79854ed4c21520beed8a0d7b06e59b7f606))
+
 ## [3.7.1](https://github.com/informatievlaanderen/postal-registry/compare/v3.7.0...v3.7.1) (2023-03-07)
 
 
