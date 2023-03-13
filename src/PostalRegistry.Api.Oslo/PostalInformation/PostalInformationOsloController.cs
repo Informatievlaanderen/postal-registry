@@ -143,7 +143,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
             return Ok(new PostalInformationListOsloResponse
             {
                 PostInfoObjecten = items,
-                Volgende = BuildNextUri(pagedPostalInformationSet.PaginationInfo, responseOptions.Value.VolgendeUrl),
+                Volgende = BuildNextUri(pagedPostalInformationSet.PaginationInfo, items.Count, responseOptions.Value.VolgendeUrl),
                 Context = responseOptions.Value.ContextUrlList
             });
         }
@@ -185,12 +185,12 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
                 });
         }
 
-        private static Uri? BuildNextUri(PaginationInfo paginationInfo, string nextUrlBase)
+        private static Uri? BuildNextUri(PaginationInfo paginationInfo, int itemsInCollection, string nextUrlBase)
         {
             var offset = paginationInfo.Offset;
             var limit = paginationInfo.Limit;
 
-            return paginationInfo.HasNextPage
+            return paginationInfo.HasNextPage(itemsInCollection)
                 ? new Uri(string.Format(nextUrlBase, offset + limit, limit))
                 : null;
         }
