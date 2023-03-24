@@ -7,6 +7,7 @@ jobs:
   build:
     if: github.repository_owner == 'Informatievlaanderen'
     name: Deploy ksql statements
+    environment: stg
     runs-on: ubuntu-latest
 
     steps:
@@ -16,21 +17,89 @@ jobs:
     - name: Execute ksql statements
       shell: bash
       run: |
-        pushd .ksql
+        shopt -s nocasematch
+        
+        function process_file() {
+            echo Start execution of $1
+            contents=$(<$1)
+            contents=$(sed 's|"|\\\"|g' <<< $contents) # escape double quotes
+            contents=$(sed ':a; N; $!ba; s/\n/ /g' <<< $contents) # single line
+            #echo $contents
+            
+            endpoint=''
+            endpoint=$2
+            if [[ ! $endpoint == https* ]]; then
+              endpoint="https$endpoint"
+            fi
+
+            #echo Endpoint: "$endpoint/ksql" | sed 's/./& /g'
+            curl --silent --user ${CONFLUENT_API_KEY}:${CONFLUENT_API_SECRET} -w "\n%{http_code}\n" --location "$endpoint/ksql" \
+                --header 'Accept: application/vnd.ksql.v1+json' \
+                --header 'Content-Type: application/json' \
+                --data "{ \"ksql\": \" $contents \", \"streamsProperties\": { \"ksql.streams.auto.offset.reset\": \"earliest\" } }"
+            echo End execution of $1
+        }
+
+        function lookup_secret() {
+            secret=''
+            secret_value=''
+            
+            if [[ $1 =~ 'INTEGRATION_0' ]]
+            then
+                secret=$ENDPOINT_INTEGRATION_0
+            elif [[ $1 =~ 'GEOLOCATION_0' ]]
+            then
+                secret=$ENDPOINT_GEOLOCATION_0
+            elif [[ $1 =~ 'GRB_0' ]]
+            then
+                secret=ENDPOINT_GRB_0
+            fi
+            
+            eval "secret_value=\$$secret"
+        }
+        
+        function process_folder() {
+            echo Processing folder $1
+        
+            # look up secret
+            lookup_secret $1
+            
+            # execute remembered files with secret
+            for REMEMBERED_FILE in $remembered_files ; do
+                process_file $REMEMBERED_FILE $secret_value
+            done
+        
+            pushd $1 > /dev/null
+
+            for FILE in *.ksql; do 
+              process_file $FILE $secret_value
+            done
+            
+            popd > /dev/null
+        }
+        
+        pushd .ksql > /dev/null
+
+        #list files
+        remembered_files=()
         for FILE in *.ksql; do 
-          echo Start execution of $FILE
-          contents=$(<$FILE)
-          contents=$(sed 's|"|\\\"|g' <<< $contents) # escape double quotes
-          contents=$(sed ':a; N; $!ba; s/\n/ /g' <<< $contents) # single line
-          echo Contents of file:
-          echo $contents
-          echo \nCurl command:
-          curl --silent -w "\n%{http_code}\n" --location 'https://pksqlc-n65nz.eu-west-1.aws.confluent.cloud:443/ksql' \
-            --header 'Accept: application/vnd.ksql.v1+json' \
-            --header 'Content-Type: application/json' \
-            --header 'Authorization: Basic Q0xUQjU0NkdBSkM0T1VPUzo4SVZUM2p5ZHU5T25pQUEwSGZvV2FyVzduS3QvUENoTHoyMHBGaUJweC9mUk4wYnFkV0g4MVBQOFN2eHBwSFg3' \
-            --data "{ \"ksql\": \" $contents \", \"streamsProperties\": { \"ksql.streams.auto.offset.reset\": \"earliest\" } }"
-          echo End execution of $FILE
-          break
+            remembered_files+=$FILE
         done
-        popd
+        
+        #list folders, skip CONNECTOR_ folder
+        for FOLDER in */ ; do
+            [[ $FOLDER =~ 'CONNECTORS' ]] && continue
+
+            if [[ $FOLDER =~ 'INTEGRATION_0' || $FOLDER =~ 'GEOLOCATION_0' || $FOLDER =~ 'GRB_0' ]]
+            then
+                process_folder $FOLDER
+            fi
+        done
+
+        popd > /dev/null
+      env:
+        CONFLUENT_API_KEY: ${{ secrets.VBR_CONFLUENT_API_KEY_STG }}
+        CONFLUENT_API_SECRET: ${{ secrets.VBR_CONFLUENT_API_SECRET_STG }}
+        ENDPOINT_INTEGRATION_0: ${{ secrets.VBR_KSQLDB_CLUSTER_ENDPOINT_INTEGRATION_0_STG }}
+        ENDPOINT_GEOLOCATION_0: ${{ secrets.VBR_KSQLDB_CLUSTER_ENDPOINT_GEOLOCATION_0_STG }}
+        ENDPOINT_GRB_0: ${{ secrets.VBR_KSQLDB_CLUSTER_ENDPOINT_GRB_0_STG }}
