@@ -1,3 +1,10 @@
+## [3.8.1](https://github.com/informatievlaanderen/postal-registry/compare/v3.8.0...v3.8.1) (2023-05-10)
+
+
+### Bug Fixes
+
+* push images to newprd ([7b8f43d](https://github.com/informatievlaanderen/postal-registry/commit/7b8f43d1f74e2e7cc32a5078cba25fc5901dd643))
+
 # [3.8.0](https://github.com/informatievlaanderen/postal-registry/compare/v3.7.2...v3.8.0) (2023-05-10)
 
 
