@@ -1,3 +1,15 @@
+# [3.8.0](https://github.com/informatievlaanderen/postal-registry/compare/v3.7.2...v3.8.0) (2023-05-10)
+
+
+### Bug Fixes
+
+* run containers as non-root ([84bccfc](https://github.com/informatievlaanderen/postal-registry/commit/84bccfc155296fbb061f658a293e680ebb756a7d))
+
+
+### Features
+
+* bump grar.common ([3c5df64](https://github.com/informatievlaanderen/postal-registry/commit/3c5df64d8cef9d6537757058141d8913f84d808a))
+
 ## [3.7.2](https://github.com/informatievlaanderen/postal-registry/compare/v3.7.1...v3.7.2) (2023-03-13)
 
 
