@@ -29,6 +29,7 @@ namespace PostalRegistry.Producer.Snapshot.Oslo
                     await snapshotManager.FindMatchingSnapshot(
                         message.Message.PostalCode,
                         message.Message.Provenance.Timestamp,
+                        null,
                         message.Position,
                         throwStaleWhenGone: false,
                         ct),
@@ -42,6 +43,7 @@ namespace PostalRegistry.Producer.Snapshot.Oslo
                     await snapshotManager.FindMatchingSnapshot(
                         message.Message.PostalCode,
                         message.Message.Provenance.Timestamp,
+                        null,
                         message.Position,
                         throwStaleWhenGone: false,
                         ct),
@@ -55,6 +57,7 @@ namespace PostalRegistry.Producer.Snapshot.Oslo
                     await snapshotManager.FindMatchingSnapshot(
                         message.Message.PostalCode,
                         message.Message.Provenance.Timestamp,
+                        null,
                         message.Position,
                         throwStaleWhenGone: false,
                         ct),
@@ -68,6 +71,7 @@ namespace PostalRegistry.Producer.Snapshot.Oslo
                     await snapshotManager.FindMatchingSnapshot(
                         message.Message.PostalCode,
                         message.Message.Provenance.Timestamp,
+                        null,
                         message.Position,
                         throwStaleWhenGone: false,
                         ct),
@@ -81,6 +85,7 @@ namespace PostalRegistry.Producer.Snapshot.Oslo
                     await snapshotManager.FindMatchingSnapshot(
                         message.Message.PostalCode,
                         message.Message.Provenance.Timestamp,
+                        null,
                         message.Position,
                         throwStaleWhenGone: false,
                         ct),
@@ -94,6 +99,7 @@ namespace PostalRegistry.Producer.Snapshot.Oslo
                     await snapshotManager.FindMatchingSnapshot(
                         message.Message.PostalCode,
                         message.Message.Provenance.Timestamp,
+                        null,
                         message.Position,
                         throwStaleWhenGone: false,
                         ct),
