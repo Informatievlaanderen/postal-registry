@@ -553,6 +553,55 @@ jobs:
           SEMVER: ${{ needs.release.outputs.version }}
           WORKSPACE: ${{ github.workspace }}
 
+  push_images_to_newproduction:
+    if: needs.release.outputs.version != 'none'
+    needs: [ release ]
+    name: Push images to New Production
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        image: ['api-legacy', 'api-oslo', 'api-crab-import', 'api-extract', 'projections-syndication', 'projector', 'producer', 'producer-snapshot-oslo']
+    steps:
+      - name: Configure AWS credentials (New Production)
+        uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          aws-access-key-id: ${{ secrets.VBR_AWS_ACCESS_KEY_ID_NEWPRD }}
+          aws-secret-access-key: ${{ secrets.VBR_AWS_SECRET_ACCESS_KEY_NEWPRD }}
+          aws-region: ${{ secrets.VBR_AWS_REGION_PRD }}
+
+      - name: Login to Amazon ECR (New Production)
+        uses: aws-actions/amazon-ecr-login@v1.5.3
+
+      # Download artifact
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        continue-on-error: false
+        with:
+          name: ${{ matrix.image }}-${{ needs.release.outputs.version }}
+          path: ~/
+
+      # Load artifact
+      - name: Load artifact
+        shell: bash
+        run: |
+          echo pr-$IMAGE-image.tar
+          docker image load -i ~/pr-$IMAGE-image.tar
+        env:
+          IMAGE: ${{ matrix.image }}
+
+      - name: Push artifacts to ECR New Production
+        shell: bash
+        run: |
+          echo $IMAGE:$SEMVER
+          docker tag $BUILD_DOCKER_REGISTRY_TST/postal-registry/$IMAGE:$SEMVER $BUILD_DOCKER_REGISTRY_NEWPRD/postal-registry/$IMAGE:$SEMVER
+          docker push $BUILD_DOCKER_REGISTRY_NEWPRD/postal-registry/$IMAGE:$SEMVER
+        env:
+          BUILD_DOCKER_REGISTRY_TST: ${{ secrets.VBR_BUILD_DOCKER_REGISTRY_TST }}
+          BUILD_DOCKER_REGISTRY_NEWPRD: ${{ secrets.VBR_BUILD_DOCKER_REGISTRY_NEWPRD }}
+          IMAGE: ${{ matrix.image }}
+          SEMVER: ${{ needs.release.outputs.version }}
+          WORKSPACE: ${{ github.workspace }}
+
   push_images_to_production:
     if: needs.release.outputs.version != 'none'
     needs: [ release ]
