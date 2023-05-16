@@ -1,3 +1,10 @@
+## [3.8.2](https://github.com/informatievlaanderen/postal-registry/compare/v3.8.1...v3.8.2) (2023-05-16)
+
+
+### Bug Fixes
+
+* add newprd to CD ([1cb799e](https://github.com/informatievlaanderen/postal-registry/commit/1cb799ed5a4af34bd762f9304908f74020676c26))
+
 ## [3.8.1](https://github.com/informatievlaanderen/postal-registry/compare/v3.8.0...v3.8.1) (2023-05-10)
 
 
