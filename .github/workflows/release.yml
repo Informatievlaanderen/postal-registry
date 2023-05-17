@@ -750,7 +750,7 @@ jobs:
 
   deploy_to_staging:
     if: github.repository_owner == 'Informatievlaanderen'
-    needs: [ push_images_to_staging, deploy_to_test_finish_slack, release ]
+    needs: [ push_images_to_staging, deploy_to_staging_start_slack, release ]
     name: Deploy to staging
     runs-on: ubuntu-latest
     strategy:
@@ -825,7 +825,7 @@ jobs:
 
   deploy_to_newprd:
     if: github.repository_owner == 'Informatievlaanderen'
-    needs: [ push_images_to_newproduction, deploy_to_test_finish_slack, release ]
+    needs: [ push_images_to_newproduction, deploy_to_newprd_start_slack, release ]
     name: Deploy to new production
     runs-on: ubuntu-latest
     strategy:
