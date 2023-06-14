@@ -1,3 +1,10 @@
+## [3.8.3](https://github.com/informatievlaanderen/postal-registry/compare/v3.8.2...v3.8.3) (2023-06-14)
+
+
+### Bug Fixes
+
+* producer naming ([e8b7d64](https://github.com/informatievlaanderen/postal-registry/commit/e8b7d6414fba9f52e780ceecb42298791c679d51))
+
 ## [3.8.2](https://github.com/informatievlaanderen/postal-registry/compare/v3.8.1...v3.8.2) (2023-05-16)
 
 
