@@ -1,3 +1,10 @@
+## [3.8.4](https://github.com/informatievlaanderen/postal-registry/compare/v3.8.3...v3.8.4) (2023-08-09)
+
+
+### Bug Fixes
+
+* set java version for sonarscanner + trigger build ([fe8057f](https://github.com/informatievlaanderen/postal-registry/commit/fe8057f589124e9b698f63c9994c765627dd9cd4))
+
 ## [3.8.3](https://github.com/informatievlaanderen/postal-registry/compare/v3.8.2...v3.8.3) (2023-06-14)
 
 
