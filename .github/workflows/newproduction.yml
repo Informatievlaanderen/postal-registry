@@ -32,6 +32,7 @@ jobs:
         REPOSITORY_NAME: ${{ env.REPOSITORY_NAME }}
 
   deploy_to_production:
+    needs: [ deploy_to_production_start_slack ]
     runs-on: ubuntu-latest
     strategy:
       matrix:
