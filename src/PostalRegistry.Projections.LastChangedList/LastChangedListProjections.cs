@@ -14,7 +14,7 @@ namespace PostalRegistry.Projections.LastChangedList
     public class LastChangedListProjections : LastChangedListConnectedProjection
     {
 
-        private static readonly AcceptType[] SupportedAcceptTypes = { AcceptType.Json, AcceptType.Xml, AcceptType.JsonLd };
+        private static readonly AcceptType[] SupportedAcceptTypes = { AcceptType.JsonLd };
 
         public LastChangedListProjections()
          : base(SupportedAcceptTypes)
@@ -54,8 +54,6 @@ namespace PostalRegistry.Projections.LastChangedList
             var shortenedAcceptType = acceptType.ToString().ToLowerInvariant();
             return acceptType switch
             {
-                AcceptType.Json => $"legacy/postalinfo:{{0}}.{shortenedAcceptType}",
-                AcceptType.Xml => $"legacy/postalinfo:{{0}}.{shortenedAcceptType}",
                 AcceptType.JsonLd => $"oslo/postalinfo:{{0}}.{shortenedAcceptType}",
                 _ => throw new NotImplementedException($"Cannot build CacheKey for type {typeof(AcceptType)}")
             };
@@ -65,8 +63,6 @@ namespace PostalRegistry.Projections.LastChangedList
         {
             return acceptType switch
             {
-                AcceptType.Json => "/v1/postcodes/{0}",
-                AcceptType.Xml => "/v1/postcodes/{0}",
                 AcceptType.JsonLd => "/v2/postcodes/{0}",
                 _ => throw new NotImplementedException($"Cannot build Uri for type {typeof(AcceptType)}")
             };
