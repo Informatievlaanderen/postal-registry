@@ -127,7 +127,7 @@ namespace PostalRegistry.Producer.Snapshot.Oslo
             long storePosition,
             CancellationToken cancellationToken = default)
         {
-            var result = await _producer.ProduceJsonMessage(
+            var result = await _producer.Produce(
                 new MessageKey(objectId),
                 jsonContent,
                 new List<MessageHeader> { new MessageHeader(MessageHeader.IdempotenceKey, storePosition.ToString()) },
