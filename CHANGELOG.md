@@ -1,3 +1,15 @@
+# [3.9.0](https://github.com/informatievlaanderen/postal-registry/compare/v3.8.4...v3.9.0) (2023-09-25)
+
+
+### Bug Fixes
+
+* produce message instead of produce json message ([745e5af](https://github.com/informatievlaanderen/postal-registry/commit/745e5af37a031066c5728fbde193ffa89fe7df99))
+
+
+### Features
+
+* don't cache legacy GAWR-5195 ([307251c](https://github.com/informatievlaanderen/postal-registry/commit/307251cfd1f7b920e40caaaea679b2a484d9d0ba))
+
 ## [3.8.4](https://github.com/informatievlaanderen/postal-registry/compare/v3.8.3...v3.8.4) (2023-08-09)
 
 
