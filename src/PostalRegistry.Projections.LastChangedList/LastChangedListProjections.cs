@@ -54,7 +54,7 @@ namespace PostalRegistry.Projections.LastChangedList
             var shortenedAcceptType = acceptType.ToString().ToLowerInvariant();
             return acceptType switch
             {
-                AcceptType.JsonLd => $"oslo/postalinfo:{{0}}.{shortenedAcceptType}",
+                 AcceptType.JsonLd => string.Format("oslo/postalinfo:{{0}}.{1}", identifier, shortenedAcceptType),
                 _ => throw new NotImplementedException($"Cannot build CacheKey for type {typeof(AcceptType)}")
             };
         }
@@ -63,7 +63,7 @@ namespace PostalRegistry.Projections.LastChangedList
         {
             return acceptType switch
             {
-                AcceptType.JsonLd => "/v2/postcodes/{0}",
+                AcceptType.JsonLd => string.Format("/v2/postcodes/{{0}}", identifier),
                 _ => throw new NotImplementedException($"Cannot build Uri for type {typeof(AcceptType)}")
             };
         }
