@@ -25,8 +25,8 @@ namespace PostalRegistry.Projections.LastChangedList
 
                 foreach (var record in attachedRecords)
                 {
-                    record.CacheKey = string.Format(record.CacheKey, message.Message.NisCode);
-                    record.Uri = string.Format(record.Uri, message.Message.NisCode);
+                    record.CacheKey = string.Format(record.CacheKey, message.Message.PostalCode);
+                    record.Uri = string.Format(record.Uri, message.Message.PostalCode);
                 }
             });
 
