@@ -21,7 +21,13 @@ namespace PostalRegistry.Projections.LastChangedList
         {
             When<Envelope<PostalInformationWasRegistered>>(async (context, message, ct) =>
             {
-                await GetLastChangedRecordsAndUpdatePosition(message.Message.PostalCode, message.Position, context, ct);
+                var attachedRecords = await GetLastChangedRecordsAndUpdatePosition(message.Message.PostalCode, message.Position, context, ct);
+
+                foreach (var record in attachedRecords)
+                {
+                    record.CacheKey = string.Format(record.CacheKey, message.Message.NisCode);
+                    record.Uri = string.Format(record.Uri, message.Message.NisCode);
+                }
             });
 
             When<Envelope<PostalInformationWasRealized>>(async (context, message, ct) =>
