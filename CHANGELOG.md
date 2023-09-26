@@ -1,3 +1,10 @@
+## [3.9.1](https://github.com/informatievlaanderen/postal-registry/compare/v3.9.0...v3.9.1) (2023-09-26)
+
+
+### Bug Fixes
+
+* lastchangedlist projections ([71b6c45](https://github.com/informatievlaanderen/postal-registry/commit/71b6c45839f3176fb79346c6f484b31336d8e962))
+
 # [3.9.0](https://github.com/informatievlaanderen/postal-registry/compare/v3.8.4...v3.9.0) (2023-09-25)
 
 
