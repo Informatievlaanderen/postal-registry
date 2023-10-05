@@ -20,6 +20,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Options;
+    using Nuts;
     using Projections.Legacy;
     using Projections.Syndication;
     using Query;
@@ -39,6 +40,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
         /// <param name="context"></param>
         /// <param name="syndicationContext"></param>
         /// <param name="responseOptions"></param>
+        /// <param name="nuts3Service"></param>
         /// <param name="postalCode">De postcode.</param>
         /// <param name="cancellationToken"></param>
         /// <response code="200">Als de postcode gevonden is.</response>
@@ -56,6 +58,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
             [FromServices] LegacyContext context,
             [FromServices] SyndicationContext syndicationContext,
             [FromServices] IOptions<ResponseOptions> responseOptions,
+            [FromServices] Nuts3Service nuts3Service,
             [FromRoute] string postalCode,
             CancellationToken cancellationToken = default)
         {
@@ -76,6 +79,8 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
                 responseOptions.Value.GemeenteDetailUrl,
                 cancellationToken);
 
+            var nuts3Record = nuts3Service.GetNuts3ByPostalCode(postalInformation.PostalCode);
+
             return Ok(
                 new PostalInformationOsloResponse(
                     responseOptions.Value.Naamruimte,
@@ -85,7 +90,8 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
                     postalInformation.VersionTimestamp.ToBelgianDateTimeOffset(),
                     postalInformation.IsRetired
                         ? PostInfoStatus.Gehistoreerd
-                        : PostInfoStatus.Gerealiseerd)
+                        : PostInfoStatus.Gerealiseerd,
+                    nuts3Record?.Nuts3Code)
                 {
                     Postnamen = postalInformation
                         .PostalNames?
@@ -100,6 +106,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
         /// <param name="legacyContext"></param>
         /// <param name="syndicationContext"></param>
         /// <param name="responseOptions"></param>
+        /// <param name="nuts3Service"></param>
         /// <param name="cancellationToken"></param>
         /// <response code="200">Als de opvraging van een lijst met postcodes gelukt is.</response>
         /// <response code="500">Als er een interne fout is opgetreden.</response>
@@ -113,6 +120,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
             [FromServices] LegacyContext legacyContext,
             [FromServices] SyndicationContext syndicationContext,
             [FromServices] IOptions<ResponseOptions> responseOptions,
+            [FromServices] Nuts3Service nuts3Service,
             CancellationToken cancellationToken = default)
         {
             var filtering = Request.ExtractFilteringRequest<PostalInformationFilter>();
@@ -120,7 +128,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
             var pagination = Request.ExtractPaginationRequest();
 
             var pagedPostalInformationSet =
-                new PostalInformationListOsloQuery(legacyContext, syndicationContext)
+                new PostalInformationListOsloQuery(legacyContext, syndicationContext, nuts3Service)
                     .Fetch(filtering, sorting, pagination);
 
             Response.AddPagedQueryResultHeaders(pagedPostalInformationSet);
@@ -153,6 +161,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
         /// </summary>
         /// <param name="context"></param>
         /// <param name="syndicationContext"></param>
+        /// <param name="nuts3Service"></param>
         /// <param name="cancellationToken"></param>
         /// <response code="200">Als de opvraging van het totaal aantal gelukt is.</response>
         /// <response code="500">Als er een interne fout is opgetreden.</response>
@@ -165,6 +174,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
         public async Task<IActionResult> Count(
             [FromServices] LegacyContext context,
             [FromServices] SyndicationContext syndicationContext,
+            [FromServices] Nuts3Service nuts3Service,
             CancellationToken cancellationToken = default)
         {
             var filtering = Request.ExtractFilteringRequest<PostalInformationFilter>();
@@ -175,7 +185,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
                 new TotaalAantalResponse
                 {
                     Aantal = filtering.ShouldFilter
-                        ? await new PostalInformationListOsloQuery(context, syndicationContext)
+                        ? await new PostalInformationListOsloQuery(context, syndicationContext, nuts3Service)
                             .Fetch(filtering, sorting, pagination)
                             .Items
                             .CountAsync(cancellationToken)

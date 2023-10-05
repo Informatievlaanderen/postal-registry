@@ -7,6 +7,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.Query
     using Be.Vlaanderen.Basisregisters.Api.Search.Sorting;
     using Be.Vlaanderen.Basisregisters.GrAr.Common;
     using Microsoft.EntityFrameworkCore;
+    using Nuts;
     using Projections.Legacy;
     using Projections.Legacy.PostalInformation;
     using Projections.Syndication;
@@ -15,13 +16,18 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.Query
     {
         private readonly LegacyContext _context;
         private readonly SyndicationContext _syndicationContext;
+        private readonly Nuts3Service _nuts3Service;
 
         protected override ISorting Sorting => new PostalInformationSorting();
 
-        public PostalInformationListOsloQuery(LegacyContext context, SyndicationContext syndicationContext)
+        public PostalInformationListOsloQuery(
+            LegacyContext context,
+            SyndicationContext syndicationContext,
+            Nuts3Service nuts3Service)
         {
             _context = context;
             _syndicationContext = syndicationContext;
+            _nuts3Service = nuts3Service;
         }
 
         protected override IQueryable<PostalInformation> Filter(FilteringHeader<PostalInformationFilter> filtering)
@@ -58,6 +64,18 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.Query
                     .Where(x => x.PostalNames.Any(y => y.SearchName == filterPostalName));
             }
 
+            if (!string.IsNullOrEmpty(filtering.Filter.Nuts3Code))
+            {
+                var nuts3PostalCodes = _nuts3Service.GetPostalCodesByNuts3(filtering.Filter.Nuts3Code)
+                    .Select(x => x.PostalCode)
+                    .ToList();
+
+                if(!nuts3PostalCodes.Any())
+                    return Enumerable.Empty<PostalInformation>().AsQueryable();
+
+                postalInformationSet = postalInformationSet.Where(x => nuts3PostalCodes.Any(y => y == x.PostalCode));
+            }
+
             return postalInformationSet;
         }
     }
@@ -78,5 +96,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.Query
         public string MunicipalityName { get; set; }
 
         public string PostalName { get; set; }
+
+        public string Nuts3Code { get; set; }
     }
 }

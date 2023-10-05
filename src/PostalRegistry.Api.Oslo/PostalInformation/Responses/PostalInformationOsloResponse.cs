@@ -60,19 +60,28 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.Responses
         [JsonProperty(Required = Required.DisallowNull)]
         public PostInfoStatus PostInfoStatus { get; set; }
 
+        /// <summary>
+        /// De NUTS3 code van de postcode.
+        /// </summary>
+        [DataMember(Name = "Nuts3", Order = 5)]
+        [JsonProperty(Required = Required.Default)]
+        public string? Nuts3Code { get; set; }
+
         public PostalInformationOsloResponse(
             string naamruimte,
             string contextUrlDetail,
             string postcode,
             PostinfoDetailGemeente? gemeente,
             DateTimeOffset version,
-            PostInfoStatus postInfoStatus)
+            PostInfoStatus postInfoStatus,
+            string? nuts3Code)
         {
             Context = contextUrlDetail;
             Identificator = new PostinfoIdentificator(naamruimte, postcode, version);
             Gemeente = gemeente;
             PostInfoStatus = postInfoStatus;
             Postnamen = new List<Postnaam>();
+            Nuts3Code = nuts3Code;
         }
     }
 
@@ -97,7 +106,8 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.Responses
                 "8200",
                 gemeente,
                 DateTimeOffset.Now.ToExampleOffset(),
-                PostInfoStatus.Gerealiseerd)
+                PostInfoStatus.Gerealiseerd,
+                "BE251")
             {
                 Postnamen = new List<Postnaam>
                 {

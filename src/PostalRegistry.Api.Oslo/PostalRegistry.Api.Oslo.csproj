@@ -28,6 +28,7 @@
     <Content Include="appsettings.*.json" CopyToOutputDirectory="Always" />
     <Content Include="paket.template" CopyToOutputDirectory="Always" />
     <Content Include="init.sh" CopyToOutputDirectory="Always" />
+    <Content Include="Nuts\nuts3_postal_v1.csv" CopyToOutputDirectory="Always" />
   </ItemGroup>
 
   <ItemGroup>
