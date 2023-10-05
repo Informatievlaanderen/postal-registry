@@ -8,6 +8,7 @@ namespace PostalRegistry.Api.Oslo.Infrastructure.Modules
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
+    using Nuts;
     using Projections.Legacy;
     using Projections.Syndication.Modules;
 
@@ -38,6 +39,9 @@ namespace PostalRegistry.Api.Oslo.Infrastructure.Modules
             builder
                 .RegisterType<ProblemDetailsHelper>()
                 .AsSelf();
+
+            builder.RegisterType<Nuts3Service>()
+                .SingleInstance();
 
             builder.Populate(_services);
         }
