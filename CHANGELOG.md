@@ -1,3 +1,10 @@
+# [3.10.0](https://github.com/informatievlaanderen/postal-registry/compare/v3.9.2...v3.10.0) (2023-10-06)
+
+
+### Features
+
+* add NUTS3 codes ([3b96d35](https://github.com/informatievlaanderen/postal-registry/commit/3b96d35dd05b5f9b1bf35bdbd56329403662920c))
+
 ## [3.9.2](https://github.com/informatievlaanderen/postal-registry/compare/v3.9.1...v3.9.2) (2023-09-26)
 
 
