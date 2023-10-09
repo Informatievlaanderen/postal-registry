@@ -61,7 +61,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.Responses
         public PostInfoStatus PostInfoStatus { get; set; }
 
         /// <summary>
-        /// De NUTS3 code van de postcode.
+        /// De NUTS3 classificatie gebruikt door Eurostat.
         /// </summary>
         [DataMember(Name = "Nuts3", Order = 5)]
         [JsonProperty(Required = Required.Default)]
