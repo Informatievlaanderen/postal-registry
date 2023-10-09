@@ -1,3 +1,10 @@
+## [3.10.1](https://github.com/informatievlaanderen/postal-registry/compare/v3.10.0...v3.10.1) (2023-10-09)
+
+
+### Bug Fixes
+
+* update docs NUTS3 ([3e009ae](https://github.com/informatievlaanderen/postal-registry/commit/3e009ae48f83759fe1564da69b84802f6749b1c1))
+
 # [3.10.0](https://github.com/informatievlaanderen/postal-registry/compare/v3.9.2...v3.10.0) (2023-10-06)
 
 
