@@ -63,8 +63,8 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.Responses
         /// <summary>
         /// De NUTS3 classificatie gebruikt door Eurostat.
         /// </summary>
-        [DataMember(Name = "Nuts3", Order = 5)]
-        [JsonProperty(Required = Required.Default)]
+        [DataMember(Name = "Nuts3", Order = 5, EmitDefaultValue = false)]
+        [JsonProperty(Required = Required.Default, DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string? Nuts3Code { get; set; }
 
         public PostalInformationOsloResponse(
