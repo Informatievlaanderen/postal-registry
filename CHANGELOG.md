@@ -1,3 +1,10 @@
+## [3.10.2](https://github.com/informatievlaanderen/postal-registry/compare/v3.10.1...v3.10.2) (2023-10-10)
+
+
+### Bug Fixes
+
+* don't show NUTS3 code when null ([80d111f](https://github.com/informatievlaanderen/postal-registry/commit/80d111f99dff41240939aac9e8f990acb0d0db08))
+
 ## [3.10.1](https://github.com/informatievlaanderen/postal-registry/compare/v3.10.0...v3.10.1) (2023-10-09)
 
 
