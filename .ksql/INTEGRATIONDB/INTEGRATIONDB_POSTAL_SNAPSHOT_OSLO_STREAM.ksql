@@ -1,0 +1,20 @@
+CREATE OR REPLACE STREAM IF NOT EXISTS postal_snapshot_oslo_stream_flatten_integrationdb
+   WITH (KAFKA_TOPIC='postal.snapshot.oslo.flatten.integrationdb', PARTITIONS=1, VALUE_FORMAT='JSON_SR', KEY_FORMAT='JSON_SR') 
+   AS SELECT 
+   REDUCE(SPLIT(URL_EXTRACT_PATH(MESSAGEKEY), '/'), '', (S, X) => X) PostalCode,
+
+   CAST(gemeente->objectId AS INT) AS "NisCode",
+   postInfoStatus AS "Status",
+
+   FILTER(POSTNAMEN, (X) => (X->GEOGRAFISCHENAAM->TAAL = 'nl'))[1]->GEOGRAFISCHENAAM->SPELLING as "PostalNameDutch",
+   FILTER(POSTNAMEN, (X) => (X->GEOGRAFISCHENAAM->TAAL = 'fr'))[1]->GEOGRAFISCHENAAM->SPELLING as "PostalNameFrench",
+   FILTER(POSTNAMEN, (X) => (X->GEOGRAFISCHENAAM->TAAL = 'de'))[1]->GEOGRAFISCHENAAM->SPELLING as "PostalNameGerman",
+   FILTER(POSTNAMEN, (X) => (X->GEOGRAFISCHENAAM->TAAL = 'en'))[1]->GEOGRAFISCHENAAM->SPELLING as "PostalNameEnglish",
+
+   IDENTIFICATOR->ID as "PuriId",
+   IDENTIFICATOR->NAAMRUIMTE as "Namespace",
+   IDENTIFICATOR->VERSIEID as "VersionString",
+   PARSE_TIMESTAMP(IDENTIFICATOR->VERSIEID, 'yyyy-MM-dd''T''HH:mm:ssXXX', 'UTC') as "VersionTimestamp"
+
+FROM POSTAL_SNAPSHOT_OSLO_STREAM
+PARTITION BY REDUCE(SPLIT(URL_EXTRACT_PATH(MESSAGEKEY), '/'), '', (S, X) => X);
