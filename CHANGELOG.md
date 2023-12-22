@@ -1,3 +1,16 @@
+# [3.11.0](https://github.com/informatievlaanderen/postal-registry/compare/v3.10.2...v3.11.0) (2023-12-22)
+
+
+### Bug Fixes
+
+* push images to new ECR ([a866b0b](https://github.com/informatievlaanderen/postal-registry/commit/a866b0bbec942fee97a2d224ab58d5683f2f44d0))
+
+
+### Features
+
+* add idempotencekey ksql ([927420d](https://github.com/informatievlaanderen/postal-registry/commit/927420d567050bc8e947b2233638a21164292269))
+* add integrationdb ksql scripts ([3dfd59b](https://github.com/informatievlaanderen/postal-registry/commit/3dfd59b662e90b54484e971291c808dec259af0b))
+
 ## [3.10.2](https://github.com/informatievlaanderen/postal-registry/compare/v3.10.1...v3.10.2) (2023-10-10)
 
 
