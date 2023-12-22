@@ -1,3 +1,10 @@
+## [3.11.1](https://github.com/informatievlaanderen/postal-registry/compare/v3.11.0...v3.11.1) (2023-12-22)
+
+
+### Bug Fixes
+
+* bump configure aws ([bf3041b](https://github.com/informatievlaanderen/postal-registry/commit/bf3041bb98abe239e87f86f6acae7786cc2c502c))
+
 # [3.11.0](https://github.com/informatievlaanderen/postal-registry/compare/v3.10.2...v3.11.0) (2023-12-22)
 
 
