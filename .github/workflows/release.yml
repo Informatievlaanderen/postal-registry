@@ -506,53 +506,6 @@ jobs:
           SEMVER: ${{ needs.release.outputs.version }}
           WORKSPACE: ${{ github.workspace }}
 
-  push_images_to_test:
-    if: needs.release.outputs.version != 'none'
-    needs: [ release ]
-    name: Push images to Test
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        image: ['api-legacy', 'api-oslo', 'api-crab-import', 'api-extract', 'projections-syndication', 'projector', 'producer', 'producer-snapshot-oslo']
-    steps:
-      - name: Configure AWS credentials (Test)
-        uses: aws-actions/configure-aws-credentials@v1-node16
-        with:
-          aws-access-key-id: ${{ secrets.VBR_AWS_ACCESS_KEY_ID_TST }}
-          aws-secret-access-key: ${{ secrets.VBR_AWS_SECRET_ACCESS_KEY_TST }}
-          aws-region: ${{ secrets.VBR_AWS_REGION_PRD }}
-
-      - name: Login to Amazon ECR (Test)
-        uses: aws-actions/amazon-ecr-login@v1.5.3
-
-      # Download artifact
-      - name: Download artifact
-        uses: actions/download-artifact@v3
-        continue-on-error: false
-        with:
-          name: ${{ matrix.image }}-${{ needs.release.outputs.version }}
-          path: ~/
-
-      # Load artifact
-      - name: Load artifact
-        shell: bash
-        run: |
-          echo pr-$IMAGE-image.tar
-          docker image load -i ~/pr-$IMAGE-image.tar
-        env:
-          IMAGE: ${{ matrix.image }}
-
-      - name: Push artifacts to ECR Test
-        shell: bash
-        run: |
-          echo $IMAGE:$SEMVER
-          docker push $BUILD_DOCKER_REGISTRY/postal-registry/$IMAGE:$SEMVER
-        env:
-          BUILD_DOCKER_REGISTRY: ${{ secrets.VBR_BUILD_DOCKER_REGISTRY_TST }}
-          IMAGE: ${{ matrix.image }}
-          SEMVER: ${{ needs.release.outputs.version }}
-          WORKSPACE: ${{ github.workspace }}
-
   push_images_to_staging:
     if: needs.release.outputs.version != 'none'
     needs: [ release ]
@@ -602,55 +555,6 @@ jobs:
           SEMVER: ${{ needs.release.outputs.version }}
           WORKSPACE: ${{ github.workspace }}
 
-  push_images_to_newproduction:
-    if: needs.release.outputs.version != 'none'
-    needs: [ release ]
-    name: Push images to New Production
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        image: ['api-legacy', 'api-oslo', 'api-crab-import', 'api-extract', 'projections-syndication', 'projector', 'producer', 'producer-snapshot-oslo']
-    steps:
-      - name: Configure AWS credentials (New Production)
-        uses: aws-actions/configure-aws-credentials@v1-node16
-        with:
-          aws-access-key-id: ${{ secrets.VBR_AWS_ACCESS_KEY_ID_NEWPRD }}
-          aws-secret-access-key: ${{ secrets.VBR_AWS_SECRET_ACCESS_KEY_NEWPRD }}
-          aws-region: ${{ secrets.VBR_AWS_REGION_PRD }}
-
-      - name: Login to Amazon ECR (New Production)
-        uses: aws-actions/amazon-ecr-login@v1.5.3
-
-      # Download artifact
-      - name: Download artifact
-        uses: actions/download-artifact@v3
-        continue-on-error: false
-        with:
-          name: ${{ matrix.image }}-${{ needs.release.outputs.version }}
-          path: ~/
-
-      # Load artifact
-      - name: Load artifact
-        shell: bash
-        run: |
-          echo pr-$IMAGE-image.tar
-          docker image load -i ~/pr-$IMAGE-image.tar
-        env:
-          IMAGE: ${{ matrix.image }}
-
-      - name: Push artifacts to ECR New Production
-        shell: bash
-        run: |
-          echo $IMAGE:$SEMVER
-          docker tag $BUILD_DOCKER_REGISTRY_TST/postal-registry/$IMAGE:$SEMVER $BUILD_DOCKER_REGISTRY_NEWPRD/postal-registry/$IMAGE:$SEMVER
-          docker push $BUILD_DOCKER_REGISTRY_NEWPRD/postal-registry/$IMAGE:$SEMVER
-        env:
-          BUILD_DOCKER_REGISTRY_TST: ${{ secrets.VBR_BUILD_DOCKER_REGISTRY_TST }}
-          BUILD_DOCKER_REGISTRY_NEWPRD: ${{ secrets.VBR_BUILD_DOCKER_REGISTRY_NEWPRD }}
-          IMAGE: ${{ matrix.image }}
-          SEMVER: ${{ needs.release.outputs.version }}
-          WORKSPACE: ${{ github.workspace }}
-
   push_images_to_production:
     if: needs.release.outputs.version != 'none'
     needs: [ release ]
@@ -663,8 +567,8 @@ jobs:
       - name: Configure AWS credentials (Production)
         uses: aws-actions/configure-aws-credentials@v1-node16
         with:
-          aws-access-key-id: ${{ secrets.VBR_AWS_ACCESS_KEY_ID_PRD }}
-          aws-secret-access-key: ${{ secrets.VBR_AWS_SECRET_ACCESS_KEY_PRD }}
+          aws-access-key-id: ${{ secrets.VBR_AWS_ACCESS_KEY_ID_NEWPRD }}
+          aws-secret-access-key: ${{ secrets.VBR_AWS_SECRET_ACCESS_KEY_NEWPRD }}
           aws-region: ${{ secrets.VBR_AWS_REGION_PRD }}
 
       - name: Login to Amazon ECR (Production)
@@ -691,18 +595,18 @@ jobs:
         shell: bash
         run: |
           echo $IMAGE:$SEMVER
-          docker tag $BUILD_DOCKER_REGISTRY_TST/postal-registry/$IMAGE:$SEMVER $BUILD_DOCKER_REGISTRY_PRD/postal-registry/$IMAGE:$SEMVER
-          docker push $BUILD_DOCKER_REGISTRY_PRD/postal-registry/$IMAGE:$SEMVER
+          docker tag $BUILD_DOCKER_REGISTRY_TST/postal-registry/$IMAGE:$SEMVER $BUILD_DOCKER_REGISTRY_NEWPRD/postal-registry/$IMAGE:$SEMVER
+          docker push $BUILD_DOCKER_REGISTRY_NEWPRD/postal-registry/$IMAGE:$SEMVER
         env:
           BUILD_DOCKER_REGISTRY_TST: ${{ secrets.VBR_BUILD_DOCKER_REGISTRY_TST }}
-          BUILD_DOCKER_REGISTRY_PRD: ${{ secrets.VBR_BUILD_DOCKER_REGISTRY_PRD }}
+          BUILD_DOCKER_REGISTRY_NEWPRD: ${{ secrets.VBR_BUILD_DOCKER_REGISTRY_NEWPRD }}
           IMAGE: ${{ matrix.image }}
           SEMVER: ${{ needs.release.outputs.version }}
           WORKSPACE: ${{ github.workspace }}
 
   deploy_to_test_start_slack:
     if: github.repository_owner == 'Informatievlaanderen'
-    needs: [ push_images_to_test ]
+    needs: [ push_images ]
     name: Deploy to test started
     environment: test
     runs-on: ubuntu-latest
@@ -724,27 +628,28 @@ jobs:
 
   deploy_to_test:
     if: github.repository_owner == 'Informatievlaanderen'
-    needs: [ push_images_to_test, release ]
+    needs: [ push_images, release ]
     name: Deploy to test
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        services: ['postal-registry-api', 'postal-registry-import-api', 'postal-registry-projections', 'postal-registry-producer', 'postal-registry-producer-snapshot-oslo']
+        services: ['postalapi', 'postalimportapi', 'postalprojections', 'postalproducer', 'postalproducersnapshotoslo']
 
     steps:
     - name: Deploy services
       env:
-        BUILD_URL: ${{ secrets.VBR_AWS_BUILD_API }}/${{matrix.services}}
-        STATUS_URL: ${{ secrets.VBR_AWS_BUILD_STATUS_API }}/${{matrix.services}}
+        BUILD_URL: ${{ vars.VBR_AWS_BUILD_API_DEVOPS }}/${{matrix.services}}
+        STATUS_URL: ${{ vars.VBR_AWS_BUILD_STATUS_API_DEVOPS }}/${{matrix.services}}
       uses: informatievlaanderen/awscurl-polling-action/polling-action@main
       with:
           environment: test
           version: ${{ needs.release.outputs.version }}
           status-url: $STATUS_URL
           deploy-url: $BUILD_URL
-          access-key: ${{ secrets.VBR_AWS_BUILD_USER_ACCESS_KEY_ID }}
-          secret-key: ${{ secrets.VBR_AWS_BUILD_USER_SECRET_ACCESS_KEY }}
+          access-key: ${{ secrets.VBR_AWS_ACCESS_KEY_ID_DEVOPS }}
+          secret-key: ${{ secrets.VBR_AWS_SECRET_ACCESS_KEY_DEVOPS }}
           region: eu-west-1
+          deploy-target: 'agb_ecs_service'
           interval: 2
 
     - name: Deploy services output
