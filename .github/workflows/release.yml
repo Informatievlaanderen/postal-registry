@@ -488,8 +488,8 @@ jobs:
       - name: Load artifact
         shell: bash
         run: |
-          echo mr-$IMAGE-image.tar
-          docker image load -i ~/mr-$IMAGE-image.tar
+          echo pr-$IMAGE-image.tar
+          docker image load -i ~/pr-$IMAGE-image.tar
         env:
           IMAGE: ${{ matrix.image }}
 
@@ -628,7 +628,7 @@ jobs:
 
   deploy_to_test:
     if: github.repository_owner == 'Informatievlaanderen'
-    needs: [ push_images, release ]
+    needs: [ deploy_to_test_start_slack, release ]
     name: Deploy to test
     runs-on: ubuntu-latest
     strategy:
