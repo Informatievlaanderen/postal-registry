@@ -1,3 +1,10 @@
+## [3.11.2](https://github.com/informatievlaanderen/postal-registry/compare/v3.11.1...v3.11.2) (2023-12-22)
+
+
+### Bug Fixes
+
+* load artifact new pipeline ([82a5543](https://github.com/informatievlaanderen/postal-registry/commit/82a554352c99339302a2557622ac04222497c4f1))
+
 ## [3.11.1](https://github.com/informatievlaanderen/postal-registry/compare/v3.11.0...v3.11.1) (2023-12-22)
 
 
