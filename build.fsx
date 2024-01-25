@@ -79,6 +79,7 @@ Target.create "Containerize_ProducerSnapshotOslo" (fun _ -> containerize "Postal
 Target.create "Containerize_ProjectionsSyndication" (fun _ -> containerize "PostalRegistry.Projections.Syndication" "projections-syndication")
 
 Target.create "SetAssemblyVersions" (fun _ -> setVersions "SolutionInfo.cs")
+
 // --------------------------------------------------------------------------------
 
 Target.create "Build" ignore
