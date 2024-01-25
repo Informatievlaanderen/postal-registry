@@ -1,3 +1,10 @@
+## [3.11.3](https://github.com/informatievlaanderen/postal-registry/compare/v3.11.2...v3.11.3) (2024-01-25)
+
+
+### Bug Fixes
+
+* style to trigger build ([b24c4c9](https://github.com/informatievlaanderen/postal-registry/commit/b24c4c93ab2df260fce8f1715bbcdf2ac7151c15))
+
 ## [3.11.2](https://github.com/informatievlaanderen/postal-registry/compare/v3.11.1...v3.11.2) (2023-12-22)
 
 
