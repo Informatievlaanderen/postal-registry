@@ -1,3 +1,10 @@
+## [3.11.4](https://github.com/informatievlaanderen/postal-registry/compare/v3.11.3...v3.11.4) (2024-01-25)
+
+
+### Bug Fixes
+
+* ci to test + bump ([fd0ab4f](https://github.com/informatievlaanderen/postal-registry/commit/fd0ab4fe85028b3322089daddda24fb1db53d829))
+
 ## [3.11.3](https://github.com/informatievlaanderen/postal-registry/compare/v3.11.2...v3.11.3) (2024-01-25)
 
 
