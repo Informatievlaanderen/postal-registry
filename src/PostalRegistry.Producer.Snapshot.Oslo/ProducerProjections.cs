@@ -117,20 +117,21 @@ namespace PostalRegistry.Producer.Snapshot.Oslo
 
             if (result != null)
             {
-                await Produce(result.Identificator.Id, result.JsonContent, storePosition, ct);
+                await Produce(result.Identificator.Id, result.Identificator.ObjectId, result.JsonContent, storePosition, ct);
             }
         }
 
         private async Task Produce(
+            string puri,
             string objectId,
             string jsonContent,
             long storePosition,
             CancellationToken cancellationToken = default)
         {
             var result = await _producer.Produce(
-                new MessageKey(objectId),
+                new MessageKey(puri),
                 jsonContent,
-                new List<MessageHeader> { new MessageHeader(MessageHeader.IdempotenceKey, storePosition.ToString()) },
+                new List<MessageHeader> { new MessageHeader(MessageHeader.IdempotenceKey, $"{objectId}-{storePosition.ToString()}") },
                 cancellationToken);
 
             if (!result.IsSuccess)
