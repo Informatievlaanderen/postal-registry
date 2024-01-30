@@ -8,6 +8,7 @@ namespace PostalRegistry.Projections.Syndication
     using Microsoft.Extensions.Logging;
     using Polly;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner.MigrationExtensions;
+    using Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner.SqlServer.MigrationExtensions;
     using Infrastructure;
 
     public class MigrationsLogger { }

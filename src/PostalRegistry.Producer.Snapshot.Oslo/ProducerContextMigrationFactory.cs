@@ -1,10 +1,11 @@
 namespace PostalRegistry.Producer.Snapshot.Oslo
 {
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner;
+    using Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner.SqlServer;
     using Microsoft.EntityFrameworkCore;
     using PostalRegistry.Infrastructure;
 
-    public class ProducerContextMigrationFactory : RunnerDbContextMigrationFactory<ProducerContext>
+    public class ProducerContextMigrationFactory : SqlServerRunnerDbContextMigrationFactory<ProducerContext>
     {
         public ProducerContextMigrationFactory()
             : base("ProducerProjectionsAdmin", HistoryConfiguration) { }
