@@ -16,6 +16,11 @@ nuget Dapper 2.0.123
 
 // For more healtchecks, look at https://github.com/Xabaril/AspNetCore.Diagnostics.HealthChecks
 nuget AspNetCore.HealthChecks.SqlServer 6.0.2
+nuget AspNetCore.HealthChecks.NpgSql 6.0.2
+
+nuget Npgsql 6.0.3
+nuget Npgsql.EntityFrameworkCore.PostgreSQL 6.0.3
+nuget Npgsql.EntityFrameworkCore.PostgreSQL.Design 2.0.0-preview1
 
 nuget Microsoft.EntityFrameworkCore.Design 6.0.3
 
@@ -42,14 +47,16 @@ nuget Be.Vlaanderen.Basisregisters.CommandHandling.SqlStreamStore 8.0.0
 nuget Be.Vlaanderen.Basisregisters.EventHandling 4.2.3
 nuget Be.Vlaanderen.Basisregisters.EventHandling.Autofac 4.2.3
 
-nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.LastChangedList 11.0.1
-nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore 11.0.1
-nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore.Autofac 11.0.1
-nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner 11.0.1
-nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector.Testing 11.0.1
-nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Syndication 11.0.1
+nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.LastChangedList 12.0.1
+nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore 12.0.1
+nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore.Autofac 12.0.1
+nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner 12.0.1
+nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner.SqlServer 12.0.1
+nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner.Npgsql 12.0.1
+nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector.Testing 12.0.1
+nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Syndication 12.0.1
 
-nuget Be.Vlaanderen.Basisregisters.Projector 12.0.1
+nuget Be.Vlaanderen.Basisregisters.Projector 13.1.0
 
 nuget Be.Vlaanderen.Basisregisters.DataDog.Tracing.Autofac 5.0.3
 nuget Be.Vlaanderen.Basisregisters.DataDog.Tracing.Sql 5.0.3
