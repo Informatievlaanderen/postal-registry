@@ -20,6 +20,8 @@ namespace PostalRegistry.Projector.Infrastructure.Modules
     using PostalRegistry.Infrastructure;
     using PostalRegistry.Projections.Extract;
     using PostalRegistry.Projections.Extract.PostalInformationExtract;
+    using PostalRegistry.Projections.Integration;
+    using PostalRegistry.Projections.Integration.Infrastructure;
     using PostalRegistry.Projections.LastChangedList;
     using PostalRegistry.Projections.Legacy;
     using PostalRegistry.Projections.Legacy.PostalInformation;
@@ -68,6 +70,26 @@ namespace PostalRegistry.Projector.Infrastructure.Modules
             RegisterExtractProjections(builder);
             RegisterLastChangedProjections(builder);
             RegisterLegacyProjections(builder);
+
+            if(_configuration.GetSection("Integration").GetValue("Enabled", false))
+                RegisterIntegrationProjections(builder);
+        }
+
+        private void RegisterIntegrationProjections(ContainerBuilder builder)
+        {
+            builder
+                .RegisterModule(
+                    new IntegrationModule(
+                        _configuration,
+                        _services,
+                        _loggerFactory));
+            builder
+                .RegisterProjectionMigrator<IntegrationContextMigrationFactory>(
+                    _configuration,
+                    _loggerFactory)
+                .RegisterProjections<PostalLatestItemProjections, IntegrationContext>(
+                    context => new PostalLatestItemProjections(context.Resolve<IOptions<IntegrationOptions>>()),
+                    ConnectedProjectionSettings.Default);
         }
 
         private void RegisterExtractProjections(ContainerBuilder builder)

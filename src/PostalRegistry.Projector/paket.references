@@ -4,7 +4,14 @@ Be.Vlaanderen.Basisregisters.EventHandling.Autofac
 Be.Vlaanderen.Basisregisters.DataDog.Tracing.Autofac
 Be.Vlaanderen.Basisregisters.Projector
 
+Npgsql
+Npgsql.EntityFrameworkCore.PostgreSQL
+
 AspNetCore.HealthChecks.SqlServer
+AspNetCore.HealthChecks.NpgSql
+
+NodaTime
+
 Dapper
 
 SourceLink.Embed.AllSourceFiles

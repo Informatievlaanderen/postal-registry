@@ -11,6 +11,8 @@ namespace PostalRegistry.Infrastructure
 
         public const string Producer = "PostalRegistryProducer";
         public const string ProducerSnapshotOslo = "PostalRegistryProducerSnapshotOslo";
+
+        public const string Integration = "integration_postal";
     }
 
     public static class MigrationTables
@@ -22,5 +24,7 @@ namespace PostalRegistry.Infrastructure
 
         public const string Producer = "__EFMigrationsHistoryProducer";
         public const string ProducerSnapshotOslo = "__EFMigrationsHistoryProducerSnapshotOslo";
+
+        public const string Integration = "__EFMigrationsHistory";
     }
 }

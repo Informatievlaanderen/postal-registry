@@ -26,6 +26,7 @@
   <ItemGroup>
     <ProjectReference Include="..\PostalRegistry.Infrastructure\PostalRegistry.Infrastructure.csproj" />
     <ProjectReference Include="..\PostalRegistry.Projections.Extract\PostalRegistry.Projections.Extract.csproj" />
+    <ProjectReference Include="..\PostalRegistry.Projections.Integration\PostalRegistry.Projections.Integration.csproj" />
     <ProjectReference Include="..\PostalRegistry.Projections.LastChangedList\PostalRegistry.Projections.LastChangedList.csproj" />
     <ProjectReference Include="..\PostalRegistry.Projections.Legacy\PostalRegistry.Projections.Legacy.csproj" />
   </ItemGroup>
