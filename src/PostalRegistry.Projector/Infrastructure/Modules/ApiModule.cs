@@ -33,6 +33,8 @@ namespace PostalRegistry.Projector.Infrastructure.Modules
         private readonly IServiceCollection _services;
         private readonly ILoggerFactory _loggerFactory;
 
+        private readonly ConnectedProjectionSettings _connectedProjectionSettings;
+
         public ApiModule(
             IConfiguration configuration,
             IServiceCollection services,
@@ -41,6 +43,13 @@ namespace PostalRegistry.Projector.Infrastructure.Modules
             _configuration = configuration;
             _services = services;
             _loggerFactory = loggerFactory;
+
+            var catchUpSize = configuration.GetValue<int>("CatchUpSize", 100);
+
+            _connectedProjectionSettings = ConnectedProjectionSettings
+                .Configure(x => x
+                    .ConfigureCatchUpPageSize(catchUpSize)
+                    .ConfigureCatchUpUpdatePositionMessageInterval(catchUpSize));
         }
 
         protected override void Load(ContainerBuilder builder)
@@ -59,10 +68,9 @@ namespace PostalRegistry.Projector.Infrastructure.Modules
         private void RegisterProjectionSetup(ContainerBuilder builder)
         {
             builder.RegisterModule(
-                new EventHandlingModule(
-                    typeof(DomainAssemblyMarker).Assembly,
-                    EventsJsonSerializerSettingsProvider.CreateSerializerSettings()))
-
+                    new EventHandlingModule(
+                        typeof(DomainAssemblyMarker).Assembly,
+                        EventsJsonSerializerSettingsProvider.CreateSerializerSettings()))
                 .RegisterModule<EnvelopeModule>()
                 .RegisterEventstreamModule(_configuration)
                 .RegisterModule(new ProjectorModule(_configuration));
@@ -71,7 +79,7 @@ namespace PostalRegistry.Projector.Infrastructure.Modules
             RegisterLastChangedProjections(builder);
             RegisterLegacyProjections(builder);
 
-            if(_configuration.GetSection("Integration").GetValue("Enabled", false))
+            if (_configuration.GetSection("Integration").GetValue("Enabled", false))
                 RegisterIntegrationProjections(builder);
         }
 
@@ -83,13 +91,14 @@ namespace PostalRegistry.Projector.Infrastructure.Modules
                         _configuration,
                         _services,
                         _loggerFactory));
+
             builder
                 .RegisterProjectionMigrator<IntegrationContextMigrationFactory>(
                     _configuration,
                     _loggerFactory)
                 .RegisterProjections<PostalLatestItemProjections, IntegrationContext>(
                     context => new PostalLatestItemProjections(context.Resolve<IOptions<IntegrationOptions>>()),
-                    ConnectedProjectionSettings.Default);
+                    _connectedProjectionSettings);
         }
 
         private void RegisterExtractProjections(ContainerBuilder builder)
@@ -105,8 +114,9 @@ namespace PostalRegistry.Projector.Infrastructure.Modules
                     _configuration,
                     _loggerFactory)
                 .RegisterProjections<PostalInformationExtractProjections, ExtractContext>(
-                    context => new PostalInformationExtractProjections(context.Resolve<IOptions<ExtractConfig>>(), DbaseCodePage.Western_European_ANSI.ToEncoding()),
-                    ConnectedProjectionSettings.Default);
+                    context => new PostalInformationExtractProjections(context.Resolve<IOptions<ExtractConfig>>(),
+                        DbaseCodePage.Western_European_ANSI.ToEncoding()),
+                    _connectedProjectionSettings);
         }
 
         private void RegisterLastChangedProjections(ContainerBuilder builder)
@@ -119,13 +129,14 @@ namespace PostalRegistry.Projector.Infrastructure.Modules
                     _loggerFactory));
 
             builder
-                .RegisterProjectionMigrator<PostalRegistry.Projections.LastChangedList.LastChangedListContextMigrationFactory>(
+                .RegisterProjectionMigrator<
+                    PostalRegistry.Projections.LastChangedList.LastChangedListContextMigrationFactory>(
                     _configuration,
                     _loggerFactory)
                 .RegisterProjectionMigrator<DataMigrationContextMigrationFactory>(
                     _configuration,
                     _loggerFactory)
-                .RegisterProjections<LastChangedListProjections, LastChangedListContext>(ConnectedProjectionSettings.Default);
+                .RegisterProjections<LastChangedListProjections, LastChangedListContext>(_connectedProjectionSettings);
         }
 
         private void RegisterLegacyProjections(ContainerBuilder builder)
@@ -140,8 +151,8 @@ namespace PostalRegistry.Projector.Infrastructure.Modules
                 .RegisterProjectionMigrator<LegacyContextMigrationFactory>(
                     _configuration,
                     _loggerFactory)
-                .RegisterProjections<PostalInformationProjections, LegacyContext>(ConnectedProjectionSettings.Default)
-                .RegisterProjections<PostalInformationSyndicationProjections, LegacyContext>(ConnectedProjectionSettings.Default);
+                .RegisterProjections<PostalInformationProjections, LegacyContext>(_connectedProjectionSettings)
+                .RegisterProjections<PostalInformationSyndicationProjections, LegacyContext>(_connectedProjectionSettings);
         }
     }
 }
