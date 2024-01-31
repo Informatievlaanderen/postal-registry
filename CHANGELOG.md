@@ -1,3 +1,15 @@
+# [3.12.0](https://github.com/informatievlaanderen/postal-registry/compare/v3.11.4...v3.12.0) (2024-01-31)
+
+
+### Bug Fixes
+
+* add objectid to idempotencekey snapshot oslo ([b39156c](https://github.com/informatievlaanderen/postal-registry/commit/b39156c0be4138a9587e5573f4f53d4ea7617cd4))
+
+
+### Features
+
+* add integration projections ([9eed859](https://github.com/informatievlaanderen/postal-registry/commit/9eed8594423e8905836029d44ff2d614c37c520a))
+
 ## [3.11.4](https://github.com/informatievlaanderen/postal-registry/compare/v3.11.3...v3.11.4) (2024-01-25)
 
 
