@@ -1,3 +1,10 @@
+## [3.12.1](https://github.com/informatievlaanderen/postal-registry/compare/v3.12.0...v3.12.1) (2024-01-31)
+
+
+### Bug Fixes
+
+* add catchup size by setting ([affe2dc](https://github.com/informatievlaanderen/postal-registry/commit/affe2dc2d9e2ee218dececc16f10a66ed76a06e5))
+
 # [3.12.0](https://github.com/informatievlaanderen/postal-registry/compare/v3.11.4...v3.12.0) (2024-01-31)
 
 
