@@ -9,4 +9,7 @@ Be.Vlaanderen.Basisregisters.AggregateSource.Testing
 Be.Vlaanderen.Basisregisters.AggregateSource.Testing.SqlStreamStore.Autofac
 Be.Vlaanderen.Basisregisters.AggregateSource.Testing.Xunit
 
+Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector.Testing
+Be.Vlaanderen.Basisregisters.ProjectionHandling.Testing.Xunit
+
 Be.Vlaanderen.Basisregisters.EventHandling.Autofac

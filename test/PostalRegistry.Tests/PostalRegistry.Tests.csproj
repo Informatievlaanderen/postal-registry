@@ -3,6 +3,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\PostalRegistry.Infrastructure\PostalRegistry.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\PostalRegistry.Projections.Integration\PostalRegistry.Projections.Integration.csproj" />
     <ProjectReference Include="..\..\src\PostalRegistry\PostalRegistry.csproj" />
   </ItemGroup>
 
