@@ -1,3 +1,10 @@
+## [3.12.2](https://github.com/informatievlaanderen/postal-registry/compare/v3.12.1...v3.12.2) (2024-02-06)
+
+
+### Bug Fixes
+
+* **bump:** ci new deploy pipeline ([d589641](https://github.com/informatievlaanderen/postal-registry/commit/d5896415f13aeddfaea2a4ffc296664e9fb214ca))
+
 ## [3.12.1](https://github.com/informatievlaanderen/postal-registry/compare/v3.12.0...v3.12.1) (2024-01-31)
 
 
