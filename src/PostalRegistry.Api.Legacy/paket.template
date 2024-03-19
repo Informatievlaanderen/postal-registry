@@ -21,8 +21,7 @@ dependencies
     Be.Vlaanderen.Basisregisters.Api >= LOCKEDVERSION
     Be.Vlaanderen.Basisregisters.EventHandling.Autofac >= LOCKEDVERSION
     Be.Vlaanderen.Basisregisters.DataDog.Tracing.Autofac >= LOCKEDVERSION
-
-AspNetCore.HealthChecks.SqlServer
+    AspNetCore.HealthChecks.SqlServer >= LOCKEDVERSION
 
 files
   PostalRegistry.Api.Legacy.dll => lib\net8.0
