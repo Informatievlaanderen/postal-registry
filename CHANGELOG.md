@@ -1,3 +1,20 @@
+# [4.0.0](https://github.com/informatievlaanderen/postal-registry/compare/v3.12.2...v4.0.0) (2024-03-19)
+
+
+### Bug Fixes
+
+* paket.template ([d74661a](https://github.com/informatievlaanderen/postal-registry/commit/d74661a02719e0de5266d5df487b89749f737130))
+
+
+### Features
+
+* move to dotnet 8.0.2 ([b5383bd](https://github.com/informatievlaanderen/postal-registry/commit/b5383bdf2f31e0b7eb55f022962a0263585c20cd))
+
+
+### BREAKING CHANGES
+
+* move to dotnet 8.0.2
+
 ## [3.12.2](https://github.com/informatievlaanderen/postal-registry/compare/v3.12.1...v3.12.2) (2024-02-06)
 
 
