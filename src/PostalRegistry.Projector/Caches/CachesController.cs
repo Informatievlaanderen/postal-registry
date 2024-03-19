@@ -4,6 +4,7 @@ namespace PostalRegistry.Projector.Caches
     using System.Linq;
     using System.Threading.Tasks;
     using System.Threading;
+    using Asp.Versioning;
     using Be.Vlaanderen.Basisregisters.Api;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.LastChangedList;
     using Microsoft.AspNetCore.Mvc;

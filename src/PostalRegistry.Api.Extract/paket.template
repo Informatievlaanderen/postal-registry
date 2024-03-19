@@ -15,14 +15,19 @@ licenseUrl https://opensource.org/licenses/EUPL-1.2
 description Postal Registry.
 
 dependencies
-  framework: net6.0
-    Be.Vlaanderen.Basisregisters.Shaperon >= LOCKEDVERSION
+  framework: net8.0
+    Be.Vlaanderen.Basisregisters.AggregateSource >= LOCKEDVERSION
+    Be.Vlaanderen.Basisregisters.Api >= LOCKEDVERSION
+    Be.Vlaanderen.Basisregisters.GrAr.Extracts >= LOCKEDVERSION
+    Be.Vlaanderen.Basisregisters.EventHandling.Autofac >= LOCKEDVERSION
+    Be.Vlaanderen.Basisregisters.DataDog.Tracing.Autofac >= LOCKEDVERSION
+    AspNetCore.HealthChecks.SqlServer >= LOCKEDVERSION
 
 files
-  PostalRegistry.Api.Extract.dll => lib\net6.0
-  PostalRegistry.Api.Extract.pdb => lib\net6.0
-  PostalRegistry.Api.Extract.xml => lib\net6.0
+  PostalRegistry.Api.Extract.dll => lib\net8.0
+  PostalRegistry.Api.Extract.pdb => lib\net8.0
+  PostalRegistry.Api.Extract.xml => lib\net8.0
   PostalRegistry.Api.Extract.xml => content
 
-  PostalRegistry.Projections.Extract.dll => lib\net6.0
-  PostalRegistry.Projections.Extract.pdb => lib\net6.0
+  PostalRegistry.Projections.Extract.dll => lib\net8.0
+  PostalRegistry.Projections.Extract.pdb => lib\net8.0

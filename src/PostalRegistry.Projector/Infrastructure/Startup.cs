@@ -6,13 +6,11 @@ namespace PostalRegistry.Projector.Infrastructure
     using Autofac;
     using Autofac.Extensions.DependencyInjection;
     using Be.Vlaanderen.Basisregisters.Api;
-    using Be.Vlaanderen.Basisregisters.DataDog.Tracing.Microsoft;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.LastChangedList;
     using Be.Vlaanderen.Basisregisters.Projector.ConnectedProjections;
     using Configuration;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Mvc.ApiExplorer;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -23,6 +21,8 @@ namespace PostalRegistry.Projector.Infrastructure
     using PostalRegistry.Projections.Legacy;
     using Microsoft.OpenApi.Models;
     using System.Threading;
+    using Asp.Versioning.ApiExplorer;
+    using Be.Vlaanderen.Basisregisters.DataDog.Tracing.Autofac;
     using PostalRegistry.Projections.Integration.Infrastructure;
 
     /// <summary>Represents the startup process for the application.</summary>

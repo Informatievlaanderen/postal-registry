@@ -2,6 +2,7 @@ namespace PostalRegistry.Api.Extract.Extracts
 {
     using System;
     using System.Threading;
+    using Asp.Versioning;
     using Be.Vlaanderen.Basisregisters.Api;
     using Be.Vlaanderen.Basisregisters.Api.Exceptions;
     using Be.Vlaanderen.Basisregisters.Api.Extract;

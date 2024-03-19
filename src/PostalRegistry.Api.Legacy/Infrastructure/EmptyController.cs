@@ -1,6 +1,7 @@
 namespace PostalRegistry.Api.Legacy.Infrastructure
 {
     using System.Reflection;
+    using Asp.Versioning;
     using Be.Vlaanderen.Basisregisters.Api;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Net.Http.Headers;

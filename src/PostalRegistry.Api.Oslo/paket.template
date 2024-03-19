@@ -14,17 +14,26 @@ licenseUrl https://opensource.org/licenses/EUPL-1.2
 
 description Postal Registry.
 
+dependencies
+  framework: net8.0
+    Be.Vlaanderen.Basisregisters.AggregateSource >= LOCKEDVERSION
+    Be.Vlaanderen.Basisregisters.Api >= LOCKEDVERSION 
+    Be.Vlaanderen.Basisregisters.EventHandling.Autofac >= LOCKEDVERSION
+    Be.Vlaanderen.Basisregisters.DataDog.Tracing.Autofac >= LOCKEDVERSION
+    AspNetCore.HealthChecks.SqlServer >= LOCKEDVERSION
+    CsvHelper >= LOCKEDVERSION
+
 files
-  PostalRegistry.Api.Oslo.dll => lib\net6.0
-  PostalRegistry.Api.Oslo.pdb => lib\net6.0
-  PostalRegistry.Api.Oslo.xml => lib\net6.0
+  PostalRegistry.Api.Oslo.dll => lib\net8.0
+  PostalRegistry.Api.Oslo.pdb => lib\net8.0
+  PostalRegistry.Api.Oslo.xml => lib\net8.0
   PostalRegistry.Api.Oslo.xml => content
 
-  PostalRegistry.Projections.Legacy.dll => lib\net6.0
-  PostalRegistry.Projections.Legacy.pdb => lib\net6.0
+  PostalRegistry.Projections.Legacy.dll => lib\net8.0
+  PostalRegistry.Projections.Legacy.pdb => lib\net8.0
   
-  PostalRegistry.Projections.Syndication.dll => lib\net6.0
-  PostalRegistry.Projections.Syndication.pdb => lib\net6.0
+  PostalRegistry.Projections.Syndication.dll => lib\net8.0
+  PostalRegistry.Projections.Syndication.pdb => lib\net8.0
   
-  PostalRegistry.dll => lib\net6.0
-  PostalRegistry.pdb => lib\net6.0
+  PostalRegistry.dll => lib\net8.0
+  PostalRegistry.pdb => lib\net8.0
