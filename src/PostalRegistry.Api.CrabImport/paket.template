@@ -14,11 +14,20 @@ licenseUrl https://opensource.org/licenses/EUPL-1.2
 
 description Postal Registry.
 
+dependencies
+  framework: net8.0
+    Be.Vlaanderen.Basisregisters.Api >= LOCKEDVERSION
+    Be.Vlaanderen.Basisregisters.CommandHandling.Idempotency >= LOCKEDVERSION
+    Be.Vlaanderen.Basisregisters.DataDog.Tracing.Autofac >= LOCKEDVERSION
+    Be.Vlaanderen.Basisregisters.EventHandling.Autofac >= LOCKEDVERSION
+    Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore.Autofac >= LOCKEDVERSION
+    AspNetCore.HealthChecks.SqlServer >= LOCKEDVERSION
+
 files
-  PostalRegistry.Api.CrabImport.dll => lib\net6.0
-  PostalRegistry.Api.CrabImport.pdb => lib\net6.0
-  PostalRegistry.Api.CrabImport.xml => lib\net6.0
+  PostalRegistry.Api.CrabImport.dll => lib\net8.0
+  PostalRegistry.Api.CrabImport.pdb => lib\net8.0
+  PostalRegistry.Api.CrabImport.xml => lib\net8.0
   PostalRegistry.Api.CrabImport.xml => content
 
-  PostalRegistry.dll => lib\net6.0
-  PostalRegistry.pdb => lib\net6.0
+  PostalRegistry.dll => lib\net8.0
+  PostalRegistry.pdb => lib\net8.0
