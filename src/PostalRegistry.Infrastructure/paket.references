@@ -6,8 +6,5 @@ Be.Vlaanderen.Basisregisters.AggregateSource
 Be.Vlaanderen.Basisregisters.AggregateSource.SqlStreamStore
 Be.Vlaanderen.Basisregisters.AggregateSource.SqlStreamStore.Autofac
 
-Be.Vlaanderen.Basisregisters.DataDog.Tracing.SqlStreamStore
-Be.Vlaanderen.Basisregisters.DataDog.Tracing.Sql
-
 SourceLink.Embed.AllSourceFiles
 SourceLink.Copy.PdbFiles

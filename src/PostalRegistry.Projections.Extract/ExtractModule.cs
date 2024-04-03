@@ -2,10 +2,8 @@ namespace PostalRegistry.Projections.Extract
 {
     using System;
     using Autofac;
-    using Be.Vlaanderen.Basisregisters.DataDog.Tracing.Sql.EntityFrameworkCore;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner.SqlServer.MigrationExtensions;
     using Infrastructure;
-    using Microsoft.Data.SqlClient;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -24,7 +22,7 @@ namespace PostalRegistry.Projections.Extract
 
             var hasConnectionString = !string.IsNullOrWhiteSpace(connectionString);
             if (hasConnectionString)
-                RunOnSqlServer(configuration, services, loggerFactory, connectionString, enableRetry);
+                RunOnSqlServer(services, loggerFactory, connectionString, enableRetry);
             else
                 RunInMemoryDb(services, loggerFactory, logger);
 
@@ -37,19 +35,16 @@ namespace PostalRegistry.Projections.Extract
                 nameof(ExtractContext), Schema.Extract, MigrationTables.Extract);
         }
 
-        private static void RunOnSqlServer(IConfiguration configuration,
+        private static void RunOnSqlServer(
             IServiceCollection services,
             ILoggerFactory loggerFactory,
             string backofficeProjectionsConnectionString,
             bool enableRetry)
         {
             services
-                .AddScoped(s => new TraceDbConnection<ExtractContext>(
-                    new SqlConnection(backofficeProjectionsConnectionString),
-                    configuration["DataDog:ServiceName"]))
                 .AddDbContext<ExtractContext>((provider, options) => options
                     .UseLoggerFactory(loggerFactory)
-                    .UseSqlServer(provider.GetRequiredService<TraceDbConnection<ExtractContext>>(), sqlServerOptions =>
+                    .UseSqlServer(backofficeProjectionsConnectionString, sqlServerOptions =>
                     {
                         if (enableRetry)
                             sqlServerOptions.EnableRetryOnFailure();

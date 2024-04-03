@@ -3,9 +3,6 @@ namespace PostalRegistry.Projections.Syndication.Modules
     using System;
     using Microsoft.Data.SqlClient;
     using System.Net.Http;
-    using Be.Vlaanderen.Basisregisters.DataDog.Tracing.Http;
-    using Be.Vlaanderen.Basisregisters.DataDog.Tracing.Sql.EntityFrameworkCore;
-    using Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner.MigrationExtensions;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Syndication;
     using Autofac;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner.SqlServer.MigrationExtensions;
@@ -29,7 +26,7 @@ namespace PostalRegistry.Projections.Syndication.Modules
 
             var hasConnectionString = !string.IsNullOrWhiteSpace(connectionString);
             if (hasConnectionString)
-                RunOnSqlServer(configuration, services, loggerFactory, connectionString);
+                RunOnSqlServer(services, loggerFactory, connectionString);
             else
                 RunInMemoryDb(services, loggerFactory, logger);
 
@@ -37,18 +34,14 @@ namespace PostalRegistry.Projections.Syndication.Modules
         }
 
         private static void RunOnSqlServer(
-            IConfiguration configuration,
             IServiceCollection services,
             ILoggerFactory loggerFactory,
             string backofficeProjectionsConnectionString)
         {
             services
-                .AddScoped(s => new TraceDbConnection<SyndicationContext>(
-                    new SqlConnection(backofficeProjectionsConnectionString),
-                    configuration["DataDog:ServiceName"]))
-                .AddDbContext<SyndicationContext>((provider, options) => options
+                .AddDbContext<SyndicationContext>((_, options) => options
                     .UseLoggerFactory(loggerFactory)
-                    .UseSqlServer(provider.GetRequiredService<TraceDbConnection<SyndicationContext>>(), sqlServerOptions =>
+                    .UseSqlServer(backofficeProjectionsConnectionString, sqlServerOptions =>
                     {
                         sqlServerOptions.EnableRetryOnFailure();
                         sqlServerOptions.MigrationsHistoryTable(MigrationTables.Syndication, Schema.Syndication);
@@ -75,9 +68,6 @@ namespace PostalRegistry.Projections.Syndication.Modules
                 .AddHttpClient(
                     RegistryAtomFeedReader.HttpClientName,
                     client => { client.DefaultRequestHeaders.Add("Accept", "application/atom+xml"); })
-                .ConfigurePrimaryHttpMessageHandler(c => new TraceHttpMessageHandler(
-                    new HttpClientHandler(),
-                    configuration["DataDog:ServiceName"]))
                 .AddTransientHttpErrorPolicy(policyBuilder => policyBuilder
                     .WaitAndRetryAsync(
                         5,

@@ -2,7 +2,6 @@ namespace PostalRegistry.Producer.Snapshot.Oslo
 {
     using System;
     using Autofac;
-    using Be.Vlaanderen.Basisregisters.DataDog.Tracing.Sql.EntityFrameworkCore;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner.SqlServer.MigrationExtensions;
     using Microsoft.Data.SqlClient;
     using Microsoft.EntityFrameworkCore;
@@ -24,7 +23,7 @@ namespace PostalRegistry.Producer.Snapshot.Oslo
             var hasConnectionString = !string.IsNullOrWhiteSpace(connectionString);
             if (hasConnectionString)
             {
-                RunOnSqlServer(configuration, services, loggerFactory, connectionString);
+                RunOnSqlServer(services, loggerFactory, connectionString);
             }
             else
             {
@@ -41,18 +40,14 @@ namespace PostalRegistry.Producer.Snapshot.Oslo
         }
 
         private static void RunOnSqlServer(
-            IConfiguration configuration,
             IServiceCollection services,
             ILoggerFactory loggerFactory,
             string backofficeProjectionsConnectionString)
         {
             services
-                .AddScoped(s => new TraceDbConnection<ProducerContext>(
-                    new SqlConnection(backofficeProjectionsConnectionString),
-                    configuration["DataDog:ServiceName"]))
-                .AddDbContext<ProducerContext>((provider, options) => options
+                .AddDbContext<ProducerContext>((_, options) => options
                     .UseLoggerFactory(loggerFactory)
-                    .UseSqlServer(provider.GetRequiredService<TraceDbConnection<ProducerContext>>(), sqlServerOptions =>
+                    .UseSqlServer(backofficeProjectionsConnectionString, sqlServerOptions =>
                     {
                         sqlServerOptions.EnableRetryOnFailure();
                         sqlServerOptions.MigrationsHistoryTable(MigrationTables.ProducerSnapshotOslo, Schema.ProducerSnapshotOslo);

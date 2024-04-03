@@ -1,10 +1,12 @@
 Be.Vlaanderen.Basisregisters.Api
 Be.Vlaanderen.Basisregisters.CommandHandling.Idempotency
-Be.Vlaanderen.Basisregisters.DataDog.Tracing.Autofac
 Be.Vlaanderen.Basisregisters.EventHandling.Autofac
 Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore.Autofac
 
 AspNetCore.HealthChecks.SqlServer
+
+Datadog.Trace
+Datadog.Trace.Bundle
 
 SourceLink.Embed.AllSourceFiles
 SourceLink.Copy.PdbFiles

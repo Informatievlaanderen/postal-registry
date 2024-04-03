@@ -20,9 +20,11 @@ Microsoft.Extensions.Http.Polly
 
 Microsoft.SyndicationFeed.ReaderWriter
 
+Datadog.Trace
+Datadog.Trace.Bundle
+
 Be.Vlaanderen.Basisregisters.AggregateSource
 Be.Vlaanderen.Basisregisters.EventHandling.Autofac
-Be.Vlaanderen.Basisregisters.DataDog.Tracing.Sql
 Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner.SqlServer
 Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore.Autofac
 Be.Vlaanderen.Basisregisters.ProjectionHandling.Syndication
