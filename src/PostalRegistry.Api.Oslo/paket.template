@@ -17,9 +17,8 @@ description Postal Registry.
 dependencies
   framework: net8.0
     Be.Vlaanderen.Basisregisters.AggregateSource >= LOCKEDVERSION
-    Be.Vlaanderen.Basisregisters.Api >= LOCKEDVERSION 
+    Be.Vlaanderen.Basisregisters.Api >= LOCKEDVERSION
     Be.Vlaanderen.Basisregisters.EventHandling.Autofac >= LOCKEDVERSION
-    Be.Vlaanderen.Basisregisters.DataDog.Tracing.Autofac >= LOCKEDVERSION
     AspNetCore.HealthChecks.SqlServer >= LOCKEDVERSION
     CsvHelper >= LOCKEDVERSION
 
@@ -31,9 +30,9 @@ files
 
   PostalRegistry.Projections.Legacy.dll => lib\net8.0
   PostalRegistry.Projections.Legacy.pdb => lib\net8.0
-  
+
   PostalRegistry.Projections.Syndication.dll => lib\net8.0
   PostalRegistry.Projections.Syndication.pdb => lib\net8.0
-  
+
   PostalRegistry.dll => lib\net8.0
   PostalRegistry.pdb => lib\net8.0

@@ -10,6 +10,9 @@ nuget HtmlAgilityPack 1.11.59
 
 nuget CsvHelper 31.0.2
 
+nuget Datadog.Trace 2.49.0
+nuget Datadog.Trace.Bundle 2.49.0
+
 nuget NetTopologySuite 2.5.0
 nuget Dapper 2.1.35
 nuget NodaTime 3.1.11

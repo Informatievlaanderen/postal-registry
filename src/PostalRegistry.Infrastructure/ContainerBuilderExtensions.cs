@@ -4,7 +4,6 @@ namespace PostalRegistry.Infrastructure
     using Autofac;
     using Autofac.Core.Registration;
     using Be.Vlaanderen.Basisregisters.AggregateSource.SqlStreamStore.Autofac;
-    using Be.Vlaanderen.Basisregisters.DataDog.Tracing.SqlStreamStore;
     using Microsoft.Extensions.Configuration;
 
     public static class ContainerBuilderExtensions
@@ -21,8 +20,7 @@ namespace PostalRegistry.Infrastructure
             }
 
             builder
-                .RegisterModule(new SqlStreamStoreModule(connectionString, Schema.Default))
-                .RegisterModule(new TraceSqlStreamStoreModule(configuration["DataDog:ServiceName"]));
+                .RegisterModule(new SqlStreamStoreModule(connectionString, Schema.Default));
 
             return builder;
         }
@@ -39,8 +37,7 @@ namespace PostalRegistry.Infrastructure
             }
 
             return builder
-                .RegisterModule(new SqlStreamStoreModule(connectionString, Schema.Default))
-                .RegisterModule(new TraceSqlStreamStoreModule(configuration["DataDog:ServiceName"]));
+                .RegisterModule(new SqlStreamStoreModule(connectionString, Schema.Default));
         }
     }
 }

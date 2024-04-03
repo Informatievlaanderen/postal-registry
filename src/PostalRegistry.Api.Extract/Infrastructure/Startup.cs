@@ -1,5 +1,9 @@
 namespace PostalRegistry.Api.Extract.Infrastructure
 {
+    using System;
+    using System.Linq;
+    using System.Reflection;
+    using Asp.Versioning.ApiExplorer;
     using Autofac;
     using Autofac.Extensions.DependencyInjection;
     using Be.Vlaanderen.Basisregisters.Api;
@@ -8,17 +12,12 @@ namespace PostalRegistry.Api.Extract.Infrastructure
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Diagnostics.HealthChecks;
     using Microsoft.Extensions.Hosting;
+    using Microsoft.Extensions.Logging;
+    using Microsoft.OpenApi.Models;
     using Modules;
     using Projections.Extract;
-    using System;
-    using System.Linq;
-    using System.Reflection;
-    using Asp.Versioning.ApiExplorer;
-    using Be.Vlaanderen.Basisregisters.DataDog.Tracing.Autofac;
-    using Microsoft.Extensions.Diagnostics.HealthChecks;
-    using Microsoft.OpenApi.Models;
 
     public class Startup
     {
@@ -114,31 +113,11 @@ namespace PostalRegistry.Api.Extract.Infrastructure
             IHostApplicationLifetime appLifetime,
             ILoggerFactory loggerFactory,
             IApiVersionDescriptionProvider apiVersionProvider,
-            ApiDataDogToggle datadogToggle,
-            ApiDebugDataDogToggle debugDataDogToggle,
             HealthCheckService healthCheckService)
         {
             StartupHelpers.CheckDatabases(healthCheckService, DatabaseTag, loggerFactory).GetAwaiter().GetResult();
 
             app
-                .UseDataDog<Startup>(new DataDogOptions
-                {
-                    Common =
-                    {
-                        ServiceProvider = serviceProvider,
-                        LoggerFactory = loggerFactory
-                    },
-                    Toggles =
-                    {
-                        Enable = datadogToggle,
-                        Debug = debugDataDogToggle
-                    },
-                    Tracing =
-                    {
-                        ServiceName = _configuration["DataDog:ServiceName"],
-                    }
-                })
-
                 .UseDefaultForApi(new StartupUseOptions
                 {
                     Common =

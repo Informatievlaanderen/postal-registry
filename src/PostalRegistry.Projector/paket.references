@@ -10,6 +10,9 @@ Npgsql.EntityFrameworkCore.PostgreSQL
 AspNetCore.HealthChecks.SqlServer
 AspNetCore.HealthChecks.NpgSql
 
+Datadog.Trace
+Datadog.Trace.Bundle
+
 NodaTime
 
 Dapper
