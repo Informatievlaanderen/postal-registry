@@ -10,7 +10,6 @@ nuget HtmlAgilityPack 1.11.59
 
 nuget CsvHelper 31.0.2
 
-nuget Datadog.Trace 2.49.0
 nuget Datadog.Trace.Bundle 2.49.0
 
 nuget NetTopologySuite 2.5.0
@@ -29,7 +28,7 @@ nuget Npgsql.EntityFrameworkCore.PostgreSQL.Design 2.0.0-preview1
 nuget Microsoft.EntityFrameworkCore.Design 8.0.3
 
 // VBR STUFF
-nuget Be.Vlaanderen.Basisregisters.Build.Pipeline 7.2.0
+nuget Be.Vlaanderen.Basisregisters.Build.Pipeline 7.2.5
 nuget Be.Vlaanderen.Basisregisters.Testing.Infrastructure.Events 4.0.0 content: true, copy_content_to_output_dir: always, copy_local: true
 
 nuget Be.Vlaanderen.Basisregisters.AggregateSource 9.0.1
@@ -40,7 +39,7 @@ nuget Be.Vlaanderen.Basisregisters.AggregateSource.Testing.CommandHandling 9.0.1
 nuget Be.Vlaanderen.Basisregisters.AggregateSource.Testing.SqlStreamStore.Autofac 9.0.1
 nuget Be.Vlaanderen.Basisregisters.AggregateSource.Testing.Xunit 9.0.1
 
-nuget Be.Vlaanderen.Basisregisters.Api 21.0.0
+nuget Be.Vlaanderen.Basisregisters.Api 23.0.0
 
 nuget Be.Vlaanderen.Basisregisters.Aws.DistributedMutex 4.0.1
 
@@ -51,21 +50,17 @@ nuget Be.Vlaanderen.Basisregisters.CommandHandling.SqlStreamStore 9.0.1
 nuget Be.Vlaanderen.Basisregisters.EventHandling 5.0.0
 nuget Be.Vlaanderen.Basisregisters.EventHandling.Autofac 5.0.0
 
-nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.LastChangedList 13.0.0
-nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore 13.0.0
-nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore.Autofac 13.0.0
-nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner 13.0.0
-nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner.SqlServer 13.0.0
-nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner.Npgsql 13.0.0
-nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector.Testing 13.0.0
-nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Testing.Xunit 13.0.0
-nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Syndication 13.0.0
+nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.LastChangedList 14.0.0
+nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore 14.0.0
+nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore.Autofac 14.0.0
+nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner 14.0.0
+nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner.SqlServer 14.0.0
+nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner.Npgsql 14.0.0
+nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector.Testing 14.0.0
+nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Testing.Xunit 14.0.0
+nuget Be.Vlaanderen.Basisregisters.ProjectionHandling.Syndication 14.0.0
 
-nuget Be.Vlaanderen.Basisregisters.Projector 14.0.0
-
-nuget Be.Vlaanderen.Basisregisters.DataDog.Tracing.Autofac 6.0.0
-nuget Be.Vlaanderen.Basisregisters.DataDog.Tracing.Sql 6.0.0
-nuget Be.Vlaanderen.Basisregisters.DataDog.Tracing.SqlStreamStore 6.0.0
+nuget Be.Vlaanderen.Basisregisters.Projector 15.0.0
 
 nuget Be.Vlaanderen.Basisregisters.Crab 4.0.0
 
