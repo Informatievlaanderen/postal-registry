@@ -1,3 +1,15 @@
+# [5.0.0](https://github.com/informatievlaanderen/postal-registry/compare/v4.0.1...v5.0.0) (2024-04-05)
+
+
+### Code Refactoring
+
+* remove old datadog libs completely ([e6c5421](https://github.com/informatievlaanderen/postal-registry/commit/e6c5421ccf34b378b4a75b9122e2c83c8f2ebce1))
+
+
+### BREAKING CHANGES
+
+* remove old datadog libs completely
+
 ## [4.0.1](https://github.com/informatievlaanderen/postal-registry/compare/v4.0.0...v4.0.1) (2024-04-03)
 
 # [4.0.0](https://github.com/informatievlaanderen/postal-registry/compare/v3.12.2...v4.0.0) (2024-03-19)
