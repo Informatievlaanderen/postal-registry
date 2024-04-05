@@ -4,7 +4,6 @@ Be.Vlaanderen.Basisregisters.EventHandling.Autofac
 
 AspNetCore.HealthChecks.SqlServer
 
-Datadog.Trace
 Datadog.Trace.Bundle
 
 SourceLink.Embed.AllSourceFiles

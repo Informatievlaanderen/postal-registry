@@ -22,7 +22,6 @@ namespace PostalRegistry.Projector.Infrastructure
     using Microsoft.OpenApi.Models;
     using System.Threading;
     using Asp.Versioning.ApiExplorer;
-    using Be.Vlaanderen.Basisregisters.DataDog.Tracing.Autofac;
     using PostalRegistry.Projections.Integration.Infrastructure;
 
     /// <summary>Represents the startup process for the application.</summary>
@@ -145,31 +144,11 @@ namespace PostalRegistry.Projector.Infrastructure
             IHostApplicationLifetime appLifetime,
             ILoggerFactory loggerFactory,
             IApiVersionDescriptionProvider apiVersionProvider,
-            ApiDataDogToggle datadogToggle,
-            ApiDebugDataDogToggle debugDataDogToggle,
             HealthCheckService healthCheckService)
         {
             StartupHelpers.CheckDatabases(healthCheckService, DatabaseTag, loggerFactory).GetAwaiter().GetResult();
 
             app
-                .UseDataDog<Startup>(new DataDogOptions
-                {
-                    Common =
-                    {
-                        ServiceProvider = serviceProvider,
-                        LoggerFactory = loggerFactory
-                    },
-                    Toggles =
-                    {
-                        Enable = datadogToggle,
-                        Debug = debugDataDogToggle
-                    },
-                    Tracing =
-                    {
-                        ServiceName = _configuration["DataDog:ServiceName"],
-                    }
-                })
-
                 .UseDefaultForApi(new StartupUseOptions
                 {
                     Common =

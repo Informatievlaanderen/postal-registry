@@ -20,7 +20,6 @@ Microsoft.Extensions.Http.Polly
 
 Microsoft.SyndicationFeed.ReaderWriter
 
-Datadog.Trace
 Datadog.Trace.Bundle
 
 Be.Vlaanderen.Basisregisters.AggregateSource

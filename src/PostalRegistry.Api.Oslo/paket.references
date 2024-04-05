@@ -6,7 +6,6 @@ AspNetCore.HealthChecks.SqlServer
 
 CsvHelper
 
-Datadog.Trace
 Datadog.Trace.Bundle
 
 SourceLink.Embed.AllSourceFiles
