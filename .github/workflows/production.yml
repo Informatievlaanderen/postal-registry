@@ -1,5 +1,5 @@
 name: CD Production
-
+run-name: 'CD Production: ${{ github.event.inputs.version }}'
 concurrency: CD Production
 
 on:

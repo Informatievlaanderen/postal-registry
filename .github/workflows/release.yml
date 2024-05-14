@@ -512,104 +512,6 @@ jobs:
           SEMVER: ${{ needs.release.outputs.version }}
           WORKSPACE: ${{ github.workspace }}
 
-  push_images_to_staging:
-    if: needs.release.outputs.version != 'none'
-    needs: [ release ]
-    name: Push images to Staging
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        image: ['api-legacy', 'api-oslo', 'api-crab-import', 'api-extract', 'projections-syndication', 'projector', 'producer', 'producer-snapshot-oslo']
-    steps:
-      - name: Configure AWS credentials (Staging)
-        uses: aws-actions/configure-aws-credentials@v4.0.2
-        with:
-          aws-access-key-id: ${{ secrets.VBR_AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.VBR_AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.VBR_AWS_REGION_PRD }}
-
-      - name: Login to Amazon ECR (Staging)
-        uses: aws-actions/amazon-ecr-login@v2
-
-      # Download artifact
-      - name: Download artifact
-        uses: actions/download-artifact@v4
-        continue-on-error: false
-        with:
-          name: ${{ matrix.image }}-${{ needs.release.outputs.version }}
-          path: ~/
-
-      # Load artifact
-      - name: Load artifact
-        shell: bash
-        run: |
-          echo pr-$IMAGE-image.tar
-          docker image load -i ~/pr-$IMAGE-image.tar
-        env:
-          IMAGE: ${{ matrix.image }}
-
-      - name: Push artifacts to ECR Staging
-        shell: bash
-        run: |
-          echo $IMAGE:$SEMVER
-          docker tag $BUILD_DOCKER_REGISTRY_TST/postal-registry/$IMAGE:$SEMVER $BUILD_DOCKER_REGISTRY/postal-registry/$IMAGE:$SEMVER
-          docker push $BUILD_DOCKER_REGISTRY/postal-registry/$IMAGE:$SEMVER
-        env:
-          BUILD_DOCKER_REGISTRY_TST: ${{ vars.VBR_DEVOPS_DOCKER_REGISTRY }}
-          BUILD_DOCKER_REGISTRY: ${{ secrets.VBR_BUILD_DOCKER_REGISTRY }}
-          IMAGE: ${{ matrix.image }}
-          SEMVER: ${{ needs.release.outputs.version }}
-          WORKSPACE: ${{ github.workspace }}
-
-  push_images_to_production:
-    if: needs.release.outputs.version != 'none'
-    needs: [ release ]
-    name: Push images to Production
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        image: ['api-legacy', 'api-oslo', 'api-crab-import', 'api-extract', 'projections-syndication', 'projector', 'producer', 'producer-snapshot-oslo']
-    steps:
-      - name: Configure AWS credentials (Production)
-        uses: aws-actions/configure-aws-credentials@v4.0.2
-        with:
-          aws-access-key-id: ${{ secrets.VBR_AWS_ACCESS_KEY_ID_NEWPRD }}
-          aws-secret-access-key: ${{ secrets.VBR_AWS_SECRET_ACCESS_KEY_NEWPRD }}
-          aws-region: ${{ secrets.VBR_AWS_REGION_PRD }}
-
-      - name: Login to Amazon ECR (Production)
-        uses: aws-actions/amazon-ecr-login@v2
-
-      # Download artifact
-      - name: Download artifact
-        uses: actions/download-artifact@v4
-        continue-on-error: false
-        with:
-          name: ${{ matrix.image }}-${{ needs.release.outputs.version }}
-          path: ~/
-
-      # Load artifact
-      - name: Load artifact
-        shell: bash
-        run: |
-          echo pr-$IMAGE-image.tar
-          docker image load -i ~/pr-$IMAGE-image.tar
-        env:
-          IMAGE: ${{ matrix.image }}
-
-      - name: Push artifacts to ECR Production
-        shell: bash
-        run: |
-          echo $IMAGE:$SEMVER
-          docker tag $BUILD_DOCKER_REGISTRY_TST/postal-registry/$IMAGE:$SEMVER $BUILD_DOCKER_REGISTRY_NEWPRD/postal-registry/$IMAGE:$SEMVER
-          docker push $BUILD_DOCKER_REGISTRY_NEWPRD/postal-registry/$IMAGE:$SEMVER
-        env:
-          BUILD_DOCKER_REGISTRY_TST: ${{ vars.VBR_DEVOPS_DOCKER_REGISTRY }}
-          BUILD_DOCKER_REGISTRY_NEWPRD: ${{ secrets.VBR_BUILD_DOCKER_REGISTRY_NEWPRD }}
-          IMAGE: ${{ matrix.image }}
-          SEMVER: ${{ needs.release.outputs.version }}
-          WORKSPACE: ${{ github.workspace }}
-
   deploy_to_test_start_slack:
     if: github.repository_owner == 'Informatievlaanderen'
     needs: [ push_images ]
@@ -623,7 +525,7 @@ jobs:
       shell: bash
 
     - name: Notify deployment started
-      uses: slackapi/slack-github-action@v1.25.0
+      uses: slackapi/slack-github-action@v1.26.0
       with:
         channel-id: '#team-dinosaur-dev'
         slack-message: Deployment of postal-registry to test has started
@@ -678,7 +580,7 @@ jobs:
       shell: bash
 
     - name: Notify deployment finished
-      uses: slackapi/slack-github-action@v1.25.0
+      uses: slackapi/slack-github-action@v1.26.0
       with:
         channel-id: '#team-dinosaur-dev'
         slack-message: Deployment of postal-registry to test has finished
@@ -689,7 +591,7 @@ jobs:
 
   deploy_to_staging_start_slack:
     if: github.repository_owner == 'Informatievlaanderen'
-    needs: [ push_images_to_staging, deploy_to_test_finish_slack ]
+    needs: [ deploy_to_test_finish_slack ]
     name: Deploy to staging started
     environment: stg
     runs-on: ubuntu-latest
@@ -700,7 +602,7 @@ jobs:
       shell: bash
 
     - name: Notify deployment started
-      uses: slackapi/slack-github-action@v1.25.0
+      uses: slackapi/slack-github-action@v1.26.0
       with:
         channel-id: '#team-dinosaur-dev'
         slack-message: Deployment of postal-registry to staging has started
@@ -711,30 +613,32 @@ jobs:
 
   deploy_to_staging:
     if: github.repository_owner == 'Informatievlaanderen'
-    needs: [ push_images_to_staging, deploy_to_staging_start_slack, release ]
+    needs: [ deploy_to_staging_start_slack, release ]
     name: Deploy to staging
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        services: ['postal-registry-api', 'postal-registry-projections', 'postal-registry-producer', 'postal-registry-producer-snapshot-oslo']
+        services: ['postal-api', 'postal-import-api', 'postal-projections', 'postal-producer', 'postal-producer-snapshot-oslo']
 
     steps:
-    - name: CD services
+    - name: Deploy services
       env:
-        BUILD_URL: ${{ secrets.VBR_AWS_BUILD_API }}/${{matrix.services}}
-        STATUS_URL: ${{ secrets.VBR_AWS_BUILD_STATUS_API }}/${{matrix.services}}
+        BUILD_URL: ${{ vars.VBR_AWS_BUILD_API_DEVOPS }}/${{matrix.services}}
+        STATUS_URL: ${{ vars.VBR_AWS_BUILD_STATUS_API_DEVOPS }}/${{matrix.services}}
       uses: informatievlaanderen/awscurl-polling-action/polling-action@main
       with:
           environment: stg
           version: ${{ needs.release.outputs.version }}
           status-url: $STATUS_URL
           deploy-url: $BUILD_URL
-          access-key: ${{ secrets.VBR_AWS_BUILD_USER_ACCESS_KEY_ID }}
-          secret-key: ${{ secrets.VBR_AWS_BUILD_USER_SECRET_ACCESS_KEY }}
-          region: eu-west-1
+          access-key: ${{ secrets.VBR_AWS_ACCESS_KEY_ID_DEVOPS }}
+          secret-key: ${{ secrets.VBR_AWS_SECRET_ACCESS_KEY_DEVOPS }}
+          deploy-target: 'agb_ecs_service'
           interval: 2
+          domain: 'basisregisters'
+          project: 'basisregisters'
 
-    - name: output CD services
+    - name: Deploy services output
       shell: bash
       run: |
         echo build-uuid: ${{ steps.awscurl-polling-action.outputs.build-uuid }}
@@ -753,7 +657,7 @@ jobs:
       shell: bash
 
     - name: Notify deployment finished
-      uses: slackapi/slack-github-action@v1.25.0
+      uses: slackapi/slack-github-action@v1.26.0
       with:
         channel-id: '#team-dinosaur-dev'
         slack-message: Deployment of postal-registry to staging has finished
