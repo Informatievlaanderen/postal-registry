@@ -1,3 +1,10 @@
+## [5.0.1](https://github.com/informatievlaanderen/postal-registry/compare/v5.0.0...v5.0.1) (2024-05-14)
+
+
+### Bug Fixes
+
+* **ci:** release to new staging + add prd run version ([c5aafa8](https://github.com/informatievlaanderen/postal-registry/commit/c5aafa8af48fe433189fb63cb399abe7f355344b))
+
 # [5.0.0](https://github.com/informatievlaanderen/postal-registry/compare/v4.0.1...v5.0.0) (2024-04-05)
 
 
