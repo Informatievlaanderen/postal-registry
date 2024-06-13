@@ -2,8 +2,11 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
 {
     using System;
     using System.Linq;
+    using System.Net.Mime;
+    using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
+    using System.Xml;
     using Asp.Versioning;
     using Be.Vlaanderen.Basisregisters.Api;
     using Be.Vlaanderen.Basisregisters.Api.Exceptions;
@@ -11,16 +14,22 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
     using Be.Vlaanderen.Basisregisters.Api.Search.Filtering;
     using Be.Vlaanderen.Basisregisters.Api.Search.Pagination;
     using Be.Vlaanderen.Basisregisters.Api.Search.Sorting;
+    using Be.Vlaanderen.Basisregisters.Api.Syndication;
     using Be.Vlaanderen.Basisregisters.GrAr.Common;
+    using Be.Vlaanderen.Basisregisters.GrAr.Common.Syndication;
     using Be.Vlaanderen.Basisregisters.GrAr.Legacy;
     using Be.Vlaanderen.Basisregisters.GrAr.Legacy.Gemeente;
     using Be.Vlaanderen.Basisregisters.GrAr.Legacy.PostInfo;
     using Convertors;
+    using Infrastructure;
     using Infrastructure.Options;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Options;
+    using Microsoft.SyndicationFeed;
+    using Microsoft.SyndicationFeed.Atom;
     using Nuts;
     using Projections.Legacy;
     using Projections.Syndication;
@@ -196,6 +205,92 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
                 });
         }
 
+         /// <summary>
+        /// Vraag een lijst met wijzigingen van postinfo op.
+        /// </summary>
+        /// <param name="configuration"></param>
+        /// <param name="context"></param>
+        /// <param name="responseOptions"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpGet("sync")]
+        [Produces("text/xml")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        [SwaggerResponseExample(StatusCodes.Status200OK, typeof(PostalInformationSyndicationResponseExamples))]
+        [SwaggerResponseExample(StatusCodes.Status400BadRequest, typeof(BadRequestResponseExamples))]
+        [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(InternalServerErrorResponseExamples))]
+        public async Task<IActionResult> Sync(
+            [FromServices] IConfiguration configuration,
+            [FromServices] LegacyContext context,
+            [FromServices] IOptions<ResponseOptions> responseOptions,
+            CancellationToken cancellationToken = default)
+        {
+            var filtering = Request.ExtractFilteringRequest<PostalInformationSyndicationFilter>();
+            var sorting = Request.ExtractSortingRequest();
+            var pagination = Request.ExtractPaginationRequest();
+
+            var lastFeedUpdate = await context
+                .PostalInformationSyndication
+                .AsNoTracking()
+                .OrderByDescending(item => item.Position)
+                .Select(item => item.SyndicationItemCreatedAt)
+                .FirstOrDefaultAsync(cancellationToken);
+
+            if (lastFeedUpdate == default)
+                lastFeedUpdate = new DateTimeOffset(2020, 1, 1, 0, 0, 0, TimeSpan.Zero);
+
+            var pagedPostalInformationSet =
+                new PostalInformationSyndicationQuery(
+                    context,
+                    filtering.Filter?.Embed)
+                .Fetch(filtering, sorting, pagination);
+
+            return new ContentResult
+            {
+                Content = await BuildAtomFeed(lastFeedUpdate, pagedPostalInformationSet, responseOptions, configuration),
+                ContentType = MediaTypeNames.Text.Xml,
+                StatusCode = StatusCodes.Status200OK
+            };
+        }
+
+        private static async Task<string> BuildAtomFeed(
+            DateTimeOffset lastFeedUpdate,
+            PagedQueryable<PostalInformationSyndicationQueryResult> pagedPostalInfoItems,
+            IOptions<ResponseOptions> responseOptions,
+            IConfiguration configuration)
+        {
+            var sw = new StringWriterWithEncoding(Encoding.UTF8);
+
+            using (var xmlWriter = XmlWriter.Create(sw, new XmlWriterSettings { Async = true, Indent = true, Encoding = sw.Encoding }))
+            {
+                var formatter = new AtomFormatter(null, xmlWriter.Settings) { UseCDATA = true };
+                var writer = new AtomFeedWriter(xmlWriter, null, formatter);
+                var syndicationConfiguration = configuration.GetSection("Syndication");
+                var atomFeedConfig = AtomFeedConfigurationBuilder.CreateFrom(syndicationConfiguration, lastFeedUpdate);
+
+                await writer.WriteDefaultMetadata(atomFeedConfig);
+
+                var postalInfos = pagedPostalInfoItems.Items.ToList();
+
+                var nextFrom = postalInfos.Any()
+                    ? postalInfos.Max(x => x.Position) + 1
+                    : (long?) null;
+
+                var nextUri = BuildNextSyncUri(pagedPostalInfoItems.PaginationInfo.Limit, nextFrom, syndicationConfiguration["NextUri"]);
+                if (nextUri != null)
+                    await writer.Write(new SyndicationLink(nextUri, GrArAtomLinkTypes.Next));
+
+                foreach (var postalInfo in postalInfos)
+                    await writer.WritePostalInfo(responseOptions, formatter, syndicationConfiguration["Category"], postalInfo);
+
+                xmlWriter.Flush();
+            }
+
+            return sw.ToString();
+        }
+
         private static Uri? BuildNextUri(PaginationInfo paginationInfo, int itemsInCollection, string nextUrlBase)
         {
             var offset = paginationInfo.Offset;
@@ -203,6 +298,13 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
 
             return paginationInfo.HasNextPage(itemsInCollection)
                 ? new Uri(string.Format(nextUrlBase, offset + limit, limit))
+                : null;
+        }
+
+        private static Uri? BuildNextSyncUri(int limit, long? from, string nextUrlBase)
+        {
+            return from.HasValue
+                ? new Uri(string.Format(nextUrlBase, from.Value, limit))
                 : null;
         }
 
