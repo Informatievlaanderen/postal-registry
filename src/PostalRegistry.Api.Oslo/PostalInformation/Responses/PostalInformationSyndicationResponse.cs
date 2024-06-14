@@ -179,7 +179,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.Responses
     {
         const string RawXml = @"<?xml version=""1.0"" encoding=""utf-8""?>
 <feed xmlns=""http://www.w3.org/2005/Atom"">
-    <id>https://api.basisregisters.vlaanderen.be/v1/feeds/postinfo.atom</id>
+    <id>https://api.basisregisters.vlaanderen.be/v2/feeds/postinfo.atom</id>
     <title>Basisregisters Vlaanderen - feed 'postinfo'</title>
     <subtitle>Deze Atom feed geeft leestoegang tot events op de resource 'postinfo'.</subtitle>
     <generator uri=""https://basisregisters.vlaanderen.be"" version=""2.2.13.2"">Basisregisters Vlaanderen</generator>
@@ -189,11 +189,11 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.Responses
         <name>Digitaal Vlaanderen</name>
         <email>digitaal.vlaanderen@vlaanderen.be</email>
     </author>
-    <link href=""https://api.basisregisters.vlaanderen.be/v1/feeds/postinfo"" rel=""self"" />
-    <link href=""https://api.basisregisters.vlaanderen.be/v1/feeds/postinfo.atom"" rel=""alternate"" type=""application/atom+xml"" />
-    <link href=""https://api.basisregisters.vlaanderen.be/v1/feeds/postinfo.xml"" rel=""alternate"" type=""application/xml"" />
+    <link href=""https://api.basisregisters.vlaanderen.be/v2/feeds/postinfo"" rel=""self"" />
+    <link href=""https://api.basisregisters.vlaanderen.be/v2/feeds/postinfo.atom"" rel=""alternate"" type=""application/atom+xml"" />
+    <link href=""https://api.basisregisters.vlaanderen.be/v2/feeds/postinfo.xml"" rel=""alternate"" type=""application/xml"" />
     <link href=""https://docs.basisregisters.vlaanderen.be/"" rel=""related"" />
-    <link href=""https://api.basisregisters.vlaanderen.be/v1/feeds/postinfo?from=2&amp;limit=100&amp;embed=event,object"" rel=""next"" />
+    <link href=""https://api.basisregisters.vlaanderen.be/v2/feeds/postinfo?from=2&amp;limit=100&amp;embed=event,object"" rel=""next"" />
     <entry>
         <id>0</id>
         <title>PostalInformationWasRegistered-0</title>
