@@ -1,3 +1,10 @@
+# [5.1.0](https://github.com/informatievlaanderen/postal-registry/compare/v5.0.1...v5.1.0) (2024-06-14)
+
+
+### Features
+
+* add syndication to oslo api ([71a29f3](https://github.com/informatievlaanderen/postal-registry/commit/71a29f336b023a992f447740f102a0b564a567a6))
+
 ## [5.0.1](https://github.com/informatievlaanderen/postal-registry/compare/v5.0.0...v5.0.1) (2024-05-14)
 
 
