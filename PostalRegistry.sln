@@ -24,7 +24,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostalRegistry", "src\Posta
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostalRegistry.Api.Legacy", "src\PostalRegistry.Api.Legacy\PostalRegistry.Api.Legacy.csproj", "{7F47CB53-84F6-4D0D-8380-306E95E1DE56}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostalRegistry.Api.CrabImport", "src\PostalRegistry.Api.CrabImport\PostalRegistry.Api.CrabImport.csproj", "{8F47CB53-84F6-4D0D-8380-306E95E1DE56}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostalRegistry.Api.Import", "src\PostalRegistry.Api.Import\PostalRegistry.Api.Import.csproj", "{8F47CB53-84F6-4D0D-8380-306E95E1DE56}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostalRegistry.Infrastructure", "src\PostalRegistry.Infrastructure\PostalRegistry.Infrastructure.csproj", "{488B07C6-FEDE-4F8D-A6E2-A7DFED79BBA1}"
 EndProject

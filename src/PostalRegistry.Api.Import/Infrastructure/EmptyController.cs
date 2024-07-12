@@ -1,4 +1,4 @@
-namespace PostalRegistry.Api.CrabImport.Infrastructure
+namespace PostalRegistry.Api.Import.Infrastructure
 {
     using System.Reflection;
     using Asp.Versioning;
@@ -15,6 +15,6 @@ namespace PostalRegistry.Api.CrabImport.Infrastructure
         public IActionResult Get()
             => Request.Headers[HeaderNames.Accept].ToString().Contains("text/html")
                 ? (IActionResult)new RedirectResult("/docs")
-                : new OkObjectResult($"Welcome to the Basisregisters Vlaanderen Postal Information CrabImport Api {Assembly.GetEntryAssembly().GetVersionText()}.");
+                : new OkObjectResult($"Welcome to the Basisregisters Vlaanderen Postal Information Import Api {Assembly.GetEntryAssembly().GetVersionText()}.");
     }
 }

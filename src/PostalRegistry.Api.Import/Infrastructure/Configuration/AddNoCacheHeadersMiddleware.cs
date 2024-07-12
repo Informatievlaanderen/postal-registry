@@ -1,4 +1,4 @@
-namespace PostalRegistry.Api.CrabImport.Infrastructure.Configuration
+namespace PostalRegistry.Api.Import.Infrastructure.Configuration
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;

@@ -1,4 +1,4 @@
-namespace PostalRegistry.Api.CrabImport.CrabImport.Requests
+namespace PostalRegistry.Api.Import.CrabImport.Requests
 {
     using System.ComponentModel.DataAnnotations;
     using Newtonsoft.Json;
