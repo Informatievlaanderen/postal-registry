@@ -1,4 +1,4 @@
-namespace PostalRegistry.Api.CrabImport.BPostImport
+namespace PostalRegistry.Api.Import.BPostImport
 {
     using System;
     using System.Threading;

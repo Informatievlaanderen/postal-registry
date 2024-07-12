@@ -1,4 +1,4 @@
-namespace PostalRegistry.Api.CrabImport.Infrastructure
+namespace PostalRegistry.Api.Import.Infrastructure
 {
     using Be.Vlaanderen.Basisregisters.Api;
     using Microsoft.AspNetCore.Hosting;

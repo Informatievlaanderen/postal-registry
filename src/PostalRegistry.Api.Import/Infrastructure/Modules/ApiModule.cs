@@ -1,4 +1,4 @@
-namespace PostalRegistry.Api.CrabImport.Infrastructure.Modules
+namespace PostalRegistry.Api.Import.Infrastructure.Modules
 {
     using Autofac;
     using Autofac.Extensions.DependencyInjection;

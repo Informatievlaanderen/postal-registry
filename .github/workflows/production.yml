@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        services: ['postal-api', 'postal-projections', 'postal-producer', 'postal-producer-snapshot-oslo']
+        services: ['postal-api', 'postal-import-api', 'postal-projections', 'postal-producer', 'postal-producer-snapshot-oslo']
     steps:
     - name: CD
       env:

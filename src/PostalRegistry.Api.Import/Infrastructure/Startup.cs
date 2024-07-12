@@ -1,4 +1,4 @@
-namespace PostalRegistry.Api.CrabImport.Infrastructure
+namespace PostalRegistry.Api.Import.Infrastructure
 {
     using System;
     using System.Linq;
@@ -135,12 +135,12 @@ namespace PostalRegistry.Api.CrabImport.Infrastructure
                         Info = groupName => $"Basisregisters.Vlaanderen - Postal Information Registry API {groupName}",
                         CSharpClientOptions =
                         {
-                            ClassName = "PostalRegistryCrabImport",
+                            ClassName = "PostalRegistryImport",
                             Namespace = "Be.Vlaanderen.Basisregisters"
                         },
                         TypeScriptClientOptions =
                         {
-                            ClassName = "PostalRegistryCrabImport"
+                            ClassName = "PostalRegistryImport"
                         }
                     },
                     Server =
