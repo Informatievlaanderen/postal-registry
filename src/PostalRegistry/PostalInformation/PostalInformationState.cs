@@ -8,11 +8,12 @@ namespace PostalRegistry.PostalInformation
 
     public partial class PostalInformation
     {
-        public PostalCode? PostalCode { get; private set; }
+        public PostalCode PostalCode { get; private set; }
         private PostalInformationStatus? _status;
 
         private readonly List<PostalName> _postalNames = new List<PostalName>();
 
+        public NisCode? NisCode { get; set; }
         public Modification LastModification { get; private set; }
 
         public PostalInformation()
@@ -23,6 +24,7 @@ namespace PostalRegistry.PostalInformation
             Register<PostalInformationPostalNameWasAdded>(When);
             Register<PostalInformationPostalNameWasRemoved>(When);
             Register<MunicipalityWasAttached>(When);
+            Register<MunicipalityWasRelinked>(When);
 
             Register<PostalInformationWasImportedFromBPost>(@event => WhenCrabEventApplied());
             Register<PostalInformationWasImportedFromCrab>(@event => WhenCrabEventApplied());
@@ -69,7 +71,12 @@ namespace PostalRegistry.PostalInformation
 
         private void When(MunicipalityWasAttached @event)
         {
-            _ = new NisCode(@event.NisCode);
+            NisCode = new NisCode(@event.NisCode);
+        }
+
+        private void When(MunicipalityWasRelinked @event)
+        {
+            NisCode = new NisCode(@event.NewNisCode);
         }
     }
 }

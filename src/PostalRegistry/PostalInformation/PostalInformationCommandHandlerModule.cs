@@ -6,6 +6,7 @@ namespace PostalRegistry.PostalInformation
     using Be.Vlaanderen.Basisregisters.CommandHandling.SqlStreamStore;
     using Be.Vlaanderen.Basisregisters.EventHandling;
     using Be.Vlaanderen.Basisregisters.GrAr.Provenance;
+    using Commands;
     using Commands.BPost;
     using Commands.Crab;
     using SqlStreamStore;
@@ -19,7 +20,8 @@ namespace PostalRegistry.PostalInformation
             EventMapping eventMapping,
             EventSerializer eventSerializer,
             BPostPostalInformationProvenanceFactory bpostProvenanceFactory,
-            CrabPostalInformationProvenanceFactory crabProvenanceFactory)
+            CrabPostalInformationProvenanceFactory crabProvenanceFactory,
+            PostalInformationProvenanceFactory postalInformationProvenanceFactory)
         {
             For<ImportPostalInformationFromBPost>()
                 .AddSqlStreamStore(getStreamStore, getUnitOfWork, eventMapping, eventSerializer)
@@ -47,27 +49,38 @@ namespace PostalRegistry.PostalInformation
             For<ImportPostalInformationFromCrab>()
                 .AddSqlStreamStore(getStreamStore, getUnitOfWork, eventMapping, eventSerializer)
                 .AddProvenance(getUnitOfWork, crabProvenanceFactory)
-                .Handle(async (mesage, ct) =>
+                .Handle(async (message, ct) =>
                 {
                     // need to use the subcanton => in crab postcode = 1030, subcanton = 1031
                     // in bpost postcode = 1031
-                    var postalCode = new PostalCode(mesage.Command.SubCantonCode);
+                    var postalCode = new PostalCode(message.Command.SubCantonCode);
                     var postalInformation = await getPostalInformationSet().GetOptionalAsync(postalCode, ct);
 
                     if (!postalInformation.HasValue) // Crab has possible outdated postalcodes
                         return;
 
                     postalInformation.Value.ImportPostalInformationFromCrab(
-                        mesage.Command.PostalCode,
-                        mesage.Command.SubCantonId,
-                        mesage.Command.SubCantonCode,
-                        mesage.Command.NisCode,
-                        mesage.Command.MunicipalityName,
-                        mesage.Command.Lifetime,
-                        mesage.Command.Timestamp,
-                        mesage.Command.Operator,
-                        mesage.Command.Modification,
-                        mesage.Command.Organisation);
+                        message.Command.PostalCode,
+                        message.Command.SubCantonId,
+                        message.Command.SubCantonCode,
+                        message.Command.NisCode,
+                        message.Command.MunicipalityName,
+                        message.Command.Lifetime,
+                        message.Command.Timestamp,
+                        message.Command.Operator,
+                        message.Command.Modification,
+                        message.Command.Organisation);
+                });
+
+            For<RelinkMunicipality>()
+                .AddSqlStreamStore(getStreamStore, getUnitOfWork, eventMapping, eventSerializer)
+                .AddProvenance(getUnitOfWork, postalInformationProvenanceFactory)
+                .Handle(async (message, ct) =>
+                {
+                    var postalCode = new PostalCode(message.Command.PostalCode);
+                    var postalInformation = await getPostalInformationSet().GetAsync(postalCode, ct);
+
+                    postalInformation.RelinkMunicipality(message.Command.NewNisCode);
                 });
         }
     }

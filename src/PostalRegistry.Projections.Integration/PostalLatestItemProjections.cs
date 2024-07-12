@@ -43,6 +43,18 @@
                     ct);
             });
 
+            When<Envelope<MunicipalityWasRelinked>>(async (context, message, ct) =>
+            {
+                await context.FindAndUpdatePostal(
+                    message.Message.PostalCode,
+                    postalInformation =>
+                    {
+                        postalInformation.NisCode = message.Message.NewNisCode;
+                        UpdateVersionTimestamp(postalInformation, message.Message.Provenance.Timestamp);
+                    },
+                    ct);
+            });
+
             When<Envelope<PostalInformationWasRealized>>(async (context, message, ct) =>
             {
                 await context.FindAndUpdatePostal(

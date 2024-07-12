@@ -106,6 +106,20 @@ namespace PostalRegistry.Producer.Snapshot.Oslo
                     message.Position,
                     ct);
             });
+
+            When<Envelope<MunicipalityWasRelinked>>(async (_, message, ct) =>
+            {
+                await FindAndProduce(async () =>
+                        await snapshotManager.FindMatchingSnapshot(
+                            message.Message.PostalCode,
+                            message.Message.Provenance.Timestamp,
+                            null,
+                            message.Position,
+                            throwStaleWhenGone: false,
+                            ct),
+                    message.Position,
+                    ct);
+            });
         }
 
         private async Task FindAndProduce(

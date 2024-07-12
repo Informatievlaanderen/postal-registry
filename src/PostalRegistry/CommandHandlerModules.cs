@@ -2,6 +2,7 @@ namespace PostalRegistry
 {
     using Autofac;
     using Be.Vlaanderen.Basisregisters.CommandHandling;
+    using Be.Vlaanderen.Basisregisters.GrAr.Provenance;
     using PostalInformation;
 
     public static class CommandHandlerModules
@@ -14,6 +15,12 @@ namespace PostalRegistry
 
             containerBuilder
                 .RegisterType<CrabPostalInformationProvenanceFactory>()
+                .SingleInstance();
+
+            containerBuilder
+                .RegisterType<PostalInformationProvenanceFactory>()
+                .As<IProvenanceFactory<PostalInformation.PostalInformation>>()
+                .AsSelf()
                 .SingleInstance();
 
             containerBuilder

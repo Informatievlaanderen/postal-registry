@@ -2,6 +2,7 @@
   <Import Project="..\..\packages\Be.Vlaanderen.Basisregisters.Build.Pipeline\Content\Be.Vlaanderen.Basisregisters.Build.Pipeline.Settings.Test.props" />
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\PostalRegistry.Api.Import\PostalRegistry.Api.Import.csproj" />
     <ProjectReference Include="..\..\src\PostalRegistry.Infrastructure\PostalRegistry.Infrastructure.csproj" />
     <ProjectReference Include="..\..\src\PostalRegistry.Projections.Integration\PostalRegistry.Projections.Integration.csproj" />
     <ProjectReference Include="..\..\src\PostalRegistry\PostalRegistry.csproj" />

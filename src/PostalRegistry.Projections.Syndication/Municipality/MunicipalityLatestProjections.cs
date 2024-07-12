@@ -32,6 +32,7 @@ namespace PostalRegistry.Projections.Syndication.Municipality
             When(MunicipalityEvent.MunicipalityGeometryWasCorrectedToCleared, DoNothing);
             When(MunicipalityEvent.MunicipalityBecameCurrent, DoNothing);
             When(MunicipalityEvent.MunicipalityWasRetired, DoNothing);
+            When(MunicipalityEvent.MunicipalityWasMerged, DoNothing);
             When(MunicipalityEvent.MunicipalityWasCorrectedToCurrent, DoNothing);
             When(MunicipalityEvent.MunicipalityWasCorrectedToRetired, DoNothing);
         }
