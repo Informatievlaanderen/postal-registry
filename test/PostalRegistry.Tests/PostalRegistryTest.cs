@@ -5,6 +5,7 @@ namespace PostalRegistry.Tests
     using Be.Vlaanderen.Basisregisters.AggregateSource.Testing;
     using Be.Vlaanderen.Basisregisters.AggregateSource.Testing.Comparers;
     using Be.Vlaanderen.Basisregisters.AggregateSource.Testing.SqlStreamStore.Autofac;
+    using Be.Vlaanderen.Basisregisters.CommandHandling.Idempotency;
     using Be.Vlaanderen.Basisregisters.EventHandling;
     using Be.Vlaanderen.Basisregisters.EventHandling.Autofac;
     using Infrastructure.Modules;
@@ -19,10 +20,19 @@ namespace PostalRegistry.Tests
         protected override void ConfigureCommandHandling(ContainerBuilder builder)
         {
             var configuration = new ConfigurationBuilder()
-                .AddInMemoryCollection(new Dictionary<string, string> { { "ConnectionStrings:Events", "" } })
+                .AddInMemoryCollection(new Dictionary<string, string> { { "ConnectionStrings:Events", "x" } }!)
                 .Build();
 
             builder.RegisterModule(new CommandHandlingModule(configuration));
+
+            builder.Register(_ => new FakeIdempotencyContextFactory().CreateDbContext([]))
+                .As<IdempotencyContext>()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<IdempotentCommandHandler>()
+                .As<IIdempotentCommandHandler>()
+                .AsSelf()
+                .InstancePerLifetimeScope();
         }
 
         protected override void ConfigureEventHandling(ContainerBuilder builder)

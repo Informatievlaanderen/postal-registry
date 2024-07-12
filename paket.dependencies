@@ -64,13 +64,13 @@ nuget Be.Vlaanderen.Basisregisters.Projector 15.0.0
 
 nuget Be.Vlaanderen.Basisregisters.Crab 4.0.0
 
-nuget Be.Vlaanderen.Basisregisters.GrAr.Common 21.0.0
-nuget Be.Vlaanderen.Basisregisters.GrAr.Contracts 21.0.0
-nuget Be.Vlaanderen.Basisregisters.GrAr.Import 21.0.0
-nuget Be.Vlaanderen.Basisregisters.GrAr.Legacy 21.0.0
-nuget Be.Vlaanderen.Basisregisters.GrAr.Oslo 21.0.0
-nuget Be.Vlaanderen.Basisregisters.GrAr.Provenance 21.0.0
-nuget Be.Vlaanderen.Basisregisters.GrAr.Extracts 21.0.0
+nuget Be.Vlaanderen.Basisregisters.GrAr.Common 21.10.0
+nuget Be.Vlaanderen.Basisregisters.GrAr.Contracts 21.10.0
+nuget Be.Vlaanderen.Basisregisters.GrAr.Import 21.10.0
+nuget Be.Vlaanderen.Basisregisters.GrAr.Legacy 21.10.0
+nuget Be.Vlaanderen.Basisregisters.GrAr.Oslo 21.10.0
+nuget Be.Vlaanderen.Basisregisters.GrAr.Provenance 21.10.0
+nuget Be.Vlaanderen.Basisregisters.GrAr.Extracts 21.10.0
 
 nuget Be.Vlaanderen.Basisregisters.MessageHandling.Kafka.Producer 5.0.1
 

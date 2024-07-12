@@ -9,6 +9,7 @@ namespace PostalRegistry.PostalInformation
     using Events;
     using Events.BPost;
     using Events.Crab;
+    using Exceptions;
 
     public partial class PostalInformation : AggregateRootEntity
     {
@@ -77,6 +78,20 @@ namespace PostalRegistry.PostalInformation
                     @operator,
                     modification,
                     organisation));
+        }
+
+        public void RelinkMunicipality(NisCode newNisCode)
+        {
+            if (newNisCode is null)
+                throw new InvalidNisCodeException(newNisCode);
+
+            if(NisCode is null)
+                ApplyChange(new MunicipalityWasAttached(PostalCode, newNisCode));
+
+            if(newNisCode == NisCode!)
+                return;
+
+            ApplyChange(new MunicipalityWasRelinked(PostalCode, newNisCode, NisCode!));
         }
     }
 }

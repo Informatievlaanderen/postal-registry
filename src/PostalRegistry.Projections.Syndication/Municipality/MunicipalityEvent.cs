@@ -15,6 +15,7 @@ namespace PostalRegistry.Projections.Syndication.Municipality
         MunicipalityFacilityLanguageWasRemoved,
 
         MunicipalityWasDrawn,
+        MunicipalityWasMerged,
         MunicipalityGeometryWasCleared,
         MunicipalityGeometryWasCorrected,
         MunicipalityGeometryWasCorrectedToCleared,

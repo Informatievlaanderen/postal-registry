@@ -31,5 +31,8 @@ namespace PostalRegistry.Producer.Extensions
 
         public static Contracts.MunicipalityWasAttached ToContract(this Domain.MunicipalityWasAttached message) =>
             new Contracts.MunicipalityWasAttached(message.PostalCode, message.NisCode, message.Provenance.ToContract());
+
+        public static Contracts.MunicipalityWasRelinked ToContract(this Domain.MunicipalityWasRelinked message) =>
+            new Contracts.MunicipalityWasRelinked(message.PostalCode, message.NewNisCode, message.PreviousNisCode, message.Provenance.ToContract());
     }
 }

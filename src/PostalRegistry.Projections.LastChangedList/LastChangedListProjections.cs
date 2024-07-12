@@ -50,7 +50,16 @@ namespace PostalRegistry.Projections.LastChangedList
                 await GetLastChangedRecordsAndUpdatePosition(message.Message.PostalCode, message.Position, context, ct);
             });
 
-            When<Envelope<MunicipalityWasAttached>>(async (context, message, ct) => await DoNothing());
+            When<Envelope<MunicipalityWasAttached>>(async (context, message, ct) =>
+            {
+                await GetLastChangedRecordsAndUpdatePosition(message.Message.PostalCode, message.Position, context, ct);
+            });
+
+            When<Envelope<MunicipalityWasRelinked>>(async (context, message, ct) =>
+            {
+                await GetLastChangedRecordsAndUpdatePosition(message.Message.PostalCode, message.Position, context, ct);
+            });
+
             When<Envelope<PostalInformationWasImportedFromCrab>>(async (context, message, ct) => await DoNothing());
             When<Envelope<PostalInformationWasImportedFromBPost>>(async (context, message, ct) => await DoNothing());
         }

@@ -52,6 +52,11 @@ namespace PostalRegistry.Producer
             {
                 await Produce(message.Message.PostalCode, message.Message.ToContract(), message.Position, ct);
             });
+
+            When<Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore.Envelope<Domain.MunicipalityWasRelinked>>(async (_, message, ct) =>
+            {
+                await Produce(message.Message.PostalCode, message.Message.ToContract(), message.Position, ct);
+            });
         }
 
         private async Task Produce<T>(
