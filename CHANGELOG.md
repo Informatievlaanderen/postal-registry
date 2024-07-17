@@ -1,3 +1,10 @@
+# [5.2.0](https://github.com/informatievlaanderen/postal-registry/compare/v5.1.0...v5.2.0) (2024-07-17)
+
+
+### Features
+
+* add relink municipality ([6fec88c](https://github.com/informatievlaanderen/postal-registry/commit/6fec88c19a936b210351059ddd2ad78c1dce0934))
+
 # [5.1.0](https://github.com/informatievlaanderen/postal-registry/compare/v5.0.1...v5.1.0) (2024-06-14)
 
 
