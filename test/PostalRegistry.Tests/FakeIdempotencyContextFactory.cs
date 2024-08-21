@@ -13,7 +13,6 @@ namespace PostalRegistry.Tests
             var tableInfo = new IdempotencyTableInfo("dbo");
 
             optionsBuilder.UseInMemoryDatabase(Guid.NewGuid().ToString());
-
             return new IdempotencyContext(optionsBuilder.Options, tableInfo);
         }
     }
