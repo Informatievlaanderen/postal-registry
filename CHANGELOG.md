@@ -1,3 +1,10 @@
+## [5.2.1](https://github.com/informatievlaanderen/postal-registry/compare/v5.2.0...v5.2.1) (2024-08-21)
+
+
+### Bug Fixes
+
+* style to trigger bump ([ee88fb8](https://github.com/informatievlaanderen/postal-registry/commit/ee88fb8f242b40d3e143d161e8b78d5e59f22deb))
+
 # [5.2.0](https://github.com/informatievlaanderen/postal-registry/compare/v5.1.0...v5.2.0) (2024-07-17)
 
 
