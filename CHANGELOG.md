@@ -1,3 +1,10 @@
+# [5.3.0](https://github.com/informatievlaanderen/postal-registry/compare/v5.2.2...v5.3.0) (2024-08-22)
+
+
+### Features
+
+* remove api legacy ([b14c70d](https://github.com/informatievlaanderen/postal-registry/commit/b14c70de84fe22f027448c2cada4e42df112acaf))
+
 ## [5.2.2](https://github.com/informatievlaanderen/postal-registry/compare/v5.2.1...v5.2.2) (2024-08-21)
 
 
