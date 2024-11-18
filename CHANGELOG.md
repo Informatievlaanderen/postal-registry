@@ -1,3 +1,10 @@
+# [5.4.0](https://github.com/informatievlaanderen/postal-registry/compare/v5.3.0...v5.4.0) (2024-11-18)
+
+
+### Features
+
+* bump event-handling + hide events ([7c03275](https://github.com/informatievlaanderen/postal-registry/commit/7c03275df5a98fdd1acfa68546bfee567cae35ff))
+
 # [5.3.0](https://github.com/informatievlaanderen/postal-registry/compare/v5.2.2...v5.3.0) (2024-08-22)
 
 
