@@ -5,6 +5,7 @@ namespace PostalRegistry.PostalInformation.Events.Crab
     using Newtonsoft.Json;
     using NodaTime;
 
+    [HideEvent]
     [EventName("Crab-PostalInformationWasImported")]
     [EventDescription("Er werd postinformatie geïmporteerd uit CRAB.")]
     public class PostalInformationWasImportedFromCrab : IMessage

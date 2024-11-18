@@ -7,6 +7,7 @@ namespace PostalRegistry.PostalInformation.Events.BPost
     using DataStructures.BPost;
     using Newtonsoft.Json;
 
+    [HideEvent]
     [EventName("BPost-PostalInformationWasImported")]
     [EventDescription("Er werd postinformatie geïmporteerd van bpost.")]
     public class PostalInformationWasImportedFromBPost : IHasProvenance, ISetProvenance, IMessage
