@@ -93,5 +93,21 @@ namespace PostalRegistry.PostalInformation
 
             ApplyChange(new MunicipalityWasRelinked(PostalCode, newNisCode, NisCode!));
         }
+
+        public void UpdatePostalNames(
+            IReadOnlyCollection<PostalName> postalNamesToAdd,
+            IReadOnlyCollection<PostalName> postalNamesToRemove)
+        {
+            foreach (var postalName in postalNamesToRemove.Where(_postalNames.Contains))
+                ApplyChange(new PostalInformationPostalNameWasRemoved(PostalCode, postalName));
+
+            foreach (var postalName in postalNamesToAdd)
+            {
+                if(_postalNames.Contains(postalName))
+                   throw new PostalNameAlreadyExistsException(postalName);
+
+                ApplyChange(new PostalInformationPostalNameWasAdded(PostalCode, postalName));
+            }
+        }
     }
 }

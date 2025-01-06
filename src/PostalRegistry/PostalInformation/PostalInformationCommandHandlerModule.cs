@@ -82,6 +82,17 @@ namespace PostalRegistry.PostalInformation
 
                     postalInformation.RelinkMunicipality(message.Command.NewNisCode);
                 });
+
+            For<UpdatePostalNames>()
+                .AddSqlStreamStore(getStreamStore, getUnitOfWork, eventMapping, eventSerializer)
+                .AddProvenance(getUnitOfWork, postalInformationProvenanceFactory)
+                .Handle(async (message, ct) =>
+                {
+                    var postalCode = new PostalCode(message.Command.PostalCode);
+                    var postalInformation = await getPostalInformationSet().GetAsync(postalCode, ct);
+
+                    postalInformation.UpdatePostalNames(message.Command.PostalNamesToAdd, message.Command.PostalNamesToRemove);
+                });
         }
     }
 }

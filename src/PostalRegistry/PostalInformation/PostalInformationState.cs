@@ -8,11 +8,11 @@ namespace PostalRegistry.PostalInformation
 
     public partial class PostalInformation
     {
-        public PostalCode PostalCode { get; private set; }
         private PostalInformationStatus? _status;
-
         private readonly List<PostalName> _postalNames = new List<PostalName>();
 
+        public PostalCode PostalCode { get; private set; }
+        public IReadOnlyCollection<PostalName> PostalNames => _postalNames.AsReadOnly();
         public NisCode? NisCode { get; set; }
         public Modification LastModification { get; private set; }
 
