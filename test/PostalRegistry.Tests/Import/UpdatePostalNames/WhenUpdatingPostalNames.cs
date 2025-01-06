@@ -1,18 +1,21 @@
-﻿namespace PostalRegistry.Tests.Import.RelinkMunicipality
+﻿namespace PostalRegistry.Tests.Import.UpdatePostalNames
 {
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using Api.Import;
-    using Api.Import.Relink;
+    using Api.Import.UpdatePostalNames;
     using Autofac;
     using AutoFixture;
     using Be.Vlaanderen.Basisregisters.Api.Exceptions;
     using Be.Vlaanderen.Basisregisters.CommandHandling.Idempotency;
     using Be.Vlaanderen.Basisregisters.Crab;
+    using Be.Vlaanderen.Basisregisters.GrAr.Legacy;
+    using Be.Vlaanderen.Basisregisters.GrAr.Legacy.PostInfo;
     using FluentAssertions;
-    using FluentValidation;
     using global::AutoFixture;
-    using Newtonsoft.Json;
     using PostalInformation.Commands.BPost;
     using PostalInformation.Commands.Crab;
     using PostalInformation.Events;
@@ -21,27 +24,26 @@
     using Xunit;
     using Xunit.Abstractions;
 
-    public sealed class WhenRelinkingMunicipality : ImportApiTest
+    public sealed class WhenUpdatingPostalNames : ImportApiTest
     {
         private readonly PostalInformationController _controller;
         private readonly Fixture _fixture;
 
-        public WhenRelinkingMunicipality(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        public WhenUpdatingPostalNames(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
             _controller = CreateMergerControllerWithUser<PostalInformationController>();
             _fixture = new Fixture();
             _fixture.Customize(new InfrastructureCustomization());
             _fixture.Customize(new WithFixedPostalCode());
-            _fixture.Customize(new WithIntegerNisCode());
         }
 
         [Fact]
         public void GivenInvalidRequest_ThenValidationErrorIsThrown()
         {
-            var act = async () => await _controller.RelinkMunicipality(
+            var act = async () => await _controller.UpdatePostalNames(
                 "9000",
-                new RelinkMunicipalityRequest(),
-                new RelinkMunicipalityRequestValidator(),
+                new UpdatePostalNamesRequest(),
+                new UpdatePostalNamesRequestValidator(),
                 Container.Resolve<IIdempotentCommandHandler>(),
                 CancellationToken.None);
 
@@ -54,10 +56,10 @@
         public void GivenPostalCodeDoesNotExist_ThenApiExceptionIsThrown()
         {
             var act = async () =>
-                await _controller.RelinkMunicipality(
+                await _controller.UpdatePostalNames(
                     "9000",
-                    new RelinkMunicipalityRequest { NewNisCode = "10001" },
-                    new RelinkMunicipalityRequestValidator(),
+                    new UpdatePostalNamesRequest { PostalNamesToAdd = new List<Postnaam>{_fixture.Create<Postnaam>()}},
+                    new UpdatePostalNamesRequestValidator(),
                     Container.Resolve<IIdempotentCommandHandler>(),
                     CancellationToken.None);
 
@@ -69,32 +71,46 @@
         }
 
         [Fact]
-        public async Task GivenValidRequest_ThenMunicipalityIsRelinked()
+        public async Task GivenValidRequest_ThenPostalNamesAreUpdated()
         {
+            //Arrange
+            _fixture.Register(() => Language.Dutch);
             var importPostalInformationFromBPost = _fixture.Create<ImportPostalInformationFromBPost>();
             DispatchArrangeCommand(importPostalInformationFromBPost, () => importPostalInformationFromBPost.CreateCommandId());
 
             var importPostalInformationFromCrab = _fixture.Create<ImportPostalInformationFromCrab>()
                 .WithSubCantonCode(new CrabSubCantonCode(importPostalInformationFromBPost.PostalCode));
-
             DispatchArrangeCommand(importPostalInformationFromCrab, () => importPostalInformationFromCrab.CreateCommandId());
 
-            await _controller.RelinkMunicipality(
+            var updatePostalNamesRequest = new UpdatePostalNamesRequest
+            {
+                PostalCode = importPostalInformationFromCrab.PostalCode,
+                PostalNamesToRemove = new List<Postnaam>
+                {
+                    new Postnaam(new GeografischeNaam(importPostalInformationFromBPost.PostalNames[0].Name, Taal.NL))
+                },
+                PostalNamesToAdd = new List<Postnaam>
+                {
+                    new Postnaam(new GeografischeNaam("Ghent", Taal.FR))
+                }
+            };
+
+            //Act
+            await _controller.UpdatePostalNames(
                 importPostalInformationFromCrab.PostalCode,
-                new RelinkMunicipalityRequest { NewNisCode = "10001" },
-                new RelinkMunicipalityRequestValidator(),
+                updatePostalNamesRequest,
+                new UpdatePostalNamesRequestValidator(),
                 Container.Resolve<IIdempotentCommandHandler>(),
                 CancellationToken.None);
 
+            //Assert
             var streamStore = Container.Resolve<IStreamStore>();
 
-            var newMessages = await streamStore.ReadStreamBackwards(new StreamId(importPostalInformationFromBPost.PostalCode), 8, 1);
-            newMessages.Messages.Length.Should().Be(1);
-            newMessages.Messages[0].Type.Should().Be(nameof(MunicipalityWasRelinked));
-            var municipalityWasRelinked = JsonConvert.DeserializeObject<MunicipalityWasRelinked>(await newMessages.Messages[0].GetJsonData(), EventsJsonSerializerSettings);
-            municipalityWasRelinked.Should().NotBeNull();
-            municipalityWasRelinked.NewNisCode.Should().Be("10001");
-            municipalityWasRelinked.PreviousNisCode.Should().Be(importPostalInformationFromCrab.NisCode);
+            var newMessages = await streamStore.ReadStreamBackwards(new StreamId(importPostalInformationFromBPost.PostalCode), 9, 2);
+            newMessages.Messages.Length.Should().Be(2);
+            var messages = newMessages.Messages.Reverse().ToList();
+            messages[0].Type.Should().Be(nameof(PostalInformationPostalNameWasRemoved));
+            messages[1].Type.Should().Be(nameof(PostalInformationPostalNameWasAdded));
         }
     }
 }

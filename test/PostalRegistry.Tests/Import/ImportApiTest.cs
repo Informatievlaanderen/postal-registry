@@ -3,7 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Security.Claims;
+    using Autofac;
     using Be.Vlaanderen.Basisregisters.Api;
+    using Be.Vlaanderen.Basisregisters.CommandHandling;
     using Be.Vlaanderen.Basisregisters.EventHandling;
     using Microsoft.AspNetCore.Http;
     using Newtonsoft.Json;
@@ -35,6 +37,13 @@
             }
 
             throw new Exception("Could not find controller type");
+        }
+
+        protected void DispatchArrangeCommand<T>(T command, Func<Guid> createCommandId)
+        {
+            using var scope = Container.BeginLifetimeScope();
+            var bus = scope.Resolve<ICommandHandlerResolver>();
+            bus.Dispatch(createCommandId(), command).GetAwaiter().GetResult();
         }
     }
 }

@@ -2,6 +2,7 @@ Be.Vlaanderen.Basisregisters.Api
 Be.Vlaanderen.Basisregisters.CommandHandling.Idempotency
 Be.Vlaanderen.Basisregisters.EventHandling.Autofac
 Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore.Autofac
+Be.Vlaanderen.Basisregisters.GrAr.Legacy
 
 AspNetCore.HealthChecks.SqlServer
 
