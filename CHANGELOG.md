@@ -1,3 +1,11 @@
+# [5.5.0](https://github.com/informatievlaanderen/postal-registry/compare/v5.4.0...v5.5.0) (2025-01-07)
+
+
+### Features
+
+* remove old importers ([d5d74ba](https://github.com/informatievlaanderen/postal-registry/commit/d5d74ba21930f89e5ccdad3de1599bc24e0d6900))
+* update postalnames ([64290ae](https://github.com/informatievlaanderen/postal-registry/commit/64290ae0a3b4ad3457a204a94a32e43222ac004f))
+
 # [5.4.0](https://github.com/informatievlaanderen/postal-registry/compare/v5.3.0...v5.4.0) (2024-11-18)
 
 
