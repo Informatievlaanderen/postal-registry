@@ -4,6 +4,7 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector;
+    using Microsoft.EntityFrameworkCore;
 
     public static class PostalLatestItemExtensions
     {
@@ -14,7 +15,8 @@
             {
                 var postalItem = await context
                     .PostalLatestItems
-                    .FindAsync(postalCode, cancellationToken: ct);
+                    .Include(x=> x.PostalNames)
+                    .SingleOrDefaultAsync(x => x.PostalCode == postalCode, cancellationToken: ct);
 
                 if (postalItem == null)
                     throw DatabaseItemNotFound(postalCode);
