@@ -1,3 +1,10 @@
+## [5.5.1](https://github.com/informatievlaanderen/postal-registry/compare/v5.5.0...v5.5.1) (2025-01-07)
+
+
+### Bug Fixes
+
+* **projections:** include postalnames when retrieving postalinformation ([7070704](https://github.com/informatievlaanderen/postal-registry/commit/707070425f79b62888c194fa990843803c46ce34))
+
 # [5.5.0](https://github.com/informatievlaanderen/postal-registry/compare/v5.4.0...v5.5.0) (2025-01-07)
 
 
