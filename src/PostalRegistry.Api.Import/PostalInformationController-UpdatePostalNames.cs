@@ -63,7 +63,7 @@
                 case Taal.EN:
                     return new PostalName(postnaam.GeografischeNaam.Spelling, Language.English);
                 default:
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException(nameof(postnaam.GeografischeNaam.Taal), postnaam.GeografischeNaam.Taal, null);
             }
         }
     }
