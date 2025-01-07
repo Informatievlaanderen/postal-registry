@@ -4,6 +4,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformation
     using System.Threading;
     using System.Threading.Tasks;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector;
+    using Microsoft.EntityFrameworkCore;
 
     public static class PostalInformationExtensions
     {
@@ -15,7 +16,8 @@ namespace PostalRegistry.Projections.Legacy.PostalInformation
         {
             var postalInformation = await context
                 .PostalInformation
-                .FindAsync(postalCode, cancellationToken: ct);
+                .Include(p => p.PostalNames)
+                .SingleOrDefaultAsync(x => x.PostalCode == postalCode, cancellationToken: ct);
 
             if (postalInformation == null)
                 throw DatabaseItemNotFound(postalCode);
