@@ -1,3 +1,5 @@
+## [5.5.2](https://github.com/informatievlaanderen/postal-registry/compare/v5.5.1...v5.5.2) (2025-01-16)
+
 ## [5.5.1](https://github.com/informatievlaanderen/postal-registry/compare/v5.5.0...v5.5.1) (2025-01-07)
 
 
