@@ -6,7 +6,9 @@ namespace PostalRegistry.Producer.Ldes
 
     public class ProducerContext : RunnerDbContext<ProducerContext>
     {
-        public override string ProjectionStateSchema => Schema.ProducerSnapshotOslo;
+        public override string ProjectionStateSchema => Schema.ProducerLdes;
+
+        public DbSet<PostalInformationDetail> PostalInformations => Set<PostalInformationDetail>();
 
         // This needs to be here to please EF
         public ProducerContext() { }

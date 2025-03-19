@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("Basisregisters Vlaanderen")]
 [assembly: AssemblyCopyright("Copyright (c) Vlaamse overheid")]
 [assembly: AssemblyCompany("Vlaamse overheid")]
-[assembly: AssemblyDescription("PostalRegistry Producer Snapshot Oslo")]
+[assembly: AssemblyDescription("PostalRegistry Producer Ldes")]
 
 [assembly: ComVisible(false)]
-[assembly: Guid("d6231c7c-7868-447a-a3f0-82c8840094f4")]
+[assembly: Guid("a83ebfc4-988a-4a9c-8ae2-747e2d57a4a4")]

@@ -3,10 +3,9 @@ namespace PostalRegistry.Producer.Ldes.Infrastructure.Modules
     using System;
     using Autofac;
     using Autofac.Extensions.DependencyInjection;
-    using Be.Vlaanderen.Basisregisters.Api.Exceptions;
+    using Be.Vlaanderen.Basisregisters.AspNetCore.Mvc.Formatters.Json;
     using Be.Vlaanderen.Basisregisters.EventHandling;
     using Be.Vlaanderen.Basisregisters.EventHandling.Autofac;
-    using Be.Vlaanderen.Basisregisters.GrAr.Oslo.SnapshotProducer;
     using Be.Vlaanderen.Basisregisters.MessageHandling.Kafka;
     using Be.Vlaanderen.Basisregisters.MessageHandling.Kafka.Producer;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner.SqlServer.MigrationExtensions;
@@ -18,6 +17,7 @@ namespace PostalRegistry.Producer.Ldes.Infrastructure.Modules
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
+    using Newtonsoft.Json;
     using PostalRegistry.Infrastructure;
 
     public class ProducerModule : Module
@@ -40,10 +40,6 @@ namespace PostalRegistry.Producer.Ldes.Infrastructure.Modules
         {
             RegisterProjectionSetup(builder);
 
-            builder
-                .RegisterType<ProblemDetailsHelper>()
-                .AsSelf();
-
             builder.Populate(_services);
         }
 
@@ -58,15 +54,13 @@ namespace PostalRegistry.Producer.Ldes.Infrastructure.Modules
                 .RegisterEventstreamModule(_configuration)
                 .RegisterModule(new ProjectorModule(_configuration));
 
-            _services.AddOsloProxy(_configuration["OsloApiUrl"]);
-
             RegisterProjections(builder);
         }
 
         private void RegisterProjections(ContainerBuilder builder)
         {
             var logger = _loggerFactory.CreateLogger<ProducerModule>();
-            var connectionString = _configuration.GetConnectionString("ProducerProjections");
+            var connectionString = _configuration.GetConnectionString("ProducerLdesProjections");
 
             var hasConnectionString = !string.IsNullOrWhiteSpace(connectionString);
             if (hasConnectionString)
@@ -84,7 +78,7 @@ namespace PostalRegistry.Producer.Ldes.Infrastructure.Modules
                 "\tSchema: {Schema}" +
                 Environment.NewLine +
                 "\tTableName: {TableName}",
-                nameof(ProducerContext), Schema.ProducerSnapshotOslo, MigrationTables.ProducerSnapshotOslo);
+                nameof(ProducerContext), Schema.ProducerLdes, MigrationTables.ProducerLdes);
 
             var connectedProjectionSettings = ConnectedProjectionSettings.Configure(x =>
             {
@@ -98,30 +92,29 @@ namespace PostalRegistry.Producer.Ldes.Infrastructure.Modules
                     _loggerFactory)
                 .RegisterProjections<ProducerProjections, ProducerContext>(c =>
                     {
-                        var bootstrapServers = _configuration["Kafka:BootstrapServers"];
-                        var topic = $"{_configuration[ProducerProjections.TopicKey]}" ?? throw new ArgumentException($"Configuration has no value for {ProducerProjections.TopicKey}");
+                        var osloNamespace = _configuration["OsloNamespace"]!.TrimEnd('/');
+
+                        var bootstrapServers = _configuration["Kafka:BootstrapServers"]!;
+                        var topic = _configuration[ProducerProjections.TopicKey]
+                                    ?? throw new ArgumentException($"Configuration has no value for {ProducerProjections.TopicKey}");
                         var producerOptions = new ProducerOptions(
                                 new BootstrapServers(bootstrapServers),
                                 new Topic(topic),
-                                true,
+                                useSinglePartition: false,
                                 EventsJsonSerializerSettingsProvider.CreateSerializerSettings())
                             .ConfigureEnableIdempotence();
                         if (!string.IsNullOrEmpty(_configuration["Kafka:SaslUserName"])
                             && !string.IsNullOrEmpty(_configuration["Kafka:SaslPassword"]))
                         {
                             producerOptions.ConfigureSaslAuthentication(new SaslAuthentication(
-                                _configuration["Kafka:SaslUserName"],
-                                _configuration["Kafka:SaslPassword"]));
+                                _configuration["Kafka:SaslUserName"]!,
+                                _configuration["Kafka:SaslPassword"]!));
                         }
 
                         return new ProducerProjections(
                             new Producer(producerOptions),
-                            new SnapshotManager(
-                                c.Resolve<ILoggerFactory>(),
-                                c.Resolve<IOsloProxy>(),
-                                SnapshotManagerOptions.Create(
-                                    _configuration["RetryPolicy:MaxRetryWaitIntervalSeconds"],
-                                    _configuration["RetryPolicy:RetryBackoffFactor"])));
+                            osloNamespace,
+                            new JsonSerializerSettings().ConfigureDefaultForApi());
                     },
                     connectedProjectionSettings);
         }
@@ -137,7 +130,7 @@ namespace PostalRegistry.Producer.Ldes.Infrastructure.Modules
                     .UseSqlServer(backofficeProjectionsConnectionString, sqlServerOptions =>
                     {
                         sqlServerOptions.EnableRetryOnFailure();
-                        sqlServerOptions.MigrationsHistoryTable(MigrationTables.ProducerSnapshotOslo, Schema.ProducerSnapshotOslo);
+                        sqlServerOptions.MigrationsHistoryTable(MigrationTables.ProducerLdes, Schema.ProducerLdes);
                     })
                     .UseExtendedSqlServerMigrations());
         }
@@ -150,7 +143,7 @@ namespace PostalRegistry.Producer.Ldes.Infrastructure.Modules
             services
                 .AddDbContext<ProducerContext>(options => options
                     .UseLoggerFactory(loggerFactory)
-                    .UseInMemoryDatabase(Guid.NewGuid().ToString(), sqlServerOptions => { }));
+                    .UseInMemoryDatabase(Guid.NewGuid().ToString(), _ => { }));
 
             logger.LogWarning("Running InMemory for {Context}!", nameof(ProducerContext));
         }

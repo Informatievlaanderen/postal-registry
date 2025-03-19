@@ -105,7 +105,7 @@ namespace PostalRegistry.Producer.Ldes.Infrastructure
                     builder.RegisterModule(new ProducerModule(hostContext.Configuration, services, loggerFactory));
 
                     builder
-                        .RegisterType<SnapshotProducer>()
+                        .RegisterType<LdesProducer>()
                         .As<IHostedService>()
                         .SingleInstance();
 

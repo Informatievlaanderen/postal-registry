@@ -160,6 +160,21 @@ jobs:
       dotnet-version: ${{ vars.VBR_DOTNET_VERSION_8 }}
     secrets: inherit
 
+  build-producer-ldes:
+    name: Build Producer Ldes
+    uses: Informatievlaanderen/build-pipeline/.github/workflows/build-image.yml@main
+    needs: [ set-release-version ]
+    if: ${{ (github.repository_owner == 'Informatievlaanderen') && (needs.set-release-version.outputs.version != 'none') }}
+    with:
+      registry: ${{ vars.VBR_DEVOPS_DOCKER_REGISTRY }}/postal-registry
+      image-file: pr-producer-ldes-image.tar
+      image-name: producer-ldes
+      test-project: PostalRegistry.Tests
+      build-project: PostalRegistry.Producer.Ldes
+      semver: ${{ needs.set-release-version.outputs.version }}
+      dotnet-version: ${{ vars.VBR_DOTNET_VERSION_8 }}
+    secrets: inherit
+
   pack-api-oslo:
     name: Pack Api Oslo
     uses: Informatievlaanderen/build-pipeline/.github/workflows/pack.yml@main
@@ -199,7 +214,9 @@ jobs:
       build-projector,
       build-projections-syndication,
       build-producer,
-      build-producer-snapshot-oslo ]
+      build-producer-snapshot-oslo,
+      build-producer-ldes
+    ]
     outputs:
       version: ${{ steps.set-version.outputs.version }}
     steps:
@@ -400,7 +417,16 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        image: ['api-oslo', 'api-import', 'api-extract', 'projections-syndication', 'projector', 'producer', 'producer-snapshot-oslo']
+        image: [
+          'api-oslo',
+          'api-import',
+          'api-extract',
+          'projections-syndication',
+          'projector',
+          'producer',
+          'producer-snapshot-oslo',
+          'producer-ldes'
+        ]
     steps:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4.0.2
@@ -469,7 +495,14 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        services: ['postal-api', 'postal-import-api', 'postal-projections', 'postal-producer', 'postal-producer-snapshot-oslo']
+        services: [
+          'postal-api',
+          'postal-import-api',
+          'postal-projections',
+          'postal-producer',
+          'postal-producer-snapshot-oslo',
+          'postal-producer-ldes'
+        ]
 
     steps:
     - name: Deploy services
@@ -546,7 +579,14 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        services: ['postal-api', 'postal-import-api', 'postal-projections', 'postal-producer', 'postal-producer-snapshot-oslo']
+        services: [
+          'postal-api',
+          'postal-import-api',
+          'postal-projections',
+          'postal-producer',
+          'postal-producer-snapshot-oslo',
+          'postal-producer-ldes'
+        ]
 
     steps:
     - name: Deploy services

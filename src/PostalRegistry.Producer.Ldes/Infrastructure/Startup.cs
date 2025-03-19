@@ -17,7 +17,7 @@ namespace PostalRegistry.Producer.Ldes.Infrastructure
             app.UseHealthChecks("/health");
 
             var configuration = app.ApplicationServices.GetRequiredService<IConfiguration>();
-            var baseUri = configuration.GetValue<string>("BaseUrl").TrimEnd('/');
+            var baseUri = configuration.GetValue<string>("BaseUrl")!.TrimEnd('/');
             app.UseProjectorEndpoints(baseUri, new JsonSerializerSettings().ConfigureDefaultForApi());
         }
     }
