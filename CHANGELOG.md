@@ -1,3 +1,10 @@
+# [5.6.0](https://github.com/informatievlaanderen/postal-registry/compare/v5.5.2...v5.6.0) (2025-03-24)
+
+
+### Features
+
+* GAWR-6786 add Ldes Producer ([43b6af7](https://github.com/informatievlaanderen/postal-registry/commit/43b6af7563586f7413f02b6bdefc82e272215173))
+
 ## [5.5.2](https://github.com/informatievlaanderen/postal-registry/compare/v5.5.1...v5.5.2) (2025-01-16)
 
 ## [5.5.1](https://github.com/informatievlaanderen/postal-registry/compare/v5.5.0...v5.5.1) (2025-01-07)
