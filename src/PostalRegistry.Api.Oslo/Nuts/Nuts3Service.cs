@@ -11,7 +11,7 @@
 
     public sealed class Nuts3Service
     {
-        private const string Nuts3FileName = "nuts3_postal_v1.csv";
+        private const string Nuts3FileName = "nuts3_postal_2024.csv";
         private readonly List<Nuts3Record> _nuts3Records = new List<Nuts3Record>();
 
         public Nuts3Service()
