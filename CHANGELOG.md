@@ -1,3 +1,10 @@
+## [5.6.1](https://github.com/informatievlaanderen/postal-registry/compare/v5.6.0...v5.6.1) (2025-04-10)
+
+
+### Bug Fixes
+
+* **oslo:** update NUTS3 codes GAWR-6846 ([#567](https://github.com/informatievlaanderen/postal-registry/issues/567)) ([ba0abd3](https://github.com/informatievlaanderen/postal-registry/commit/ba0abd3153e6fcbf3b21469d4f358718317a8cf9))
+
 # [5.6.0](https://github.com/informatievlaanderen/postal-registry/compare/v5.5.2...v5.6.0) (2025-03-24)
 
 
