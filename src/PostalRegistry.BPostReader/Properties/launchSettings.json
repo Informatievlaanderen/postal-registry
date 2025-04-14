@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "PostalRegistry.BPostReader": {
-      "commandName": "Project",
-      "commandLineArgs": "init -c -l Trace"
-    }
-  }
-}
