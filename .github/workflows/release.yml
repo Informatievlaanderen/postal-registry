@@ -22,7 +22,7 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '20.x'
+        node-version: '22.x'
 
     - name: Node version
       shell: bash
@@ -51,13 +51,12 @@ jobs:
       run: |
         [ ! -f semver ] && echo none > semver
         echo $(cat semver)
-        echo ::set-output name=version::$(cat semver)
-        echo RELEASE_VERSION=$(cat semver) >> $GITHUB_ENV
+        echo "version=$(cat semver)" >> "$GITHUB_OUTPUT"
       shell: bash
 
   build-api-oslo:
     name: Build Api Oslo
-    uses: Informatievlaanderen/build-pipeline/.github/workflows/build-image.yml@main
+    uses: Informatievlaanderen/build-pipeline/.github/workflows/build-image-v2.yml@main
     needs: [ set-release-version ]
     if: ${{ (github.repository_owner == 'Informatievlaanderen') && (needs.set-release-version.outputs.version != 'none') }}
     with:
@@ -67,12 +66,13 @@ jobs:
       test-project: PostalRegistry.Tests
       build-project: PostalRegistry.Api.Oslo
       semver: ${{ needs.set-release-version.outputs.version }}
-      dotnet-version: ${{ vars.VBR_DOTNET_VERSION_8 }}
+      dotnet-version: ${{ vars.VBR_DOTNET_VERSION_9 }}
+      prerestore-script: ./pre-restore.sh
     secrets: inherit
 
   build-api-import:
     name: Build Api Import
-    uses: Informatievlaanderen/build-pipeline/.github/workflows/build-image.yml@main
+    uses: Informatievlaanderen/build-pipeline/.github/workflows/build-image-v2.yml@main
     needs: [ set-release-version ]
     if: ${{ (github.repository_owner == 'Informatievlaanderen') && (needs.set-release-version.outputs.version != 'none') }}
     with:
@@ -82,12 +82,13 @@ jobs:
       test-project: PostalRegistry.Tests
       build-project: PostalRegistry.Api.Import
       semver: ${{ needs.set-release-version.outputs.version }}
-      dotnet-version: ${{ vars.VBR_DOTNET_VERSION_8 }}
+      dotnet-version: ${{ vars.VBR_DOTNET_VERSION_9 }}
+      prerestore-script: ./pre-restore.sh
     secrets: inherit
 
   build-api-extract:
     name: Build Api Extract
-    uses: Informatievlaanderen/build-pipeline/.github/workflows/build-image.yml@main
+    uses: Informatievlaanderen/build-pipeline/.github/workflows/build-image-v2.yml@main
     needs: [ set-release-version ]
     if: ${{ (github.repository_owner == 'Informatievlaanderen') && (needs.set-release-version.outputs.version != 'none') }}
     with:
@@ -97,12 +98,13 @@ jobs:
       test-project: PostalRegistry.Tests
       build-project: PostalRegistry.Api.Extract
       semver: ${{ needs.set-release-version.outputs.version }}
-      dotnet-version: ${{ vars.VBR_DOTNET_VERSION_8 }}
+      dotnet-version: ${{ vars.VBR_DOTNET_VERSION_9 }}
+      prerestore-script: ./pre-restore.sh
     secrets: inherit
 
   build-projector:
     name: Build Projector
-    uses: Informatievlaanderen/build-pipeline/.github/workflows/build-image.yml@main
+    uses: Informatievlaanderen/build-pipeline/.github/workflows/build-image-v2.yml@main
     needs: [ set-release-version ]
     if: ${{ (github.repository_owner == 'Informatievlaanderen') && (needs.set-release-version.outputs.version != 'none') }}
     with:
@@ -112,12 +114,13 @@ jobs:
       test-project: PostalRegistry.Tests
       build-project: PostalRegistry.Projector
       semver: ${{ needs.set-release-version.outputs.version }}
-      dotnet-version: ${{ vars.VBR_DOTNET_VERSION_8 }}
+      dotnet-version: ${{ vars.VBR_DOTNET_VERSION_9 }}
+      prerestore-script: ./pre-restore.sh
     secrets: inherit
 
   build-projections-syndication:
     name: Build Projections Syndication
-    uses: Informatievlaanderen/build-pipeline/.github/workflows/build-image.yml@main
+    uses: Informatievlaanderen/build-pipeline/.github/workflows/build-image-v2.yml@main
     needs: [ set-release-version ]
     if: ${{ (github.repository_owner == 'Informatievlaanderen') && (needs.set-release-version.outputs.version != 'none') }}
     with:
@@ -127,12 +130,13 @@ jobs:
       test-project: PostalRegistry.Tests
       build-project: PostalRegistry.Projections.Syndication
       semver: ${{ needs.set-release-version.outputs.version }}
-      dotnet-version: ${{ vars.VBR_DOTNET_VERSION_8 }}
+      dotnet-version: ${{ vars.VBR_DOTNET_VERSION_9 }}
+      prerestore-script: ./pre-restore.sh
     secrets: inherit
 
   build-producer:
     name: Build Producer
-    uses: Informatievlaanderen/build-pipeline/.github/workflows/build-image.yml@main
+    uses: Informatievlaanderen/build-pipeline/.github/workflows/build-image-v2.yml@main
     needs: [ set-release-version ]
     if: ${{ (github.repository_owner == 'Informatievlaanderen') && (needs.set-release-version.outputs.version != 'none') }}
     with:
@@ -142,12 +146,13 @@ jobs:
       test-project: PostalRegistry.Tests
       build-project: PostalRegistry.Producer
       semver: ${{ needs.set-release-version.outputs.version }}
-      dotnet-version: ${{ vars.VBR_DOTNET_VERSION_8 }}
+      dotnet-version: ${{ vars.VBR_DOTNET_VERSION_9 }}
+      prerestore-script: ./pre-restore.sh
     secrets: inherit
 
   build-producer-snapshot-oslo:
     name: Build Producer Snapshot Oslo
-    uses: Informatievlaanderen/build-pipeline/.github/workflows/build-image.yml@main
+    uses: Informatievlaanderen/build-pipeline/.github/workflows/build-image-v2.yml@main
     needs: [ set-release-version ]
     if: ${{ (github.repository_owner == 'Informatievlaanderen') && (needs.set-release-version.outputs.version != 'none') }}
     with:
@@ -157,12 +162,13 @@ jobs:
       test-project: PostalRegistry.Tests
       build-project: PostalRegistry.Producer.Snapshot.Oslo
       semver: ${{ needs.set-release-version.outputs.version }}
-      dotnet-version: ${{ vars.VBR_DOTNET_VERSION_8 }}
+      dotnet-version: ${{ vars.VBR_DOTNET_VERSION_9 }}
+      prerestore-script: ./pre-restore.sh
     secrets: inherit
 
   build-producer-ldes:
     name: Build Producer Ldes
-    uses: Informatievlaanderen/build-pipeline/.github/workflows/build-image.yml@main
+    uses: Informatievlaanderen/build-pipeline/.github/workflows/build-image-v2.yml@main
     needs: [ set-release-version ]
     if: ${{ (github.repository_owner == 'Informatievlaanderen') && (needs.set-release-version.outputs.version != 'none') }}
     with:
@@ -172,12 +178,13 @@ jobs:
       test-project: PostalRegistry.Tests
       build-project: PostalRegistry.Producer.Ldes
       semver: ${{ needs.set-release-version.outputs.version }}
-      dotnet-version: ${{ vars.VBR_DOTNET_VERSION_8 }}
+      dotnet-version: ${{ vars.VBR_DOTNET_VERSION_9 }}
+      prerestore-script: ./pre-restore.sh
     secrets: inherit
 
   pack-api-oslo:
     name: Pack Api Oslo
-    uses: Informatievlaanderen/build-pipeline/.github/workflows/pack.yml@main
+    uses: Informatievlaanderen/build-pipeline/.github/workflows/pack-v2.yml@main
     needs: [ set-release-version ]
     if: ${{ (github.repository_owner == 'Informatievlaanderen') && (needs.set-release-version.outputs.version != 'none') }}
     with:
@@ -185,12 +192,13 @@ jobs:
       test-project: PostalRegistry.Tests
       build-project: PostalRegistry.Api.Oslo
       semver: ${{ needs.set-release-version.outputs.version }}
-      dotnet-version: ${{ vars.VBR_DOTNET_VERSION_8 }}
+      dotnet-version: ${{ vars.VBR_DOTNET_VERSION_9 }}
+      prerestore-script: ./pre-restore.sh
     secrets: inherit
 
   pack-api-extract:
     name: Pack Api Extract
-    uses: Informatievlaanderen/build-pipeline/.github/workflows/pack.yml@main
+    uses: Informatievlaanderen/build-pipeline/.github/workflows/pack-v2.yml@main
     needs: [ set-release-version ]
     if: ${{ (github.repository_owner == 'Informatievlaanderen') && (needs.set-release-version.outputs.version != 'none') }}
     with:
@@ -198,7 +206,8 @@ jobs:
       test-project: PostalRegistry.Tests
       build-project: PostalRegistry.Api.Extract
       semver: ${{ needs.set-release-version.outputs.version }}
-      dotnet-version: ${{ vars.VBR_DOTNET_VERSION_8 }}
+      dotnet-version: ${{ vars.VBR_DOTNET_VERSION_9 }}
+      prerestore-script: ./pre-restore.sh
     secrets: inherit
 
   release:
@@ -242,7 +251,7 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '20.x'
+        node-version: '22.x'
 
     - name: Setup Python
       uses: actions/setup-python@v5
@@ -304,8 +313,7 @@ jobs:
       run: |
         [ ! -f semver ] && echo none > semver
         echo $(cat semver)
-        echo ::set-output name=version::$(cat semver)
-        echo RELEASE_VERSION=$(cat semver) >> $GITHUB_ENV
+        echo "version=$(cat semver)" >> "$GITHUB_OUTPUT"
       shell: bash
 
   publish_to_nuget:
@@ -321,7 +329,9 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: ${{ vars.VBR_DOTNET_VERSION_8 }}
+        dotnet-version: ${{ vars.VBR_DOTNET_VERSION_9 }}
+        cache: true
+        cache-dependency-path: "**/packages.lock.json"
 
     - name: .NET version
       shell: bash
@@ -362,16 +372,6 @@ jobs:
         run: echo REPOSITORY_NAME=$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $2}' | sed -e "s/:refs//") >> $GITHUB_ENV
         shell: bash
 
-      - name: Cache Paket
-        uses: actions/cache@v4
-        env:
-          cache-name: cache-paket
-        with:
-          path: packages
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('paket.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-
       - name: Cache Python
         uses: actions/cache@v4
         env:
@@ -391,9 +391,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests markdown argparse
 
+      - name: Restore build-pipeline
+        shell: bash
+        run: ./pre-restore.sh
+
       - name: Publish to Confluence
         shell: bash
-        run: ./packages/Be.Vlaanderen.Basisregisters.Build.Pipeline/Content/ci-confluence.sh
+        run: bash ./.build/Be.Vlaanderen.Basisregisters.Build.Pipeline/Content/ci-confluence.sh
         env:
           CONFLUENCE_TITLE: ${{ env.REPOSITORY_NAME }}
           CONFLUENCE_USERNAME: ${{ secrets.VBR_CONFLUENCE_USER }}
@@ -429,7 +433,7 @@ jobs:
         ]
     steps:
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4.0.2
+        uses: aws-actions/configure-aws-credentials@v4.1.0
         with:
           aws-access-key-id: ${{ secrets.VBR_AWS_ACCESS_KEY_ID_DEVOPS }}
           aws-secret-access-key: ${{ secrets.VBR_AWS_SECRET_ACCESS_KEY_DEVOPS }}
@@ -474,19 +478,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Parse repository name
-      run: echo REPOSITORY_NAME=$(echo ""$GITHUB_REPOSITORY"" | awk -F / '{print $2}' | sed -e ""s/:refs//"") >> $GITHUB_ENV
-      shell: bash
-
     - name: Notify deployment started
-      uses: slackapi/slack-github-action@v1.26.0
+      uses: slackapi/slack-github-action@v2
       with:
-        channel-id: '#team-dinosaur-dev'
-        slack-message: Deployment of postal-registry to test has started
-      env:
-        SLACK_BOT_TOKEN: ${{ secrets.VBR_SLACK_BOT_TOKEN }}
-        SLACK_CHANNEL: ${{ secrets.VBR_NOTIFIER_CHANNEL_NAME }}
-        REPOSITORY_NAME: ${{ env.REPOSITORY_NAME }}
+        method: chat.postMessage
+        token: ${{ secrets.VBR_SLACK_BOT_TOKEN }}
+        payload: |
+          channel: '#team-dinosaur-dev'
+          text: 'Deployment of postal-registry to test has started'
 
   deploy_to_test:
     if: github.repository_owner == 'Informatievlaanderen'
@@ -536,19 +535,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Parse repository name
-      run: echo REPOSITORY_NAME=$(echo ""$GITHUB_REPOSITORY"" | awk -F / '{print $2}' | sed -e ""s/:refs//"") >> $GITHUB_ENV
-      shell: bash
-
     - name: Notify deployment finished
-      uses: slackapi/slack-github-action@v1.26.0
+      uses: slackapi/slack-github-action@v2
       with:
-        channel-id: '#team-dinosaur-dev'
-        slack-message: Deployment of postal-registry to test has finished
-      env:
-        SLACK_BOT_TOKEN: ${{ secrets.VBR_SLACK_BOT_TOKEN }}
-        SLACK_CHANNEL: ${{ secrets.VBR_NOTIFIER_CHANNEL_NAME }}
-        REPOSITORY_NAME: ${{ env.REPOSITORY_NAME }}
+        method: chat.postMessage
+        token: ${{ secrets.VBR_SLACK_BOT_TOKEN }}
+        payload: |
+          channel: '#team-dinosaur-dev'
+          text: 'Deployment of postal-registry to test has finished'
 
   deploy_to_staging_start_slack:
     if: github.repository_owner == 'Informatievlaanderen'
@@ -558,19 +552,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Parse repository name
-      run: echo REPOSITORY_NAME=$(echo ""$GITHUB_REPOSITORY"" | awk -F / '{print $2}' | sed -e ""s/:refs//"") >> $GITHUB_ENV
-      shell: bash
-
     - name: Notify deployment started
-      uses: slackapi/slack-github-action@v1.26.0
+      uses: slackapi/slack-github-action@v2
       with:
-        channel-id: '#team-dinosaur-dev'
-        slack-message: Deployment of postal-registry to staging has started
-      env:
-        SLACK_BOT_TOKEN: ${{ secrets.VBR_SLACK_BOT_TOKEN }}
-        SLACK_CHANNEL: ${{ secrets.VBR_NOTIFIER_CHANNEL_NAME }}
-        REPOSITORY_NAME: ${{ env.REPOSITORY_NAME }}
+        method: chat.postMessage
+        token: ${{ secrets.VBR_SLACK_BOT_TOKEN }}
+        payload: |
+          channel: '#team-dinosaur-dev'
+          text: 'Deployment of postal-registry to staging has started'
 
   deploy_to_staging:
     if: github.repository_owner == 'Informatievlaanderen'
@@ -620,16 +609,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Parse repository name
-      run: echo REPOSITORY_NAME=$(echo ""$GITHUB_REPOSITORY"" | awk -F / '{print $2}' | sed -e ""s/:refs//"") >> $GITHUB_ENV
-      shell: bash
-
     - name: Notify deployment finished
-      uses: slackapi/slack-github-action@v1.26.0
+      uses: slackapi/slack-github-action@v2
       with:
-        channel-id: '#team-dinosaur-dev'
-        slack-message: Deployment of postal-registry to staging has finished
-      env:
-        SLACK_BOT_TOKEN: ${{ secrets.VBR_SLACK_BOT_TOKEN }}
-        SLACK_CHANNEL: ${{ secrets.VBR_NOTIFIER_CHANNEL_NAME }}
-        REPOSITORY_NAME: ${{ env.REPOSITORY_NAME }}
+        method: chat.postMessage
+        token: ${{ secrets.VBR_SLACK_BOT_TOKEN }}
+        payload: |
+          channel: '#team-dinosaur-dev'
+          text: 'Deployment of postal-registry to staging has finished'

@@ -17,19 +17,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Parse repository name
-      run: echo REPOSITORY_NAME=$(echo ""$GITHUB_REPOSITORY"" | awk -F / '{print $2}' | sed -e ""s/:refs//"") >> $GITHUB_ENV
-      shell: bash
-
     - name: Notify deployment started
-      uses: slackapi/slack-github-action@v1.25.0
+      uses: slackapi/slack-github-action@v2
       with:
-        channel-id: '#team-dinosaur-dev'
-        slack-message: Deployment of postal-registry to production has started
-      env:
-        SLACK_BOT_TOKEN: ${{ secrets.VBR_SLACK_BOT_TOKEN }}
-        SLACK_CHANNEL: ${{ secrets.VBR_NOTIFIER_CHANNEL_NAME }}
-        REPOSITORY_NAME: ${{ env.REPOSITORY_NAME }}
+        method: chat.postMessage
+        token: ${{ secrets.VBR_SLACK_BOT_TOKEN }}
+        payload: |
+          channel: '#team-dinosaur-dev'
+          text: 'Deployment of postal-registry to production has started'
 
   deploy_to_production:
     needs: [ deploy_to_production_start_slack ]
@@ -75,16 +70,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Parse repository name
-      run: echo REPOSITORY_NAME=$(echo ""$GITHUB_REPOSITORY"" | awk -F / '{print $2}' | sed -e ""s/:refs//"") >> $GITHUB_ENV
-      shell: bash
-
     - name: Notify deployment finished
-      uses: slackapi/slack-github-action@v1.25.0
+      uses: slackapi/slack-github-action@v2
       with:
-        channel-id: '#team-dinosaur-dev'
-        slack-message: Deployment of postal-registry to new production has finished
-      env:
-        SLACK_BOT_TOKEN: ${{ secrets.VBR_SLACK_BOT_TOKEN }}
-        SLACK_CHANNEL: ${{ secrets.VBR_NOTIFIER_CHANNEL_NAME }}
-        REPOSITORY_NAME: ${{ env.REPOSITORY_NAME }}
+        method: chat.postMessage
+        token: ${{ secrets.VBR_SLACK_BOT_TOKEN }}
+        payload: |
+          channel: '#team-dinosaur-dev'
+          text: 'Deployment of postal-registry to new production has finished'

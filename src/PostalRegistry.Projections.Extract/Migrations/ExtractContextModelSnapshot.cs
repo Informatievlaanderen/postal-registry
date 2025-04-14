@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PostalRegistry.Projections.Extract;
 
+#nullable disable
+
 namespace PostalRegistry.Projections.Extract.Migrations
 {
     [DbContext(typeof(ExtractContext))]
@@ -15,9 +17,10 @@ namespace PostalRegistry.Projections.Extract.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.8")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "9.0.4")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner.ProjectionStates.ProjectionStateItem", b =>
                 {
@@ -36,10 +39,9 @@ namespace PostalRegistry.Projections.Extract.Migrations
                     b.Property<long>("Position")
                         .HasColumnType("bigint");
 
-                    b.HasKey("Name")
-                        .HasAnnotation("SqlServer:Clustered", true);
+                    b.HasKey("Name");
 
-                    b.ToTable("ProjectionStates","PostalRegistryExtract");
+                    b.ToTable("ProjectionStates", "PostalRegistryExtract");
                 });
 
             modelBuilder.Entity("PostalRegistry.Projections.Extract.PostalInformationExtract.PostalInformationExtractItem", b =>
@@ -50,13 +52,15 @@ namespace PostalRegistry.Projections.Extract.Migrations
                     b.Property<byte[]>("DbaseRecord")
                         .HasColumnType("varbinary(max)");
 
-                    b.HasKey("PostalCode")
-                        .HasAnnotation("SqlServer:Clustered", false);
+                    b.HasKey("PostalCode");
 
-                    b.HasIndex("PostalCode")
-                        .HasAnnotation("SqlServer:Clustered", true);
+                    SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("PostalCode"), false);
 
-                    b.ToTable("Postal","PostalRegistryExtract");
+                    b.HasIndex("PostalCode");
+
+                    SqlServerIndexBuilderExtensions.IsClustered(b.HasIndex("PostalCode"));
+
+                    b.ToTable("Postal", "PostalRegistryExtract");
                 });
 #pragma warning restore 612, 618
         }

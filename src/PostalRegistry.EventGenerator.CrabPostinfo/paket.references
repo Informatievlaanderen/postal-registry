@@ -1,8 +1,0 @@
-NodaTime
-
-Microsoft.Extensions.Configuration
-Microsoft.Extensions.Configuration.FileExtensions
-Microsoft.Extensions.Configuration.Json
-
-SourceLink.Embed.AllSourceFiles
-SourceLink.Copy.PdbFiles
