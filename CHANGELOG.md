@@ -1,3 +1,15 @@
+# [6.0.0](https://github.com/informatievlaanderen/postal-registry/compare/v5.6.1...v6.0.0) (2025-04-16)
+
+
+### Code Refactoring
+
+* use renovate and nuget + update pipeline ([e8cb258](https://github.com/informatievlaanderen/postal-registry/commit/e8cb2588fc5ae8b613b06c306d59c22056f5d09b))
+
+
+### BREAKING CHANGES
+
+* update to dotnet 9
+
 ## [5.6.1](https://github.com/informatievlaanderen/postal-registry/compare/v5.6.0...v5.6.1) (2025-04-10)
 
 
