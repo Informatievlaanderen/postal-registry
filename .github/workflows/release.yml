@@ -196,27 +196,12 @@ jobs:
       prerestore-script: ./pre-restore.sh
     secrets: inherit
 
-  pack-api-extract:
-    name: Pack Api Extract
-    uses: Informatievlaanderen/build-pipeline/.github/workflows/pack-v2.yml@main
-    needs: [ set-release-version ]
-    if: ${{ (github.repository_owner == 'Informatievlaanderen') && (needs.set-release-version.outputs.version != 'none') }}
-    with:
-      pack-file: Be.Vlaanderen.Basisregisters.PostalRegistry.Api.Extract
-      test-project: PostalRegistry.Tests
-      build-project: PostalRegistry.Api.Extract
-      semver: ${{ needs.set-release-version.outputs.version }}
-      dotnet-version: ${{ vars.VBR_DOTNET_VERSION_9 }}
-      prerestore-script: ./pre-restore.sh
-    secrets: inherit
-
   release:
     if: ${{ (github.repository_owner == 'Informatievlaanderen') && (needs.set-release-version.outputs.version != 'none') }}
     name: Semantic Release
     runs-on: ubuntu-latest
     needs: [ set-release-version,
       pack-api-oslo,
-      pack-api-extract,
       build-api-oslo,
       build-api-extract,
       build-api-import,
@@ -287,13 +272,6 @@ jobs:
         name: nuget-Be.Vlaanderen.Basisregisters.PostalRegistry.Api.Oslo-${{ needs.set-release-version.outputs.version }}
         path: dist/nuget/
 
-    - name: Download NuGet Api Extract
-      uses: actions/download-artifact@v4
-      continue-on-error: false
-      with:
-        name: nuget-Be.Vlaanderen.Basisregisters.PostalRegistry.Api.Extract-${{ needs.set-release-version.outputs.version }}
-        path: dist/nuget/
-
     - name: Run Semantic Release
       shell: bash
       run: npx semantic-release
@@ -343,17 +321,10 @@ jobs:
         name: nuget-Be.Vlaanderen.Basisregisters.PostalRegistry.Api.Oslo-${{ needs.release.outputs.version }}
         path: ~/
 
-    - name: Download NuGet package api-extract
-      uses: actions/download-artifact@v4
-      with:
-        name: nuget-Be.Vlaanderen.Basisregisters.PostalRegistry.Api.Extract-${{ needs.release.outputs.version }}
-        path: ~/
-
     - name: Publish packages to NuGet
       shell: bash
       run: |
         dotnet nuget push ~/Be.Vlaanderen.Basisregisters.PostalRegistry.Api.Oslo.$SEMVER.nupkg --source nuget.org --api-key $NUGET_API_KEY
-        dotnet nuget push ~/Be.Vlaanderen.Basisregisters.PostalRegistry.Api.Extract.$SEMVER.nupkg --source nuget.org --api-key $NUGET_API_KEY
       env:
         SEMVER: ${{  needs.release.outputs.version }}
         WORKSPACE: ${{ github.workspace }}
