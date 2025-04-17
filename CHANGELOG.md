@@ -1,3 +1,10 @@
+## [6.0.1](https://github.com/informatievlaanderen/postal-registry/compare/v6.0.0...v6.0.1) (2025-04-17)
+
+
+### Bug Fixes
+
+* **syndication:** correct open migration ([76e99d6](https://github.com/informatievlaanderen/postal-registry/commit/76e99d650db0e3f6250a6fc7a869ac3607e6c0b0))
+
 # [6.0.0](https://github.com/informatievlaanderen/postal-registry/compare/v5.6.1...v6.0.0) (2025-04-16)
 
 
