@@ -17,10 +17,10 @@ namespace PostalRegistry.Projections.Syndication.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.3")
+                .HasAnnotation("ProductVersion", "9.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner.ProjectionStates.ProjectionStateItem", b =>
                 {
@@ -40,8 +40,6 @@ namespace PostalRegistry.Projections.Syndication.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Name");
-
-                    SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Name"));
 
                     b.ToTable("ProjectionStates", "PostalRegistrySyndication");
                 });
