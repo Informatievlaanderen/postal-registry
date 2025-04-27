@@ -72,7 +72,7 @@
         <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
         <PackageVersion Include="xunit" Version="2.9.3" />
         <PackageVersion Include="xunit.runner.visualstudio" Version="3.0.2" />
-        <PackageVersion Include="FluentAssertions" Version="[7.1.0,8.0.0)" />
+        <PackageVersion Include="FluentAssertions" Version="[7.1.0,8.2.0]" />
         <PackageVersion Include="AutoFixture" Version="4.18.1" />
 
         <PackageVersion Include="SourceLink.Embed.AllSourceFiles" Version="2.8.3" />
