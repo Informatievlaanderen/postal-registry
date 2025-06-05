@@ -14,7 +14,7 @@
         <PackageVersion Include="AspNetCore.HealthChecks.NpgSql" Version="9.0.0" />
 
         <PackageVersion Include="Autofac" Version="8.3.0" />
-        <PackageVersion Include="CsvHelper" Version="33.0.1" />
+        <PackageVersion Include="CsvHelper" Version="33.1.0" />
         <PackageVersion Include="Dapper" Version="2.1.66" />
 
         <PackageVersion Include="Datadog.Trace.Bundle" Version="3.16.0" />
