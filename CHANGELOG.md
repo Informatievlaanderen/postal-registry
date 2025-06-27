@@ -1,3 +1,10 @@
+# [6.1.0](https://github.com/informatievlaanderen/postal-registry/compare/v6.0.1...v6.1.0) (2025-06-27)
+
+
+### Features
+
+* **api:** add hasMunicipality filter GAWR-6975 ([8cae596](https://github.com/informatievlaanderen/postal-registry/commit/8cae5968887e9f235672e4a51a5d40e02494999c))
+
 ## [6.0.1](https://github.com/informatievlaanderen/postal-registry/compare/v6.0.0...v6.0.1) (2025-04-17)
 
 
