@@ -76,6 +76,13 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.Query
                 postalInformationSet = postalInformationSet.Where(x => nuts3PostalCodes.Any(y => y == x.PostalCode));
             }
 
+            if (filtering.Filter.HasMunicipality.HasValue)
+            {
+                postalInformationSet = filtering.Filter.HasMunicipality.Value
+                    ? postalInformationSet.Where(x => x.NisCode != null)
+                    : postalInformationSet.Where(x => x.NisCode == null);
+            }
+
             return postalInformationSet;
         }
     }
@@ -98,5 +105,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.Query
         public string PostalName { get; set; }
 
         public string Nuts3Code { get; set; }
+
+        public bool? HasMunicipality { get; set; }
     }
 }
