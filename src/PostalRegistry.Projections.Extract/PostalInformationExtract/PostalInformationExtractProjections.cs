@@ -67,6 +67,11 @@ namespace PostalRegistry.Projections.Extract.PostalInformationExtract
                     ct);
             });
 
+            When<Envelope<PostalInformationWasRemoved>>(async (context, message, ct) =>
+            {
+                await context.DeletePostalInformationExtract(message.Message.PostalCode, ct);
+            });
+
             When<Envelope<PostalInformationPostalNameWasAdded>>(async (context, message, ct) =>
             {
                 await context.FindAndUpdatePostalInformationExtract(

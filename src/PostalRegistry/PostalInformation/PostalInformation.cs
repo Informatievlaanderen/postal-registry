@@ -109,5 +109,10 @@ namespace PostalRegistry.PostalInformation
                 ApplyChange(new PostalInformationPostalNameWasAdded(PostalCode, postalName));
             }
         }
+
+        public void Delete()
+        {
+            ApplyChange(new PostalInformationWasRemoved(PostalCode));
+        }
     }
 }

@@ -135,6 +135,12 @@ namespace PostalRegistry.Producer.Ldes
                 await Produce(context, message.Message.PostalCode, message.Position, ct);
             });
 
+            When<Envelope<PostalInformationWasRemoved>>(async (context, message, ct) =>
+            {
+                await context.DeletePostalInformationDetail(message.Message.PostalCode, ct);
+                await Produce(context, message.Message.PostalCode, message.Position, ct);
+            });
+
             When<Envelope<MunicipalityWasAttached>>(async (context, message, ct) =>
             {
                 await context.FindAndUpdatePostalInformationDetail(message.Message.PostalCode, postalInformation =>

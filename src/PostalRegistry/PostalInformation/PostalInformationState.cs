@@ -15,6 +15,7 @@ namespace PostalRegistry.PostalInformation
         public IReadOnlyCollection<PostalName> PostalNames => _postalNames.AsReadOnly();
         public NisCode? NisCode { get; set; }
         public Modification LastModification { get; private set; }
+        public bool IsRemoved { get; private set; } = false;
 
         public PostalInformation()
         {
@@ -25,6 +26,7 @@ namespace PostalRegistry.PostalInformation
             Register<PostalInformationPostalNameWasRemoved>(When);
             Register<MunicipalityWasAttached>(When);
             Register<MunicipalityWasRelinked>(When);
+            Register<PostalInformationWasRemoved>(When);
 
             Register<PostalInformationWasImportedFromBPost>(@event => WhenCrabEventApplied());
             Register<PostalInformationWasImportedFromCrab>(@event => WhenCrabEventApplied());
@@ -77,6 +79,11 @@ namespace PostalRegistry.PostalInformation
         private void When(MunicipalityWasRelinked @event)
         {
             NisCode = new NisCode(@event.NewNisCode);
+        }
+
+        private void When(PostalInformationWasRemoved @event)
+        {
+            IsRemoved = true;
         }
     }
 }

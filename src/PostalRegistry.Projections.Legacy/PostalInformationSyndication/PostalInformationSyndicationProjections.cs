@@ -93,6 +93,15 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
                     ct);
             });
 
+            When<Envelope<PostalInformationWasRemoved>>(async (context, message, ct) =>
+            {
+                await context.CreateNewPostalInformationSyndicationItem(
+                    message.Message.PostalCode,
+                    message,
+                    x => x.IsRemoved = true,
+                    ct);
+            });
+
             When<Envelope<PostalInformationWasImportedFromCrab>>(async (context, message, ct) => await DoNothing());
             When<Envelope<PostalInformationWasImportedFromBPost>>(async (context, message, ct) => await DoNothing());
         }
