@@ -57,12 +57,12 @@
         <PackageVersion Include="Be.Vlaanderen.Basisregisters.ProjectionHandling.Syndication" Version="15.0.1" />
         <PackageVersion Include="Be.Vlaanderen.Basisregisters.Projector" Version="16.0.0" />
         <PackageVersion Include="Be.Vlaanderen.Basisregisters.Crab" Version="5.0.1" />
-        <PackageVersion Include="Be.Vlaanderen.Basisregisters.GrAr.Common" Version="22.0.0" />
-        <PackageVersion Include="Be.Vlaanderen.Basisregisters.GrAr.Contracts" Version="22.0.0" />
-        <PackageVersion Include="Be.Vlaanderen.Basisregisters.GrAr.Legacy" Version="22.0.0" />
-        <PackageVersion Include="Be.Vlaanderen.Basisregisters.GrAr.Oslo" Version="22.0.0" />
-        <PackageVersion Include="Be.Vlaanderen.Basisregisters.GrAr.Provenance" Version="22.0.0" />
-        <PackageVersion Include="Be.Vlaanderen.Basisregisters.GrAr.Extracts" Version="22.0.0" />
+        <PackageVersion Include="Be.Vlaanderen.Basisregisters.GrAr.Common" Version="22.1.1" />
+        <PackageVersion Include="Be.Vlaanderen.Basisregisters.GrAr.Contracts" Version="22.1.1" />
+        <PackageVersion Include="Be.Vlaanderen.Basisregisters.GrAr.Legacy" Version="22.1.1" />
+        <PackageVersion Include="Be.Vlaanderen.Basisregisters.GrAr.Oslo" Version="22.1.1" />
+        <PackageVersion Include="Be.Vlaanderen.Basisregisters.GrAr.Provenance" Version="22.1.1" />
+        <PackageVersion Include="Be.Vlaanderen.Basisregisters.GrAr.Extracts" Version="22.1.1" />
         <PackageVersion Include="Be.Vlaanderen.Basisregisters.Shaperon" Version="11.0.0" />
 
         <PackageVersion Include="Structurizr.Core" Version="0.9.7" />

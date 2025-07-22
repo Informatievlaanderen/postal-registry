@@ -13,7 +13,6 @@ namespace PostalRegistry.Projections.LastChangedList
     [ConnectedProjectionDescription("Projectie die markeert voor hoeveel postinfo de gecachte data nog geüpdated moeten worden.")]
     public class LastChangedListProjections : LastChangedListConnectedProjection
     {
-
         private static readonly AcceptType[] SupportedAcceptTypes = { AcceptType.JsonLd };
 
         public LastChangedListProjections()
@@ -62,6 +61,11 @@ namespace PostalRegistry.Projections.LastChangedList
 
             When<Envelope<PostalInformationWasImportedFromCrab>>(async (context, message, ct) => await DoNothing());
             When<Envelope<PostalInformationWasImportedFromBPost>>(async (context, message, ct) => await DoNothing());
+
+            When<Envelope<PostalInformationWasRemoved>>(async (context, message, ct) =>
+            {
+                await GetLastChangedRecordsAndUpdatePosition(message.Message.PostalCode, message.Position, context, ct);
+            });
         }
 
         protected override string BuildCacheKey(AcceptType acceptType, string identifier)

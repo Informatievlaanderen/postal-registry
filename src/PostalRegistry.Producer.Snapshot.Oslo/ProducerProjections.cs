@@ -18,10 +18,12 @@ namespace PostalRegistry.Producer.Snapshot.Oslo
         public const string TopicKey = "Topic";
 
         private readonly IProducer _producer;
+        private readonly string _osloNamespace;
 
-        public ProducerProjections(IProducer producer, ISnapshotManager snapshotManager)
+        public ProducerProjections(IProducer producer, ISnapshotManager snapshotManager, string osloNamespace)
         {
             _producer = producer;
+            _osloNamespace = osloNamespace;
 
             When<Envelope<PostalInformationWasRegistered>>(async (_, message, ct) =>
             {
@@ -91,6 +93,12 @@ namespace PostalRegistry.Producer.Snapshot.Oslo
                         ct),
                     message.Position,
                     ct);
+            });
+
+            When<Envelope<PostalInformationWasRemoved>>(async (_, message, ct) =>
+            {
+                await Produce($"{osloNamespace}/{message.Message.PostalCode}", message.Message.PostalCode, "{}", message.Position, ct);
+
             });
 
             When<Envelope<MunicipalityWasAttached>>(async (_, message, ct) =>

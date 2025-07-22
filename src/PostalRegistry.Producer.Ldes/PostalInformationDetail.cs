@@ -57,6 +57,8 @@
             get => Instant.FromDateTimeOffset(VersionTimestampAsDateTimeOffset);
             set => VersionTimestampAsDateTimeOffset = value.ToDateTimeOffset();
         }
+
+        public bool IsRemoved { get; set; }
     }
 
     public class PostalInformationDetailConfiguration : IEntityTypeConfiguration<PostalInformationDetail>
@@ -91,6 +93,9 @@
             builder.Property(PostalInformationDetail.VersionTimestampBackingPropertyName)
                 .HasColumnName(nameof(PostalInformationDetail.VersionTimestamp));
             builder.Ignore(p => p.VersionTimestamp);
+
+            builder.Property(x => x.IsRemoved)
+                .HasDefaultValue(false);
 
             builder.HasIndex(x => x.NisCode);
         }

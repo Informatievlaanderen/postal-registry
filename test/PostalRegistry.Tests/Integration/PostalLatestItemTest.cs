@@ -157,6 +157,23 @@
                 });
         }
 
+        [Fact]
+        public async Task WhenPostalInformationWasDeleted()
+        {
+            var postalInformationWasDeleted = _fixture.Create<PostalInformationWasRemoved>();
+
+            await Sut
+                .Given(
+                    _fixture.Create<PostalInformationWasRegistered>(),
+                    postalInformationWasDeleted)
+                .Then(async ct =>
+                {
+                    var expectedLatestItem =
+                        await ct.PostalLatestItems.FindAsync(postalInformationWasDeleted.PostalCode);
+                    expectedLatestItem.Should().BeNull();
+                });
+        }
+
         protected override PostalLatestItemProjections CreateProjection()
             => new PostalLatestItemProjections(
                 new OptionsWrapper<IntegrationOptions>(new IntegrationOptions { Namespace = Namespace }));

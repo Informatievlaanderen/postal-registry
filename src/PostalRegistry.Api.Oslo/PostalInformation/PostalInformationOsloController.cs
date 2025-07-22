@@ -79,9 +79,10 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
                 .SingleOrDefaultAsync(item => item.PostalCode == postalCode, cancellationToken);
 
             if (postalInformation == null)
-            {
                 throw new ApiException("Onbestaande postcode.", StatusCodes.Status404NotFound);
-            }
+
+            if (postalInformation.IsRemoved)
+                throw new ApiException("Verwijderde postcode.", StatusCodes.Status410Gone);
 
             var gemeente = await GetPostinfoDetailGemeente(
                 syndicationContext,

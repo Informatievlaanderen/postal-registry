@@ -123,6 +123,11 @@
                     },
                     ct);
             });
+
+            When<Envelope<PostalInformationWasRemoved>>(async (context, message, ct) =>
+            {
+                await context.DeletePostal(message.Message.PostalCode, ct);
+            });
         }
 
         private static void UpdateVersionTimestamp(PostalLatestItem postal, Instant versionTimestamp)

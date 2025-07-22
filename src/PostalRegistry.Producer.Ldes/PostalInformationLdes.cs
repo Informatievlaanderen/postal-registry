@@ -68,7 +68,7 @@
         public PostInfoStatus PostInfoStatus { get; private set; }
 
         [JsonProperty("isVerwijderd", Order = 6)]
-        public bool IsRemoved => false;
+        public bool IsRemoved { get; private set; }
 
         public PostalInformationLdes(PostalInformationDetail postalInformation, string osloNamespace)
         {
@@ -90,6 +90,7 @@
             PostInfoStatus = postalInformation.IsRetired
                 ? PostInfoStatus.Gehistoreerd
                 : PostInfoStatus.Gerealiseerd;
+            IsRemoved = postalInformation.IsRemoved;
         }
     }
 

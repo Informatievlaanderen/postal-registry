@@ -25,6 +25,8 @@ namespace PostalRegistry.Projections.Legacy.PostalInformation
             get => Instant.FromDateTimeOffset(VersionTimestampAsDateTimeOffset);
             set => VersionTimestampAsDateTimeOffset = value.ToDateTimeOffset();
         }
+
+        public bool IsRemoved { get; set; }
     }
 
     public class PostalInformationConfiguration : IEntityTypeConfiguration<PostalInformation>
@@ -40,6 +42,8 @@ namespace PostalRegistry.Projections.Legacy.PostalInformation
             builder.Property(p => p.NisCode);
 
             builder.Property(p => p.IsRetired);
+            builder.Property(p => p.IsRemoved)
+                .HasDefaultValue(false);
 
             builder.HasMany(p => p.PostalNames)
                 .WithOne()
@@ -51,6 +55,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformation
             builder.Ignore(p => p.VersionTimestamp);
 
             builder.HasIndex(x => x.NisCode);
+            builder.HasIndex(x => x.IsRemoved);
         }
     }
 }

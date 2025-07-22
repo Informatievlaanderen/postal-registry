@@ -121,7 +121,8 @@ namespace PostalRegistry.Producer.Snapshot.Oslo.Infrastructure.Modules
                                 c.Resolve<IOsloProxy>(),
                                 SnapshotManagerOptions.Create(
                                     _configuration["RetryPolicy:MaxRetryWaitIntervalSeconds"],
-                                    _configuration["RetryPolicy:RetryBackoffFactor"])));
+                                    _configuration["RetryPolicy:RetryBackoffFactor"])),
+                                _configuration["OsloNamespace"]);
                     },
                     connectedProjectionSettings);
         }
@@ -150,7 +151,7 @@ namespace PostalRegistry.Producer.Snapshot.Oslo.Infrastructure.Modules
             services
                 .AddDbContext<ProducerContext>(options => options
                     .UseLoggerFactory(loggerFactory)
-                    .UseInMemoryDatabase(Guid.NewGuid().ToString(), sqlServerOptions => { }));
+                    .UseInMemoryDatabase(Guid.NewGuid().ToString(), _ => { }));
 
             logger.LogWarning("Running InMemory for {Context}!", nameof(ProducerContext));
         }

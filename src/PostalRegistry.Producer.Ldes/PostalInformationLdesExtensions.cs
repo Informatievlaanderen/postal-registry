@@ -24,5 +24,22 @@
 
             updateFunc(postalInformation);
         }
+
+        public static async Task DeletePostalInformationDetail(
+            this ProducerContext context,
+            string postalCode,
+            CancellationToken ct)
+        {
+            var postalInformation = await context
+                .PostalInformations
+                .FindAsync(postalCode, cancellationToken: ct);
+
+            if (postalInformation is null)
+            {
+                throw new ProjectionItemNotFoundException<ProducerProjections>(postalCode);
+            }
+
+            context.PostalInformations.Remove(postalInformation);
+        }
     }
 }

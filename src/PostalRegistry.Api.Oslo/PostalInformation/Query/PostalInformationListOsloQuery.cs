@@ -36,7 +36,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.Query
                 .PostalInformation
                 .AsNoTracking()
                 .OrderBy(x => x.PostalCode)
-                .Where(p => !p.IsRetired);
+                .Where(p => !p.IsRetired && !p.IsRemoved);
 
             if (!filtering.ShouldFilter)
                 return postalInformationSet;

@@ -48,6 +48,7 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
         public string? Reason { get; set; }
         public string? EventDataAsXml { get; set; }
         public DateTimeOffset SyndicationItemCreatedAt { get; set; }
+        public bool IsRemoved { get; set; }
 
         public PostalInformationSyndicationItem CloneAndApplyEventInfo(
             long newPosition,
@@ -133,12 +134,14 @@ namespace PostalRegistry.Projections.Legacy.PostalInformationSyndication
             b.Property(x => x.Reason);
             b.Property(x => x.EventDataAsXml);
             b.Property(x => x.SyndicationItemCreatedAt).IsRequired();
+            b.Property(x => x.IsRemoved);
 
             b.Ignore(x => x.PostalNames);
             b.Ignore(x => x.RecordCreatedAt);
             b.Ignore(x => x.LastChangedOn);
 
             b.HasIndex(x => x.PostalCode);
+            b.HasIndex(x => x.IsRemoved);
         }
     }
 }

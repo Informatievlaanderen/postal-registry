@@ -121,6 +121,18 @@ namespace PostalRegistry.Projections.Legacy.PostalInformation
                     ct);
             });
 
+            When<Envelope<PostalInformationWasRemoved>>(async (context, message, ct) =>
+            {
+                await context.FindAndUpdatePostalInformation(
+                    message.Message.PostalCode,
+                    postalInformation =>
+                    {
+                        postalInformation.IsRemoved = true;
+                        UpdateVersionTimestamp(postalInformation, message.Message.Provenance.Timestamp);
+                    },
+                    ct);
+            });
+
             When<Envelope<PostalInformationWasImportedFromCrab>>(async (context, message, ct) => await DoNothing());
             When<Envelope<PostalInformationWasImportedFromBPost>>(async (context, message, ct) => await DoNothing());
         }
