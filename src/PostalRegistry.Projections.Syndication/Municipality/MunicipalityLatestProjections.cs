@@ -35,6 +35,7 @@ namespace PostalRegistry.Projections.Syndication.Municipality
             When(MunicipalityEvent.MunicipalityWasMerged, DoNothing);
             When(MunicipalityEvent.MunicipalityWasCorrectedToCurrent, DoNothing);
             When(MunicipalityEvent.MunicipalityWasCorrectedToRetired, DoNothing);
+            When(MunicipalityEvent.MunicipalityWasRemoved, DoNothing);
         }
 
         private static async Task AddSyndicationItemEntry(AtomEntry<SyndicationContent<Gemeente>> entry, SyndicationContext context, CancellationToken ct)
