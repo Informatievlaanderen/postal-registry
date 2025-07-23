@@ -23,5 +23,6 @@ namespace PostalRegistry.Projections.Syndication.Municipality
         MunicipalityWasRetired,
         MunicipalityWasCorrectedToCurrent,
         MunicipalityWasCorrectedToRetired,
+        MunicipalityWasRemoved,
     }
 }
