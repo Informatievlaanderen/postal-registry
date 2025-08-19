@@ -36,7 +36,7 @@
         <PackageVersion Include="Be.Vlaanderen.Basisregisters.AggregateSource.Testing" Version="10.0.2" />
         <PackageVersion Include="Be.Vlaanderen.Basisregisters.AggregateSource.Testing.SqlStreamStore.Autofac" Version="10.0.2" />
         <PackageVersion Include="Be.Vlaanderen.Basisregisters.AggregateSource.Testing.Xunit" Version="10.0.2" />
-        <PackageVersion Include="Be.Vlaanderen.Basisregisters.Api" Version="24.0.0" />
+        <PackageVersion Include="Be.Vlaanderen.Basisregisters.Api" Version="24.1.0" />
         <PackageVersion Include="Be.Vlaanderen.Basisregisters.Aws.DistributedMutex" Version="5.0.0" />
         <PackageVersion Include="Be.Vlaanderen.Basisregisters.CommandHandling" Version="10.0.2" />
         <PackageVersion Include="Be.Vlaanderen.Basisregisters.CommandHandling.Idempotency" Version="10.0.2" />
