@@ -1,3 +1,11 @@
+# [6.2.0](https://github.com/informatievlaanderen/postal-registry/compare/v6.1.0...v6.2.0) (2025-08-19)
+
+
+### Features
+
+* add delete PostalInformation GAWR-4168 ([87d15ec](https://github.com/informatievlaanderen/postal-registry/commit/87d15ec3b38446b2076211c3928ca4f233e58fcb))
+* add remove municipality ([3b46507](https://github.com/informatievlaanderen/postal-registry/commit/3b46507665630a4c7aea737b45c23ab490149db3))
+
 # [6.1.0](https://github.com/informatievlaanderen/postal-registry/compare/v6.0.1...v6.1.0) (2025-06-27)
 
 
