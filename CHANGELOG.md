@@ -1,3 +1,10 @@
+# [6.3.0](https://github.com/informatievlaanderen/postal-registry/compare/v6.2.0...v6.3.0) (2025-09-01)
+
+
+### Features
+
+* **import:** add remove postalinfo endpoint ([a19a2bd](https://github.com/informatievlaanderen/postal-registry/commit/a19a2bd44f1ac7b13429a1c79a9f55a262bcb470))
+
 # [6.2.0](https://github.com/informatievlaanderen/postal-registry/compare/v6.1.0...v6.2.0) (2025-08-19)
 
 
