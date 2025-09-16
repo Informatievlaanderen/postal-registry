@@ -1,3 +1,10 @@
+## [6.3.1](https://github.com/informatievlaanderen/postal-registry/compare/v6.3.0...v6.3.1) (2025-09-16)
+
+
+### Bug Fixes
+
+* **producer:** dotnet migrations upgrade ([bd2cb8c](https://github.com/informatievlaanderen/postal-registry/commit/bd2cb8c579c8df68b866d052150ca1a39bbede69))
+
 # [6.3.0](https://github.com/informatievlaanderen/postal-registry/compare/v6.2.0...v6.3.0) (2025-09-01)
 
 
