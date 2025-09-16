@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PostalRegistry.Producer.Ldes;
 
@@ -11,9 +12,11 @@ using PostalRegistry.Producer.Ldes;
 namespace PostalRegistry.Producer.Ldes.Migrations
 {
     [DbContext(typeof(ProducerContext))]
-    partial class ProducerContextModelSnapshot : ModelSnapshot
+    [Migration("20250916121124_IsRemoved")]
+    partial class IsRemoved
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
