@@ -17,7 +17,7 @@
         <PackageVersion Include="CsvHelper" Version="33.0.1" />
         <PackageVersion Include="Dapper" Version="2.1.66" />
 
-        <PackageVersion Include="Datadog.Trace.Bundle" Version="3.16.0" />
+        <PackageVersion Include="Datadog.Trace.Bundle" Version="3.27.0" />
 
         <PackageVersion Include="Destructurama.JsonNet" Version="4.0.2" />
         <PackageVersion Include="NodaTime" Version="3.2.2" />
