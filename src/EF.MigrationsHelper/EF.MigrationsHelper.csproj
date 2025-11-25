@@ -31,7 +31,6 @@
     <ProjectReference Include="..\PostalRegistry.Projections.Integration\PostalRegistry.Projections.Integration.csproj" />
     <ProjectReference Include="..\PostalRegistry.Producer\PostalRegistry.Producer.csproj" />
     <ProjectReference Include="..\PostalRegistry.Producer.Snapshot.Oslo\PostalRegistry.Producer.Snapshot.Oslo.csproj" />
-    <ProjectReference Include="..\PostalRegistry.Producer.Ldes\PostalRegistry.Producer.Ldes.csproj" />
   </ItemGroup>
 
   <ItemGroup>

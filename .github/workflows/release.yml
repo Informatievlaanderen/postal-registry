@@ -166,22 +166,6 @@ jobs:
       prerestore-script: ./pre-restore.sh
     secrets: inherit
 
-  build-producer-ldes:
-    name: Build Producer Ldes
-    uses: Informatievlaanderen/build-pipeline/.github/workflows/build-image-v2.yml@main
-    needs: [ set-release-version ]
-    if: ${{ (github.repository_owner == 'Informatievlaanderen') && (needs.set-release-version.outputs.version != 'none') }}
-    with:
-      registry: ${{ vars.VBR_DEVOPS_DOCKER_REGISTRY }}/postal-registry
-      image-file: pr-producer-ldes-image.tar
-      image-name: producer-ldes
-      test-project: PostalRegistry.Tests
-      build-project: PostalRegistry.Producer.Ldes
-      semver: ${{ needs.set-release-version.outputs.version }}
-      dotnet-version: ${{ vars.VBR_DOTNET_VERSION_9 }}
-      prerestore-script: ./pre-restore.sh
-    secrets: inherit
-
   pack-api-oslo:
     name: Pack Api Oslo
     uses: Informatievlaanderen/build-pipeline/.github/workflows/pack-v2.yml@main
@@ -208,8 +192,7 @@ jobs:
       build-projector,
       build-projections-syndication,
       build-producer,
-      build-producer-snapshot-oslo,
-      build-producer-ldes
+      build-producer-snapshot-oslo
     ]
     outputs:
       version: ${{ steps.set-version.outputs.version }}
@@ -399,8 +382,7 @@ jobs:
           'projections-syndication',
           'projector',
           'producer',
-          'producer-snapshot-oslo',
-          'producer-ldes'
+          'producer-snapshot-oslo'
         ]
     steps:
       - name: Configure AWS credentials
@@ -470,8 +452,7 @@ jobs:
           'postal-import-api',
           'postal-projections',
           'postal-producer',
-          'postal-producer-snapshot-oslo',
-          'postal-producer-ldes'
+          'postal-producer-snapshot-oslo'
         ]
 
     steps:
@@ -544,8 +525,7 @@ jobs:
           'postal-import-api',
           'postal-projections',
           'postal-producer',
-          'postal-producer-snapshot-oslo',
-          'postal-producer-ldes'
+          'postal-producer-snapshot-oslo'
         ]
 
     steps:

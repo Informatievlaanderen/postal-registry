@@ -56,8 +56,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostalRegistry.Producer.Sna
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostalRegistry.Projections.Integration", "src\PostalRegistry.Projections.Integration\PostalRegistry.Projections.Integration.csproj", "{8049759B-20E1-4AEE-9086-5422C437D742}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostalRegistry.Producer.Ldes", "src\PostalRegistry.Producer.Ldes\PostalRegistry.Producer.Ldes.csproj", "{DAC6FB5E-9E34-45EF-8088-C6650E78F0A1}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -124,10 +122,6 @@ Global
 		{8049759B-20E1-4AEE-9086-5422C437D742}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8049759B-20E1-4AEE-9086-5422C437D742}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8049759B-20E1-4AEE-9086-5422C437D742}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DAC6FB5E-9E34-45EF-8088-C6650E78F0A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DAC6FB5E-9E34-45EF-8088-C6650E78F0A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DAC6FB5E-9E34-45EF-8088-C6650E78F0A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DAC6FB5E-9E34-45EF-8088-C6650E78F0A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -148,7 +142,6 @@ Global
 		{DAC34E64-9C52-495E-9BF6-868E3DFE99EE} = {81BE6CDF-434E-42AB-9CB1-B5E7A26DC317}
 		{B6B9729E-0EF7-48C8-88B1-BB4C437D20E6} = {81BE6CDF-434E-42AB-9CB1-B5E7A26DC317}
 		{8049759B-20E1-4AEE-9086-5422C437D742} = {81BE6CDF-434E-42AB-9CB1-B5E7A26DC317}
-		{DAC6FB5E-9E34-45EF-8088-C6650E78F0A1} = {81BE6CDF-434E-42AB-9CB1-B5E7A26DC317}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {14E5CC1E-7FCC-4086-A7DD-CEFDAD492801}

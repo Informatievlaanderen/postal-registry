@@ -36,8 +36,7 @@ jobs:
           'postal-import-api',
           'postal-projections',
           'postal-producer',
-          'postal-producer-snapshot-oslo',
-          'postal-producer-ldes'
+          'postal-producer-snapshot-oslo'
         ]
     steps:
     - name: CD
