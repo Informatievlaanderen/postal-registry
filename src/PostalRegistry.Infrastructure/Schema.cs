@@ -7,6 +7,7 @@ namespace PostalRegistry.Infrastructure
         public const string Import = "PostalRegistryImport";
         public const string Legacy = "PostalRegistryLegacy";
         public const string Extract = "PostalRegistryExtract";
+        public const string Feed = "PostalRegistryFeed";
         public const string Syndication = "PostalRegistrySyndication";
 
         public const string Producer = "PostalRegistryProducer";
@@ -19,6 +20,7 @@ namespace PostalRegistry.Infrastructure
     {
         public const string Legacy = "__EFMigrationsHistoryLegacy";
         public const string Extract = "__EFMigrationsHistoryExtract";
+        public const string Feed = "__EFMigrationsHistoryFeed";
         public const string RedisDataMigration = "__EFMigrationsHistoryDataMigration";
         public const string Syndication = "__EFMigrationsHistorySyndication";
 

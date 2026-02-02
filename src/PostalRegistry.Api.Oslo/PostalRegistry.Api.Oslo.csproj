@@ -33,6 +33,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PostalRegistry.Projections.Legacy\PostalRegistry.Projections.Legacy.csproj" PrivateAssets="All" />
+    <ProjectReference Include="..\PostalRegistry.Projections.Feed\PostalRegistry.Projections.Feed.csproj" PrivateAssets="All" />
     <ProjectReference Include="..\PostalRegistry.Projections.Syndication\PostalRegistry.Projections.Syndication.csproj" PrivateAssets="All" />
     <ProjectReference Include="..\PostalRegistry\PostalRegistry.csproj" PrivateAssets="All" />
   </ItemGroup>
@@ -75,6 +76,9 @@
     <ItemGroup>
       <BuildOutputInPackage Include="$(MSBuildProjectDirectory)\$(OutputPath)PostalRegistry.Projections.Legacy.dll" />
       <BuildOutputInPackage Include="$(MSBuildProjectDirectory)\$(OutputPath)PostalRegistry.Projections.Legacy.pdb" />
+
+      <BuildOutputInPackage Include="$(MSBuildProjectDirectory)\$(OutputPath)PostalRegistry.Projections.Feed.dll" />
+      <BuildOutputInPackage Include="$(MSBuildProjectDirectory)\$(OutputPath)PostalRegistry.Projections.Feed.pdb" />
 
       <BuildOutputInPackage Include="$(MSBuildProjectDirectory)\$(OutputPath)PostalRegistry.Projections.Syndication.dll" />
       <BuildOutputInPackage Include="$(MSBuildProjectDirectory)\$(OutputPath)PostalRegistry.Projections.Syndication.pdb" />

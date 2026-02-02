@@ -48,6 +48,7 @@ namespace PostalRegistry.Api.Oslo.Infrastructure
                 : baseUrl;
 
             services
+                .AddOutputCache(options => options.DefaultExpirationTimeSpan = TimeSpan.FromHours(1))
                 .ConfigureDefaultForApi<Startup>(new StartupConfigureOptions
                 {
                     Cors =
@@ -152,6 +153,7 @@ namespace PostalRegistry.Api.Oslo.Infrastructure
                     },
                     MiddlewareHooks =
                     {
+                        AfterAuthorization = x => x.UseOutputCache(),
                         AfterMiddleware = x => x.UseMiddleware<AddNoCacheHeadersMiddleware>()
                     }
                 });

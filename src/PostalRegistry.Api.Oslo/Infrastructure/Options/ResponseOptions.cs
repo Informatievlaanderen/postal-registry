@@ -1,5 +1,7 @@
 namespace PostalRegistry.Api.Oslo.Infrastructure.Options
 {
+    using Be.Vlaanderen.Basisregisters.GrAr.ChangeFeed;
+
     public class ResponseOptions
     {
         public string Naamruimte { get; set; }
@@ -12,5 +14,7 @@ namespace PostalRegistry.Api.Oslo.Infrastructure.Options
         public string GemeenteDetailUrl { get; set; }
 
         public string PostInfoDetailAddressesLink { get; set; }
+
+        public ChangeFeedConfig PostalFeed { get; set; }
     }
 }

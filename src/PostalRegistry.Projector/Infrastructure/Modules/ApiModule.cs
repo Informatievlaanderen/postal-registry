@@ -3,8 +3,10 @@ namespace PostalRegistry.Projector.Infrastructure.Modules
     using Autofac;
     using Autofac.Extensions.DependencyInjection;
     using Be.Vlaanderen.Basisregisters.Api.Exceptions;
+    using Be.Vlaanderen.Basisregisters.AspNetCore.Mvc.Formatters.Json;
     using Be.Vlaanderen.Basisregisters.EventHandling;
     using Be.Vlaanderen.Basisregisters.EventHandling.Autofac;
+    using Be.Vlaanderen.Basisregisters.GrAr.ChangeFeed;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.LastChangedList;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore.Autofac;
     using Be.Vlaanderen.Basisregisters.Projector;
@@ -15,9 +17,12 @@ namespace PostalRegistry.Projector.Infrastructure.Modules
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
+    using Newtonsoft.Json;
     using PostalRegistry.Infrastructure;
     using PostalRegistry.Projections.Extract;
     using PostalRegistry.Projections.Extract.PostalInformationExtract;
+    using PostalRegistry.Projections.Feed;
+    using PostalRegistry.Projections.Feed.PostalFeed;
     using PostalRegistry.Projections.Integration;
     using PostalRegistry.Projections.Integration.Infrastructure;
     using PostalRegistry.Projections.LastChangedList;
@@ -75,6 +80,7 @@ namespace PostalRegistry.Projector.Infrastructure.Modules
             RegisterExtractProjections(builder);
             RegisterLastChangedProjections(builder);
             RegisterLegacyProjections(builder);
+            RegisterFeedProjections(builder);
 
             if (_configuration.GetSection("Integration").GetValue("Enabled", false))
                 RegisterIntegrationProjections(builder);
@@ -96,6 +102,37 @@ namespace PostalRegistry.Projector.Infrastructure.Modules
                 .RegisterProjections<PostalLatestItemProjections, IntegrationContext>(
                     context => new PostalLatestItemProjections(context.Resolve<IOptions<IntegrationOptions>>()),
                     _connectedProjectionSettings);
+        }
+
+        private void RegisterFeedProjections(ContainerBuilder builder)
+        {
+            builder
+                .RegisterModule(
+                    new FeedModule(
+                        _configuration,
+                        _services,
+                        _loggerFactory,
+                        new JsonSerializerSettings().ConfigureDefaultForApi()));
+
+            builder.Register(c => new ChangeFeedService(
+                    c.Resolve<IOptions<ChangeFeedConfig>>().Value,
+                    c.Resolve<LastChangedListContext>(),
+                    new JsonSerializerSettings().ConfigureDefaultForApi()))
+                .AsImplementedInterfaces()
+                .AsSelf()
+                .SingleInstance();
+
+            builder
+                .RegisterProjectionMigrator<FeedContextMigrationFactory>(
+                    _configuration,
+                    _loggerFactory)
+                .RegisterProjections<PostalFeedProjections, FeedContext>(context =>
+                        new PostalFeedProjections(context.Resolve<IChangeFeedService>()),
+                    ConnectedProjectionSettings.Configure(c =>
+                    {
+                        c.ConfigureCatchUpPageSize(1);
+                        c.ConfigureCatchUpUpdatePositionMessageInterval(1);
+                    }));
         }
 
         private void RegisterExtractProjections(ContainerBuilder builder)
