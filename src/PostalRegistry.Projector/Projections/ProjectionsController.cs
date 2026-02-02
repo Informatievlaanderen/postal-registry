@@ -21,6 +21,7 @@ namespace PostalRegistry.Projector.Projections
         {
             RegisterConnectionString(Schema.Legacy, configuration.GetConnectionString("LegacyProjections"));
             RegisterConnectionString(Schema.Extract, configuration.GetConnectionString("ExtractProjections"));
+            RegisterConnectionString(Schema.Feed, configuration.GetConnectionString("FeedProjections"));
         }
     }
 }

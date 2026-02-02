@@ -22,6 +22,8 @@ namespace PostalRegistry.Projector.Infrastructure
     using Microsoft.OpenApi.Models;
     using System.Threading;
     using Asp.Versioning.ApiExplorer;
+    using Be.Vlaanderen.Basisregisters.GrAr.ChangeFeed;
+    using PostalRegistry.Projections.Feed;
     using PostalRegistry.Projections.Integration.Infrastructure;
 
     /// <summary>Represents the startup process for the application.</summary>
@@ -120,6 +122,10 @@ namespace PostalRegistry.Projector.Infrastructure
                                 $"dbcontext-{nameof(LegacyContext).ToLowerInvariant()}",
                                 tags: new[] {DatabaseTag, "sql", "sqlserver"});
 
+                            health.AddDbContextCheck<FeedContext>(
+                                $"dbcontext-{nameof(FeedContext).ToLowerInvariant()}",
+                                tags: new[] {DatabaseTag, "sql", "sqlserver"});
+
                             health.AddDbContextCheck<LastChangedListContext>(
                                 $"dbcontext-{nameof(LastChangedListContext).ToLowerInvariant()}",
                                 tags: new[] {DatabaseTag, "sql", "sqlserver"});
@@ -127,7 +133,8 @@ namespace PostalRegistry.Projector.Infrastructure
                     }
                 })
                 .Configure<ExtractConfig>(_configuration.GetSection("Extract"))
-                .Configure<IntegrationOptions>(_configuration.GetSection("Integration"));
+                .Configure<IntegrationOptions>(_configuration.GetSection("Integration"))
+                .Configure<ChangeFeedConfig>(_configuration.GetSection("PostalFeed"));
 
             var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterModule(new LoggingModule(_configuration, services));
