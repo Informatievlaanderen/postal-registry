@@ -1,3 +1,10 @@
+# [6.6.0](https://github.com/informatievlaanderen/postal-registry/compare/v6.5.1...v6.6.0) (2026-02-03)
+
+
+### Features
+
+* **feed:** add change feeds ([cf1ae41](https://github.com/informatievlaanderen/postal-registry/commit/cf1ae416320eaf9a54053b20fc9cc99146dd2b21))
+
 ## [6.5.1](https://github.com/informatievlaanderen/postal-registry/compare/v6.5.0...v6.5.1) (2025-12-04)
 
 
