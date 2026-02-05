@@ -1,3 +1,10 @@
+## [6.6.1](https://github.com/informatievlaanderen/postal-registry/compare/v6.6.0...v6.6.1) (2026-02-05)
+
+
+### Bug Fixes
+
+* **feed:** remove postalcode as change attribute ([1ddb893](https://github.com/informatievlaanderen/postal-registry/commit/1ddb893f37d0518687953b1a97b694c887e259f6))
+
 # [6.6.0](https://github.com/informatievlaanderen/postal-registry/compare/v6.5.1...v6.6.0) (2026-02-03)
 
 
