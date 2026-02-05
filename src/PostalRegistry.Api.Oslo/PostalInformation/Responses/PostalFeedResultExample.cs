@@ -34,13 +34,7 @@
                                      "naamruimte": "https://data.vlaanderen.be/id/postinfo",
                                      "versieId": "2020-02-10T12:42:50.6472584+01:00",
                                      "nisCodes": [],
-                                     "attributen": [
-                                         {
-                                             "naam": "postcode",
-                                             "oudeWaarde": null,
-                                             "nieuweWaarde": "9000"
-                                         }
-                                     ]
+                                     "attributen": []
                                  }
                              },
                              {

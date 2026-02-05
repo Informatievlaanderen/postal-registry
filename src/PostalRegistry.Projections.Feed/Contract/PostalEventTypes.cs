@@ -11,7 +11,6 @@
     public static class PostalAttributeNames
     {
         public const string MunicipalityId = "gemeente.id";
-        public const string PostalCode = "postcode";
         public const string StatusName = "postInfoStatus";
         public const string PostalNames = "postnamen";
     }

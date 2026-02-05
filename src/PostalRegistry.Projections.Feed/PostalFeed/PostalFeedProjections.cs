@@ -31,9 +31,7 @@
                 var document = new PostalDocument(message.Message.PostalCode, message.Message.Provenance.Timestamp);
                 await context.PostalDocuments.AddAsync(document, ct);
 
-                await AddCloudEvent(message, document, context, [
-                    new BaseRegistriesCloudEventAttribute(PostalAttributeNames.PostalCode, null, document.PostalCode),
-                ], PostalEventTypes.CreateV1);
+                await AddCloudEvent(message, document, context, [], PostalEventTypes.CreateV1);
             });
 
             When<Envelope<PostalInformationPostalNameWasAdded>>(async (context, message, ct) =>
