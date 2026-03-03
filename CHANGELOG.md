@@ -1,3 +1,10 @@
+## [6.6.2](https://github.com/informatievlaanderen/postal-registry/compare/v6.6.1...v6.6.2) (2026-03-03)
+
+
+### Bug Fixes
+
+* feed api + registration fixes ([dfe7dcc](https://github.com/informatievlaanderen/postal-registry/commit/dfe7dccc9d3d73bc3907dd4239be4763676ae7dc))
+
 ## [6.6.1](https://github.com/informatievlaanderen/postal-registry/compare/v6.6.0...v6.6.1) (2026-02-05)
 
 
