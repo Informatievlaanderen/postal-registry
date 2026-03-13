@@ -25,7 +25,12 @@
         public Instant LastChangedOn
         {
             get => Instant.FromDateTimeOffset(LastChangedOnAsDateTimeOffset);
-            set => LastChangedOnAsDateTimeOffset = value.ToBelgianDateTimeOffset();
+            set
+            {
+                var belgianDateTimeOffset = value.ToBelgianDateTimeOffset();
+                LastChangedOnAsDateTimeOffset = belgianDateTimeOffset;
+                Document.VersionId = belgianDateTimeOffset;
+            }
         }
 
         public PostalJsonDocument Document { get; set; }
@@ -39,12 +44,13 @@
         {
             PostalCode = postalCode;
             RecordCreatedAt = createdTimestamp;
-            LastChangedOn = createdTimestamp;
+
             Document = new PostalJsonDocument
             {
                 PostalCode = postalCode,
-                VersionId = createdTimestamp.ToBelgianDateTimeOffset()
             };
+
+            LastChangedOn = createdTimestamp;
         }
     }
 
