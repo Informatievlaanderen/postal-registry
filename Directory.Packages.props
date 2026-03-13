@@ -25,7 +25,7 @@
         <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.4" />
         <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.4" />
         <PackageVersion Include="Microsoft.SyndicationFeed.ReaderWriter" Version="1.0.2" />
-        <PackageVersion Include="Npgsql" Version="9.0.3" />
+        <PackageVersion Include="Npgsql" Version="9.0.5" />
         <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
 
         <PackageVersion Include="Be.Vlaanderen.Basisregisters.Testing.Infrastructure.Events" Version="5.0.0" />
