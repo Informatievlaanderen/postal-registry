@@ -1,3 +1,10 @@
+## [6.6.3](https://github.com/informatievlaanderen/postal-registry/compare/v6.6.2...v6.6.3) (2026-03-13)
+
+
+### Bug Fixes
+
+* **feed:** set Document.VersionId when LastChangedOn is updated ([d1b1ee3](https://github.com/informatievlaanderen/postal-registry/commit/d1b1ee37fa69d9284b472219f51875fd0c19ce62))
+
 ## [6.6.2](https://github.com/informatievlaanderen/postal-registry/compare/v6.6.1...v6.6.2) (2026-03-03)
 
 
