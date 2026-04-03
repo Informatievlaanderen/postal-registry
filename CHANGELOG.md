@@ -1,3 +1,10 @@
+## [6.6.4](https://github.com/informatievlaanderen/postal-registry/compare/v6.6.3...v6.6.4) (2026-04-03)
+
+
+### Bug Fixes
+
+* **feed:** update packages + disable cache ([c237046](https://github.com/informatievlaanderen/postal-registry/commit/c237046f6e615065bc55456a4c9cff5067234d46))
+
 ## [6.6.3](https://github.com/informatievlaanderen/postal-registry/compare/v6.6.2...v6.6.3) (2026-03-13)
 
 
