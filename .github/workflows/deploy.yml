@@ -1,0 +1,79 @@
+name: Manual Deploy
+run-name: 'Manual Deploy ${{ github.event.inputs.environment }} - ${{ github.event.inputs.version }}'
+concurrency: Manual Deploy ${{ github.event.inputs.environment }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version'
+        required: true
+      environment:
+        description: 'Environment to deploy to'
+        type: choice
+        required: true
+        default: 'test'
+        options:
+          - 'test'
+          - 'stg'
+          - 'prd'
+
+permissions:
+  id-token: write
+
+jobs:
+  deploy_start_slack:
+    if: github.repository_owner == 'Informatievlaanderen'
+    name: Deploy started
+    environment: ${{ github.event.inputs.environment }}
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Notify deployment started
+      uses: slackapi/slack-github-action@v2.0.0
+      with:
+        method: chat.postMessage
+        token: ${{ secrets.VBR_SLACK_BOT_TOKEN }}
+        payload: |
+          channel: '#team-dinosaur-dev'
+          text: 'Deployment of postal-registry (${{ github.event.inputs.version }}) to ${{ github.event.inputs.environment }} has started'
+
+  deploy_services:
+    if: github.repository_owner == 'Informatievlaanderen'
+    needs: [ deploy_start_slack ]
+    name: Deploy
+    uses: informatievlaanderen/build-pipeline/.github/workflows/deploy-v4.1.yml@main
+    strategy:
+      matrix:
+        services: [
+          'api',
+          'import-api',
+          'producer',
+          'producer-snapshot-oslo',
+          'projector'
+        ]
+    with:
+      environment: ${{ github.event.inputs.environment }}
+      service-name: ${{ matrix.services }}
+      application: ${{ matrix.services }}
+      version: ${{ github.event.inputs.version }}
+      domain: 'postal'
+      project: 'grawr'
+      use-subfolder: true
+    secrets: inherit
+
+  deploy_finish_slack:
+    if: github.repository_owner == 'Informatievlaanderen'
+    needs: [ deploy_services ]
+    name: Deploy finished
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Notify deployment finished
+      uses: slackapi/slack-github-action@v2.0.0
+      with:
+        method: chat.postMessage
+        token: ${{ secrets.VBR_SLACK_BOT_TOKEN }}
+        payload: |
+          channel: '#team-dinosaur-dev'
+          text: 'Deployment of postal-registry to ${{ github.event.inputs.environment }} has finished'
