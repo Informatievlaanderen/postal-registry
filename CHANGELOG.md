@@ -1,3 +1,10 @@
+## [6.6.5](https://github.com/informatievlaanderen/postal-registry/compare/v6.6.4...v6.6.5) (2026-04-29)
+
+
+### Bug Fixes
+
+* **ci:** update pipelines + trigger build ([5b6bc4e](https://github.com/informatievlaanderen/postal-registry/commit/5b6bc4e903433c5a326f9606c68fd2f8fa17f132))
+
 ## [6.6.4](https://github.com/informatievlaanderen/postal-registry/compare/v6.6.3...v6.6.4) (2026-04-03)
 
 
