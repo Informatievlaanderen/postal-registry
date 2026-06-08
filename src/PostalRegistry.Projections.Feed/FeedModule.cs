@@ -1,7 +1,6 @@
 namespace PostalRegistry.Projections.Feed
 {
     using System;
-    using Autofac;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner.SqlServer.MigrationExtensions;
     using Infrastructure;
     using Microsoft.EntityFrameworkCore;
@@ -10,15 +9,15 @@ namespace PostalRegistry.Projections.Feed
     using Microsoft.Extensions.Logging;
     using Newtonsoft.Json;
 
-    public class FeedModule : Module
+    public static class FeedModule
     {
-        public FeedModule(
+        public static IServiceCollection RegisterFeedModule(
+            this IServiceCollection services,
             IConfiguration configuration,
-            IServiceCollection services,
             ILoggerFactory loggerFactory,
             JsonSerializerSettings jsonSerializerSettings)
         {
-            var logger = loggerFactory.CreateLogger<FeedModule>();
+            var logger = loggerFactory.CreateLogger<FeedContext>();
             var connectionString = configuration.GetConnectionString("FeedProjections");
 
             var hasConnectionString = !string.IsNullOrWhiteSpace(connectionString);
@@ -34,6 +33,8 @@ namespace PostalRegistry.Projections.Feed
                 Environment.NewLine +
                 "\tTableName: {TableName}",
                 nameof(FeedContext), Schema.Feed, MigrationTables.Feed);
+
+            return services;
         }
 
         private static void RunOnSqlServer(

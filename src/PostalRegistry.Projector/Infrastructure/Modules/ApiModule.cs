@@ -29,7 +29,8 @@ namespace PostalRegistry.Projector.Infrastructure.Modules
     using PostalRegistry.Projections.Legacy;
     using PostalRegistry.Projections.Legacy.PostalInformation;
     using PostalRegistry.Projections.Legacy.PostalInformationSyndication;
-    using LastChangedListContextMigrationFactory = PostalRegistry.Projections.LastChangedList.LastChangedListContextMigrationFactory;
+    using LastChangedListContextMigrationFactory =
+        PostalRegistry.Projections.LastChangedList.LastChangedListContextMigrationFactory;
 
     public class ApiModule : Module
     {
@@ -106,13 +107,10 @@ namespace PostalRegistry.Projector.Infrastructure.Modules
 
         private void RegisterFeedProjections(ContainerBuilder builder)
         {
-            builder
-                .RegisterModule(
-                    new FeedModule(
-                        _configuration,
-                        _services,
-                        _loggerFactory,
-                        new JsonSerializerSettings().ConfigureDefaultForApi()));
+            _services.RegisterFeedModule(
+                _configuration,
+                _loggerFactory,
+                new JsonSerializerSettings().ConfigureDefaultForApi());
 
             builder.Register(c => new ChangeFeedService(
                     c.Resolve<IOptions<ChangeFeedConfig>>().Value,
@@ -137,11 +135,9 @@ namespace PostalRegistry.Projector.Infrastructure.Modules
 
         private void RegisterExtractProjections(ContainerBuilder builder)
         {
-            builder.RegisterModule(
-                new ExtractModule(
-                    _configuration,
-                    _services,
-                    _loggerFactory));
+            _services.RegisterExtractModule(
+                _configuration,
+                _loggerFactory);
 
             builder
                 .RegisterProjectionMigrator<ExtractContextMigrationFactory>(
@@ -174,18 +170,17 @@ namespace PostalRegistry.Projector.Infrastructure.Modules
 
         private void RegisterLegacyProjections(ContainerBuilder builder)
         {
-            builder
-                .RegisterModule(
-                    new LegacyModule(
-                        _configuration,
-                        _services,
-                        _loggerFactory));
+            _services.RegisterLegacyModule(
+                _configuration,
+                _loggerFactory);
+
             builder
                 .RegisterProjectionMigrator<LegacyContextMigrationFactory>(
                     _configuration,
                     _loggerFactory)
                 .RegisterProjections<PostalInformationProjections, LegacyContext>(_connectedProjectionSettings)
-                .RegisterProjections<PostalInformationSyndicationProjections, LegacyContext>(_connectedProjectionSettings);
+                .RegisterProjections<PostalInformationSyndicationProjections, LegacyContext>(
+                    _connectedProjectionSettings);
         }
     }
 }

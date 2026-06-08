@@ -16,17 +16,9 @@ namespace PostalRegistry.Api.Import.Infrastructure.Modules
     public class ApiModule : Module
     {
         private readonly IConfiguration _configuration;
-        private readonly IServiceCollection _services;
-        private readonly ILoggerFactory _loggerFactory;
-
-        public ApiModule(
-            IConfiguration configuration,
-            IServiceCollection services,
-            ILoggerFactory loggerFactory)
+        public ApiModule(IConfiguration configuration)
         {
             _configuration = configuration;
-            _services = services;
-            _loggerFactory = loggerFactory;
         }
 
         protected override void Load(ContainerBuilder builder)
@@ -38,12 +30,6 @@ namespace PostalRegistry.Api.Import.Infrastructure.Modules
                 .RegisterModule(new EnvelopeModule())
                 .RegisterModule(new CommandHandlingModule(_configuration));
 
-            _services.ConfigureIdempotency(
-                _configuration.GetSection(IdempotencyConfiguration.Section).Get<IdempotencyConfiguration>().ConnectionString,
-                new IdempotencyMigrationsTableInfo(Schema.Import),
-                new IdempotencyTableInfo(Schema.Import),
-                _loggerFactory);
-
             builder.RegisterType<IdempotentCommandHandler>()
                 .As<IIdempotentCommandHandler>()
                 .AsSelf()
@@ -52,8 +38,6 @@ namespace PostalRegistry.Api.Import.Infrastructure.Modules
             builder
                 .RegisterType<ProblemDetailsHelper>()
                 .AsSelf();
-
-            builder.Populate(_services);
         }
     }
 }
