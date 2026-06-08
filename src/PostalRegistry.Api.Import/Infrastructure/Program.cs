@@ -1,14 +1,20 @@
 namespace PostalRegistry.Api.Import.Infrastructure
 {
+    using Autofac;
+    using Autofac.Extensions.DependencyInjection;
     using Be.Vlaanderen.Basisregisters.Api;
-    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Hosting;
+    using Modules;
 
     public static class Program
     {
-        public static void Main(string[] args) => CreateWebHostBuilder(args).Build().Run();
+        public static void Main(string[] args) => CreateHostBuilder(args).Build().Run();
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
-            => new WebHostBuilder()
+        public static IHostBuilder CreateHostBuilder(string[] args)
+            => new HostBuilder()
+                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+                .ConfigureContainer<ContainerBuilder>((hostContext, builder)
+                    => builder.RegisterModule(new ApiModule(hostContext.Configuration)))
                 .UseDefaultForApi<Startup>(
                     new ProgramOptions
                     {

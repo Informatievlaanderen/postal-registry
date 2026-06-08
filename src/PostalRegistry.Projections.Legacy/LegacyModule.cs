@@ -1,7 +1,6 @@
 namespace PostalRegistry.Projections.Legacy
 {
     using System;
-    using Autofac;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner.SqlServer.MigrationExtensions;
     using Infrastructure;
     using Microsoft.EntityFrameworkCore;
@@ -9,14 +8,14 @@ namespace PostalRegistry.Projections.Legacy
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
 
-    public class LegacyModule : Module
+    public static class LegacyModule
     {
-        public LegacyModule(
+        public static IServiceCollection RegisterLegacyModule(
+            this IServiceCollection services,
             IConfiguration configuration,
-            IServiceCollection services,
             ILoggerFactory loggerFactory)
         {
-            var logger = loggerFactory.CreateLogger<LegacyModule>();
+            var logger = loggerFactory.CreateLogger<LegacyContext>();
             var connectionString = configuration.GetConnectionString("LegacyProjections");
 
             var hasConnectionString = !string.IsNullOrWhiteSpace(connectionString);
@@ -32,6 +31,8 @@ namespace PostalRegistry.Projections.Legacy
                 Environment.NewLine +
                 "\tTableName: {TableName}",
                 nameof(LegacyContext), Schema.Legacy, MigrationTables.Legacy);
+
+            return services;
         }
 
         private static void RunOnSqlServer(

@@ -1,7 +1,6 @@
 namespace PostalRegistry.Projections.Extract
 {
     using System;
-    using Autofac;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner.SqlServer.MigrationExtensions;
     using Infrastructure;
     using Microsoft.EntityFrameworkCore;
@@ -9,15 +8,15 @@ namespace PostalRegistry.Projections.Extract
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
 
-    public class ExtractModule : Module
+    public static class ExtractModule
     {
-        public ExtractModule(
+        public static IServiceCollection RegisterExtractModule(
+            this IServiceCollection services,
             IConfiguration configuration,
-            IServiceCollection services,
             ILoggerFactory loggerFactory,
             bool enableRetry = true)
         {
-            var logger = loggerFactory.CreateLogger<ExtractModule>();
+            var logger = loggerFactory.CreateLogger<ExtractContext>();
             var connectionString = configuration.GetConnectionString("ExtractProjections");
 
             var hasConnectionString = !string.IsNullOrWhiteSpace(connectionString);
@@ -33,6 +32,8 @@ namespace PostalRegistry.Projections.Extract
                 Environment.NewLine +
                 "\tTableName: {TableName}",
                 nameof(ExtractContext), Schema.Extract, MigrationTables.Extract);
+
+            return services;
         }
 
         private static void RunOnSqlServer(

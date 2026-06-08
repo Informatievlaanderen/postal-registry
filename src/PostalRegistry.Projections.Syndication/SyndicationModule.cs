@@ -1,27 +1,24 @@
-namespace PostalRegistry.Projections.Syndication.Modules
+namespace PostalRegistry.Projections.Syndication
 {
     using System;
-    using Microsoft.Data.SqlClient;
-    using System.Net.Http;
-    using Be.Vlaanderen.Basisregisters.ProjectionHandling.Syndication;
     using Autofac;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner.SqlServer.MigrationExtensions;
-    using Infrastructure;
+    using Be.Vlaanderen.Basisregisters.ProjectionHandling.Syndication;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
     using Polly;
-    using Syndication;
+    using PostalRegistry.Infrastructure;
 
-    public class SyndicationModule : Module
+    public static class SyndicationModuleExtensions
     {
-        public SyndicationModule(
+        public static IServiceCollection RegisterSyndicationModule(
+            this IServiceCollection services,
             IConfiguration configuration,
-            IServiceCollection services,
             ILoggerFactory loggerFactory)
         {
-            var logger = loggerFactory.CreateLogger<SyndicationModule>();
+            var logger = loggerFactory.CreateLogger<SyndicationContext>();
             var connectionString = configuration.GetConnectionString("SyndicationProjections");
 
             var hasConnectionString = !string.IsNullOrWhiteSpace(connectionString);
@@ -31,6 +28,8 @@ namespace PostalRegistry.Projections.Syndication.Modules
                 RunInMemoryDb(services, loggerFactory, logger);
 
             RegisterHttpClient(configuration, services);
+
+            return services;
         }
 
         private static void RunOnSqlServer(
@@ -78,7 +77,10 @@ namespace PostalRegistry.Projections.Syndication.Modules
                             return TimeSpan.FromSeconds(randomValue);
                         }));
         }
+    }
 
+    public class SyndicationModule : Module
+    {
         protected override void Load(ContainerBuilder builder)
         {
             builder

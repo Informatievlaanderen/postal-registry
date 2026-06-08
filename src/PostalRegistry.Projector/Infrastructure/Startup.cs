@@ -19,10 +19,11 @@ namespace PostalRegistry.Projector.Infrastructure
     using Modules;
     using PostalRegistry.Projections.Extract;
     using PostalRegistry.Projections.Legacy;
-    using Microsoft.OpenApi.Models;
+    using Microsoft.OpenApi;
     using System.Threading;
     using Asp.Versioning.ApiExplorer;
     using Be.Vlaanderen.Basisregisters.GrAr.ChangeFeed;
+    using FluentValidation;
     using PostalRegistry.Projections.Feed;
     using PostalRegistry.Projections.Integration.Infrastructure;
 
@@ -31,23 +32,18 @@ namespace PostalRegistry.Projector.Infrastructure
     {
         private const string DatabaseTag = "db";
 
-        private IContainer _applicationContainer;
-
         private readonly IConfiguration _configuration;
-        private readonly ILoggerFactory _loggerFactory;
         private readonly CancellationTokenSource _projectionsCancellationTokenSource = new CancellationTokenSource();
 
         public Startup(
-            IConfiguration configuration,
-            ILoggerFactory loggerFactory)
+            IConfiguration configuration)
         {
             _configuration = configuration;
-            _loggerFactory = loggerFactory;
         }
 
         /// <summary>Configures services for the application.</summary>
         /// <param name="services">The collection of services to configure the application with.</param>
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             var baseUrl = _configuration.GetValue<string>("BaseUrl");
             var baseUrlForExceptions = baseUrl.EndsWith("/")
@@ -87,8 +83,6 @@ namespace PostalRegistry.Projector.Infrastructure
                     },
                     MiddlewareHooks =
                     {
-                        FluentValidation = fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>(),
-
                         AfterHealthChecks = health =>
                         {
                             var connectionStrings = _configuration
@@ -132,16 +126,11 @@ namespace PostalRegistry.Projector.Infrastructure
                         }
                     }
                 })
+                .AddValidatorsFromAssemblyContaining<Startup>()
                 .Configure<ExtractConfig>(_configuration.GetSection("Extract"))
                 .Configure<IntegrationOptions>(_configuration.GetSection("Integration"))
-                .Configure<ChangeFeedConfig>(_configuration.GetSection("PostalFeed"));
-
-            var containerBuilder = new ContainerBuilder();
-            containerBuilder.RegisterModule(new LoggingModule(_configuration, services));
-            containerBuilder.RegisterModule(new ApiModule(_configuration, services, _loggerFactory));
-            _applicationContainer = containerBuilder.Build();
-
-            return new AutofacServiceProvider(_applicationContainer);
+                .Configure<ChangeFeedConfig>(_configuration.GetSection("PostalFeed"))
+                .RegisterLoggingModule(_configuration);
         }
 
         public void Configure(
@@ -160,7 +149,7 @@ namespace PostalRegistry.Projector.Infrastructure
                 {
                     Common =
                     {
-                        ApplicationContainer = _applicationContainer,
+                        ApplicationContainer = serviceProvider.GetAutofacRoot(),
                         ServiceProvider = serviceProvider,
                         HostingEnvironment = env,
                         ApplicationLifetime = appLifetime,
@@ -194,7 +183,7 @@ namespace PostalRegistry.Projector.Infrastructure
             appLifetime.ApplicationStopping.Register(() => _projectionsCancellationTokenSource.Cancel());
             appLifetime.ApplicationStarted.Register(() =>
             {
-                var projectionsManager = _applicationContainer.Resolve<IConnectedProjectionsManager>();
+                var projectionsManager = serviceProvider.GetRequiredService<IConnectedProjectionsManager>();
                 projectionsManager.Resume(_projectionsCancellationTokenSource.Token);
             });
         }
