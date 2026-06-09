@@ -1,3 +1,15 @@
+# [7.0.0](https://github.com/informatievlaanderen/postal-registry/compare/v6.6.5...v7.0.0) (2026-06-09)
+
+
+### Features
+
+* update packages + upgrade to dotnet 10 ([378e34a](https://github.com/informatievlaanderen/postal-registry/commit/378e34af323d2534bbd45f9237ee411fb1e8cc5c))
+
+
+### BREAKING CHANGES
+
+* update to dotnet 10
+
 ## [6.6.5](https://github.com/informatievlaanderen/postal-registry/compare/v6.6.4...v6.6.5) (2026-04-29)
 
 
