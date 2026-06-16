@@ -1,3 +1,10 @@
+## [7.0.1](https://github.com/informatievlaanderen/postal-registry/compare/v7.0.0...v7.0.1) (2026-06-16)
+
+
+### Bug Fixes
+
+* **api:** api xml docs ([1a6008f](https://github.com/informatievlaanderen/postal-registry/commit/1a6008f33c28b16823418c90f2e3d84cfca2819f))
+
 # [7.0.0](https://github.com/informatievlaanderen/postal-registry/compare/v6.6.5...v7.0.0) (2026-06-09)
 
 
