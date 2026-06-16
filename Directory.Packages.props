@@ -45,7 +45,7 @@
         <PackageVersion Include="Be.Vlaanderen.Basisregisters.EventHandling.Autofac" Version="7.1.0" />
         <PackageVersion Include="Be.Vlaanderen.Basisregisters.Utilities.HexByteConvertor" Version="5.1.0" />
         <PackageVersion Include="Be.Vlaanderen.Basisregisters.Generators.Guid.Deterministic" Version="5.1.0" />
-        <PackageVersion Include="Be.Vlaanderen.Basisregisters.MessageHandling.Kafka.Producer" Version="7.0.0" />
+        <PackageVersion Include="Be.Vlaanderen.Basisregisters.MessageHandling.Kafka.Producer" Version="7.1.0" />
         <PackageVersion Include="Be.Vlaanderen.Basisregisters.ProjectionHandling.LastChangedList" Version="16.0.0" />
         <PackageVersion Include="Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore.Autofac" Version="16.0.0" />
         <PackageVersion Include="Be.Vlaanderen.Basisregisters.ProjectionHandling.Runner" Version="16.0.0" />

@@ -91,9 +91,9 @@
       },
       "Be.Vlaanderen.Basisregisters.MessageHandling.Kafka.Producer": {
         "type": "Direct",
-        "requested": "[7.0.0, )",
-        "resolved": "7.0.0",
-        "contentHash": "iEg9ypqkbTJNl7HhupR6IG4UV/7wacnny+FNzGSFGX1iS9sbTfscxcFGd06tZZ88NZkheiAECXiOUS3e5JJOwg==",
+        "requested": "[7.1.0, )",
+        "resolved": "7.1.0",
+        "contentHash": "Uszzc1YoH0PTMR11NMx/dGVbcm2TOwQNBU94DOw87lTBxL6xFs1blawfpTVNfkWikTA3uCSSUe8E3+8atoHd2Q==",
         "dependencies": {
           "Confluent.Kafka": "2.14.2",
           "Newtonsoft.Json": "13.0.4"
