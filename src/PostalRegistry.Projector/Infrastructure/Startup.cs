@@ -183,7 +183,7 @@ namespace PostalRegistry.Projector.Infrastructure
             appLifetime.ApplicationStopping.Register(() => _projectionsCancellationTokenSource.Cancel());
             appLifetime.ApplicationStarted.Register(() =>
             {
-                var projectionsManager = serviceProvider.GetRequiredService<IConnectedProjectionsManager>();
+                var projectionsManager = app.ApplicationServices.GetRequiredService<IConnectedProjectionsManager>();
                 projectionsManager.Resume(_projectionsCancellationTokenSource.Token);
             });
         }
