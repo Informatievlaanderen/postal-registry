@@ -1,3 +1,10 @@
+## [7.0.2](https://github.com/informatievlaanderen/postal-registry/compare/v7.0.1...v7.0.2) (2026-06-19)
+
+
+### Bug Fixes
+
+* **projector:** resume projections ([30ac11c](https://github.com/informatievlaanderen/postal-registry/commit/30ac11c3c449dfdf8deefc1f6f5f165334db9c0b))
+
 ## [7.0.1](https://github.com/informatievlaanderen/postal-registry/compare/v7.0.0...v7.0.1) (2026-06-16)
 
 
