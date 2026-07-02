@@ -1267,7 +1267,7 @@
       "postalregistry": {
         "type": "Project",
         "dependencies": {
-          "Autofac": "[9.1.0, )",
+          "Autofac": "[9.3.0, )",
           "Be.Vlaanderen.Basisregisters.AggregateSource": "[11.0.0, )",
           "Be.Vlaanderen.Basisregisters.AggregateSource.ExplicitRouting": "[11.0.0, )",
           "Be.Vlaanderen.Basisregisters.CommandHandling": "[11.0.0, )",
@@ -1297,7 +1297,7 @@
       "postalregistry.infrastructure": {
         "type": "Project",
         "dependencies": {
-          "Autofac": "[9.1.0, )",
+          "Autofac": "[9.3.0, )",
           "Be.Vlaanderen.Basisregisters.AggregateSource": "[11.0.0, )",
           "Be.Vlaanderen.Basisregisters.AggregateSource.SqlStreamStore": "[11.0.0, )",
           "Be.Vlaanderen.Basisregisters.AggregateSource.SqlStreamStore.Autofac": "[11.0.0, )",
@@ -1330,9 +1330,9 @@
       },
       "Autofac": {
         "type": "CentralTransitive",
-        "requested": "[9.1.0, )",
-        "resolved": "9.1.0",
-        "contentHash": "onT/BcnnfWcQNXiuC7R/0h8ALQzRdsAI20gpB7nfrudXpFMXdVZKz1umdtHXDwjc/bmWEsrCBAxck3+Arnk15g=="
+        "requested": "[9.3.0, )",
+        "resolved": "9.3.0",
+        "contentHash": "OXigGAa1oFYbHmI9lEEYYSRQvbtGC3AnNdg+4BEhHa0x8XlJrYOS7Sg5fZtmlrHPLp+gRsDnz2aqbsglNUnv0g=="
       },
       "Be.Vlaanderen.Basisregisters.AggregateSource": {
         "type": "CentralTransitive",
