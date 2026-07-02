@@ -1,3 +1,10 @@
+## [7.0.3](https://github.com/informatievlaanderen/postal-registry/compare/v7.0.2...v7.0.3) (2026-07-02)
+
+
+### Bug Fixes
+
+* **extract:** disable retry ([dd83648](https://github.com/informatievlaanderen/postal-registry/commit/dd836489bef9e5fa584633afd12af75751a859ec))
+
 ## [7.0.2](https://github.com/informatievlaanderen/postal-registry/compare/v7.0.1...v7.0.2) (2026-06-19)
 
 
