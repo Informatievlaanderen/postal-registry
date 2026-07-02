@@ -94,7 +94,7 @@ namespace PostalRegistry.Api.Extract.Infrastructure
                     }
                 })
                 .AddValidatorsFromAssemblyContaining<Startup>()
-                .RegisterExtractModule(_configuration, _loggerFactory);
+                .RegisterExtractModule(_configuration, _loggerFactory, enableRetry: false);
         }
 
         public void Configure(
