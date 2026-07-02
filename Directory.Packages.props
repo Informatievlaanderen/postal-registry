@@ -63,7 +63,7 @@
         <PackageVersion Include="Be.Vlaanderen.Basisregisters.GrAr.Legacy" Version="24.1.0" />
         <PackageVersion Include="Be.Vlaanderen.Basisregisters.GrAr.Oslo" Version="24.1.0" />
         <PackageVersion Include="Be.Vlaanderen.Basisregisters.GrAr.Provenance" Version="24.1.0" />
-        <PackageVersion Include="Be.Vlaanderen.Basisregisters.GrAr.Extracts" Version="24.1.0" />
+        <PackageVersion Include="Be.Vlaanderen.Basisregisters.GrAr.Extracts" Version="24.4.1" />
         <PackageVersion Include="Be.Vlaanderen.Basisregisters.Shaperon" Version="11.1.0" />
 
         <PackageVersion Include="Structurizr.Core" Version="0.9.7" />
