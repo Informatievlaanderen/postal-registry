@@ -59,7 +59,7 @@
         <PackageVersion Include="Be.Vlaanderen.Basisregisters.Crab" Version="5.1.0" />
         <PackageVersion Include="Be.Vlaanderen.Basisregisters.GrAr.ChangeFeed" Version="24.1.0" />
         <PackageVersion Include="Be.Vlaanderen.Basisregisters.GrAr.Common" Version="24.1.0" />
-        <PackageVersion Include="Be.Vlaanderen.Basisregisters.GrAr.Contracts" Version="24.1.0" />
+        <PackageVersion Include="Be.Vlaanderen.Basisregisters.GrAr.Contracts" Version="24.4.1" />
         <PackageVersion Include="Be.Vlaanderen.Basisregisters.GrAr.Legacy" Version="24.1.0" />
         <PackageVersion Include="Be.Vlaanderen.Basisregisters.GrAr.Oslo" Version="24.1.0" />
         <PackageVersion Include="Be.Vlaanderen.Basisregisters.GrAr.Provenance" Version="24.1.0" />
