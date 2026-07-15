@@ -7,8 +7,8 @@
     using Be.Vlaanderen.Basisregisters.EventHandling;
     using Be.Vlaanderen.Basisregisters.GrAr.ChangeFeed;
     using Be.Vlaanderen.Basisregisters.GrAr.Common;
-    using Be.Vlaanderen.Basisregisters.GrAr.Legacy;
     using Be.Vlaanderen.Basisregisters.GrAr.Oslo;
+    using Be.Vlaanderen.Basisregisters.GrAr.Oslo.PostInfo;
     using Be.Vlaanderen.Basisregisters.GrAr.Provenance;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.Connector;
     using Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore;
@@ -116,15 +116,15 @@
                     throw new InvalidOperationException($"Could not find document for postalcode {message.Message.PostalCode}");
 
                 var oldStatus = document.Document.Status;
-                document.Document.Status = PostInfoStatus.Gerealiseerd;
+                document.Document.Status = new Status(PostInfoStatus.Gerealiseerd);
                 document.LastChangedOn = message.Message.Provenance.Timestamp;
 
                 await AddCloudEvent(message, document, context,
                 [
                     new BaseRegistriesCloudEventAttribute(
                         PostalAttributeNames.StatusName,
-                        oldStatus,
-                        PostInfoStatus.Gerealiseerd)
+                        oldStatus?.Id,
+                        document.Document.Status!.Id)
                 ]);
             });
 
@@ -135,15 +135,15 @@
                     throw new InvalidOperationException($"Could not find document for postalcode {message.Message.PostalCode}");
 
                 var oldStatus = document.Document.Status;
-                document.Document.Status = PostInfoStatus.Gehistoreerd;
+                document.Document.Status = new Status(PostInfoStatus.Gehistoreerd);
                 document.LastChangedOn = message.Message.Provenance.Timestamp;
 
                 await AddCloudEvent(message, document, context,
                 [
                     new BaseRegistriesCloudEventAttribute(
                         PostalAttributeNames.StatusName,
-                        oldStatus,
-                        PostInfoStatus.Gehistoreerd)
+                        oldStatus!.Id,
+                        document.Document.Status!.Id)
                 ]);
             });
 
@@ -215,16 +215,16 @@
             {
                 default:
                 case Language.Dutch:
-                    return Taal.NL;
+                    return Taal.Nl;
 
                 case Language.French:
-                    return Taal.FR;
+                    return Taal.Fr;
 
                 case Language.German:
-                    return Taal.DE;
+                    return Taal.De;
 
                 case Language.English:
-                    return Taal.EN;
+                    return Taal.En;
             }
         }
     }

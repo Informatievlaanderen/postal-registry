@@ -1,4 +1,4 @@
-namespace PostalRegistry.Api.Oslo.PostalInformation.Responses
+namespace PostalRegistry.Api.Oslo.PostalInformation.V2.Responses
 {
     using System;
     using System.Collections.Generic;
@@ -6,9 +6,9 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.Responses
     using Be.Vlaanderen.Basisregisters.GrAr.Common;
     using Be.Vlaanderen.Basisregisters.GrAr.Legacy;
     using Be.Vlaanderen.Basisregisters.GrAr.Legacy.PostInfo;
-    using Infrastructure.Options;
     using Microsoft.Extensions.Options;
     using Newtonsoft.Json;
+    using PostalRegistry.Api.Oslo.Infrastructure.Options;
     using Swashbuckle.AspNetCore.Filters;
 
     [DataContract(Name = "PostinfoCollectie", Namespace = "")]

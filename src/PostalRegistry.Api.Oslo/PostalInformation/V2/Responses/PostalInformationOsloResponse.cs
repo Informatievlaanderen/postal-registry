@@ -1,4 +1,4 @@
-namespace PostalRegistry.Api.Oslo.PostalInformation.Responses
+namespace PostalRegistry.Api.Oslo.PostalInformation.V2.Responses
 {
     using System;
     using System.Collections.Generic;
@@ -8,10 +8,10 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.Responses
     using Be.Vlaanderen.Basisregisters.GrAr.Legacy;
     using Be.Vlaanderen.Basisregisters.GrAr.Legacy.Gemeente;
     using Be.Vlaanderen.Basisregisters.GrAr.Legacy.PostInfo;
-    using Infrastructure.Options;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Options;
     using Newtonsoft.Json;
+    using PostalRegistry.Api.Oslo.Infrastructure.Options;
     using Swashbuckle.AspNetCore.Filters;
     using ProblemDetails = Be.Vlaanderen.Basisregisters.BasicApiProblem.ProblemDetails;
 
@@ -183,6 +183,30 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.Responses
                 HttpStatus = StatusCodes.Status404NotFound,
                 Title = ProblemDetails.DefaultTitle,
                 Detail = "Onbestaande postcode.",
+                ProblemInstanceUri = _problemDetailsHelper.GetInstanceUri(_httpContextAccessor.HttpContext, "v2")
+            };
+    }
+
+    public class PostalInformationGoneResponseExamples : IExamplesProvider<ProblemDetails>
+    {
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ProblemDetailsHelper _problemDetailsHelper;
+
+        public PostalInformationGoneResponseExamples(
+            IHttpContextAccessor httpContextAccessor,
+            ProblemDetailsHelper problemDetailsHelper)
+        {
+            _httpContextAccessor = httpContextAccessor;
+            _problemDetailsHelper = problemDetailsHelper;
+        }
+
+        public ProblemDetails GetExamples()
+            => new ProblemDetails
+            {
+                ProblemTypeUri = "urn:be.vlaanderen.basisregisters.api:postalcode:gone",
+                HttpStatus = StatusCodes.Status410Gone,
+                Title = ProblemDetails.DefaultTitle,
+                Detail = "Verwijderde postcode.",
                 ProblemInstanceUri = _problemDetailsHelper.GetInstanceUri(_httpContextAccessor.HttpContext, "v2")
             };
     }

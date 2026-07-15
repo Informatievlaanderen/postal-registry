@@ -1,13 +1,10 @@
-namespace PostalRegistry.Api.Oslo.PostalInformation
+namespace PostalRegistry.Api.Oslo.PostalInformation.V3
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Net.Mime;
-    using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
-    using System.Xml;
     using Asp.Versioning;
     using Be.Vlaanderen.Basisregisters.Api;
     using Be.Vlaanderen.Basisregisters.Api.ChangeFeed;
@@ -16,25 +13,19 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
     using Be.Vlaanderen.Basisregisters.Api.Search.Filtering;
     using Be.Vlaanderen.Basisregisters.Api.Search.Pagination;
     using Be.Vlaanderen.Basisregisters.Api.Search.Sorting;
-    using Be.Vlaanderen.Basisregisters.Api.Syndication;
     using Be.Vlaanderen.Basisregisters.GrAr.ChangeFeed;
     using Be.Vlaanderen.Basisregisters.GrAr.Common;
-    using Be.Vlaanderen.Basisregisters.GrAr.Common.Syndication;
-    using Be.Vlaanderen.Basisregisters.GrAr.Legacy;
-    using Be.Vlaanderen.Basisregisters.GrAr.Legacy.Gemeente;
-    using Be.Vlaanderen.Basisregisters.GrAr.Legacy.PostInfo;
+    using Be.Vlaanderen.Basisregisters.GrAr.Oslo;
+    using Be.Vlaanderen.Basisregisters.GrAr.Oslo.Gemeente;
+    using Be.Vlaanderen.Basisregisters.GrAr.Oslo.PostInfo;
     using CloudNative.CloudEvents;
     using Convertors;
-    using Infrastructure;
     using Infrastructure.Options;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.OutputCaching;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Options;
-    using Microsoft.SyndicationFeed;
-    using Microsoft.SyndicationFeed.Atom;
     using Nuts;
     using Projections.Feed;
     using Projections.Legacy;
@@ -44,8 +35,8 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
     using Swashbuckle.AspNetCore.Filters;
     using ProblemDetails = Be.Vlaanderen.Basisregisters.BasicApiProblem.ProblemDetails;
 
-    [ApiVersion("2.0")]
-    [AdvertiseApiVersions("2.0")]
+    [ApiVersion("3.0")]
+    [AdvertiseApiVersions("2.0", "3.0")]
     [ApiRoute("postcodes")]
     [ApiExplorerSettings(GroupName = "Postcodes")]
     public class PostalInformationOsloController : ApiController
@@ -61,19 +52,22 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
         /// <param name="cancellationToken"></param>
         /// <response code="200">Als de postcode gevonden is.</response>
         /// <response code="404">Als de postcode niet gevonden kan worden.</response>
+        /// <response code="410">Als de postcode verwijderd is.</response>
         /// <response code="500">Als er een interne fout is opgetreden.</response>
         [HttpGet("{postalCode}")]
         [Produces(AcceptTypes.JsonLd)]
-        [ProducesResponseType(typeof(PostalInformationOsloResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(PostalInformationOsloV3Response), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status410Gone)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         [SwaggerResponseExample(StatusCodes.Status200OK, typeof(PostalInformationOsloResponseExamples))]
         [SwaggerResponseExample(StatusCodes.Status404NotFound, typeof(PostalInformationNotFoundResponseExamples))]
+        [SwaggerResponseExample(StatusCodes.Status410Gone, typeof(PostalInformationGoneResponseExamples))]
         [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(InternalServerErrorResponseExamples))]
         public async Task<IActionResult> Get(
             [FromServices] LegacyContext context,
             [FromServices] SyndicationContext syndicationContext,
-            [FromServices] IOptions<ResponseOptions> responseOptions,
+            [FromServices] IOptions<ResponseOptionsV3> responseOptions,
             [FromServices] Nuts3Service nuts3Service,
             [FromRoute] string postalCode,
             CancellationToken cancellationToken = default)
@@ -99,24 +93,21 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
             var nuts3Record = nuts3Service.GetNuts3ByPostalCode(postalInformation.PostalCode);
 
             return Ok(
-                new PostalInformationOsloResponse(
-                    responseOptions.Value.Naamruimte,
+                new PostalInformationOsloV3Response(
                     responseOptions.Value.ContextUrlDetail,
                     postalCode,
                     gemeente,
+                    postalInformation
+                        .PostalNames
+                        .Select(name => new GeografischeNaam(name.Name, name.Language.ConvertOsloFromLanguage()))
+                        .ToList(),
                     postalInformation.VersionTimestamp.ToBelgianDateTimeOffset(),
                     postalInformation.IsRetired
                         ? PostInfoStatus.Gehistoreerd
                         : PostInfoStatus.Gerealiseerd,
                     nuts3Record?.Nuts3Code,
                     responseOptions.Value.DetailUrl,
-                    responseOptions.Value.PostInfoDetailAddressesLink)
-                {
-                    Postnamen = postalInformation
-                        .PostalNames?
-                        .Select(name => new Postnaam(new GeografischeNaam(name.Name, name.Language.ConvertFromLanguage())))
-                        .ToList()
-                });
+                    responseOptions.Value.PostInfoDetailAddressesLink));
         }
 
         /// <summary>
@@ -131,14 +122,14 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
         /// <response code="500">Als er een interne fout is opgetreden.</response>
         [HttpGet]
         [Produces(AcceptTypes.JsonLd)]
-        [ProducesResponseType(typeof(PostalInformationListOsloResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(PostalInformationListOsloV3Response), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         [SwaggerResponseExample(StatusCodes.Status200OK, typeof(PostalInformationListOsloResponseExamples))]
         [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(InternalServerErrorResponseExamples))]
         public async Task<IActionResult> List(
             [FromServices] LegacyContext legacyContext,
             [FromServices] SyndicationContext syndicationContext,
-            [FromServices] IOptions<ResponseOptions> responseOptions,
+            [FromServices] IOptions<ResponseOptionsV3> responseOptions,
             [FromServices] Nuts3Service nuts3Service,
             CancellationToken cancellationToken = default)
         {
@@ -157,17 +148,14 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
                 .ToListAsync(cancellationToken);
 
             var items = postalInformationSet
-                .Select(p => new PostalInformationListItemOsloResponse(
+                .Select(p => new PostalInformationListItemOsloV3Response(
                     p.PostalCode,
-                    responseOptions.Value.Naamruimte,
                     responseOptions.Value.DetailUrl,
                     p.IsRetired ? PostInfoStatus.Gehistoreerd : PostInfoStatus.Gerealiseerd,
-                    p.VersionTimestamp.ToBelgianDateTimeOffset())
-                {
-                    Postnamen = p.PostalNames.Select(x => x.ConvertFromPostalName()).ToList()
-                }).ToList();
+                    p.PostalNames.Select(x => new GeografischeNaam(x.Name, x.Language.ConvertOsloFromLanguage())),
+                    p.VersionTimestamp.ToBelgianDateTimeOffset())).ToList();
 
-            return Ok(new PostalInformationListOsloResponse
+            return Ok(new PostalInformationListOsloV3Response
             {
                 PostInfoObjecten = items,
                 Volgende = BuildNextUri(pagedPostalInformationSet.PaginationInfo, items.Count, responseOptions.Value.VolgendeUrl),
@@ -360,92 +348,6 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
             return Ok(response);
         }
 
-         /// <summary>
-        /// Vraag een lijst met wijzigingen van postinfo op.
-        /// </summary>
-        /// <param name="configuration"></param>
-        /// <param name="context"></param>
-        /// <param name="responseOptions"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        [HttpGet("sync")]
-        [Produces("text/xml")]
-        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        [SwaggerResponseExample(StatusCodes.Status200OK, typeof(PostalInformationSyndicationResponseExamples))]
-        [SwaggerResponseExample(StatusCodes.Status400BadRequest, typeof(BadRequestResponseExamples))]
-        [SwaggerResponseExample(StatusCodes.Status500InternalServerError, typeof(InternalServerErrorResponseExamples))]
-        public async Task<IActionResult> Sync(
-            [FromServices] IConfiguration configuration,
-            [FromServices] LegacyContext context,
-            [FromServices] IOptions<ResponseOptions> responseOptions,
-            CancellationToken cancellationToken = default)
-        {
-            var filtering = Request.ExtractFilteringRequest<PostalInformationSyndicationFilter>();
-            var sorting = Request.ExtractSortingRequest();
-            var pagination = Request.ExtractPaginationRequest();
-
-            var lastFeedUpdate = await context
-                .PostalInformationSyndication
-                .AsNoTracking()
-                .OrderByDescending(item => item.Position)
-                .Select(item => item.SyndicationItemCreatedAt)
-                .FirstOrDefaultAsync(cancellationToken);
-
-            if (lastFeedUpdate == default)
-                lastFeedUpdate = new DateTimeOffset(2020, 1, 1, 0, 0, 0, TimeSpan.Zero);
-
-            var pagedPostalInformationSet =
-                new PostalInformationSyndicationQuery(
-                    context,
-                    filtering.Filter?.Embed)
-                .Fetch(filtering, sorting, pagination);
-
-            return new ContentResult
-            {
-                Content = await BuildAtomFeed(lastFeedUpdate, pagedPostalInformationSet, responseOptions, configuration),
-                ContentType = MediaTypeNames.Text.Xml,
-                StatusCode = StatusCodes.Status200OK
-            };
-        }
-
-        private static async Task<string> BuildAtomFeed(
-            DateTimeOffset lastFeedUpdate,
-            PagedQueryable<PostalInformationSyndicationQueryResult> pagedPostalInfoItems,
-            IOptions<ResponseOptions> responseOptions,
-            IConfiguration configuration)
-        {
-            var sw = new StringWriterWithEncoding(Encoding.UTF8);
-
-            using (var xmlWriter = XmlWriter.Create(sw, new XmlWriterSettings { Async = true, Indent = true, Encoding = sw.Encoding }))
-            {
-                var formatter = new AtomFormatter(null, xmlWriter.Settings) { UseCDATA = true };
-                var writer = new AtomFeedWriter(xmlWriter, null, formatter);
-                var syndicationConfiguration = configuration.GetSection("Syndication");
-                var atomFeedConfig = AtomFeedConfigurationBuilder.CreateFrom(syndicationConfiguration, lastFeedUpdate);
-
-                await writer.WriteDefaultMetadata(atomFeedConfig);
-
-                var postalInfos = pagedPostalInfoItems.Items.ToList();
-
-                var nextFrom = postalInfos.Any()
-                    ? postalInfos.Max(x => x.Position) + 1
-                    : (long?) null;
-
-                var nextUri = BuildNextSyncUri(pagedPostalInfoItems.PaginationInfo.Limit, nextFrom, syndicationConfiguration["NextUri"]);
-                if (nextUri != null)
-                    await writer.Write(new SyndicationLink(nextUri, GrArAtomLinkTypes.Next));
-
-                foreach (var postalInfo in postalInfos)
-                    await writer.WritePostalInfo(responseOptions, formatter, syndicationConfiguration["Category"], postalInfo);
-
-                xmlWriter.Flush();
-            }
-
-            return sw.ToString();
-        }
-
         private static Uri? BuildNextUri(PaginationInfo paginationInfo, int itemsInCollection, string nextUrlBase)
         {
             var offset = paginationInfo.Offset;
@@ -463,12 +365,15 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
                 : null;
         }
 
-        private async Task<PostinfoDetailGemeente?> GetPostinfoDetailGemeente(
+        private async Task<PostinfoToegekendAanGemeente?> GetPostinfoDetailGemeente(
             SyndicationContext syndicationContext,
             string? nisCode,
             string gemeenteDetailUrl,
             CancellationToken ct)
         {
+            if (string.IsNullOrEmpty(nisCode))
+                return null;
+
             var municipality = await syndicationContext
                 .MunicipalityLatestItems
                 .AsNoTracking()
@@ -479,12 +384,24 @@ namespace PostalRegistry.Api.Oslo.PostalInformation
                 return null;
             }
 
-            var municipalityDefaultName = municipality.DefaultName;
-            var gemeente = new PostinfoDetailGemeente
+            var gemeenteNamen = new List<GeografischeNaam>
             {
-                ObjectId = nisCode,
+                new GeografischeNaam(municipality.NameDutch, Taal.Nl),
+                new GeografischeNaam(municipality.NameFrench, Taal.Fr),
+                new GeografischeNaam(municipality.NameGerman, Taal.De),
+                new GeografischeNaam(municipality.NameEnglish, Taal.En),
+            };
+
+            gemeenteNamen = gemeenteNamen.Where(g => !string.IsNullOrWhiteSpace(g.Spelling)).ToList();
+
+            var gemeente = new PostinfoToegekendAanGemeente
+            {
+                Id = OsloNamespaces.Gemeente.ToPuri(nisCode!),
                 Detail = string.Format(gemeenteDetailUrl, nisCode),
-                Gemeentenaam = new Gemeentenaam(new GeografischeNaam(municipalityDefaultName.Value, municipalityDefaultName.Key))
+                Gemeentenaam = new Gemeentenaam
+                {
+                    Gemeentenamen = gemeenteNamen
+                }
             };
             return gemeente;
         }

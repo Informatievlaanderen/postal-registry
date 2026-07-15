@@ -1,4 +1,4 @@
-namespace PostalRegistry.Api.Oslo.PostalInformation.Responses
+namespace PostalRegistry.Api.Oslo.PostalInformation.V2.Responses
 {
     using Be.Vlaanderen.Basisregisters.GrAr.Legacy;
     using Swashbuckle.AspNetCore.Filters;
