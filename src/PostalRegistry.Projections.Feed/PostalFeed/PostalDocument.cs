@@ -3,7 +3,8 @@
     using System;
     using System.Collections.Generic;
     using Be.Vlaanderen.Basisregisters.GrAr.Common;
-    using Be.Vlaanderen.Basisregisters.GrAr.Legacy;
+    using Be.Vlaanderen.Basisregisters.GrAr.Oslo;
+    using Be.Vlaanderen.Basisregisters.GrAr.Oslo.PostInfo;
     using Infrastructure;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -58,7 +59,7 @@
     {
         public string PostalCode { get; set; } = null!;
         public string? NisCode { get; set; }
-        public PostInfoStatus? Status { get; set; }
+        public Status? Status { get; set; }
         public DateTimeOffset VersionId { get; set; }
         public List<GeografischeNaam> Names { get; set; } = [];
     }

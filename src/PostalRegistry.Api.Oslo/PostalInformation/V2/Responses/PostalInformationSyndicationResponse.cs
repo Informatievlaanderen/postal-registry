@@ -1,4 +1,4 @@
-namespace PostalRegistry.Api.Oslo.PostalInformation.Responses
+namespace PostalRegistry.Api.Oslo.PostalInformation.V2.Responses
 {
     using System;
     using System.Collections.Generic;
@@ -12,12 +12,12 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.Responses
     using Be.Vlaanderen.Basisregisters.GrAr.Legacy;
     using Be.Vlaanderen.Basisregisters.GrAr.Legacy.PostInfo;
     using Be.Vlaanderen.Basisregisters.GrAr.Provenance;
-    using Convertors;
-    using Infrastructure.Options;
     using Microsoft.Extensions.Options;
     using Microsoft.SyndicationFeed;
     using Microsoft.SyndicationFeed.Atom;
-    using Query;
+    using PostalRegistry.Api.Oslo.Convertors;
+    using PostalRegistry.Api.Oslo.Infrastructure.Options;
+    using PostalRegistry.Api.Oslo.PostalInformation.Query;
     using Swashbuckle.AspNetCore.Filters;
     using Provenance = Be.Vlaanderen.Basisregisters.GrAr.Provenance.Syndication.Provenance;
 

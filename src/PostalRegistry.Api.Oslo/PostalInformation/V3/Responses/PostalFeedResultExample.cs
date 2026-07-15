@@ -1,4 +1,4 @@
-﻿namespace PostalRegistry.Api.Oslo.PostalInformation.Responses
+namespace PostalRegistry.Api.Oslo.PostalInformation.V3.Responses
 {
     using Infrastructure.Options;
     using Microsoft.Extensions.Options;
@@ -7,9 +7,9 @@
 
     public sealed class PostalFeedResultExample : IExamplesProvider<object>
     {
-        private readonly ResponseOptions _feedConfig;
+        private readonly ResponseOptionsV3 _feedConfig;
 
-        public PostalFeedResultExample(IOptions<ResponseOptions> feedConfig)
+        public PostalFeedResultExample(IOptions<ResponseOptionsV3> feedConfig)
         {
             _feedConfig = feedConfig.Value;
         }

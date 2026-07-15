@@ -100,7 +100,8 @@ namespace PostalRegistry.Api.Oslo.Infrastructure
                         }
                     }
                 })
-                .Configure<ResponseOptions>(_configuration)
+                .Configure<ResponseOptions>(_configuration.GetSection("V2"))
+                .Configure<ResponseOptionsV3>(_configuration.GetSection("V3"))
                 .AddValidatorsFromAssemblyContaining<Startup>()
                 .RegisterLegacyModule(_configuration, _loggerFactory)
                 .RegisterSyndicationModule(_configuration, _loggerFactory)

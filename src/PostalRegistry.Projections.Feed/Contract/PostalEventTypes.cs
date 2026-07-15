@@ -10,8 +10,8 @@
 
     public static class PostalAttributeNames
     {
-        public const string MunicipalityId = "gemeente.id";
-        public const string StatusName = "postInfoStatus";
-        public const string PostalNames = "postnamen";
+        public const string MunicipalityId = "isToegekendAan";
+        public const string StatusName = "status";
+        public const string PostalNames = "postnaam";
     }
 }
