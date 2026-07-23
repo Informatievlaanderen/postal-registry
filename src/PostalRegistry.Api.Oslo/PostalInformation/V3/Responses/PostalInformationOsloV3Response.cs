@@ -70,6 +70,9 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.V3.Responses
         }
     }
 
+    /// <summary>
+    /// De data van de postinfo.
+    /// </summary>
     public class PostalInformationOsloV3ResponseData
     {
         /// <summary>

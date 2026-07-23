@@ -165,7 +165,8 @@ namespace PostalRegistry.Projector.Infrastructure.Modules
                 .RegisterProjectionMigrator<DataMigrationContextMigrationFactory>(
                     _configuration,
                     _loggerFactory)
-                .RegisterProjections<LastChangedListProjections, LastChangedListContext>(_connectedProjectionSettings);
+                .RegisterProjections<LastChangedListProjections, LastChangedListContext>(_connectedProjectionSettings)
+                .RegisterProjections<LastChangedListProjectionsV3,  LastChangedListContext>(_connectedProjectionSettings);
         }
 
         private void RegisterLegacyProjections(ContainerBuilder builder)
