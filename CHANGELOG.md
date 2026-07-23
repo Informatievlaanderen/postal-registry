@@ -1,3 +1,10 @@
+# [7.1.0](https://github.com/informatievlaanderen/postal-registry/compare/v7.0.3...v7.1.0) (2026-07-23)
+
+
+### Features
+
+* **oslo:** add v3 ([71a7e18](https://github.com/informatievlaanderen/postal-registry/commit/71a7e181702af9522b8df38f62e83218dc46b4c4))
+
 ## [7.0.3](https://github.com/informatievlaanderen/postal-registry/compare/v7.0.2...v7.0.3) (2026-07-02)
 
 
