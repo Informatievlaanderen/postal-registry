@@ -67,7 +67,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.V3.Responses
         /// De huidige fase in de doorlooptijd van de postcode.
         /// </summary>
         [JsonProperty("status", Required = Required.DisallowNull, Order = 4)]
-        public Status PostInfoStatus { get; set; }
+        public PostInfoStatus PostInfoStatus { get; set; }
 
         /// <summary>
         /// De namen van het gebied dat de postcode beslaat, in de taal afkomstig uit het bPost bestand.
@@ -78,14 +78,14 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.V3.Responses
         public PostalInformationListItemOsloV3Response(
             string postalCode,
             string detail,
-            PostInfoStatus status,
+            PostInfoStatusValue status,
             IEnumerable<GeografischeNaam> postnamen,
             DateTimeOffset version)
         {
             Id = OsloNamespaces.Postinfo.ToPuri(postalCode);
             Identificator = new PostinfoIdentificator(postalCode, version);
             Detail = new Uri(string.Format(detail, postalCode));
-            PostInfoStatus = new Status(status);
+            PostInfoStatus = new PostInfoStatus(status);
             Postnamen = new List<GeografischeNaam>(postnamen);
         }
     }
@@ -102,7 +102,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.V3.Responses
                 new PostalInformationListItemOsloV3Response(
                     "9000",
                     _responseOptions.DetailUrl,
-                    PostInfoStatus.Gerealiseerd,
+                    PostInfoStatusValue.Gerealiseerd,
                     [new GeografischeNaam("Gent", Taal.Nl)],
                     DateTimeOffset.Now.ToExampleOffset());
 
@@ -110,7 +110,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.V3.Responses
                 new PostalInformationListItemOsloV3Response(
                     "9140",
                     _responseOptions.DetailUrl,
-                    PostInfoStatus.Gerealiseerd,
+                    PostInfoStatusValue.Gerealiseerd,
                     [new GeografischeNaam("Temse", Taal.Nl)],
                     DateTimeOffset.Now.ToExampleOffset());
 

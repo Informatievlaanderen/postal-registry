@@ -116,7 +116,7 @@
                     throw new InvalidOperationException($"Could not find document for postalcode {message.Message.PostalCode}");
 
                 var oldStatus = document.Document.Status;
-                document.Document.Status = new Status(PostInfoStatus.Gerealiseerd);
+                document.Document.Status = new PostInfoStatus(PostInfoStatusValue.Gerealiseerd);
                 document.LastChangedOn = message.Message.Provenance.Timestamp;
 
                 await AddCloudEvent(message, document, context,
@@ -135,7 +135,7 @@
                     throw new InvalidOperationException($"Could not find document for postalcode {message.Message.PostalCode}");
 
                 var oldStatus = document.Document.Status;
-                document.Document.Status = new Status(PostInfoStatus.Gehistoreerd);
+                document.Document.Status = new PostInfoStatus(PostInfoStatusValue.Gehistoreerd);
                 document.LastChangedOn = message.Message.Provenance.Timestamp;
 
                 await AddCloudEvent(message, document, context,

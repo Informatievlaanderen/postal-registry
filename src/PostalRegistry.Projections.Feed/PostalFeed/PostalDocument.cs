@@ -59,7 +59,7 @@
     {
         public string PostalCode { get; set; } = null!;
         public string? NisCode { get; set; }
-        public Status? Status { get; set; }
+        public PostInfoStatus? Status { get; set; }
         public DateTimeOffset VersionId { get; set; }
         public List<GeografischeNaam> Names { get; set; } = [];
     }

@@ -14,7 +14,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.V3.Responses
     using Newtonsoft.Json;
     using Swashbuckle.AspNetCore.Filters;
     using ProblemDetails = Be.Vlaanderen.Basisregisters.BasicApiProblem.ProblemDetails;
-    using Status = Be.Vlaanderen.Basisregisters.GrAr.Oslo.PostInfo.Status;
+    using Status = Be.Vlaanderen.Basisregisters.GrAr.Oslo.PostInfo.PostInfoStatus;
 
     public class PostalInformationOsloV3Response
     {
@@ -49,7 +49,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.V3.Responses
             PostinfoToegekendAanGemeente? gemeente,
             IEnumerable<GeografischeNaam> postnamen,
             DateTimeOffset version,
-            PostInfoStatus postInfoStatus,
+            PostInfoStatusValue postInfoStatus,
             string? nuts3Code,
             string selfDetailUrl,
             string addressesLinkUrl)
@@ -122,13 +122,13 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.V3.Responses
             PostinfoToegekendAanGemeente? gemeente,
             IEnumerable<GeografischeNaam> postnamen,
             DateTimeOffset version,
-            PostInfoStatus postInfoStatus,
+            PostInfoStatusValue postInfoStatus,
             string? nuts3Code)
         {
             Id = OsloNamespaces.Postinfo.ToPuri(postcode);
             Identificator = new PostinfoIdentificator(postcode, version);
             Gemeente = gemeente;
-            PostInfoStatus = new Status(postInfoStatus);
+            PostInfoStatus = new PostInfoStatus(postInfoStatus);
             Postnamen = new List<GeografischeNaam>(postnamen);
             Nuts3Code = nuts3Code;
         }
@@ -181,7 +181,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.V3.Responses
                 gemeente,
                 [new GeografischeNaam("Sint-Andries", Taal.Nl), new GeografischeNaam("Sint-Michiels", Taal.Nl)],
                 DateTimeOffset.Now.ToExampleOffset(),
-                PostInfoStatus.Gerealiseerd,
+                PostInfoStatusValue.Gerealiseerd,
                 "BE251",
                 _responseOptions.DetailUrl,
                 _responseOptions.PostInfoDetailAddressesLink);

@@ -103,8 +103,8 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.V3
                         .ToList(),
                     postalInformation.VersionTimestamp.ToBelgianDateTimeOffset(),
                     postalInformation.IsRetired
-                        ? PostInfoStatus.Gehistoreerd
-                        : PostInfoStatus.Gerealiseerd,
+                        ? PostInfoStatusValue.Gehistoreerd
+                        : PostInfoStatusValue.Gerealiseerd,
                     nuts3Record?.Nuts3Code,
                     responseOptions.Value.DetailUrl,
                     responseOptions.Value.PostInfoDetailAddressesLink));
@@ -151,7 +151,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.V3
                 .Select(p => new PostalInformationListItemOsloV3Response(
                     p.PostalCode,
                     responseOptions.Value.DetailUrl,
-                    p.IsRetired ? PostInfoStatus.Gehistoreerd : PostInfoStatus.Gerealiseerd,
+                    p.IsRetired ? PostInfoStatusValue.Gehistoreerd : PostInfoStatusValue.Gerealiseerd,
                     p.PostalNames.Select(x => new GeografischeNaam(x.Name, x.Language.ConvertOsloFromLanguage())),
                     p.VersionTimestamp.ToBelgianDateTimeOffset())).ToList();
 
