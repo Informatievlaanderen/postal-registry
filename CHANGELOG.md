@@ -1,3 +1,5 @@
+## [7.2.1](https://github.com/informatievlaanderen/postal-registry/compare/v7.2.0...v7.2.1) (2026-07-23)
+
 # [7.2.0](https://github.com/informatievlaanderen/postal-registry/compare/v7.1.0...v7.2.0) (2026-07-23)
 
 
