@@ -1,3 +1,10 @@
+# [7.2.0](https://github.com/informatievlaanderen/postal-registry/compare/v7.1.0...v7.2.0) (2026-07-23)
+
+
+### Features
+
+* add LastChangedListV3 + small fixes ([d3e6252](https://github.com/informatievlaanderen/postal-registry/commit/d3e62526828a771ed983fb2fb11cf662353bd36d))
+
 # [7.1.0](https://github.com/informatievlaanderen/postal-registry/compare/v7.0.3...v7.1.0) (2026-07-23)
 
 
