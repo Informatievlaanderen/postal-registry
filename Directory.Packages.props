@@ -21,7 +21,7 @@
         <PackageVersion Include="Datadog.Trace.Bundle" Version="3.45.0" />
 
         <PackageVersion Include="Destructurama.JsonNet" Version="4.0.2" />
-        <PackageVersion Include="NodaTime" Version="3.3.2" />
+        <PackageVersion Include="NodaTime" Version="3.3.3" />
 
         <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.8" />
         <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.8" />
