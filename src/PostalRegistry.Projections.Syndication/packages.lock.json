@@ -146,11 +146,11 @@
       },
       "Datadog.Trace.Bundle": {
         "type": "Direct",
-        "requested": "[3.45.0, )",
-        "resolved": "3.45.0",
-        "contentHash": "ax3lAy2poa1SRgxkMXUpQaCe2vl/Kf0DnopfIltXyRw6o6TSkChFB4Rj9JO3K41Od6A5oMLuf4tMhrCdRRUdfg==",
+        "requested": "[3.50.0, )",
+        "resolved": "3.50.0",
+        "contentHash": "XoCNUvAt1wpFJy0YD7Q4CqM0uTEZOAwRXEoHchxjCVLpVvsgk0qtH/EvWCc6Pi3mWi5kf5zU4jcox+M8xjxCAA==",
         "dependencies": {
-          "Datadog.Trace": "3.45.0"
+          "Datadog.Trace": "3.50.0"
         }
       },
       "Destructurama.JsonNet": {
@@ -415,8 +415,8 @@
       },
       "Datadog.Trace": {
         "type": "Transitive",
-        "resolved": "3.45.0",
-        "contentHash": "X9pNQFNLdElEAvJv/rNDnqjivFIChAAdMbq13QqdPVIy9eykkRYEpP/MZus21WxW1XhxG/h/735F/UVDWbi3+w=="
+        "resolved": "3.50.0",
+        "contentHash": "K1ZQwJgHeEkEBmxmwwoCB36rQQl9esAdQwH4Dsz9LhG29G0BtOm7Vydp1NTyBg4MEqaih1hO/x2+8BEh5Zo4hQ=="
       },
       "FluentValidation": {
         "type": "Transitive",

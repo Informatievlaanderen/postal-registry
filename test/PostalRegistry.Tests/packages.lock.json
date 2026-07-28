@@ -371,8 +371,8 @@
       },
       "Datadog.Trace": {
         "type": "Transitive",
-        "resolved": "3.45.0",
-        "contentHash": "X9pNQFNLdElEAvJv/rNDnqjivFIChAAdMbq13QqdPVIy9eykkRYEpP/MZus21WxW1XhxG/h/735F/UVDWbi3+w=="
+        "resolved": "3.50.0",
+        "contentHash": "K1ZQwJgHeEkEBmxmwwoCB36rQQl9esAdQwH4Dsz9LhG29G0BtOm7Vydp1NTyBg4MEqaih1hO/x2+8BEh5Zo4hQ=="
       },
       "Fare": {
         "type": "Transitive",
@@ -1289,7 +1289,7 @@
           "Be.Vlaanderen.Basisregisters.EventHandling.Autofac": "[7.1.0, )",
           "Be.Vlaanderen.Basisregisters.GrAr.Legacy": "[25.3.0, )",
           "Be.Vlaanderen.Basisregisters.ProjectionHandling.SqlStreamStore.Autofac": "[16.0.0, )",
-          "Datadog.Trace.Bundle": "[3.45.0, )",
+          "Datadog.Trace.Bundle": "[3.50.0, )",
           "PostalRegistry": "[1.0.0, )",
           "PostalRegistry.Infrastructure": "[1.0.0, )"
         }
@@ -1600,11 +1600,11 @@
       },
       "Datadog.Trace.Bundle": {
         "type": "CentralTransitive",
-        "requested": "[3.45.0, )",
-        "resolved": "3.45.0",
-        "contentHash": "ax3lAy2poa1SRgxkMXUpQaCe2vl/Kf0DnopfIltXyRw6o6TSkChFB4Rj9JO3K41Od6A5oMLuf4tMhrCdRRUdfg==",
+        "requested": "[3.50.0, )",
+        "resolved": "3.50.0",
+        "contentHash": "XoCNUvAt1wpFJy0YD7Q4CqM0uTEZOAwRXEoHchxjCVLpVvsgk0qtH/EvWCc6Pi3mWi5kf5zU4jcox+M8xjxCAA==",
         "dependencies": {
-          "Datadog.Trace": "3.45.0"
+          "Datadog.Trace": "3.50.0"
         }
       },
       "Destructurama.JsonNet": {
