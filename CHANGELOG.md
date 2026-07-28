@@ -1,3 +1,10 @@
+## [7.2.2](https://github.com/informatievlaanderen/postal-registry/compare/v7.2.1...v7.2.2) (2026-07-28)
+
+
+### Bug Fixes
+
+* **lastchanged:** create new id for v3 ([a219470](https://github.com/informatievlaanderen/postal-registry/commit/a21947040fb51ceaa5e550ae6062a34c5b154b8f))
+
 ## [7.2.1](https://github.com/informatievlaanderen/postal-registry/compare/v7.2.0...v7.2.1) (2026-07-23)
 
 # [7.2.0](https://github.com/informatievlaanderen/postal-registry/compare/v7.1.0...v7.2.0) (2026-07-23)
