@@ -20,7 +20,7 @@ namespace PostalRegistry.Projections.LastChangedList
         {
             When<Envelope<PostalInformationWasRegistered>>(async (context, message, ct) =>
             {
-                var attachedRecords = await GetLastChangedRecordsAndUpdatePosition(message.Message.PostalCode, message.Position, context, ct);
+                var attachedRecords = await GetLastChangedRecordsAndUpdatePosition(GetIdentifier(message.Message.PostalCode), message.Position, context, ct);
 
                 foreach (var record in attachedRecords)
                 {
@@ -31,32 +31,32 @@ namespace PostalRegistry.Projections.LastChangedList
 
             When<Envelope<PostalInformationWasRealized>>(async (context, message, ct) =>
             {
-                await GetLastChangedRecordsAndUpdatePosition(message.Message.PostalCode, message.Position, context, ct);
+                await GetLastChangedRecordsAndUpdatePosition(GetIdentifier(message.Message.PostalCode), message.Position, context, ct);
             });
 
             When<Envelope<PostalInformationPostalNameWasAdded>>(async (context, message, ct) =>
             {
-                await GetLastChangedRecordsAndUpdatePosition(message.Message.PostalCode, message.Position, context, ct);
+                await GetLastChangedRecordsAndUpdatePosition(GetIdentifier(message.Message.PostalCode), message.Position, context, ct);
             });
 
             When<Envelope<PostalInformationPostalNameWasRemoved>>(async (context, message, ct) =>
             {
-                await GetLastChangedRecordsAndUpdatePosition(message.Message.PostalCode, message.Position, context, ct);
+                await GetLastChangedRecordsAndUpdatePosition(GetIdentifier(message.Message.PostalCode), message.Position, context, ct);
             });
 
             When<Envelope<PostalInformationWasRetired>>(async (context, message, ct) =>
             {
-                await GetLastChangedRecordsAndUpdatePosition(message.Message.PostalCode, message.Position, context, ct);
+                await GetLastChangedRecordsAndUpdatePosition(GetIdentifier(message.Message.PostalCode), message.Position, context, ct);
             });
 
             When<Envelope<MunicipalityWasAttached>>(async (context, message, ct) =>
             {
-                await GetLastChangedRecordsAndUpdatePosition(message.Message.PostalCode, message.Position, context, ct);
+                await GetLastChangedRecordsAndUpdatePosition(GetIdentifier(message.Message.PostalCode), message.Position, context, ct);
             });
 
             When<Envelope<MunicipalityWasRelinked>>(async (context, message, ct) =>
             {
-                await GetLastChangedRecordsAndUpdatePosition(message.Message.PostalCode, message.Position, context, ct);
+                await GetLastChangedRecordsAndUpdatePosition(GetIdentifier(message.Message.PostalCode), message.Position, context, ct);
             });
 
             When<Envelope<PostalInformationWasImportedFromCrab>>(async (context, message, ct) => await DoNothing());
@@ -64,8 +64,13 @@ namespace PostalRegistry.Projections.LastChangedList
 
             When<Envelope<PostalInformationWasRemoved>>(async (context, message, ct) =>
             {
-                await GetLastChangedRecordsAndUpdatePosition(message.Message.PostalCode, message.Position, context, ct);
+                await GetLastChangedRecordsAndUpdatePosition(GetIdentifier(message.Message.PostalCode), message.Position, context, ct);
             });
+        }
+
+        private static string GetIdentifier(string postalCode)
+        {
+            return $"v3.{postalCode}";
         }
 
         protected override string BuildCacheKey(AcceptType acceptType, string identifier)
