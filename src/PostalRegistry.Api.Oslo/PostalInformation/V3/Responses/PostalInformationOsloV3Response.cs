@@ -168,7 +168,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.V3.Responses
             var gemeente = new PostinfoToegekendAanGemeente
             {
                 Id = OsloNamespaces.Gemeente.ToPuri("31005"),
-                Detail = string.Format(_responseOptions.GemeenteDetailUrl, "31005"),
+                Detail = new Uri(string.Format(_responseOptions.GemeenteDetailUrl, "31005")),
                 Gemeentenaam = new Gemeentenaam
                 {
                     Gemeentenamen = [new GeografischeNaam("Brugge", Taal.Nl)]

@@ -397,7 +397,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.V3
             var gemeente = new PostinfoToegekendAanGemeente
             {
                 Id = OsloNamespaces.Gemeente.ToPuri(nisCode!),
-                Detail = string.Format(gemeenteDetailUrl, nisCode),
+                Detail = new Uri(string.Format(gemeenteDetailUrl, nisCode)),
                 Gemeentenaam = new Gemeentenaam
                 {
                     Gemeentenamen = gemeenteNamen
