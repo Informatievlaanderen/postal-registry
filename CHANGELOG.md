@@ -1,3 +1,11 @@
+## [7.2.3](https://github.com/informatievlaanderen/postal-registry/compare/v7.2.2...v7.2.3) (2026-08-18)
+
+
+### Bug Fixes
+
+* **oslo:** update common packages ([4a54928](https://github.com/informatievlaanderen/postal-registry/commit/4a54928b8c4287afaa3af1abbbe91edebb0f3493))
+* **projector:** changefeed config ([6b45770](https://github.com/informatievlaanderen/postal-registry/commit/6b45770ddf42f5af8430e5a6237d202aeaf8db97))
+
 ## [7.2.2](https://github.com/informatievlaanderen/postal-registry/compare/v7.2.1...v7.2.2) (2026-07-28)
 
 
