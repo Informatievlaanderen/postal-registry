@@ -198,14 +198,16 @@
                 message.Metadata["CommandId"].ToString()!);
 
             postalFeeDItem.CloudEventAsString = _changeFeedService.SerializeCloudEvent(cloudEvent);
-            await CheckToUpdateCache(page, context);
+            await MarkCompletedPage(page, context);
         }
 
-        private async Task CheckToUpdateCache(int page, FeedContext context)
+        private async Task MarkCompletedPage(int page, FeedContext context)
         {
-            await _changeFeedService.CheckToUpdateCacheAsync(
+            await _changeFeedService.MarkCompletedPageAsync(
                 page,
-                context,
+                // Committed rows only. Rows that are merely tracked as added on the context must not be
+                // counted here, or the cache record can be published for a page that is not yet complete
+                // in the database.
                 async p => await context.PostalFeed.CountAsync(x => x.Page == p));
         }
 
