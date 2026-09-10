@@ -33,7 +33,6 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.V3.Responses
                                      "objectId": "9000",
                                      "naamruimte": "https://data.vlaanderen.be/id/postinfo",
                                      "versieId": "2020-02-10T12:42:50.6472584+01:00",
-                                     "nisCodes": [],
                                      "attributen": []
                                  }
                              },
@@ -52,7 +51,6 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.V3.Responses
                                      "objectId": "9000",
                                      "naamruimte": "https://data.vlaanderen.be/id/postinfo",
                                      "versieId": "2020-02-10T12:42:50.6472584+01:00",
-                                     "nisCodes": [],
                                      "attributen": [
                                          {
                                              "naam": "status",
