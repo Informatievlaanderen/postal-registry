@@ -183,16 +183,13 @@
             };
             await context.PostalFeed.AddAsync(postalFeeDItem);
 
-            var nisCodes = string.IsNullOrEmpty(document.Document.NisCode)
-                ? (List<string>)[]
-                : [document.Document.NisCode];
             var cloudEvent = _changeFeedService.CreateCloudEventWithData(
                 postalFeeDItem.Id,
                 message.Message.Provenance.Timestamp.ToBelgianDateTimeOffset(),
                 eventType,
                 document.PostalCode,
                 document.LastChangedOnAsDateTimeOffset,
-                nisCodes,
+                nisCodes: null,
                 attributes,
                 message.EventName,
                 message.Metadata["CommandId"].ToString()!);
