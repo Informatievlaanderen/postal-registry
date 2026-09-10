@@ -4,9 +4,9 @@
     "net10.0": {
       "Autofac": {
         "type": "Direct",
-        "requested": "[9.1.0, )",
-        "resolved": "9.1.0",
-        "contentHash": "onT/BcnnfWcQNXiuC7R/0h8ALQzRdsAI20gpB7nfrudXpFMXdVZKz1umdtHXDwjc/bmWEsrCBAxck3+Arnk15g=="
+        "requested": "[9.3.2, )",
+        "resolved": "9.3.2",
+        "contentHash": "an3dLpmXWvb2aBP5qyA7GVEcXhoG+W/EtFRa3sBYzJdXSNDnB0aoeo4MgOQru0G5sjNDGYM3D3CnBzNFXEVOOA=="
       },
       "Be.Vlaanderen.Basisregisters.AggregateSource": {
         "type": "Direct",
@@ -349,7 +349,7 @@
       "postalregistry": {
         "type": "Project",
         "dependencies": {
-          "Autofac": "[9.1.0, )",
+          "Autofac": "[9.3.2, )",
           "Be.Vlaanderen.Basisregisters.AggregateSource": "[11.0.0, )",
           "Be.Vlaanderen.Basisregisters.AggregateSource.ExplicitRouting": "[11.0.0, )",
           "Be.Vlaanderen.Basisregisters.CommandHandling": "[11.0.0, )",
