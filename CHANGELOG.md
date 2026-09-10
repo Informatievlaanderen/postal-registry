@@ -1,3 +1,10 @@
+## [7.2.5](https://github.com/informatievlaanderen/postal-registry/compare/v7.2.4...v7.2.5) (2026-09-10)
+
+
+### Bug Fixes
+
+* **oslo:** update feedexamples ([1a011f0](https://github.com/informatievlaanderen/postal-registry/commit/1a011f0076ebfe4fde2cfc2d95f791373a12374d))
+
 ## [7.2.4](https://github.com/informatievlaanderen/postal-registry/compare/v7.2.3...v7.2.4) (2026-09-10)
 
 
