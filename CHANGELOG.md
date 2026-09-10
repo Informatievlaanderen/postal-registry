@@ -1,3 +1,11 @@
+## [7.2.4](https://github.com/informatievlaanderen/postal-registry/compare/v7.2.3...v7.2.4) (2026-09-10)
+
+
+### Bug Fixes
+
+* **feed:** bump packages + remove niscode filtering ([1560507](https://github.com/informatievlaanderen/postal-registry/commit/15605072b2f18ef824230ed91039cf5ed9ed1697))
+* **feed:** concurrency in feed projections ([1342d55](https://github.com/informatievlaanderen/postal-registry/commit/1342d5538d3ac4cc1311be54fae00044eaeafd61))
+
 ## [7.2.3](https://github.com/informatievlaanderen/postal-registry/compare/v7.2.2...v7.2.3) (2026-08-18)
 
 
