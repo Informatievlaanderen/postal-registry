@@ -1,3 +1,11 @@
+## [7.2.6](https://github.com/informatievlaanderen/postal-registry/compare/v7.2.5...v7.2.6) (2026-10-28)
+
+
+### Bug Fixes
+
+* **api:** links build error ([cde27cb](https://github.com/informatievlaanderen/postal-registry/commit/cde27cba3ae8229284567446bc1d3b9894272de1))
+* **api:** links rename to _links ([96a3a90](https://github.com/informatievlaanderen/postal-registry/commit/96a3a90ec7bfd679c3dd7a0086f5ee86f2101055))
+
 ## [7.2.5](https://github.com/informatievlaanderen/postal-registry/compare/v7.2.4...v7.2.5) (2026-09-10)
 
 
