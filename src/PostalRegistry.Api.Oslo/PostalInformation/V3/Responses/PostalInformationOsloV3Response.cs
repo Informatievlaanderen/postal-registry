@@ -39,7 +39,7 @@ namespace PostalRegistry.Api.Oslo.PostalInformation.V3.Responses
         /// <summary>
         /// De hyperlinks die gerelateerd zijn aan de postinfo.
         /// </summary>        
-        [JsonProperty("_links", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.Ignore), Order = 99]
+        [JsonProperty("_links", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.Ignore, Order = 99)]
         public PostalInformationOsloV3ResponseLinks? Links { get; set; }
 
         public PostalInformationOsloV3Response(
